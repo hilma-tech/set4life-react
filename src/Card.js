@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Board.css';
 
 
 function importAll(r) {
@@ -15,10 +16,11 @@ export default class Card extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            index_card: 0
+            isSelected:false
         }
 
         this.WhichCard = this.WhichCard.bind(this);
+        this.selectedCardsCSSchange=this.selectedCardsCSSchange.bind(this);
     }
 
 
@@ -72,18 +74,42 @@ export default class Card extends Component {
 
         num = str[3];
         if (str[3]==="0"){
-            num=""; 
+            num=null; 
         }
         
-        if(num)
+        if(num){
+            //console.log(`${shape}_${shade}_${color}_${num}.png`)
             return `${shape}_${shade}_${color}_${num}.png`;
+        }
+        //console.log(`${shape}_${shade}_${color}.png`)
         return `${shape}_${shade}_${color}.png`;
+    }
+
+    selectedCardsCSSchange(e){
+       this.setState({isSelected:!this.state.isSelected});
+       this.props.onClick(this.props.id);
+
+       if(this.props.selectedCards.length===3){
+           if(this.props.isSet){
+                e.target.className="set"
+           }
+           else{
+                e.target.className="unset"
+
+           }
+       }
+         
     }
 
 
     render() {
         return (
-            <img width="100px" height="100px" src={cardImages[this.WhichCard("2221")]} alt="card" />
+            <img onClick={this.selectedCardsCSSchange}
+            className={this.state.isSelected?"selectedCard":"unselectedCard"
+         }
+            width="100px" 
+            height="100px" 
+            src={cardImages[this.WhichCard(this.props.id)]} alt="card" />
         );
 
     }

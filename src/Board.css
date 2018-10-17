@@ -1,0 +1,31 @@
+.board{
+    display:flex;
+    margin:auto;
+
+}
+
+.selectedCard{
+    border: solid gray;
+    margin:0.4%;
+    padding:0.4%;
+}
+
+.unselectedCard{
+    margin:0.4%;
+    padding:0.4%;
+
+}
+
+.set{
+    border: solid green;
+    margin:0.4%;
+    padding:0.4%; 
+}
+
+.unset{
+    border: solid red;
+    margin:0.4%;
+    padding:0.4%;
+}
+
+
