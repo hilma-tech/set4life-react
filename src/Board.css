@@ -1,10 +1,13 @@
+* {
+     Box-sizing: Border-box
+     } 
 .board{
     display:flex;
     margin:auto;
 
 }
 
-.selectedCard{
+.greyCard{
     border: solid gray;
     margin:0.4%;
     padding:0.4%;
@@ -16,13 +19,13 @@
 
 }
 
-.set{
+.greenCard{
     border: solid green;
     margin:0.4%;
     padding:0.4%; 
 }
 
-.unset{
+.redCard{
     border: solid red;
     margin:0.4%;
     padding:0.4%;

@@ -16,7 +16,8 @@ export default class Card extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isSelected:false
+            isSelected:false,
+            isSetUpdate:null
         }
 
         this.WhichCard = this.WhichCard.bind(this);
@@ -86,30 +87,39 @@ export default class Card extends Component {
     }
 
     selectedCardsCSSchange(e){
-       this.setState({isSelected:!this.state.isSelected});
-       this.props.onClick(this.props.id);
+        //console.log("isSelected : ",this.state.isSelected)
+       this.setState({isSelected:!this.state.isSelected}, ()=>{console.log("isSelected: ",this.state.isSelected);});
+       this.props.onclick(this.props.id);
 
-       if(this.props.selectedCards.length===3){
-           if(this.props.isSet){
-                e.target.className="set"
-           }
-           else{
-                e.target.className="unset"
-
-           }
-       }
          
     }
 
-
     render() {
+        let classOfCard="unselectedCard";
+        if(this.state.isSelected)
+        {
+            if(this.props.isSet===true)
+            {
+                classOfCard="greenCard";
+            }
+            else if(this.props.isSet===false)
+            {
+                classOfCard="redCard";
+            }
+            else{
+                classOfCard="greyCard"; 
+            }
+            
+        }
         return (
-            <img onClick={this.selectedCardsCSSchange}
-            className={this.state.isSelected?"selectedCard":"unselectedCard"
-         }
+            <img 
+            onClick={this.selectedCardsCSSchange}
+            className={classOfCard}
             width="100px" 
             height="100px" 
-            src={cardImages[this.WhichCard(this.props.id)]} alt="card" />
+            src={cardImages[this.WhichCard(this.props.id)]} 
+            alt="card"
+            id={this.props.id} />
         );
 
     }
