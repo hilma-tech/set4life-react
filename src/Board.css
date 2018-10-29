@@ -1,34 +1,7 @@
-* {
-     Box-sizing: Border-box
-     } 
-.board{
-    display:flex;
-    margin:auto;
-
-}
-
-.greyCard{
-    border: solid gray;
-    margin:0.4%;
-    padding:0.4%;
-}
-
-.unselectedCard{
-    margin:0.4%;
-    padding:0.4%;
-
-}
-
-.greenCard{
-    border: solid green;
-    margin:0.4%;
-    padding:0.4%; 
-}
-
-.redCard{
-    border: solid red;
-    margin:0.4%;
-    padding:0.4%;
+button{
+    position: absolute;
+    top:30%;
+    left:45%;
 }
 
 

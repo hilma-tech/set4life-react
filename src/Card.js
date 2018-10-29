@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './Board.css';
+import './Card.css';
 
 
 function importAll(r) {
     let images = {};
-    r.keys().map((card, index) => { images[card.replace('./', '')] = r(card); });
+    r.keys().map((card) => { images[card.replace('./', '')] = r(card); });
     return images;
 }
 
@@ -16,18 +16,17 @@ export default class Card extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isSelected:false,
-            isSetUpdate:null
+            
         }
 
-        this.WhichCard = this.WhichCard.bind(this);
-        this.selectedCardsCSSchange=this.selectedCardsCSSchange.bind(this);
+        this.cardNameStringFromNumbersCode = this.cardNameStringFromNumbersCode.bind(this);
+        this.clickOnCard=this.clickOnCard.bind(this);
     }
 
-
-    WhichCard(str) {
+    cardNameStringFromNumbersCode(str) {
         let shape = "", shade = "", color = "", num = "";
 
+        //shape
         switch (str[0]) {
             case "0":
                 shape = "diamond";
@@ -79,47 +78,85 @@ export default class Card extends Component {
         }
         
         if(num){
-            //console.log(`${shape}_${shade}_${color}_${num}.png`)
             return `${shape}_${shade}_${color}_${num}.png`;
         }
-        //console.log(`${shape}_${shade}_${color}.png`)
         return `${shape}_${shade}_${color}.png`;
     }
 
-    selectedCardsCSSchange(e){
-        //console.log("isSelected : ",this.state.isSelected)
-       this.setState({isSelected:!this.state.isSelected}, ()=>{console.log("isSelected: ",this.state.isSelected);});
-       this.props.onclick(this.props.id);
-
-         
+    
+    clickOnCard(e){
+        console.log('click on card');
+       if(this.props.stageOfTheGame===1){
+        console.log('click on card inside if');
+        this.props.onclick(this.props.cardCode);
+       }
     }
 
     render() {
-        let classOfCard="unselectedCard";
-        if(this.state.isSelected)
-        {
-            if(this.props.isSet===true)
-            {
-                classOfCard="greenCard";
+
+            let stageOfTheGame=this.props.stageOfTheGame;
+            let classNameCard;
+    
+            if(stageOfTheGame===0){
+                classNameCard='not-active'
             }
-            else if(this.props.isSet===false)
-            {
-                classOfCard="redCard";
+            if(stageOfTheGame===1 || stageOfTheGame===2){
+                if(this.props.isSelected){
+                   console.log('selectedCard ' )
+                    if(this.props.isSet){
+                        classNameCard='greenCard';
+                    }else if(this.props.isSet===false){
+                        classNameCard='redCard';
+                    }else if(this.props.isSet===undefined){
+                        classNameCard='greyCard';
+                    }
+    
+                }
+                else{
+                    classNameCard='unselectedCard'
+                //     if(stageOfTheGame===1)
+                //         classNameCard='greyCard';
+                //     else
+                //         classNameCard='not-active';
+                 }
+                
             }
-            else{
-                classOfCard="greyCard"; 
-            }
-            
-        }
+        
+        // let classOfCard="not-active";
+
+        // if(this.props.isClickableCard){
+        //     classOfCard='unselectedCard';
+        // }
+        // if(this.props.isSelected && this.props.isClickableCard )
+        // {
+        //     if(this.props.selectedCards.length===3){
+        //         if(this.props.isSet===true)
+        //         {
+        //             classOfCard="greenCard";
+        //         }
+        //         else if(this.props.isSet===false)
+        //         {
+        //             classOfCard="redCard";
+        //         } 
+
+        //         if (this.props.isSet===null){
+        //             classOfCard="greyCard"; 
+        //         } 
+        
+        // }
+
+
+
         return (
-            <img 
-            onClick={this.selectedCardsCSSchange}
-            className={classOfCard}
-            width="100px" 
-            height="100px" 
-            src={cardImages[this.WhichCard(this.props.id)]} 
-            alt="card"
-            id={this.props.id} />
+            <div>
+                <img 
+                onClick={this.clickOnCard}
+                className={classNameCard}
+                width="100px" 
+                height="100px" 
+                src={cardImages[this.cardNameStringFromNumbersCode(this.props.cardCode)]} 
+                alt="card" />
+            </div>
         );
 
     }
