@@ -14,7 +14,19 @@ const firebaseObj={
 
     setingValueInDataBase(path,value){
         this.fb_db.ref(path).set(value);
+    },
+
+    returnRef(path){
+        return this.fb_db.ref(path);
+    },
+    
+    listenerOnFirebase(cb,path){
+        let ref=this.returnRef(path)
+        ref.on('value',snap=>{
+            if(typeof cb ==='function') cb(snap.val());
+        })
     }
+
 }
 
 export default firebaseObj;
