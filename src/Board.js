@@ -13,7 +13,6 @@ export default class Board extends Component{
             selectedCards:[],
             isSet:undefined,
             usedCards:[],
-            userId:1,
             stageOfTheGame: 0
             /*
             stageOfTheGame values:
@@ -26,50 +25,52 @@ export default class Board extends Component{
         firebaseObj.createDataBase();
     }
 
-    
-
-    componentDidMount(){
-        firebaseObj.setingValueInDataBase("Games/000000/cardsOnBoard",this.state.currentCards);
-        firebaseObj.setingValueInDataBase("Games/000000/usedCards",this.state.usedCards);
-    }
-
     componentWillMount(){
+        firebaseObj.returnRef("Games/000000/selectedCards").remove();
+        firebaseObj.returnRef("Games/000000/currentPlayerID").remove();
         firebaseObj.listenerOnFirebase(this.reciveCurrentUserIdFromFirebase,"Games/000000/currentPlayerID");
         firebaseObj.listenerOnFirebase(this.updateCurrentCards,'Games/000000/cardsOnBoard');
         firebaseObj.listenerOnFirebase(this.updateSelectedCards,'Games/000000/selectedCards');
 
         let currCards=setFunctions.newCurrentCards(12);
         this.setState({currentCards:currCards, usedCards:currCards});
+
+        firebaseObj.setingValueInDataBase("Games/000000/cardsOnBoard",currCards);
+        firebaseObj.setingValueInDataBase("Games/000000/usedCards",currCards);
     }
 
-    updateCurrentCards=(CurrentCards)=>{
-        this.setState({currentCards:CurrentCards})
+    updateCurrentCards=(newCurrentCards)=>{
+        if(JSON.stringify(this.state.currentCards)!==JSON.stringify(newCurrentCards))
+            this.setState({currentCards:newCurrentCards})
     }
 
-    updateSelectedCards=(selectedCards)=>{
-        if(selectedCards===null){
-            selectedCards=[];
+    updateSelectedCards=(newSelectedCards)=>{
+        if(JSON.stringify(this.state.selectedCards)!==JSON.stringify(newSelectedCards))
+        {
+            if(newSelectedCards===null){
+                newSelectedCards=[];
+            }
+            if(newSelectedCards.length===3){
+                this.setState({isSet:setFunctions.isSetBoolFunction(newSelectedCards)});
+            }
+            this.setState({selectedCards:newSelectedCards});
         }
-        this.setState({selectedCards:selectedCards});
     }
 
     reciveCurrentUserIdFromFirebase=(userIdFromFirebase)=>{
-        if(this.state.userId===userIdFromFirebase){
+        console.log();
+        if(userIdFromFirebase && userIdFromFirebase!=this.props.userId)
+            this.setState({stageOfTheGame:3})
+        else 
             this.setState({stageOfTheGame:0});
-        }else if(userIdFromFirebase===null){
-            this.setState({stageOfTheGame:0})
-        }else{
-            this.setState({stageOfTheGame:3});
-
-        }
     }
 
-    selectCardFunction=(id)=>{
+    selectCardFunction=(cardCode)=>{
         let selectedCards=this.state.selectedCards;
-        if(selectedCards.length<3 && !selectedCards.includes(id)){
-            selectedCards.push(id);
+        if(selectedCards.length<3 && !selectedCards.includes(cardCode)){
+            selectedCards.push(cardCode);
         }else{
-            selectedCards=selectedCards.filter(value=>value!==id)
+            selectedCards=selectedCards.filter(value=>value!==cardCode)
         }
 
         this.setState({selectedCards:selectedCards});
@@ -81,8 +82,6 @@ export default class Board extends Component{
         }
     }
 
-    
-
     ifNoSelect=()=>{
        /*setTimeout(()=>{
              if(this.state.selectedCards.length<3){
@@ -91,30 +90,31 @@ export default class Board extends Component{
          }, 5000);*/
     }
     
-
     clickButtonEvent=(e)=>{
         //this.setState({stageOfTheGame: (this.state.stageOfTheGame+1)%3});
         //this.ifNoSelect();
 
+        console.log("stage of the game",this.state.stageOfTheGame);
         if(this.state.stageOfTheGame===0)
         {
+            firebaseObj.setingValueInDataBase("Games/000000/currentPlayerID",this.props.userId)
             this.setState({stageOfTheGame: 1});
         }
-
         if(this.state.stageOfTheGame===2){
 
             if(this.state.isSet){
-                this.setState({currentCards:setFunctions.pullXCardsAndEnterNewXCards(3,this.state.currentCards,this.state.selectedCards, this.state.usedCards),
-                    usedCards:[...this.state.usedCards,...this.state.selectedCards]}); 
+                let usedCards=[...this.state.usedCards,...this.state.selectedCards];
+                let currentCards=setFunctions.pullXCardsAndEnterNewXCards(3,this.state.currentCards,this.state.selectedCards, this.state.usedCards);
+                this.setState({currentCards:currentCards, usedCards:usedCards}); 
 
                 setFunctions.IsArrayHasSet(this.state.currentCards);//// only for checking. not nessecerry to the code
                 
-                firebaseObj.setingValueInDataBase("Games/000000/cardsOnBoard",this.state.currentCards);
-                firebaseObj.setingValueInDataBase("Games/000000/usedCards",this.state.usedCards);
+                firebaseObj.setingValueInDataBase("Games/000000/cardsOnBoard",currentCards);
+                firebaseObj.setingValueInDataBase("Games/000000/usedCards",usedCards);
             }
-            //console.log('currentCards after change',this.state.currentCards)
             this.setState({stageOfTheGame:0, selectedCards:[], isSet:undefined});
             firebaseObj.setingValueInDataBase("Games/000000/selectedCards",[]);
+            firebaseObj.returnRef("Games/000000/currentPlayerID").remove();
         }
 
     }   
@@ -122,11 +122,13 @@ export default class Board extends Component{
    
     
     render(){
+        console.log('user id in board',this.props.userId)
+
         return (
             <div className="board" >
                 {this.state.currentCards.map((cardCode, i)=>
                     <Card 
-                    key={i} 
+                    key={i}
                     onclick={this.selectCardFunction} 
                     cardCode={cardCode}
                     selectedCards={this.state.selectedCards}
@@ -136,7 +138,6 @@ export default class Board extends Component{
                     />
                     )
                 }
-
                 
                 <button onClick={this.clickButtonEvent} id="main_button" 
                 disabled={this.state.stageOfTheGame===1||this.state.stageOfTheGame===3}>
@@ -145,9 +146,6 @@ export default class Board extends Component{
                         this.state.stageOfTheGame===2?"הבא":"שחקן אחר משחק"            
                     }
                 </button>
-
-
-               
             </div>
         );
     }

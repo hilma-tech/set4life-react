@@ -67,39 +67,27 @@ const setFunctions={
     //pull x cardCodes out of an arry and enter to the array new random x cardCodes Creating a situation in which there is a set
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x,currCards,selectedCards, usedCards){
-        let currentCards=Array.from(currCards);
+        let currentCardsDuplicate=Array.from(currCards);
         let newCards=[];
         let indexRemovedCards=[];
+
         selectedCards.map((card,n)=>{
-            let index=currentCards.indexOf(card);
+            let index=currCards.indexOf(card);
             indexRemovedCards.push(index);
         });
-
-        indexRemovedCards.sort((a,b)=>{
-            if (a<b) {
-                return -1;
-              }
-              if (a>b) {
-                return 1;
-              }
-              // a must be equal to b
-              return 0;
+        indexRemovedCards.map((index,n)=>{
+            currCards[index]=undefined;
+            currentCardsDuplicate.splice(index-n,1);
+        });
+        do{
+            newCards=[];
+            for(let i=0;i<x;i++){
+                newCards.push(this.NewCardNumber([...currentCardsDuplicate,...newCards,...usedCards]));
             }
-        );
+        }while(!setFunctions.IsArrayHasSet([...currentCardsDuplicate,...newCards]));
 
         indexRemovedCards.map((index,n)=>{
-            currCards.splice(index-n,1);
-        });
-
-        do{
-            if(newCards.length!==0)newCards=[];
-            for(let i=0;i<x;i++){
-                newCards.push(this.NewCardNumber([...currCards,...newCards,...usedCards]));
-            }
-        }while(!setFunctions.IsArrayHasSet([...currCards,...newCards]));
-
-        newCards.map((newCard,i)=>{
-            currCards.splice(indexRemovedCards[i],0,newCard)
+            currCards[index]=newCards[n];
         });
         return currCards;
     },

@@ -1,0 +1,24 @@
+*{
+    padding:0;
+    margin: 0;
+}
+input{
+    position: absolute;
+    top:40%;
+    left:50%;
+    width:10%;
+    height: 4%;
+}
+
+#request{
+    position: absolute;
+    top:30%;
+    left:44%;
+    font-size: 200%;
+}
+
+button{
+    position: absolute;
+    top:40%;
+    left:62%;
+}
