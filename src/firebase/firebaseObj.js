@@ -15,18 +15,39 @@ const firebaseObj={
     setingValueInDataBase(path,value){
         this.fb_db.ref(path).set(value);
     },
+    updatingValueInDataBase(path,value){
+        this.fb_db.ref(path).update(value);
+    },
 
     returnRef(path){
         return this.fb_db.ref(path);
     },
     
     listenerOnFirebase(cb,path){
-        let ref=this.returnRef(path)
+        let ref=this.returnRef(path);
         ref.on('value',snap=>{
             if(typeof cb ==='function') cb(snap.val());
         })
-    }
+    },
 
+    pushToFirebase(path,value){
+        this.fb_db.ref(path).push(value);
+    },
+
+    readingDataOnFireBase(cb,path){
+        let ref=this.returnRef(path);
+        ref.once('value',snap=>{
+            if(typeof cb ==='function') cb(snap.val());
+        })
+    },
+
+    checkIfValueExistInDB(path){
+        this.readingDataOnFireBase((gameCodeObj)=>{
+            if(gameCodeObj)return true;
+            return false;
+        } 
+            , path)
+    }
 }
 
 export default firebaseObj;

@@ -16,7 +16,7 @@ export default class LoginPage extends Component{
     clickLoginButtonEvent=()=>{
 
         if(this.state.userID!==''){
-            this.props.gettingUserIDFromLogin(this.state.userID);
+            this.props.gettingUserId(this.state.userID);
         }
     }
 

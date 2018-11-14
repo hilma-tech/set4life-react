@@ -18,7 +18,21 @@ const setFunctions={
         let numberSim = selectedCards[0].charAt(3)===selectedCards[1].charAt(3) && selectedCards[0].charAt(3)===selectedCards[2].charAt(3);
         let numberDiff = selectedCards[0].charAt(3)!==selectedCards[1].charAt(3) && selectedCards[0].charAt(3)!==selectedCards[2].charAt(3) && selectedCards[1].charAt(3)!==selectedCards[2].charAt(3);
                
-        return (colorSim||colorDiff) && (shapeSim || shapeDiff) && (shadingSim||shadingDiff) && (numberSim||numberDiff);
+        return {
+            bool: (colorSim||colorDiff) && (shapeSim || shapeDiff) && (shadingSim||shadingDiff) && (numberSim||numberDiff),
+            information:{
+                color: colorSim? selectedCards[0].charAt(0):-1,
+                shape: shapeSim? selectedCards[0].charAt(1):-1,
+                shade: shadingSim? selectedCards[0].charAt(2):-1,
+                number: numberSim? selectedCards[0].charAt(3):-1
+            }   
+        }
+    },
+
+    pad(num, size) {
+        let s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
     },
 
     //receive an array of cards and return a random cardCode that is not in the array 
@@ -40,7 +54,7 @@ const setFunctions={
         for (let a=0;a<currCards.length-2;a++){
             for(let b=a+1;b<currCards.length-1;b++){
                 for(let c=b+1;c<currCards.length;c++){
-                    if(this.isSetBoolFunction([currCards[a],currCards[b],currCards[c]])){
+                    if(this.isSetBoolFunction([currCards[a],currCards[b],currCards[c]]).bool){
                         console.log('only the first set at ', a,b,c)
                         return true;
                         }
@@ -50,18 +64,17 @@ const setFunctions={
         return false;
     },
 
-    // מקבל את מספר הקלפים שהוא צריך להחזיר ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
+    // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
-    newCurrentCards(x){
+    newCurrentCards(x,arr1,arr2){
         let currCards=[];
         do{
             for(let i=0;i<x;i++){
-                currCards.push(this.NewCardNumber(currCards));
+                currCards.push(this.NewCardNumber([...currCards,...arr1,...arr2]));
             }
-        }while(!this.IsArrayHasSet(currCards));
+        }while(!this.IsArrayHasSet([...currCards,...arr1]));
 
-        return currCards;
-        
+        return currCards;  
     },
 
     //pull x cardCodes out of an arry and enter to the array new random x cardCodes Creating a situation in which there is a set
@@ -79,12 +92,8 @@ const setFunctions={
             currCards[index]=undefined;
             currentCardsDuplicate.splice(index-n,1);
         });
-        do{
-            newCards=[];
-            for(let i=0;i<x;i++){
-                newCards.push(this.NewCardNumber([...currentCardsDuplicate,...newCards,...usedCards]));
-            }
-        }while(!setFunctions.IsArrayHasSet([...currentCardsDuplicate,...newCards]));
+
+        newCards=this.newCurrentCards(x,currentCardsDuplicate,usedCards);
 
         indexRemovedCards.map((index,n)=>{
             currCards[index]=newCards[n];

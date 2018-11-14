@@ -29,10 +29,8 @@ export default class Card extends Component {
         if(this.props.isSet){
             classNameCard=' greenCard';
         }else if(this.props.isSet===false){
-            console.log('red')
             classNameCard=' redCard';
         }else if(this.props.isSet===undefined){
-            console.log('gray')
             classNameCard=' greyCard';
         }
         return classNameCard;  
@@ -42,24 +40,6 @@ export default class Card extends Component {
         let stageOfTheGame=this.props.stageOfTheGame;
         let classNameCard;
 
-        // if(stageOfTheGame===0||stageOfTheGame===3){
-        //     classNameCard='not-active'
-        // }
-        // if(stageOfTheGame===1 || stageOfTheGame===2){
-        //     if(this.props.isSelected){
-        //         if(this.props.isSet){
-        //             classNameCard='greenCard';
-        //         }else if(this.props.isSet===false){
-        //             classNameCard='redCard';
-        //         }else if(this.props.isSet===undefined){
-        //             classNameCard='greyCard';
-        //         }
-
-        //     }
-        //     else{
-        //         classNameCard='unselectedCard';
-        //         }
-        // }
     
         if(stageOfTheGame===0||stageOfTheGame===3)classNameCard='not-active';
             if(stageOfTheGame===1||stageOfTheGame===2)classNameCard='unselectedCard';
