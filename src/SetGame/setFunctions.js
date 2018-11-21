@@ -1,11 +1,21 @@
+let shapes=[['diamond',0],['oval',1],['squiggle',2]];
+let shades=[['open',0],['solid',1],['striped',2]];
+let colors=[['blue',0],['green',1],['red',2]];
 
 const setFunctions={
 
+    //return a number with help to know if valid number of checkboxs is checked
+    checkOfValidChecks(obj){
+        let objArr=Object.values(obj);
+        let count=4;
+        for(let i=0;i<objArr.length;i++) !objArr[i]&&count--;
+        return count;
+    },
+    
     // receive an array of 3 cardCodes and check if there is a set between them 
     //(return t/f)
     isSetBoolFunction(selectedCards)
-    {
-
+    {   
         let colorSim = selectedCards[0].charAt(0)===selectedCards[1].charAt(0) && selectedCards[0].charAt(0)===selectedCards[2].charAt(0);
         let colorDiff = selectedCards[0].charAt(0)!==selectedCards[1].charAt(0) && selectedCards[0].charAt(0)!==selectedCards[2].charAt(0) && selectedCards[1].charAt(0)!==selectedCards[2].charAt(0);
 
@@ -29,7 +39,7 @@ const setFunctions={
         }
     },
 
-    pad(num, size) {
+    newRandomGameCode(num, size) {
         let s = num+"";
         while (s.length < size) s = "0" + s;
         return s;
@@ -37,14 +47,20 @@ const setFunctions={
 
     //receive an array of cards and return a random cardCode that is not in the array 
     //(return cardCode)
-    NewCardNumber(arrCards){
-        let shape,shade,color,num;
+    NewCardNumber(arrCards,objConstParameters){
+        let randoms=[];
+        let {shape,shade,color,num}=objConstParameters;
+
+        [shape,shade,color,num].map(value=>{
+            value===undefined?randoms.push(true):randoms.push(false);
+        })
         do{
-            shape=Math.floor(Math.random() * 3);
-            shade=Math.floor(Math.random() * 3);
-            color=Math.floor(Math.random() * 3);
-            num=Math.floor(Math.random() * 3);
+            randoms[0]&&(shape=Math.floor(Math.random() * 3));
+            randoms[1]&&(shade=Math.floor(Math.random() * 3));
+            randoms[2]&&(color=Math.floor(Math.random() * 3));
+            randoms[3]&&(num=Math.floor(Math.random() * 3));
         }while(arrCards.includes(`${shape}${shade}${color}${num}`))
+        console.log(`${shape}${shade}${color}${num}`)
         return `${shape}${shade}${color}${num}`; 
     },
 
@@ -66,13 +82,13 @@ const setFunctions={
 
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
-    newCurrentCards(x,arr1,arr2){
+    newCurrentCards(x,arrCardsOnBoard,arrUsedCards,objConstParameters){
         let currCards=[];
         do{
             for(let i=0;i<x;i++){
-                currCards.push(this.NewCardNumber([...currCards,...arr1,...arr2]));
+                currCards.push(this.NewCardNumber([...currCards,...arrCardsOnBoard,...arrUsedCards],objConstParameters));
             }
-        }while(!this.IsArrayHasSet([...currCards,...arr1]));
+        }while(!this.IsArrayHasSet([...currCards,...arrCardsOnBoard]));
 
         return currCards;  
     },
@@ -93,7 +109,7 @@ const setFunctions={
             currentCardsDuplicate.splice(index-n,1);
         });
 
-        newCards=this.newCurrentCards(x,currentCardsDuplicate,usedCards);
+        newCards=this.newCurrentCards(x,currentCardsDuplicate,usedCards,{});
 
         indexRemovedCards.map((index,n)=>{
             currCards[index]=newCards[n];
@@ -101,67 +117,139 @@ const setFunctions={
         return currCards;
     },
 
-    cardNameStringFromNumbersCode(str) {// translate cardCode into src of pictures 
-        //(return src)
-        let shape = "", shade = "", color = "", num = "";
-
-        //shape
-        switch (str[0]) {
-            case "0":
-                shape = "diamond";
-                break;
-            case "1":
-                shape = "oval";
-                break;
-            case "2":
-                shape = "squiggle";
-                break;
-            default:
-                break;
-        }
-
-        //shade
-        switch (str[1]) {
-            case "0":
-                shade = "open";
-                break;
-            case "1":
-                shade = "solid";
-                break;
-            case "2":
-                shade = "striped";
-                break;
-            default:
-                
-                break;
-        }
-
-        //color
-        switch (str[2]) {
-            case "0":
-                color = "blue";
-                break;
-            case "1":
-                color = "green";
-                break;
-            case "2":
-                color = "red";
-                break;
-            default:
-                break;
-        }
-
-        num = str[3];
+    // translate cardCode into src of pictures 
+    //(return src)
+    cardNameStringFromNumbersCode(str) {
+        let shape = this.getShapeFromCode(str[0],"en");
+        let shade=this.getShadeFromCode(str[1],"en");
+        let color=this.getColorFromCode(str[2],"en");
+        let num = str[3];
         if (str[3]==="0"){
             num=null; 
         }
-        
         if(num){
             return `${shape}_${shade}_${color}_${num}.png`;
         }
         return `${shape}_${shade}_${color}.png`;
     },
 
+    //convert shapeCode to string 
+    getShapeFromCode(code,lang)
+    {
+        let shape;
+        if(lang=="en")
+        {
+            switch (code) {
+                case "0":
+                    shape = "diamond";
+                    break;
+                case "1":
+                    shape = "oval";
+                    break;
+                case "2":
+                    shape = "squiggle";
+                    break;
+                default:
+                    break;
+            }
+        }
+        if(lang=="he")
+        {
+            switch (code) {
+                case "0":
+                    shape = "יהלום";
+                    break;
+                case "1":
+                    shape = "אליפסה";
+                    break;
+                case "2":
+                    shape = "גלים";
+                    break;
+                default:
+                    break;
+            }
+        }
+        return shape;
+    },
+
+    //convert shadeCode to string 
+    getShadeFromCode(code,lang){
+
+        let shade;
+        if(lang==='en'){
+            switch (code) {
+                case "0":
+                    shade = "open";
+                    break;
+                case "1":
+                    shade = "solid";
+                    break;
+                case "2":
+                    shade = "striped";
+                    break;
+                default:
+                    
+                    break;
+            }
+        }
+        if(lang==='he'){
+            switch (code) {
+                case "0":
+                    shade = "ריק";
+                    break;
+                case "1":
+                    shade = "מלא";
+                    break;
+                case "2":
+                    shade = "פסים";
+                    break;
+                default:
+                    break;
+            }
+        }
+        return shade;  
+    },
+
+    //convert colorCode to string 
+    getColorFromCode(code,lang){
+
+        let color;
+        if(lang==='en'){
+            switch (code) {
+                case "0":
+                    color = "blue";
+                    break;
+                case "1":
+                    color = "green";
+                    break;
+                case "2":
+                    color = "red";
+                    break;
+                default:
+                    break;
+            }
+    
+        }
+        if(lang==='he'){
+            switch (code) {
+                case "0":
+                    color = "כחול";
+                    break;
+                case "1":
+                    color = "ירוק";
+                    break;
+                case "2":
+                    color = "אדום";
+                    break;
+                default:
+                    break;
+            }
+        }
+        return color;  
+    },
+    getInfoFromCode:{
+        
+    }
 };
 
 export default setFunctions;

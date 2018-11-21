@@ -2,80 +2,103 @@ import React,{Component} from 'react';
 import './GameType.css';
 import firebaseObj from '../firebase/firebaseObj';
 import setFunctions from '../SetGame/setFunctions';
+import NewGame from './NewGame';
+import LoadingImg from '../data/design/loading-img.gif'
 
 export default class GameType extends Component{
     constructor(props){
         super(props);
         this.state={
             gameCode:'',
-            existsGame:false,
-            unvalidGameCode:false
+            invalidGameCode:false,
+            loadingImg:false,
+            GameTypeOptions:null
+            //0-new game
+            //1-exist game
         }
     }
 
-    findingGameCode=(gameCodeObj)=>{
-        if(gameCodeObj===null)
-            this.setState({unvalidGameCode:true});  
-        else{
-            firebaseObj.returnRef(`Games/${this.state.gameCode}/selectedCards`).remove();
-            firebaseObj.returnRef(`Games/${this.state.gameCode}/currentPlayerID`).remove();
-
-            this.props.gettingGameCodeObj(this.state.gameCode,gameCodeObj);
-        }
-            
-    }
-
-    onClickExistGame=()=>{
-        this.setState({existsGame:true});
-    }
-
-    onClickNewGame=()=>{
+    settingNewGame=(constParameters)=>{
+        //NOT WORKING AT ALL!
         let newGameCode;
+        let newCurrentCards;
         do{
-            newGameCode= setFunctions.pad(Math.floor(Math.random()*1000000),6);
-        }while(firebaseObj.checkIfValueExistInDB(`Games/${newGameCode}`))
+            newGameCode= setFunctions.newRandomGameCode(Math.floor(Math.random()*1000000),6);
+        }while(firebaseObj.readingDataOnFireBase(firebaseObj.checkIfValueExistInDB,`Games/${newGameCode}`))
 
-        let newCurrentCards=setFunctions.newCurrentCards(12,[],[])
+        
+
+        if( Object.keys(constParameters).length===2)
+            newCurrentCards=setFunctions.newCurrentCards(9,[],[],constParameters) 
+        else
+            newCurrentCards=setFunctions.newCurrentCards(12,[],[],constParameters)
+        
+
         let gameCodeObj={cardsOnBoard:newCurrentCards,usedCards:newCurrentCards}
 
         firebaseObj.setingValueInDataBase(`Games/${newGameCode}`,gameCodeObj);
         this.props.gettingGameCodeObj(newGameCode,gameCodeObj);
     }
 
-    inputChange=(e)=>{
-        this.setState({gameCode:e.target.value.toString(),unvalidGameCode:false});
-        //console.log(e.target.value);
+    onClickGameTypeButton=(event)=>{
+        event.target.getAttribute('id')==='exsitGame'&&this.setState({GameTypeOptions:1});
+        event.target.getAttribute('id')==='newGame'&&this.setState({GameTypeOptions:0});
     }
 
-    onClickGameCodeButton=()=>{
-        if(this.state.gameCode!==''){
-            firebaseObj.readingDataOnFireBase(this.findingGameCode, `Games/${this.state.gameCode}`);
+    inputChange=(event)=>{
+        this.setState({gameCode:event.target.value.toString(),invalidGameCode:false});
+    }
 
-            //this.props.gettingGameCodeObj(this.state.gameCode);
+    onClickExistGameCodeButton=()=>{
+        if(this.state.gameCode!==''){
+            this.setState({loadingImg:true})
+            firebaseObj.readingDataOnFireBase(this.findingGameCode, `Games/${this.state.gameCode}`);
         }
+    }
+
+    findingGameCode=(gameCodeObj)=>{
+        if(gameCodeObj===null)
+            this.setState({invalidGameCode:true,loadingImg:false});  
+        else{
+            firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/selectedCards`);
+            firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/currentPlayerID`);
+
+            this.props.gettingGameCodeObj(this.state.gameCode,gameCodeObj);
+        }  
     }
 
     render(){
         return(
             <div>
-                <button onClick={this.onClickExistGame} id='exsitsGame' >משחק קיים</button>
-                <button onClick={this.onClickNewGame} id='newGame' >משחק חדש</button>
+                {this.state.GameTypeOptions===null&&
+                <div>
+                    <button onClick={this.onClickGameTypeButton} id='exsitGame' >משחק קיים</button>
+                    <button onClick={this.onClickGameTypeButton} id='newGame' >משחק חדש</button>
+                </div>}
 
-                {this.state.existsGame&&
-                <input
-                id="input"
-                 name='gameCode' 
-                 type='text'
-                 placeholder="enter the Game Code"
-                 value={this.state.gameCode}
-                 onChange={this.inputChange}/>
+                {/* if game exist */}
+                {this.state.GameTypeOptions===1&&
+                <div>
+                    <input
+                    id="input"
+                    name='gameCode' 
+                    type='text'
+                    placeholder="enter the Game Code"
+                    value={this.state.gameCode}
+                    onChange={this.inputChange}/>
+
+                    {this.state.loadingImg?
+                    <img src={LoadingImg} alt='loading' />:
+                    <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button>}  
+
+                    {this.state.invalidGameCode&& <div id='game-not-exist' >המשחק אינו קיים. אנא נסה שנית</div>}   
+                </div>
                 }
 
+                {/* if game is new */}
+                {this.state.GameTypeOptions===0&&<NewGame settingNewGame={this.settingNewGame} />}
 
 
-                {this.state.existsGame && <button onClick={this.onClickGameCodeButton} id='continue' >המשך</button>}
-
-                {this.state.unvalidGameCode&& <div id='game-not-exist' >המשחק אינו קיים. אנא נסה שנית</div>}
             </div>
         );
     }

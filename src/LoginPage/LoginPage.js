@@ -11,10 +11,9 @@ export default class LoginPage extends Component{
 
     inputChange=(e)=>{
         this.setState({userID:e.target.value.toString()});
-        console.log(e.target.value);
     }
-    clickLoginButtonEvent=()=>{
 
+    clickLoginButtonEvent=()=>{
         if(this.state.userID!==''){
             this.props.gettingUserId(this.state.userID);
         }

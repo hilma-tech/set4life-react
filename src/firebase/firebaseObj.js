@@ -41,12 +41,18 @@ const firebaseObj={
         })
     },
 
-    checkIfValueExistInDB(path){
-        this.readingDataOnFireBase((gameCodeObj)=>{
-            if(gameCodeObj)return true;
-            return false;
-        } 
-            , path)
+    checkIfValueExistInDB(gameCodeObj){
+        if(gameCodeObj){
+            console.log('exist')
+            return true;}
+            console.log('not')
+
+        return false
+    },
+
+    removeDataFromDB(path){
+        let ref=this.returnRef(path);
+        ref.remove();
     }
 }
 

@@ -5,15 +5,16 @@ import LoginPage from './LoginPage/LoginPage.js';
 import firebaseObj from './firebase/firebaseObj.js';
 import GameType from './GameType/GameType.js';
 import setFunctions from './SetGame/setFunctions';
+import NewGame from './GameType/NewGame.js'
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      userID:'',
-      gameCode:-1,
+      userId:'',
+      gameCode:null,
       gameObj:{},
-      pageSeen:1
+      pageSeen:2
       //1-LoginPage
       //2-GameType
       //3-Board
@@ -21,8 +22,8 @@ class App extends Component {
     firebaseObj.createDataBase();
   }
 
-  gettingUserId=(infoFromPage)=>{
-    this.setState({pageSeen:2, userID:infoFromPage.toString()});
+  gettingUserId=(userId)=>{
+    this.setState({pageSeen:2, userId:userId.toString()});
   }
 
   gettingGameCodeObj=(gameCode,gameObj)=>{
@@ -30,13 +31,12 @@ class App extends Component {
   }
 
   render() {
-    console.log('gameCode',this.state.gameCode,'gameObj',this.state.gameObj)
-
+    console.log(this.state);
     return (
       <div className="App">
       {this.state.pageSeen===1&&<LoginPage gettingUserId={this.gettingUserId} />}
       {this.state.pageSeen===2&&<GameType gettingGameCodeObj={this.gettingGameCodeObj} />}
-      {this.state.pageSeen===3&&<Board gameObj={this.state.gameObj} gameCode={this.state.gameCode}  userId={this.state.userID} />} 
+      {this.state.pageSeen===3&&<Board  gameObj={this.state.gameObj} gameCode={this.state.gameCode}  userId={this.state.userId} />} 
       </div>
     );
   }

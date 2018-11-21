@@ -45,3 +45,24 @@
     top:850px;
     left:1050px;
  }
+
+ div #new-game{
+    position: absolute;
+    top:850px;
+    left:1050px;
+ }
+
+input [type="checkbox"]{
+    position: absolute;
+    top:70px;
+    left:1050px;
+    width:100px;
+    height: 100px;
+}
+
+
+ #setting-parameters{
+   position: absolute;
+   top:850px;
+   left:850px;
+ }
