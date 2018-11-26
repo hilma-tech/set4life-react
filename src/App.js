@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Board from './Board';
-import LoginPage from './LoginPage/LoginPage.js';
-import firebaseObj from './firebase/firebaseObj.js';
+import LoginPage from './LoginPage.js';
 import GameType from './GameType/GameType.js';
-import setFunctions from './SetGame/setFunctions';
-import NewGame from './GameType/NewGame.js'
 
 class App extends Component {
   constructor(props){
@@ -19,7 +16,6 @@ class App extends Component {
       //2-GameType
       //3-Board
     }
-    firebaseObj.createDataBase();
   }
 
   gettingUserId=(userId)=>{
@@ -31,9 +27,8 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <div className="App">
+      <div id="App" className='page'>
       {this.state.pageSeen===1&&<LoginPage gettingUserId={this.gettingUserId} />}
       {this.state.pageSeen===2&&<GameType gettingGameCodeObj={this.gettingGameCodeObj} />}
       {this.state.pageSeen===3&&<Board  gameObj={this.state.gameObj} gameCode={this.state.gameCode}  userId={this.state.userId} />} 

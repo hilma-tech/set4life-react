@@ -1,8 +1,11 @@
-let shapes=[['diamond',0],['oval',1],['squiggle',2]];
-let shades=[['open',0],['solid',1],['striped',2]];
-let colors=[['blue',0],['green',1],['red',2]];
 
 const setFunctions={
+
+    objConstParameters:{},
+
+    setobjConstParameters(objConstParameters){
+        this.objConstParameters=objConstParameters;
+    },
 
     //return a number with help to know if valid number of checkboxs is checked
     checkOfValidChecks(obj){
@@ -47,21 +50,20 @@ const setFunctions={
 
     //receive an array of cards and return a random cardCode that is not in the array 
     //(return cardCode)
-    NewCardNumber(arrCards,objConstParameters){
+    NewCardNumber(arrCards){
         let randoms=[];
-        let {shape,shade,color,num}=objConstParameters;
+        let {shape,shade,color,number}=this.objConstParameters;
 
-        [shape,shade,color,num].map(value=>{
+        [shape,shade,color,number].map(value=>{
             value===undefined?randoms.push(true):randoms.push(false);
         })
         do{
             randoms[0]&&(shape=Math.floor(Math.random() * 3));
             randoms[1]&&(shade=Math.floor(Math.random() * 3));
             randoms[2]&&(color=Math.floor(Math.random() * 3));
-            randoms[3]&&(num=Math.floor(Math.random() * 3));
-        }while(arrCards.includes(`${shape}${shade}${color}${num}`))
-        console.log(`${shape}${shade}${color}${num}`)
-        return `${shape}${shade}${color}${num}`; 
+            randoms[3]&&(number=Math.floor(Math.random() * 3));
+        }while(arrCards.includes(`${shape}${shade}${color}${number}`))
+        return `${shape}${shade}${color}${number}`; 
     },
 
     //receive an array of cards and check if there is at least one set inside
@@ -82,11 +84,11 @@ const setFunctions={
 
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
-    newCurrentCards(x,arrCardsOnBoard,arrUsedCards,objConstParameters){
+    newCurrentCards(x,arrCardsOnBoard,arrUsedCards){
         let currCards=[];
         do{
             for(let i=0;i<x;i++){
-                currCards.push(this.NewCardNumber([...currCards,...arrCardsOnBoard,...arrUsedCards],objConstParameters));
+                currCards.push(this.NewCardNumber([...currCards,...arrCardsOnBoard,...arrUsedCards]));
             }
         }while(!this.IsArrayHasSet([...currCards,...arrCardsOnBoard]));
 
@@ -109,7 +111,7 @@ const setFunctions={
             currentCardsDuplicate.splice(index-n,1);
         });
 
-        newCards=this.newCurrentCards(x,currentCardsDuplicate,usedCards,{});
+        newCards=this.newCurrentCards(x,currentCardsDuplicate,usedCards);
 
         indexRemovedCards.map((index,n)=>{
             currCards[index]=newCards[n];

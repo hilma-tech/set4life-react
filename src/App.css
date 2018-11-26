@@ -1,4 +1,144 @@
 *{
     padding:0;
     margin:0;
+    font-family:Verdana, Geneva, sans-serif;
+
 }
+
+.page{
+    display: flex;
+    width:100vw;
+    height: 100vh; 
+}
+
+
+#login-page{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#login-page> * {
+    margin:0.5rem;
+}
+
+#game-type{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-type button{
+    margin:0.5rem;
+    height:6rem ;
+    width: 10rem;
+    font-size: 1.7rem ;
+    font-weight:bold;
+}
+
+#game-type #continue{
+    height:3rem ;
+    width: 6rem; 
+    font-size: 1.3rem ;
+}
+
+#game-type input[type="text"]{
+    height:2.8rem ;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+#new-game{
+    flex-direction: column;
+    direction: rtl;
+}
+
+#new-game input{
+    margin:0.7rem;
+}
+
+#new-game select{
+    margin:0.8rem;
+}
+
+#new-game span{
+    font-size:1.5rem;
+}
+
+#new-game button{
+    margin-top: 1.5rem;
+    height:3rem ;
+    width: 7rem;
+    font-size: 1rem;
+}
+
+
+
+#board{
+   display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.greyCard{
+   border: solid gray;
+   border-width: 10%;
+   
+}
+
+.unselectedCard, .not-active{
+   border: solid white;
+   border-width: 10%;
+}
+
+.greenCard{
+   border: solid greenyellow;
+   border-width: 10%; 
+}
+
+.redCard{
+   border: solid red;
+   border-width: 10%;
+}
+
+.not-active {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.4;
+
+  }
+
+#cards{
+    width:48vw;
+    height:78vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-around;
+    align-content: space-around;
+}
+
+
+#lower-bar>*{
+ 
+    margin:2%;
+}
+
+#lower-bar button{
+    font-weight:bold;
+    padding:8%;
+}
+
+.card{
+    width:8vw;
+    height:16vh;
+    padding:3vh 1vw;
+    margin:0.5vh 0.5vh;
+    background-color: #dbdbdb;
+    border-radius: 8px;
+}
+
+

@@ -5,7 +5,6 @@ const firebaseObj={
 
     createDataBase(){
         this.fb_db=firebase.database();
-        //console.log("db: ", this.fb_db );
     },
 
     showWhatInDataBase(){
@@ -42,12 +41,8 @@ const firebaseObj={
     },
 
     checkIfValueExistInDB(gameCodeObj){
-        if(gameCodeObj){
-            console.log('exist')
-            return true;}
-            console.log('not')
-
-        return false
+        if(gameCodeObj)return true;
+        return false;
     },
 
     removeDataFromDB(path){

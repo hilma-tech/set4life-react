@@ -1,33 +1,33 @@
 import React, {Component} from 'react';
-import './LoginPage.css'
 
 export default class LoginPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            userID:''
+            userId:''
         };
     }
 
     inputChange=(e)=>{
-        this.setState({userID:e.target.value.toString()});
+        this.setState({userId:e.target.value.toString()});
     }
 
     clickLoginButtonEvent=()=>{
-        if(this.state.userID!==''){
-            this.props.gettingUserId(this.state.userID);
+        if(this.state.userId!==''){
+            this.props.gettingUserId(this.state.userId);
         }
     }
 
     render(){
         return(
-            <div>
-                <div id='request' >אנא הכנס את קוד השחקן שלך</div>
+            <div id='login-page' className='page' >
+                <h1>Set4Life</h1>
+                <div >אנא הכנס את קוד השחקן שלך</div>
                 <input
-                name='userID' 
+                name='userId' 
                 type='text'
                 placeholder="enter your player ID"
-                value={this.state.userID}
+                value={this.state.userId}
                 onChange={this.inputChange} >
                 </input>
 
