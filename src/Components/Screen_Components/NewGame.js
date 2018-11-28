@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
-import setFunctions from '../SetGame/setFunctions';
-
+import setFunctions from '../../SetGame/setFunctions';
+import ParametersInfo from '../../ParametersInfo.json';
+import firebaseObj from '../../firebase/firebaseObj';
+import Variables from '../../SetGame/Variables.js'
 
 export default class NewGame extends Component{
     constructor(props){
@@ -13,6 +15,28 @@ export default class NewGame extends Component{
         }
     }
 
+    settingNewGame=(constParameters)=>{
+       
+        let newGameCode;
+        let newCurrentCards;
+        do{
+            newGameCode= setFunctions.newRandomGameCode(Math.floor(Math.random()*1000000),6);
+        }while(firebaseObj.readingDataOnFireBase(firebaseObj.checkIfValueExistInDB,`Games/${newGameCode}`));
+         //WHILE LOOP NOT WORKING AT ALL!
+
+        (Object.keys(constParameters).length===2)?
+            newCurrentCards=setFunctions.newCurrentCards(9,[],[]) :
+            newCurrentCards=setFunctions.newCurrentCards(12,[],[])
+        
+        let gameObj={cardsOnBoard:newCurrentCards,usedCards:newCurrentCards}
+
+        firebaseObj.setingValueInDataBase(`Games/${newGameCode}`,gameObj);
+        //put push to fire base most early as you can do it, to prevent collision
+        Variables.setGameCode(newGameCode);
+        Variables.setGameObj(gameObj)
+    }
+
+
     checkboxsChange=(event)=>{
         let checkboxsInfo=this.state.checkboxsInfo;
 
@@ -21,7 +45,7 @@ export default class NewGame extends Component{
             let name=event.target.name.charAt(0).toUpperCase() + event.target.name.slice(1);
             delete dropDownInfo[name];
 
-             checkboxsInfo[`${event.target.name}Bool`]=true;
+            checkboxsInfo[`${event.target.name}Bool`]=true;
             this.setState({dropDownInfo:dropDownInfo});
         }
         else{
@@ -33,20 +57,11 @@ export default class NewGame extends Component{
 
     settingSpecificParameterForm=(categoryStr)=>{
         if(!this.state.checkboxsInfo[categoryStr+'Bool']){
-            let arrOptionsHe=[];
-            let arrOptionsEn=[];
 
-            if(categoryStr==='number'){
-                arrOptionsHe=['1','2','3'];
-                arrOptionsEn=['1','2','3'];
-            }
-            else{
-                let categoryStrUpperCase=categoryStr.charAt(0).toUpperCase() + categoryStr.slice(1);
-                for(let i=0;i<3;i++){
-                    arrOptionsHe[i]=setFunctions[`get${categoryStrUpperCase}FromCode`](i.toString(),'he');
-                    arrOptionsEn[i]=setFunctions[`get${categoryStrUpperCase}FromCode`](i.toString(),'en');
-                }
-            }
+            let arrOptionsHe=ParametersInfo.cardsParameters[categoryStr][categoryStr+'He']
+
+            let arrOptionsEn=ParametersInfo.cardsParameters[categoryStr][categoryStr+'En']
+
             return (
                 <select className={categoryStr} onChange={this.settingConstParameters}>
                     <option disabled="disabled" selected="selected">בחר</option>
@@ -66,11 +81,13 @@ export default class NewGame extends Component{
     }
    
     onClickSendingConstParameters=()=>{
-        setFunctions.setobjConstParameters(this.state.dropDownInfo);
-        this.props.settingNewGame(this.state.dropDownInfo);
+        setFunctions.setObjConstParameters(this.state.dropDownInfo);
+        this.settingNewGame(this.state.dropDownInfo);
+        this.props.moveThroughPages();
     }
 
     render(){
+        console.log(this.state.dropDownInfo);
         return(
             
             <div id='new-game'>

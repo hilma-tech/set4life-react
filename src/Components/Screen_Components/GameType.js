@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
-import firebaseObj from '../firebase/firebaseObj';
-import setFunctions from '../SetGame/setFunctions';
+import firebaseObj from '../../firebase/firebaseObj';
+import setFunctions from '../../SetGame/setFunctions';
 import NewGame from './NewGame';
-import LoadingImg from '../data/design/loading-img.gif';
+import LoadingImg from '../../data/design/loading-img.gif';
+import Variables from '../../SetGame/Variables.js'
 
 export default class GameType extends Component{
     constructor(props){
@@ -14,25 +15,6 @@ export default class GameType extends Component{
             //1-exist game
         }
         firebaseObj.createDataBase();
-    }
-
-    settingNewGame=(constParameters)=>{
-        //NOT WORKING AT ALL!
-        let newGameCode;
-        let newCurrentCards;
-        do{
-            newGameCode= setFunctions.newRandomGameCode(Math.floor(Math.random()*1000000),6);
-        }while(firebaseObj.readingDataOnFireBase(firebaseObj.checkIfValueExistInDB,`Games/${newGameCode}`))
-
-        if(Object.keys(constParameters).length===2)
-            newCurrentCards=setFunctions.newCurrentCards(9,[],[]) 
-        else
-            newCurrentCards=setFunctions.newCurrentCards(12,[],[])
-        
-        let gameCodeObj={cardsOnBoard:newCurrentCards,usedCards:newCurrentCards}
-
-        firebaseObj.setingValueInDataBase(`Games/${newGameCode}`,gameCodeObj);
-        this.props.gettingGameCodeObj(newGameCode,gameCodeObj);
     }
 
     onClickGameTypeButton=(event)=>{
@@ -49,9 +31,9 @@ export default class GameType extends Component{
                     <button onClick={this.onClickGameTypeButton} id='newGame' className='game-type-buttons' >משחק חדש</button>
                 </div>}
 
-                {this.state.GameTypeOptions===1&&<ExistGame gettingGameCodeObj={this.props.gettingGameCodeObj} />}
+                {this.state.GameTypeOptions===1&&<ExistGame moveThroughPages={this.props.moveThroughPages} />}
 
-                {this.state.GameTypeOptions===0&&<NewGame settingNewGame={this.settingNewGame} />}
+                {this.state.GameTypeOptions===0&&<NewGame moveThroughPages={this.props.moveThroughPages} />}
             </div>
         );
     }
@@ -75,14 +57,16 @@ class ExistGame extends Component{
         }
     }
 
-    findingGameCode=(gameCodeObj)=>{
-        if(gameCodeObj===null)
+    findingGameCode=(gameObj)=>{
+        if(gameObj===null)
             this.setState({invalidGameCode:true,loadingImg:false});  
         else{
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/selectedCards`);
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/currentPlayerID`);
 
-            this.props.gettingGameCodeObj(this.state.gameCode,gameCodeObj);
+            Variables.setGameCode(this.state.gameCode);
+            Variables.setGameObj(gameObj);
+            this.props.moveThroughPages();
         }  
     }
 

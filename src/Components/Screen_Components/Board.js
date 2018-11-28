@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Card from './Card';
-import firebaseObj from './firebase/firebaseObj';
-import setFunctions from './SetGame/setFunctions.js';
+import Card from '../Small_Components/Card';
+import firebaseObj from '../../firebase/firebaseObj';
+import setFunctions from '../../SetGame/setFunctions.js';
 
 
 let time0,timeClickOnChooseSet,timeChooseSet;

@@ -1,37 +1,31 @@
 import React, { Component } from 'react';
 import './App.css';
-import Board from './Board';
-import LoginPage from './LoginPage.js';
-import GameType from './GameType/GameType.js';
+import Board from './Components/Screen_Components/Board.js';
+import LoginPage from './Components/Screen_Components/LoginPage.js';
+import GameType from './Components/Screen_Components/GameType.js';
+import Variables from './SetGame/Variables.js';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      userId:'',
-      gameCode:null,
-      gameObj:{},
-      pageSeen:2
+      pageSeen:1
       //1-LoginPage
       //2-GameType
       //3-Board
     }
   }
 
-  gettingUserId=(userId)=>{
-    this.setState({pageSeen:2, userId:userId.toString()});
-  }
-
-  gettingGameCodeObj=(gameCode,gameObj)=>{
-    this.setState({pageSeen:3, gameCode:gameCode,gameObj:gameObj });
+  moveThroughPages=()=>{
+     this.setState({pageSeen:this.state.pageSeen<3?this.state.pageSeen+1:3})
   }
 
   render() {
     return (
       <div id="App" className='page'>
-      {this.state.pageSeen===1&&<LoginPage gettingUserId={this.gettingUserId} />}
-      {this.state.pageSeen===2&&<GameType gettingGameCodeObj={this.gettingGameCodeObj} />}
-      {this.state.pageSeen===3&&<Board  gameObj={this.state.gameObj} gameCode={this.state.gameCode}  userId={this.state.userId} />} 
+      {this.state.pageSeen===1&&<LoginPage moveThroughPages={this.moveThroughPages} />}
+      {this.state.pageSeen===2&&<GameType moveThroughPages={this.moveThroughPages} />}
+      {this.state.pageSeen===3&&<Board  gameObj={Variables.gameObj} gameCode={Variables.gameCode}  userId={Variables.userId} />} 
       </div>
     );
   }

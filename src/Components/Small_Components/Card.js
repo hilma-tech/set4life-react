@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import setFunctions from './SetGame/setFunctions.js';
+import setFunctions from '../../SetGame/setFunctions.js';
 
 
 function importAll(r) {
@@ -7,7 +7,7 @@ function importAll(r) {
     r.keys().map((card) => { images[card.replace('./', '')] = r(card); });
     return images;
 }
-const cardImages = importAll(require.context('./data/cards', false, /\.(png|jpe?g|svg)$/));
+const cardImages = importAll(require.context('../../data/cards', false, /\.(png|jpe?g|svg)$/));
 
 
 export default class Card extends Component {

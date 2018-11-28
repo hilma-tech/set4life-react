@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Variables from '../../SetGame/Variables.js';
 
 export default class LoginPage extends Component{
     constructor(props){
@@ -14,7 +15,8 @@ export default class LoginPage extends Component{
 
     clickLoginButtonEvent=()=>{
         if(this.state.userId!==''){
-            this.props.gettingUserId(this.state.userId);
+            Variables.setUserId(this.state.userId);
+            this.props.moveThroughPages();
         }
     }
 
