@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Card from '../Small_Components/Card';
 import firebaseObj from '../../firebase/firebaseObj';
 import setFunctions from '../../SetGame/setFunctions.js';
-
+import Variables from '../../SetGame/Variables';
 
 let time0,timeClickOnChooseSet,timeChooseSet;
 
@@ -102,23 +102,24 @@ export default class Board extends Component{
             this.setState({stageOfTheGame: 1});
         }
         if(this.state.stageOfTheGame===2){
-            if(this.state.isSet && Object.values(setFunctions.objConstParameters).length){
-                let len=Object.values(setFunctions.objConstParameters).length;
-                if(this.state.usedCards.length===(81/(Math.pow(3,len)))){
-                    this.setState({gameOver:true});
-                    return;
-                }   
-            }
             if(this.state.isSet){
                 let usedCards=[...this.state.usedCards,...this.state.selectedCards];
-                let currentCards=setFunctions.pullXCardsAndEnterNewXCards(3,this.state.currentCards,this.state.selectedCards, this.state.usedCards);
-                this.setState({currentCards:currentCards, usedCards:usedCards}); 
-
+                let objPullCards=setFunctions.pullXCardsAndEnterNewXCards(3,this.state.currentCards,this.state.selectedCards, this.state.usedCards);
+                let currentCards;
+                if(objPullCards.gameOver)
+                    this.setState({gameOver:true});
+                else{
+                    currentCards=objPullCards.currentCards;
+                    this.setState({currentCards:currentCards}); 
+                    if(!objPullCards.fullUsedCards)
+                        this.setState({usedCards:usedCards});
+                    firebaseObj.setingValueInDataBase(`Games/${this.props.gameCode}`,{cardsOnBoard:currentCards,usedCards:usedCards});
+                    this.setState({stageOfTheGame:0, selectedCards:[], isSet:undefined});
+                }
                 setFunctions.IsArrayHasSet(this.state.currentCards);//// only for checking. not nessecerry for the code
                 
-                firebaseObj.setingValueInDataBase(`Games/${this.props.gameCode}`,{cardsOnBoard:currentCards,usedCards:usedCards});
+                time0=performance.now();
             }
-            this.setState({stageOfTheGame:0, selectedCards:[], isSet:undefined});
             firebaseObj.setingValueInDataBase(`Games/${this.props.gameCode}/selectedCards`,[]);
             firebaseObj.removeDataFromDB(`Games/${this.props.gameCode}/currentPlayerID`);
         }
@@ -127,6 +128,7 @@ export default class Board extends Component{
     render(){
         return (
             <div id="board" className='page'>
+                <label  >{Variables.gameCode} הקוד של המשחק</label>
                 <div id='cards' >
                     {this.state.currentCards.map((cardCode, i)=>
                         <Card 

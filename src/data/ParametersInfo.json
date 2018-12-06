@@ -2,19 +2,22 @@
     "cardsParameters":{
         "shape":{
             "shapeHe" :["יהלום","אליפסה","גלים"],
-            "shapeEn" :["diamond","oval","squiggle"]
+            "shapeEn" :["diamond","oval","squiggle"],
+            "nameHe":"צורה"
         },
         "shade":{
             "shadeHe" : ["ריק","מלא","פסים"],
-            "shadeEn" : ["open","solid","striped"]
+            "shadeEn" : ["open","solid","striped"],
+            "nameHe":"מרקם"
         },
         "color":{
             "colorHe" : ["כחול","ירוק","אדום"],
-            "colorEn" : ["blue","green","red"]
+            "colorEn" : ["blue","green","red"],
+            "nameHe":"צבע"
         },
         "number":{
             "numberHe" : ["1","2","3"],
-            "numberEn" : ["1","2","3"]
+            "nameHe":"מספר"
         }
     }
 }

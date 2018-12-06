@@ -1,8 +1,9 @@
 
-import ParametersInfo from '../ParametersInfo.json';
+import ParametersInfo from '../data/ParametersInfo.json';
 import Variables from './Variables.js';
 
 const setFunctions = {
+
 
     //return a number with help to know if valid number of checkboxs is checked
     checkOfValidChecks(obj) {
@@ -13,6 +14,9 @@ const setFunctions = {
     },
 
     isParameterValidSet(selectedCards,index) {
+        if(selectedCards.includes("00")) 
+            return {bool:false, isSimilar:false};
+
         let similar = selectedCards[0].charAt(index) === selectedCards[1].charAt(index) &&
             selectedCards[0].charAt(index) === selectedCards[2].charAt(index);
         let difference = selectedCards[0].charAt(index) !== selectedCards[1].charAt(index) &&
@@ -45,7 +49,8 @@ const setFunctions = {
         return  result; 
     },
 
-    newRandomGameCode(num, size) {
+    newRandomGameCode(size) {
+        let num=Math.floor(Math.random()*(Math.pow(10,size)));
         let s = num + "";
         while (s.length < size) s = "0" + s;
         return s;
@@ -102,18 +107,39 @@ const setFunctions = {
     //pull x cardCodes out of an arry and enter to the array new random x cardCodes Creating a situation in which there is a set
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
-        let newCards =this.newCurrentCards(x, currCards, usedCards);
+        let parsNum=Object.keys(Variables.objConstParameters).length;
+        let newCards,gameOver=false , fullUsedCards=false;
+
+        if(usedCards.length===(81/(Math.pow(3,parsNum)))){
+            currCards=currCards.filter(card=>!selectedCards.includes(card))
+
+            this.IsArrayHasSet(currCards)?fullUsedCards=true:gameOver=true;    
+        }
+        else
+        {
+            newCards =this.newCurrentCards(x, currCards, usedCards); 
         
-        selectedCards.map((card,i) => {
-            let index = currCards.indexOf(card);
-            currCards[index] = newCards[i]
-        });
-        return currCards;
+            selectedCards.map((card,i) => {
+                let index = currCards.indexOf(card);
+                currCards[index] = newCards[i]
+            });
+        }
+
+        return{
+            currentCards:currCards,
+            gameOver:gameOver,
+            fullUsedCards:fullUsedCards
+        }
+
     },
 
     // translate cardCode into src of pictures 
     //(return src)
     cardNameStringFromNumbersCode(str) {
+        if(str==="00"){
+            console.log('hereeeee')
+            return (`empty_picture.jpg`); 
+        }
         let shape = this.getShapeFromCode(str[0], "en");
         let shade = this.getShadeFromCode(str[1], "en");
         let color = this.getColorFromCode(str[2], "en");

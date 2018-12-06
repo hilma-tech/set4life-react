@@ -16,7 +16,7 @@ export default class LoginPage extends Component{
     clickLoginButtonEvent=()=>{
         if(this.state.userId!==''){
             Variables.setUserId(this.state.userId);
-            this.props.moveThroughPages();
+            this.props.moveThroughPages("sel");
         }
     }
 

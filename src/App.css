@@ -23,6 +23,8 @@
     margin:0.5rem;
 }
 
+
+
 #game-type{
     flex-direction: row;
     justify-content: center;
@@ -74,7 +76,6 @@
 }
 
 
-
 #board{
    display:flex;
     align-items: center;
@@ -82,25 +83,26 @@
     justify-content: space-around;
 }
 
+#board button{
+    width: 4rem;
+}
+
 .greyCard{
-   border: solid gray;
-   border-width: 10%;
+   border: solid 0.4rem gray;
+
    
 }
 
 .unselectedCard, .not-active{
-   border: solid white;
-   border-width: 10%;
+   border: solid 0.4rem white;
 }
 
 .greenCard{
-   border: solid greenyellow;
-   border-width: 10%; 
+   border: solid 0.4rem greenyellow; 
 }
 
 .redCard{
-   border: solid red;
-   border-width: 10%;
+   border: solid 0.4rem red;
 }
 
 .not-active {
@@ -138,7 +140,95 @@
     padding:3vh 1vw;
     margin:0.5vh 0.5vh;
     background-color: #dbdbdb;
-    border-radius: 8px;
+    border-radius: 0.9rem;
+}
+
+#board label{
+    font-size: 1.5rem;
+    font-weight: 550; 
+    margin-top:2vh;
+    
 }
 
 
+@media only screen and (max-width: 600px) {
+    .card{
+        width:19vw;
+        height:9vh;
+        padding:3vh 1vw;
+        margin:0.5vh 0.5vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+
+    #cards{
+        width:81vw;
+        height:70vh;
+    }  
+}
+
+/* @media only screen and (max-width: 1072px) {
+    .card{
+        width:14vw;
+        height:18vh;
+        padding:3vh 1vw;
+        margin:0.5vh 0.5vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+
+    #cards{
+        width:92vw;
+        height:70vh;
+    }
+    
+}  */
+
+#entrance{
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#entrance button{
+    margin:0.5rem;
+    height:6rem ;
+    width: 10rem;
+    font-size: 1.7rem ;
+    font-weight:bold;
+}
+
+#login-page button{
+    margin:0.5rem;
+    height:7vh ;
+    width: 5vw;
+    font-size: 1rem ;
+    font-weight:bold;
+}
+
+
+#reg{
+    direction: rtl;
+    text-align: center;
+}
+
+#reg > *{
+    display: block;
+    margin:0.5rem;
+}
+#reg input{
+    text-align:center;
+}
+#reg button{
+    margin:1.5rem;
+    height:2rem ;
+    width: 5rem;
+    font-size: 1rem ;
+    font-weight:bold;
+    margin:auto auto;
+}
+
+#reg h2{
+    font-size: 4rem;
+    margin-bottom:4vh;
+}
