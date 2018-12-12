@@ -1,5 +1,5 @@
 
-import ParametersInfo from '../data/ParametersInfo.json';
+import GameData from '../data/GameData.json';
 import Variables from './Variables.js';
 
 const setFunctions = {
@@ -34,7 +34,7 @@ const setFunctions = {
     isSetBoolFunction(selectedCards) {
         let flag = true;
         let tempResult; 
-        let info =Object.keys(ParametersInfo.cardsParameters);
+        let info =Object.keys(GameData.cardsParameters);
         let result = {information:{}};
 
         if(selectedCards.includes(undefined))
@@ -107,39 +107,32 @@ const setFunctions = {
     //pull x cardCodes out of an arry and enter to the array new random x cardCodes Creating a situation in which there is a set
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
-        let parsNum=Object.keys(Variables.objConstParameters).length;
-        let newCards,gameOver=false , fullUsedCards=false;
+        let parmObjLength=Object.keys(Variables.objConstParameters).length;
+        let gameOver=false;
 
-        if(usedCards.length===(81/(Math.pow(3,parsNum)))){
-            currCards=currCards.filter(card=>!selectedCards.includes(card))
-
-            this.IsArrayHasSet(currCards)?fullUsedCards=true:gameOver=true;    
+        if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
+            currCards=currCards.filter(card=>!selectedCards.includes(card));
+            if(!this.IsArrayHasSet(currCards))gameOver=true;    
         }
-        else
-        {
-            newCards =this.newCurrentCards(x, currCards, usedCards); 
+        else{
+            let newCards =this.newCurrentCards(x, currCards, usedCards); 
         
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
-                currCards[index] = newCards[i]
+                currCards[index] = newCards[i];
             });
         }
 
         return{
             currentCards:currCards,
-            gameOver:gameOver,
-            fullUsedCards:fullUsedCards
-        }
+            gameOver:gameOver
+        };
 
     },
 
     // translate cardCode into src of pictures 
     //(return src)
     cardNameStringFromNumbersCode(str) {
-        if(str==="00"){
-            console.log('hereeeee')
-            return (`empty_picture.jpg`); 
-        }
         let shape = this.getShapeFromCode(str[0], "en");
         let shade = this.getShadeFromCode(str[1], "en");
         let color = this.getColorFromCode(str[2], "en");
@@ -150,20 +143,20 @@ const setFunctions = {
 
     //convert shapeCode to string 
     getShapeFromCode(code, lang) {
-        return lang ==="en"?ParametersInfo.cardsParameters.shape.shapeEn[code]:
-            ParametersInfo.cardsParameters.shape.shapeHe[code];
+        return lang ==="en"?GameData.cardsParameters.shape.shapeEn[code]:
+            GameData.cardsParameters.shape.shapeHe[code];
     },
 
     //convert shadeCode to string 
     getShadeFromCode(code, lang) {
-        return lang ==="en"?ParametersInfo.cardsParameters.shade.shadeEn[code]:
-        ParametersInfo.cardsParameters.shade.shadeHe[code];
+        return lang ==="en"?GameData.cardsParameters.shade.shadeEn[code]:
+        GameData.cardsParameters.shade.shadeHe[code];
     },
 
     //convert colorCode to string 
     getColorFromCode(code, lang) {
-        return (lang ==="en")?ParametersInfo.cardsParameters.color.colorEn[code]:
-            ParametersInfo.cardsParameters.color.colorHe[code];;
+        return (lang ==="en")?GameData.cardsParameters.color.colorEn[code]:
+            GameData.cardsParameters.color.colorHe[code];;
     },
 };
 

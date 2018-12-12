@@ -17,8 +17,8 @@ export default class Card extends Component {
        }
     }
 
-    settingClassNameCard=(classNameCard)=>{
-        classNameCard='card';
+    settingClassNameCard=()=>{
+        let classNameCard='card';
         if(this.props.isSet){
             classNameCard+=' greenCard';
         }else if(this.props.isSet===false){
@@ -36,7 +36,7 @@ export default class Card extends Component {
         (stageOfTheGame===0||stageOfTheGame===3) && (classNameCard+=' not-active');
         (stageOfTheGame===1||stageOfTheGame===2) && (classNameCard+=' unselectedCard');
 
-        (this.props.isSelected) && (classNameCard+=this.settingClassNameCard(classNameCard));
+        (this.props.isSelected) && (classNameCard+=this.settingClassNameCard());
         
         return (
             <img 

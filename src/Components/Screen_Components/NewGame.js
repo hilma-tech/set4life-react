@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import setFunctions from '../../SetGame/setFunctions';
-import ParametersInfo from '../../data/ParametersInfo.json';
+import GameData from '../../data/GameData.json';
 import firebaseObj from '../../firebase/firebaseObj';
 import Variables from '../../SetGame/Variables.js'
 
@@ -15,26 +15,24 @@ export default class NewGame extends Component{
         firebaseObj.createDataBase();
     }
 
-    settingNewGame=(constParameters)=>{ 
+
+    settingNewGame=async()=>{ 
         let newGameCode;
-        let newCurrentCards;
-        // do{
-        //     newGameCode= setFunctions.newRandomGameCode(6);
-        // }while(firebaseObj.readingDataOnFireBase(firebaseObj.checkIfValueExistInDB,`Games/${newGameCode}`));
-         //WHILE LOOP NOT WORKING AT ALL!
 
-         newGameCode= setFunctions.newRandomGameCode(6);
+        do{
+            newGameCode= setFunctions.newRandomGameCode(6);
+        }while(await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`)!==null)
 
-        (Object.keys(constParameters).length===2)?
-            newCurrentCards=setFunctions.newCurrentCards(9,[],[]) :
-            newCurrentCards=setFunctions.newCurrentCards(12,[],[])
+        await Variables.setGameCode(newGameCode);
+
+        let newCurrentCards=setFunctions.newCurrentCards(Object.keys(this.state.dropDownInfo).length===2?9:12,[],[]);
+        let gameObj={cardsOnBoard:newCurrentCards,usedCards:newCurrentCards, constParameters:this.state.dropDownInfo};
         
-        let gameObj={cardsOnBoard:newCurrentCards,usedCards:newCurrentCards}
+        Variables.setGameObj(gameObj);
+        Variables.setObjConstParameters(this.state.dropDownInfo);
+        firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`,gameObj);
 
-        firebaseObj.setingValueInDataBase(`Games/${newGameCode}`,gameObj);
-        //put push to fire base most early as you can do it, to prevent collision
-        Variables.setGameCode(newGameCode);
-        Variables.setGameObj(gameObj)
+        this.props.moveThroughPages("boa");          
     }
 
     checkboxsChange=(event)=>{
@@ -57,7 +55,7 @@ export default class NewGame extends Component{
     settingSpecificParameterForm=(categoryStr)=>{
 
         if(!this.state.checkboxsInfo[categoryStr+'Bool']){
-            let arrOptionsHe=ParametersInfo.cardsParameters[categoryStr][categoryStr+'He'];
+            let arrOptionsHe=GameData.cardsParameters[categoryStr][categoryStr+'He'];
 
             return (
                 <select name={categoryStr} onChange={this.settingConstParametersObj}>
@@ -76,30 +74,23 @@ export default class NewGame extends Component{
         dropDownInfo[event.target.name]=event.target.options[event.target.selectedIndex].getAttribute('code')
         this.setState({dropDownInfo:dropDownInfo});
     }
-   
-    onClickSendingConstParameters=()=>{
-        Variables.setObjConstParameters(this.state.dropDownInfo);
-        this.settingNewGame(this.state.dropDownInfo);
-        this.props.moveThroughPages("boa");
-    }
 
     setDisableNewGameButton=()=>{
         return !(Object.keys(this.state.dropDownInfo).length+setFunctions.checkOfValidChecks(this.state.checkboxsInfo)===4);
     }
 
     render(){
-        console.log(this.state.dropDownInfo)
         return(
             
             <div id='new-game'>
-                {Object.keys(ParametersInfo.cardsParameters).map(par=>{
+                {Object.keys(GameData.cardsParameters).map(par=>{
                     return(<div>
                             <input 
                             type="checkbox" 
                             name={par}  
                             checked={this.state.checkboxsInfo[par+'Bool']} 
                             onChange={this.checkboxsChange} key={par}/>
-                            <span>{ParametersInfo.cardsParameters[par].nameHe}</span>
+                            <span>{GameData.cardsParameters[par].nameHe}</span>
                             
                             {this.settingSpecificParameterForm(par)}
                         </div>);
@@ -108,7 +99,7 @@ export default class NewGame extends Component{
 
             <button 
             disabled={this.setDisableNewGameButton()}  
-            onClick={this.onClickSendingConstParameters} 
+            onClick={this.settingNewGame} 
             >התחל משחק חדש
             </button>
 

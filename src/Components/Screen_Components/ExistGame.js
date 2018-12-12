@@ -15,15 +15,17 @@ export default class ExistGame extends Component{
         firebaseObj.createDataBase();
     }
 
-    findingGameCode=(gameObj)=>{
-        if(gameObj===null)
+    findingGameCode=(db_gameObj)=>{
+        console.log('db_gameObj',db_gameObj)
+        if(db_gameObj===null)
             this.setState({invalidGameCode:true,loadingImg:false});  
         else{
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/selectedCards`);
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/currentPlayerID`);
 
             Variables.setGameCode(this.state.gameCode);
-            Variables.setGameObj(gameObj);
+            Variables.setGameObj({cardsOnBoard:db_gameObj.cardsOnBoard,usedCards:db_gameObj.usedCards});
+            Variables.setObjConstParameters(db_gameObj.constParameters)
             this.props.moveThroughPages("boa");
         }  
     }
@@ -31,7 +33,7 @@ export default class ExistGame extends Component{
     onClickExistGameCodeButton=()=>{
         if(this.state.gameCode!==''){
             this.setState({loadingImg:true})
-            firebaseObj.readingDataOnFireBase(this.findingGameCode, `Games/${this.state.gameCode}`);
+            firebaseObj.readingDataOnFirebaseCB(this.findingGameCode, `Games/${this.state.gameCode}`);
         }
     }
 

@@ -22,6 +22,7 @@ export default class GameType extends Component{
             <div id='game-type' className='page' >
                 {this.state.GameTypeOptions===null&&
                 <div>
+                    <label>אנא בחר את סוג המשחק הרצוי</label>
                     <button onClick={this.onClickGameTypeButton} id='exsitGame' className='game-type-buttons' >משחק קיים</button>
                     <button onClick={this.onClickGameTypeButton} id='newGame' className='game-type-buttons' >משחק חדש</button>
                 </div>}

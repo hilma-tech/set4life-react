@@ -23,10 +23,17 @@
     margin:0.5rem;
 }
 
-
-
 #game-type{
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#game-type label{
+    display: block;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10vh;
+    direction: rtl;
     justify-content: center;
     align-items: center;
 }
@@ -83,9 +90,15 @@
     justify-content: space-around;
 }
 
+#board label{
+    font-size:2rem;
+}
+
 #board button{
     width: 4rem;
 }
+
+
 
 .greyCard{
    border: solid 0.4rem gray;
@@ -135,12 +148,12 @@
 }
 
 .card{
-    width:8vw;
-    height:16vh;
+    height:15vh;
     padding:3vh 1vw;
     margin:0.5vh 0.5vh;
     background-color: #dbdbdb;
     border-radius: 0.9rem;
+    display: inline-block;
 }
 
 #board label{
@@ -150,7 +163,7 @@
     
 }
 
-
+/*
 @media only screen and (max-width: 600px) {
     .card{
         width:19vw;
@@ -165,7 +178,7 @@
         width:81vw;
         height:70vh;
     }  
-}
+}*/
 
 /* @media only screen and (max-width: 1072px) {
     .card{
@@ -186,16 +199,23 @@
 
 #entrance{
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
 }
 
-#entrance button{
-    margin:0.5rem;
+#entrance-options button{
+    margin:1rem;
+    margin-top:2.5rem;
     height:6rem ;
     width: 10rem;
     font-size: 1.7rem ;
     font-weight:bold;
+}
+#entrance-options label{
+    margin-top: 30vh;
+    font-size: 5.5rem;
+    font-weight: 600;
+    display:block;
 }
 
 #login-page button{
@@ -232,3 +252,5 @@
     font-size: 4rem;
     margin-bottom:4vh;
 }
+
+

@@ -1,4 +1,5 @@
-const variables={
+
+const Variables={
     objConstParameters: {},
     gameObj:{},
     gameCode:'',
@@ -6,16 +7,17 @@ const variables={
 
     setObjConstParameters(objConstParameters) {
         this.objConstParameters = objConstParameters;
+        console.log('objConstParameters in var',objConstParameters)
     },
     setGameObj(gameObj) {
         this.gameObj = gameObj;
     },
     setGameCode(gameCode) {
-        this.gameCode =gameCode ;
+        this.gameCode =gameCode;
     },
     setUserId(userId) {
         this.userId = userId;
     }
 }
 
-export default variables;
+export default Variables;

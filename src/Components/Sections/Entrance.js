@@ -21,7 +21,10 @@ export default class Entrance extends Component{
         return(
             <div id="entrance" className="page" >
                 {!this.state.EntranceOption&&
+                <div id="entrance-options" >
                 <div>
+                    <label>Set4Life</label>
+                   </div>
                     <button onClick={this.onClickEntranceButton} id='login'>משתמש קיים </button>
                     <button onClick={this.onClickEntranceButton} id='Registration'>הרשמה</button>
                 </div>

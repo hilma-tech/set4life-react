@@ -2,30 +2,59 @@ import React, {Component} from "react";
 import firebaseObj from "../../firebase/firebaseObj";
 import setFunctions from '../../SetGame/setFunctions';
 import Variables from '../../SetGame/Variables';
+import GameData from "../../data/GameData.json";
+
 
 export default class Registration extends Component{
     constructor(props){
         super(props);
         this.state={
-            fullName:'',
-            phoneNum:'',
-            password:null,
-            email:''
+            personalInfo:{
+                fullName:'',
+                phoneNum:'',
+                password:'',
+                email:''
+            },
+            errorMess:''
         }
         firebaseObj.createDataBase();
     }
 
     inputChange=(event)=>{
-        this.setState({[event.target.name]:event.target.value})
+        let personalInfo=this.state.personalInfo;
+        personalInfo[event.target.name]=event.target.value;
+        this.setState({personalInfo:personalInfo})
     }
 
-    onClickRegisterButton=()=>{
+    onClickRegisterButton=async()=>{
         ////////need to write check if the code exist in db
-        let playerCode=setFunctions.newRandomGameCode(6);
-        Variables.setUserId(playerCode);
+        let flag=true;
+        let personalInfo=this.state.personalInfo;
 
-        firebaseObj.setingValueInDataBase(`players/${playerCode}`,this.state)
-        this.props.moveThroughPages("sel")
+        Object.values(personalInfo).map(val=>{
+            flag=flag&&val?true:false;
+            if(!flag)return;
+        })
+
+        if(flag){
+
+            let newPlayerCode;
+            do{
+                newPlayerCode=setFunctions.newRandomGameCode(1);
+            }while(await firebaseObj.readingDataOnFirebaseAsync(`PlayersPersonalInfo/${newPlayerCode}`)!==null)
+    
+            Variables.setUserId(newPlayerCode);
+    
+            firebaseObj.settingValueInDataBase(`PlayersPersonalInfo/${newPlayerCode}`,personalInfo)
+            this.props.moveThroughPages("sel")
+        }
+        else{
+            let errorMess='שכחת למלא את השדות';
+            Object.values(personalInfo).map((val,i)=>{
+                if(!val)errorMess+=(i!==0?' ,':': ')+GameData.registration[i];
+            })
+            this.setState({errorMess:errorMess})
+        }  
     }
 
     render(){
@@ -57,6 +86,7 @@ export default class Registration extends Component{
                 onChange={this.inputChange}></input>
 
                 <button onClick={this.onClickRegisterButton} >הבא</button>
+                {this.state.errorMess&&<label>{this.state.errorMess}</label>}
             </div>
         );
     }
