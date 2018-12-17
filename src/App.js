@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   moveThroughPages=(pageName)=>{
-     this.setState({pageSeen:pageName})
+     this.setState({pageSeen:pageName});
   }
 
   render() {

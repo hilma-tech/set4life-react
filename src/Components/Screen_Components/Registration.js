@@ -17,7 +17,7 @@ export default class Registration extends Component{
             },
             errorMess:''
         }
-        firebaseObj.createDataBase();
+        firebaseObj.createAuth();
     }
 
     inputChange=(event)=>{
@@ -27,7 +27,6 @@ export default class Registration extends Component{
     }
 
     onClickRegisterButton=async()=>{
-        ////////need to write check if the code exist in db
         let flag=true;
         let personalInfo=this.state.personalInfo;
 
@@ -37,16 +36,21 @@ export default class Registration extends Component{
         })
 
         if(flag){
+            firebaseObj.fb_auth.createUserWithEmailAndPassword(this.state.personalInfo.email,this.state.personalInfo.password)
+            .then(()=>{
+                this.setState({errorMess:'נרשמת בהצלחה'});
+                setTimeout(()=>this.props.moveThroughPages(null), 1000);
+                },
+                error=>this.setState({errorMess:error.message}));
 
-            let newPlayerCode;
-            do{
-                newPlayerCode=setFunctions.newRandomGameCode(1);
-            }while(await firebaseObj.readingDataOnFirebaseAsync(`PlayersPersonalInfo/${newPlayerCode}`)!==null)
+            // let newPlayerCode;
+            // do{
+            //     newPlayerCode=setFunctions.newRandomGameCode(1);
+            // }while(await firebaseObj.readingDataOnFirebaseAsync(`PlayersPersonalInfo/${newPlayerCode}`)!==null)
     
-            Variables.setUserId(newPlayerCode);
+            // Variables.setUserId(newPlayerCode);
     
-            firebaseObj.settingValueInDataBase(`PlayersPersonalInfo/${newPlayerCode}`,personalInfo)
-            this.props.moveThroughPages("sel")
+            // firebaseObj.settingValueInDataBase(`PlayersPersonalInfo/${newPlayerCode}`,personalInfo)
         }
         else{
             let errorMess='שכחת למלא את השדות';
@@ -86,7 +90,7 @@ export default class Registration extends Component{
                 onChange={this.inputChange}></input>
 
                 <button onClick={this.onClickRegisterButton} >הבא</button>
-                {this.state.errorMess&&<label>{this.state.errorMess}</label>}
+                {this.state.errorMess!==''&&<label>{this.state.errorMess}</label>}
             </div>
         );
     }

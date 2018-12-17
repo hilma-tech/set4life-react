@@ -7,14 +7,19 @@ export default class Entrance extends Component{
         super(props);
         this.state={
             EntranceOption:null
-            //1-login
-            //2-Registration
+            //'log'-login
+            //'reg'-Registration
         }
     }
     
     onClickEntranceButton=(event)=>{
-        event.target.getAttribute('id')==='login'&&this.setState({EntranceOption:1});
-        event.target.getAttribute('id')==='Registration'&&this.setState({EntranceOption:2});
+        event.target.getAttribute('id')==='login'&&this.setState({EntranceOption:'log'});
+        event.target.getAttribute('id')==='Registration'&&this.setState({EntranceOption:'reg'});
+    }
+
+    moveThroughPages=(pageName)=>{
+        if(['log','reg',null].includes(pageName))this.setState({EntranceOption:pageName});
+        else this.props.moveThroughPages(pageName);
     }
     
     render(){
@@ -30,9 +35,9 @@ export default class Entrance extends Component{
                 </div>
                 }
 
-                {this.state.EntranceOption===1&&<LoginPage moveThroughPages={this.props.moveThroughPages} />}
+                {this.state.EntranceOption==='log'&&<LoginPage moveThroughPages={this.moveThroughPages} />}
                 
-                {this.state.EntranceOption===2&&<Registration moveThroughPages={this.props.moveThroughPages}/>}
+                {this.state.EntranceOption==='reg'&&<Registration moveThroughPages={this.moveThroughPages}/>}
 
             </div>
             

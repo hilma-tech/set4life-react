@@ -1,44 +1,64 @@
 import React, {Component} from 'react';
 import Variables from '../../SetGame/Variables.js';
 import firebaseObj from '../../firebase/firebaseObj';
+import GameData from '../../data/GameData.json';
+
 
 export default class LoginPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            userId:'',
-            loginEmail:'',
-            loginPsw:''
+            loginInfo:{
+                loginEmail:'',
+                loginPsw:''
+            },
+            loginStateInfo:''
         };
         firebaseObj.createAuth();
     }
+    componentDidMount(){
+        firebaseObj.fb_auth.onAuthStateChanged(fbUser=>{
+            if(fbUser)
+                console.log('user',fbUser)
+            else
+                console.log("not logged in")
+       });
+    }
 
     inputChange=(event)=>{
-        this.setState({[event.target.name]:event.target.value});
+        let loginInfo=this.state.loginInfo;
+        loginInfo[event.target.name]=event.target.value;
+        this.setState({loginInfo:loginInfo});
     }
 
     clickLoginButtonEvent=()=>{
-        // if(!Object.values(this.state).includes('')){
-        //     firebaseObj.fb_auth.sign
-        // }
-        if(this.state.userId!==''){
-            Variables.setUserId(this.state.userId);
-            this.props.moveThroughPages("sel");
+        let loginInfo=this.state.loginInfo;
+        let flag=true;
+
+        Object.values(loginInfo).map(val=>{
+            flag=flag&&val?true:false;
+            if(!flag)return;
+        })
+
+        if(flag)
+            firebaseObj.fb_auth.signInWithEmailAndPassword(loginInfo.loginEmail,loginInfo.loginPsw)
+            .then(()=>this.props.moveThroughPages("sel"),error=>this.setState({loginStateInfo:error.message}));
+        else{
+            let loginStateInfo='שכחת למלא את השדות';
+
+            Object.values(loginInfo).map((val,i)=>{
+                if(!val)loginStateInfo+=(i!==0?' ,':': ')+GameData.registration[2+i];
+            })
+            this.setState({loginStateInfo:loginStateInfo})
         }
+        
+        
     }
 
     render(){
         return(
             <div id='login-page' className='page' >
-                <div >אנא הכנס את קוד השחקן שלך</div>
-                <input
-                name='userId' 
-                type='text'
-                placeholder="enter your player ID"
-                value={this.state.userId}
-                onChange={this.inputChange} >
-                </input>
-
+                
                 <label>אימייל</label>
                 <input 
                 name='loginEmail'
@@ -58,6 +78,7 @@ export default class LoginPage extends Component{
                 </input>
 
                 <button onClick={this.clickLoginButtonEvent} >המשך</button>
+                <label>{this.state.loginStateInfo}</label>
             </div>
         );
     }
