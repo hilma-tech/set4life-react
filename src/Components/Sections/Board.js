@@ -32,6 +32,7 @@ export default class Board extends Component{
         firebaseObj.listenerOnFirebase(this.reciveCurrentUserIdFromFirebase,`Games/${Variables.gameCode}/currentPlayerID`);
         firebaseObj.listenerOnFirebase(this.updateCurrentCards,`Games/${Variables.gameCode}/cardsOnBoard`);
         firebaseObj.listenerOnFirebase(this.updateSelectedCards,`Games/${Variables.gameCode}/selectedCards`);
+        
 
         this.setState({currentCards:Variables.gameObj.cardsOnBoard, usedCards:Variables.gameObj.usedCards})
     }
@@ -152,7 +153,7 @@ export default class Board extends Component{
                 <div id='lower-bar' >
                         {!this.state.gameOver&&<button onClick={this.clickButtonEvent} id="main_button" 
                         disabled={this.state.stageOfTheGame===1||this.state.stageOfTheGame===3}>
-                        {this.state.stageOfTheGame===0?"בחר סט":
+                        {this.state.stageOfTheGame===0?"!מצאתי סט":
                             this.state.stageOfTheGame===1?"סט בבחירה":
                                 this.state.stageOfTheGame===2?"הבא":"שחקן אחר משחק"            
                             }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Variables from '../../SetGame/Variables.js';
 import firebaseObj from '../../firebase/firebaseObj';
 import GameData from '../../data/GameData.json';
-
+import LoadingImg from '../../data/design/loading-img.gif';
 
 export default class LoginPage extends Component{
     constructor(props){
@@ -12,19 +12,11 @@ export default class LoginPage extends Component{
                 loginEmail:'',
                 loginPsw:''
             },
-            loginStateInfo:''
+            loginStateInfo:'',
+            _loadingImg:false
         };
-        firebaseObj.createAuth();
     }
-    componentDidMount(){
-        firebaseObj.fb_auth.onAuthStateChanged(fbUser=>{
-            if(fbUser)
-                console.log('user',fbUser)
-            else
-                console.log("not logged in")
-       });
-    }
-
+    
     inputChange=(event)=>{
         let loginInfo=this.state.loginInfo;
         loginInfo[event.target.name]=event.target.value;
@@ -32,27 +24,31 @@ export default class LoginPage extends Component{
     }
 
     clickLoginButtonEvent=()=>{
+        this.setState({_loadingImg:true});
         let loginInfo=this.state.loginInfo;
-        let flag=true;
+        let emptyFilesArr=[];
 
-        Object.values(loginInfo).map(val=>{
-            flag=flag&&val?true:false;
-            if(!flag)return;
-        })
-
-        if(flag)
-            firebaseObj.fb_auth.signInWithEmailAndPassword(loginInfo.loginEmail,loginInfo.loginPsw)
-            .then(()=>this.props.moveThroughPages("sel"),error=>this.setState({loginStateInfo:error.message}));
+        Object.values(loginInfo).map((val,i)=>
+            (!val)&&emptyFilesArr.push(GameData.registration[2+i]));
+        
+        if(!emptyFilesArr.length)
+            firebaseObj._auth.signInWithEmailAndPassword(loginInfo.loginEmail,loginInfo.loginPsw)
+            .then(fbUser=>{
+                firebaseObj._db.ref(`PlayersInfo/${fbUser.user.uid}/Name`).once('value',snap=>{
+                    Variables.setPlayerName(snap.val());
+                    Variables.setUserId(fbUser.user.uid);
+                    this.props.moveThroughPages("sel")
+                });
+            },error=>this.setState({loginStateInfo:error.message,_loadingImg:false}));
         else{
             let loginStateInfo='שכחת למלא את השדות';
 
-            Object.values(loginInfo).map((val,i)=>{
-                if(!val)loginStateInfo+=(i!==0?' ,':': ')+GameData.registration[2+i];
-            })
-            this.setState({loginStateInfo:loginStateInfo})
+            emptyFilesArr.map((val,i)=>{
+                loginStateInfo+=(!i?': ':
+                    (i===emptyFilesArr.length-1?' ו':" ,"))+val
+            });
+            this.setState({loginStateInfo:loginStateInfo,_loadingImg:false});
         }
-        
-        
     }
 
     render(){
@@ -78,6 +74,7 @@ export default class LoginPage extends Component{
                 </input>
 
                 <button onClick={this.clickLoginButtonEvent} >המשך</button>
+                {this.state._loadingImg&&<img src={LoadingImg} alt='loading'/>}
                 <label>{this.state.loginStateInfo}</label>
             </div>
         );

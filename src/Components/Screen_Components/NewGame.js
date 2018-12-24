@@ -20,7 +20,7 @@ export default class NewGame extends Component{
         let newGameCode;
 
         do{
-            newGameCode= setFunctions.newRandomGameCode(6);
+            newGameCode= setFunctions.newRandomGameCode(3);
         }while(await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`)!==null)
 
         await Variables.setGameCode(newGameCode);
