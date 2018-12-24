@@ -5,6 +5,7 @@ import SelectGameType from './Components/Sections/SelectGameType.js';
 import Variables from './SetGame/Variables'
 import Entrance from './Components/Sections/Entrance.js';
 
+
 class App extends Component {
   constructor(props){
     super(props);

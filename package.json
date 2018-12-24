@@ -2,6 +2,7 @@
   "name": "set4life-react",
   "version": "0.1.0",
   "private": true,
+  "homepage":".",
   "dependencies": {
     "firebase": "^5.5.5",
     "react": "^16.5.2",

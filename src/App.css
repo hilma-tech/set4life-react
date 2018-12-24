@@ -1,4 +1,4 @@
-*{
+ *{
     padding:0;
     margin:0;
     font-family:Verdana, Geneva, sans-serif;
@@ -148,12 +148,12 @@
 }
 
 .card{
-    height:15vh;
+    width:8vw;
+    height:16vh;
     padding:3vh 1vw;
     margin:0.5vh 0.5vh;
     background-color: #dbdbdb;
-    border-radius: 0.9rem;
-    display: inline-block;
+    border-radius: 8px;
 }
 
 #board label{
@@ -210,6 +210,9 @@
     width: 10rem;
     font-size: 1.7rem ;
     font-weight:bold;
+    background-color: lightskyblue;
+    /* color: purple; */
+    border-radius: 15%
 }
 #entrance-options label{
     margin-top: 30vh;
@@ -253,4 +256,4 @@
     margin-bottom:4vh;
 }
 
-
+ 
