@@ -18,18 +18,17 @@ export default class NewGame extends Component{
 
     settingNewGame=async()=>{ 
         let newGameCode;
-
         do{
-            newGameCode= setFunctions.newRandomGameCode(6);
+            newGameCode= setFunctions.newRandomGameCode(3);
         }while(await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`)!==null)
-
+        console.log("tpye of", typeof Variables.setGameCode(newGameCode) )
         await Variables.setGameCode(newGameCode);
-
+        Variables.setObjConstParameters(this.state.dropDownInfo);
+        
         let newCurrentCards=setFunctions.newCurrentCards(Object.keys(this.state.dropDownInfo).length===2?9:12,[],[]);
         let gameObj={cardsOnBoard:newCurrentCards,usedCards:newCurrentCards, constParameters:this.state.dropDownInfo};
         
         Variables.setGameObj(gameObj);
-        Variables.setObjConstParameters(this.state.dropDownInfo);
         firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`,gameObj);
 
         this.props.moveThroughPages("boa");          

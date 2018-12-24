@@ -59,6 +59,7 @@ const setFunctions = {
     //receive an array of cards and return a random cardCode that is not in the array 
     //(return cardCode)
     NewCardNumber(arrCards) {
+        console.log('Variables.objConstParameters',Variables.objConstParameters)
         let randoms=[];
         let { shape, shade, color, number } = Variables.objConstParameters;
 

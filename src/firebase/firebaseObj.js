@@ -1,54 +1,65 @@
 import firebase from './Def';
 
 const firebaseObj={
-    fb_db:null,
-    fb_auth:null,
+    _db:null,
+    _auth:null,
 
     createDataBase(){
-        this.fb_db=firebase.database();
+        this._db=firebase.database();
     },
     createAuth(){
-        this.fb_auth=firebase.auth();
+        this._auth=firebase.auth();
     },
  
     settingValueInDataBase(path,value){
-        this.fb_db.ref(path).set(value)
+        this._db.ref(path).set(value)
     },
 
     pushToFirebase(path,value){
-        this.fb_db.ref(path).push(value);
+        this._db.ref(path).push(value);
     },
     
     updatingValueInDataBase(path,value){
-        this.fb_db.ref(path).update(value);
+        this._db.ref(path).update(value);
     },
     removeDataFromDB(path){
-        let ref=this.fb_db.ref(path);
+        let ref=this._db.ref(path);
         ref.remove();
     },
     
     listenerOnFirebase(cb,path){
-        let ref=this.fb_db.ref(path);
+        let ref=this._db.ref(path);
         ref.on('value',snap=>{
             if(typeof cb ==='function') cb(snap.val());
         })
     },
 
     readingDataOnFirebaseCB(cb,path){
-        let ref=this.fb_db.ref(path);
+        let ref=this._db.ref(path);
         ref.once('value',snap=>{
             if(typeof cb ==='function') cb(snap.val());
         })
     },
 
+    authState(cb){
+        firebaseObj._auth.onAuthStateChanged(fbUser=>{
+            if(typeof cb ==='function') cb(fbUser);
+          });
+    },
+
     async readingDataOnFirebaseAsync(path){
         let data;
-        let ref=this.fb_db.ref(path);
+        let ref=this._db.ref(path);
         await ref.once('value',async (snap)=>{
             data=snap.val();
         })
         return await data;
-    }
+    },
+
+    readingDataOnFirebasePromise(path){
+        let ref=this._db.ref(path);
+        ref.once('value',snap=>snap.val());
+    }  
 }
 
 export default firebaseObj;

@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import firebaseObj from "../../firebase/firebaseObj";
-import setFunctions from '../../SetGame/setFunctions';
-import Variables from '../../SetGame/Variables';
 import GameData from "../../data/GameData.json";
+import Variables from "../../SetGame/Variables";
 
 
 export default class Registration extends Component{
@@ -15,50 +14,41 @@ export default class Registration extends Component{
                 password:'',
                 email:''
             },
-            errorMess:''
+            registStateInfo:''
         }
-        firebaseObj.createAuth();
     }
 
     inputChange=(event)=>{
         let personalInfo=this.state.personalInfo;
         personalInfo[event.target.name]=event.target.value;
-        this.setState({personalInfo:personalInfo})
+        this.setState({personalInfo:personalInfo,registStateInfo:''})
     }
 
     onClickRegisterButton=async()=>{
-        let flag=true;
+        let emptyFilesArr=[];
         let personalInfo=this.state.personalInfo;
-
-        Object.values(personalInfo).map(val=>{
-            flag=flag&&val?true:false;
-            if(!flag)return;
-        })
-
-        if(flag){
-            firebaseObj.fb_auth.createUserWithEmailAndPassword(this.state.personalInfo.email,this.state.personalInfo.password)
-            .then(()=>{
-                this.setState({errorMess:'נרשמת בהצלחה'});
-                setTimeout(()=>this.props.moveThroughPages(null), 1000);
+        
+        Object.values(personalInfo).map((val,i)=>
+            (!val)&&emptyFilesArr.push(GameData.registration[i]));
+        
+        if(!emptyFilesArr.length){
+            firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email,personalInfo.password)
+            .then(fbUser=>{
+                this.setState({registStateInfo:'נרשמת בהצלחה'});
+                firebaseObj.settingValueInDataBase(`PlayersInfo/${fbUser.user.uid}`,
+                    {Name:personalInfo.fullName,phoneNum:personalInfo.phoneNum});            
                 },
-                error=>this.setState({errorMess:error.message}));
-
-            // let newPlayerCode;
-            // do{
-            //     newPlayerCode=setFunctions.newRandomGameCode(1);
-            // }while(await firebaseObj.readingDataOnFirebaseAsync(`PlayersPersonalInfo/${newPlayerCode}`)!==null)
-    
-            // Variables.setUserId(newPlayerCode);
-    
-            // firebaseObj.settingValueInDataBase(`PlayersPersonalInfo/${newPlayerCode}`,personalInfo)
+                error=>this.setState({registStateInfo:error.message}));
         }
         else{
-            let errorMess='שכחת למלא את השדות';
-            Object.values(personalInfo).map((val,i)=>{
-                if(!val)errorMess+=(i!==0?' ,':': ')+GameData.registration[i];
-            })
-            this.setState({errorMess:errorMess})
-        }  
+            let registStateInfo='שכחת למלא את השדות';
+            emptyFilesArr.map((val,i)=>{
+                registStateInfo+=(!i?': ':
+                    (i===emptyFilesArr.length-1?' ו':" ,"))+val;
+            });
+            this.setState({registStateInfo:registStateInfo});
+        }
+           
     }
 
     render(){
@@ -90,7 +80,7 @@ export default class Registration extends Component{
                 onChange={this.inputChange}></input>
 
                 <button onClick={this.onClickRegisterButton} >הבא</button>
-                {this.state.errorMess!==''&&<label>{this.state.errorMess}</label>}
+                {this.state.registStateInfo!==''&&<label>{this.state.registStateInfo}</label>}
             </div>
         );
     }

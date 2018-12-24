@@ -10,15 +10,15 @@ export default class ExistGame extends Component{
         this.state={
             gameCode:'',
             invalidGameCode:false,
-            loadingImg:false
+            continueToGame:false,
+            participants:[],
+            loadLocatePartic:false
         }
-        firebaseObj.createDataBase();
     }
 
     findingGameCode=(db_gameObj)=>{
-        console.log('db_gameObj',db_gameObj)
         if(db_gameObj===null)
-            this.setState({invalidGameCode:true,loadingImg:false});  
+            this.setState({invalidGameCode:true,continueToGame:false});  
         else{
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/selectedCards`);
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/currentPlayerID`);
@@ -32,18 +32,30 @@ export default class ExistGame extends Component{
 
     onClickExistGameCodeButton=()=>{
         if(this.state.gameCode!==''){
-            this.setState({loadingImg:true})
+            this.setState({continueToGame:true})
             firebaseObj.readingDataOnFirebaseCB(this.findingGameCode, `Games/${this.state.gameCode}`);
         }
     }
 
     inputChange=(event)=>{
-        this.setState({gameCode:event.target.value.toString(),invalidGameCode:false});
+        this.setState({gameCode:event.target.value.toString(),invalidGameCode:false,participants:[]});
+        
+        if(event.target.value.length===3){
+            this.setState({loadLocatePartic:true});
+            firebaseObj.readingDataOnFirebaseCB(
+                (partic)=>
+                this.setState({participants:partic?Object.keys(partic):[],loadLocatePartic:false})
+            ,`Game_Participants/${event.target.value}`);
+        }
     }
 
     render(){
         return(
             <div >
+                {this.state.loadLocatePartic?
+                    <img src={LoadingImg} alt='loading'/>:
+                    <p>{this.state.participants}</p>
+                }
                 <input
                 id="input"
                 name='gameCode' 
@@ -52,7 +64,7 @@ export default class ExistGame extends Component{
                 value={this.state.gameCode}
                 onChange={this.inputChange}/>
 
-                {this.state.loadingImg?
+                {this.state.continueToGame?
                 <img src={LoadingImg} alt='loading' />:
                 <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button>}  
 
