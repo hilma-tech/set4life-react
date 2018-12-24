@@ -148,12 +148,12 @@
 }
 
 .card{
-    height:15vh;
+    width:8vw;
+    height:16vh;
     padding:3vh 1vw;
     margin:0.5vh 0.5vh;
     background-color: #dbdbdb;
-    border-radius: 0.9rem;
-    display: inline-block;
+    border-radius: 8px;
 }
 
 #board label{
@@ -163,7 +163,7 @@
     
 }
 
-/*
+
 @media only screen and (max-width: 600px) {
     .card{
         width:19vw;
@@ -178,7 +178,7 @@
         width:81vw;
         height:70vh;
     }  
-}*/
+}
 
 /* @media only screen and (max-width: 1072px) {
     .card{

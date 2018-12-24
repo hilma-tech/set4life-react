@@ -8,12 +8,14 @@ const Variables={
 
     setObjConstParameters(objConstParameters) {
         this.objConstParameters = objConstParameters;
+        console.log('objConstParameters',objConstParameters)
     },
     setGameObj(gameObj) {
         this.gameObj = gameObj;
     },
     setGameCode(gameCode) {
         this.gameCode =gameCode;
+        console.log("game code set")
     },
     setUserId(userId) {
         this.userId = userId; 
