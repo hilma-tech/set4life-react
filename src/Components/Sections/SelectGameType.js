@@ -12,6 +12,7 @@ export default class GameType extends Component{
             //0-new game
             //1-exist game
         }
+       
     }
 
     onClickGameTypeButton=(event)=>{
@@ -23,7 +24,6 @@ export default class GameType extends Component{
         firebaseObj._auth.signOut();
         this.props.moveThroughPages("ent");
     }
-
 
     render(){
         return(

@@ -36,7 +36,7 @@ export default class Registration extends Component{
             .then(fbUser=>{
                 this.setState({registStateInfo:'נרשמת בהצלחה'});
                 firebaseObj.settingValueInDataBase(`PlayersInfo/${fbUser.user.uid}`,
-                    {Name:personalInfo.fullName,phoneNum:personalInfo.phoneNum});            
+                    {Name:personalInfo.fullName,phoneNum:personalInfo.phoneNum});
                 },
                 error=>this.setState({registStateInfo:error.message}));
         }
