@@ -30,11 +30,15 @@ export default class GameType extends Component{
             <div id='game-type' className='page' >
                 {this.state.GameTypeOptions===null&&
                 <div>
-                    <label>שלום {Variables.playerName}</label>
-                    <button onClick={this.signOut} >התנתק</button>
-                    <label>אנא בחר את סוג המשחק הרצוי</label>
-                    <button onClick={this.onClickGameTypeButton} id='exsitGame' className='game-type-buttons' >משחק קיים</button>
-                    <button onClick={this.onClickGameTypeButton} id='newGame' className='game-type-buttons' >משחק חדש</button>
+                    <div id="top-bar">
+                        <label>שלום {Variables.playerName}</label>
+                        <button id="signout" onClick={this.signOut} >התנתק</button>
+                    </div>
+                    <h1>אנא בחר את סוג המשחק הרצוי</h1>
+                    <div className='game-type-buttons' >
+                        <button onClick={this.onClickGameTypeButton} id='exsitGame'>משחק קיים</button>
+                        <button onClick={this.onClickGameTypeButton} id='newGame'>משחק חדש</button>
+                    </div>
                 </div>}
 
                 {this.state.GameTypeOptions===1&&<ExistGame moveThroughPages={this.props.moveThroughPages} />}

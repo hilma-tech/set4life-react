@@ -28,8 +28,10 @@ export default class Entrance extends Component{
                 <div>
                     <label>Set4Life</label>
                    </div>
+                   <div id="entrance-buttons">
                     <button onClick={this.onClickEntranceButton} id='login'>משתמש קיים </button>
                     <button onClick={this.onClickEntranceButton} id='Registration'>הרשמה</button>
+                    </div>
                 </div>
                 }
 

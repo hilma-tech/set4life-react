@@ -11,16 +11,27 @@
     height: 100vh; 
 }
 
+button{
+    background-color: lightskyblue;
+    border-radius: 15%;
+}
 
 #login-page{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 #login-page> * {
     margin:0.5rem;
+}
+
+#login-page input{
+    height: 5vh;
+    width: 40vw;
+    font-size: 1.2rem;
 }
 
 #game-type{
@@ -30,26 +41,48 @@
 }
 #game-type label{
     display: block;
+    font-size: 1rem;
+    margin-bottom: 10vh;
+    direction: rtl;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2rem; 
+}
+#game-type h1{
+    display: block;
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 10vh;
     direction: rtl;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
-#game-type button{
+#signout{
+    height:1.7rem ;
+    width: 4rem;
+    text-align: center;
+    font-size: 1rem ;
+}
+.game-type-buttons>*{
     margin:0.5rem;
     height:6rem ;
     width: 10rem;
     font-size: 1.7rem ;
     font-weight:bold;
 }
+.game-type-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
-#game-type #continue{
-    height:3rem ;
-    width: 6rem; 
-    font-size: 1.3rem ;
+#top-bar{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: baseline;
+    align-self: start;
 }
 
 #game-type input[type="text"]{
@@ -88,15 +121,20 @@
     align-items: center;
     flex-direction: column;
     justify-content: space-around;
+    direction: rtl;
 }
 
 #board label{
     font-size:2rem;
+    font-weight: 550; 
+    margin-top:2vh;
 }
 
 #board button{
-    width: 4rem;
+    width: 10rem;
+    font-size: 2rem;
 }
+
 
 
 
@@ -156,76 +194,50 @@
     border-radius: 8px;
 }
 
-#board label{
-    font-size: 1.5rem;
-    font-weight: 550; 
-    margin-top:2vh;
-    
-}
 
 
-@media only screen and (max-width: 600px) {
-    .card{
-        width:19vw;
-        height:9vh;
-        padding:3vh 1vw;
-        margin:0.5vh 0.5vh;
-        background-color: #dbdbdb;
-        border-radius: 0.9rem;
-    }
 
-    #cards{
-        width:81vw;
-        height:70vh;
-    }  
-}
 
-/* @media only screen and (max-width: 1072px) {
-    .card{
-        width:14vw;
-        height:18vh;
-        padding:3vh 1vw;
-        margin:0.5vh 0.5vh;
-        background-color: #dbdbdb;
-        border-radius: 0.9rem;
-    }
 
-    #cards{
-        width:92vw;
-        height:70vh;
-    }
-    
-}  */
+
 
 #entrance{
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 }
 
+#entrance-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
 #entrance-options button{
     margin:1rem;
     margin-top:2.5rem;
     height:6rem ;
-    width: 10rem;
+    width: 12rem;
     font-size: 1.7rem ;
     font-weight:bold;
     background-color: lightskyblue;
-    /* color: purple; */
-    border-radius: 15%
+    border-radius: 15%;
+    align-items: center;
 }
+
 #entrance-options label{
     margin-top: 30vh;
     font-size: 5.5rem;
     font-weight: 600;
     display:block;
+    text-align: center;
 }
 
 #login-page button{
     margin:0.5rem;
-    height:7vh ;
-    width: 5vw;
-    font-size: 1rem ;
+    height: 3.8rem ;
+    width: 8.5rem;
+    font-size: 1.7rem ;
     font-weight:bold;
 }
 
@@ -241,6 +253,10 @@
 }
 #reg input{
     text-align:center;
+    width: 50vw;
+    height: 4vh;
+    border: 0.01rem solid black;
+    font-size: 1.2rem;
 }
 #reg button{
     margin:1.5rem;
@@ -256,4 +272,53 @@
     margin-bottom:4vh;
 }
 
- 
+@media only screen and (max-width: 600px) {
+    .card{
+        width:19vw;
+        height:9vh;
+        padding:3vh 1vw;
+        margin:0.5vh 0.5vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+
+    #cards{
+        width:81vw;
+        height:70vh;
+    }  
+    #entrance-buttons{
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+    }
+    #login-page input{
+        height: 5vh;
+        width: 80vw;
+        font-size: 1.2rem;
+    }
+    #reg input{
+        text-align:center;
+        width: 80vw;
+        height: 4vh;
+    }
+}
+
+@media only screen and (max-width: 1072px) {
+    .card{
+        width:15vw;
+        height:13vh;
+        padding:3vh 1vw;
+        margin:0.5vh 0.5vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+
+    #cards{
+        width:92vw;
+        height:70vh;
+    }
+    #board label{
+        font-size:3rem;
+    }
+    
+} 

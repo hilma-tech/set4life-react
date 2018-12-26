@@ -178,7 +178,7 @@ export default class Board extends Component{
                 <div id='lower-bar' >
                         {!this.state.gameOver&&<button onClick={this.clickButtonEvent} id="main_button" 
                         disabled={this.state.stageOfTheGame===1||this.state.stageOfTheGame===3}>
-                        {this.state.stageOfTheGame===0?"!מצאתי סט":
+                        {this.state.stageOfTheGame===0?"מצאתי סט!":
                             this.state.stageOfTheGame===1?"סט בבחירה":
                                 this.state.stageOfTheGame===2?"הבא":"שחקן אחר משחק"            
                             }
