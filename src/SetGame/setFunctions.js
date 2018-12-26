@@ -1,9 +1,30 @@
 
 import GameData from '../data/GameData.json';
 import Variables from './Variables.js';
+import firebaseObj from '../firebase/firebaseObj';
 
 const setFunctions = {
 
+    flag_pullXCards:false,
+
+    timeAndDate(purpose){
+        let d=new Date();
+        switch(purpose){
+            case 'time':{
+                let hour=d.getHours();
+                let min=d.getMinutes();
+                return `${hour<10?'0':''}${hour}:${min<10?'0':''}${min}`;
+            }
+            case 'date':{
+                return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
+            }
+        }
+    },
+
+    exitGame(cb){
+        firebaseObj.removeDataFromDB(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`);
+        if(typeof cb ==='function') cb('sel');
+    },
 
     //return a number with help to know if valid number of checkboxs is checked
     checkOfValidChecks(obj) {
@@ -59,7 +80,6 @@ const setFunctions = {
     //receive an array of cards and return a random cardCode that is not in the array 
     //(return cardCode)
     NewCardNumber(arrCards) {
-        console.log('Variables.objConstParameters',Variables.objConstParameters)
         let randoms=[];
         let { shape, shade, color, number } = Variables.objConstParameters;
 
@@ -109,26 +129,24 @@ const setFunctions = {
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
         let parmObjLength=Object.keys(Variables.objConstParameters).length;
-        let gameOver=false;
-
-        if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
+        let gameOver=false
+        
+        if(this.flag_pullXCards||usedCards.length===(81/(Math.pow(3,parmObjLength)))){
+            this.flag_pullXCards=true;
             currCards=currCards.filter(card=>!selectedCards.includes(card));
-            if(!this.IsArrayHasSet(currCards))gameOver=true;    
+            if(!this.IsArrayHasSet(currCards))gameOver=true;             
         }
         else{
             let newCards =this.newCurrentCards(x, currCards, usedCards); 
-        
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
                 currCards[index] = newCards[i];
             });
         }
-
         return{
             currentCards:currCards,
             gameOver:gameOver
         };
-
     },
 
     // translate cardCode into src of pictures 

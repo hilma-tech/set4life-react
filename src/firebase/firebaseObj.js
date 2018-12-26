@@ -13,6 +13,7 @@ const firebaseObj={
  
     settingValueInDataBase(path,value){
         this._db.ref(path).set(value)
+        console.log('setting value to firebase',value,path);
     },
 
     pushToFirebase(path,value){

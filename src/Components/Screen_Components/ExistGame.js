@@ -10,7 +10,7 @@ export default class ExistGame extends Component{
         this.state={
             gameCode:'',
             invalidGameCode:false,
-            continueToGame:false,
+            loadingParticipants:false,
             participants:[],
             loadLocatePartic:false
         }
@@ -18,10 +18,11 @@ export default class ExistGame extends Component{
 
     findingGameCode=(db_gameObj)=>{
         if(db_gameObj===null)
-            this.setState({invalidGameCode:true,continueToGame:false});  
+            this.setState({invalidGameCode:true,loadingParticipants:false});  
         else{
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/selectedCards`);
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/currentPlayerID`);
+            firebaseObj.updatingValueInDataBase(`Games/${this.state.gameCode}/Game_Participants`,{[Variables.userId]:{[Variables.playerName]:true}})
 
             Variables.setGameCode(this.state.gameCode);
             Variables.setGameObj({cardsOnBoard:db_gameObj.cardsOnBoard,usedCards:db_gameObj.usedCards});
@@ -32,7 +33,7 @@ export default class ExistGame extends Component{
 
     onClickExistGameCodeButton=()=>{
         if(this.state.gameCode!==''){
-            this.setState({continueToGame:true})
+            this.setState({loadingParticipants:true})
             firebaseObj.readingDataOnFirebaseCB(this.findingGameCode, `Games/${this.state.gameCode}`);
         }
     }
@@ -64,7 +65,7 @@ export default class ExistGame extends Component{
                 value={this.state.gameCode}
                 onChange={this.inputChange}/>
 
-                {this.state.continueToGame?
+                {this.state.loadingParticipants?
                 <img src={LoadingImg} alt='loading' />:
                 <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button>}  
 
