@@ -43,11 +43,11 @@ export default class Board extends Component{
     componentWillMount(){
         time0=performance.now();
         Variables.set_date(setFunctions.timeAndDate('date'));
-        firebaseObj.readingDataOnFirebasePromise(`Players/${Variables.userId}/games`).then(snap=>{
-            let leng=Object.keys(snap.val()).length;
-            firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
-                {[leng+1]:{startGameTime:Variables.startGameTime,gameCode:Variables.gameCode}});
-        })
+        // firebaseObj.readingDataOnFirebasePromise(`Players/${Variables.userId}/games`).then(snap=>{
+        //     let leng=Object.keys(snap.val()).length;
+        //     firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
+        //         {[leng+1]:{startGameTime:Variables.startGameTime,gameCode:Variables.gameCode}});
+        // })
         firebaseObj.listenerOnFirebase(this.reciveCurrentUserIdFromFirebase,`Games/${Variables.gameCode}/currentPlayerID`);
         firebaseObj.listenerOnFirebase(this.updateCurrentCards,`Games/${Variables.gameCode}/cardsOnBoard`);
         firebaseObj.listenerOnFirebase(this.updateSelectedCards,`Games/${Variables.gameCode}/selectedCards`);
@@ -159,7 +159,7 @@ export default class Board extends Component{
                 <label  >{Variables.gameCode} הקוד של המשחק</label>
                 <button onClick={()=>setFunctions.exitGame(this.props.moveThroughPages)} >יציאה מהמשחק</button>
                 {!this.state.gameOver&&
-                <div id='cards' >
+                <div id='cards'>
                     {this.state.currentCards.map((cardCode, i)=>
                         <Card 
                         className='card'
