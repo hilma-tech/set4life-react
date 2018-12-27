@@ -15,9 +15,8 @@ const setFunctions = {
                 let min=d.getMinutes();
                 return `${hour<10?'0':''}${hour}:${min<10?'0':''}${min}`;
             }
-            case 'date':{
+            case 'date':
                 return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
-            }
         }
     },
 
@@ -35,9 +34,6 @@ const setFunctions = {
     },
 
     isParameterValidSet(selectedCards,index) {
-        if(selectedCards.includes("00")) 
-            return {bool:false, isSimilar:false};
-
         let similar = selectedCards[0].charAt(index) === selectedCards[1].charAt(index) &&
             selectedCards[0].charAt(index) === selectedCards[2].charAt(index);
         let difference = selectedCards[0].charAt(index) !== selectedCards[1].charAt(index) &&
@@ -63,8 +59,12 @@ const setFunctions = {
 
         for (let index = 0; index < 4; index++) {
             tempResult = this.isParameterValidSet(selectedCards,index);
-            result.information[info[index]] = tempResult.isSimilar ? selectedCards[0].charAt(index) : -1;
-            flag = flag && tempResult.bool;
+            if(Variables.objConstParameters&&Variables.objConstParameters.hasOwnProperty(info[index]))
+                result.information[info[index]]=parseInt(Variables.objConstParameters[info[index]],10)+3;
+            else{
+                result.information[info[index]] =tempResult.bool?(tempResult.isSimilar ? selectedCards[0].charAt(index): -1):-2;
+                flag&&(flag = flag && tempResult.bool);  
+            }
         }
         result.bool = flag;
         return  result; 

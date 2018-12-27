@@ -1,3 +1,4 @@
+import setFunctions from '../SetGame/setFunctions';
 
 const Variables={
     objConstParameters: {},
@@ -8,15 +9,25 @@ const Variables={
     _timer:10,
     startGameTime:'',
     _date:'',
+    day_numberedGame:null,
 
+    checkDay_numberedGame(){
+        if(this._date!==setFunctions.timeAndDate("date")){
+            this.set_date(setFunctions.timeAndDate('date'));
+            this.setDay_numberedGame(0);
+        }
+    },
+    
+    setDay_numberedGame(num){
+    this.day_numberedGame=
+        (this._date===setFunctions.timeAndDate("date"))?num:0;
+    },
     set_date(date){
         this._date=date;
     },
-    
     setstartGameTime(time){
         this.startGameTime=time;
     },
-
     setObjConstParameters(objConstParameters) {
         this.objConstParameters = objConstParameters;
     },
