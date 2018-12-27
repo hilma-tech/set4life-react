@@ -4,7 +4,7 @@ import firebaseObj from '../../firebase/firebaseObj';
 import setFunctions from '../../SetGame/setFunctions.js';
 import Variables from '../../SetGame/Variables';
 
-let timeStartGame,time0, timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut;
+let timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut;
 
 export default class Board extends Component{
     constructor(props){
@@ -27,19 +27,6 @@ export default class Board extends Component{
         }
     }
     
-    // componentWillUnmount(){
-    //     let userStateInGame= Window.confirm('אתה בטוח שאתה רוצה לצאת?');
-    //     if(userStateInGame){
-    //         firebaseObj.removeDataFromDB(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`)
-    //         this.props.moveThroughPages('sel');
-    //     }
-    //     else
-    //         this.setState({shouldUpdate:false});
-    // }
-
-    // shouldComponentUpdate(){
-    //     return this.state.shouldUpdate;
-    // }
     componentWillMount(){
         Variables.set_date(setFunctions.timeAndDate('date'));
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
@@ -57,6 +44,7 @@ export default class Board extends Component{
 
         this.setState({currentCards:Variables.gameObj.cardsOnBoard, usedCards:Variables.gameObj.usedCards});
         timeStartGame=performance.now();
+        timeNewCards=timeStartGame;
     }
 
      //callback functions for listeners on firebase
@@ -107,9 +95,10 @@ export default class Board extends Component{
 
             Variables.checkDay_numberedGame();
             firebaseObj.pushToFirebase(`Players/${Variables.userId}/${isSet.bool?'CorrectSets':'WrongSets'}/${setFunctions.timeAndDate('date')}:${Variables.day_numberedGame}`,
-            {...isSet.information,
-            timeTillChoosingSet: ((timeChooseSet-timeClickOnChooseSet)/1000).toFixed(2),
-            timeTillClickOnButton: ((timeClickOnChooseSet-time0)/1000).toFixed(2)});
+                {...isSet.information,
+                DisplaysNewCards_Till_ClickSet:((timeClickOnChooseSet-timeNewCards)/1000).toFixed(2),
+                ClickSet_Till_ChooseSet: ((timeChooseSet-timeClickOnChooseSet)/1000).toFixed(2),
+                StartGame_Till_ClickSet: ((timeClickOnChooseSet-timeStartGame)/1000).toFixed(2)});
         }
 
         this.setState({selectedCards:selectedCards});
@@ -152,7 +141,7 @@ export default class Board extends Component{
                         {cardsOnBoard:objPullCards.currentCards
                         ,usedCards:[...this.state.usedCards,...this.state.selectedCards]});
                 }
-                time0=performance.now();
+                timeNewCards=performance.now();
             }
             this.setState({isSet:undefined})
             firebaseObj.removeDataFromDB(`Games/${Variables.gameCode}/selectedCards`);
