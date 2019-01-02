@@ -7,8 +7,6 @@ import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
 
-
-
 class App extends Component {
   constructor(props){
     super(props);
@@ -48,7 +46,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(Variables.playerName,this.state.pageSeen)
     return (
       <div id="App" className='page'>
         {this.state.pageSeen==="load"&&<div className='page'><img src={LoadingImg} alt='loading'/></div>}

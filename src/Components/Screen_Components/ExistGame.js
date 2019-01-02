@@ -24,9 +24,10 @@ export default class ExistGame extends Component{
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/currentPlayerID`);
             firebaseObj.updatingValueInDataBase(`Games/${this.state.gameCode}/Game_Participants`,{[Variables.userId]:{[Variables.playerName]:true}})
 
+            Variables.setstartGameTime(db_gameObj.creationTime)
             Variables.setGameCode(this.state.gameCode);
             Variables.setGameObj({cardsOnBoard:db_gameObj.cardsOnBoard,usedCards:db_gameObj.usedCards});
-            Variables.setObjConstParameters(db_gameObj.constParameters)
+            Variables.setObjConstParameters(db_gameObj.constParameters?db_gameObj.constParameters:{})
             this.props.moveThroughPages("boa");
         }  
     }
@@ -70,7 +71,6 @@ export default class ExistGame extends Component{
                             partic.map((val,i)=>{
                                 participantsList+=((i===partic.length-1&&partic.length!==1)?' ו':(partic.length<=2)?"":" ,")+val
                             });
-                            // console.log('participantsList',participantsList)
                             participantsList+=`${partic.length===1?`משתתף`:`משתתפים`} במשחק כרגע `
                             return participantsList;
                             })()

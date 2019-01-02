@@ -9,7 +9,6 @@ function importAll(r) {
 }
 const cardImages = importAll(require.context('../../data/cards', false, /\.(png|jpe?g|svg)$/));
 
-
 export default class Card extends Component {
     clickOnCard=(e)=>{
        if(this.props.stageOfTheGame===1){
