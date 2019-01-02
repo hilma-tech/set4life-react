@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import setFunctions from '../../SetGame/setFunctions';
-import ParametersInfo from '../../data/ParametersInfo.json';
+import GameData from '../../data/GameData.json';
 import firebaseObj from '../../firebase/firebaseObj';
 import Variables from '../../SetGame/Variables.js'
 
@@ -10,31 +10,35 @@ export default class NewGame extends Component{
         this.state={
             checkboxsInfo:{colorBool:true,shapeBool:true,shadeBool:true,numberBool:true},
             dropDownInfo:{},
-            messageErr:false
+            messageErr:false,
+            _timer:10
         }
-        firebaseObj.createDataBase();
     }
 
-    settingNewGame=(constParameters)=>{ 
+    settingNewGame=async()=>{ 
         let newGameCode;
-        let newCurrentCards;
-        // do{
-        //     newGameCode= setFunctions.newRandomGameCode(6);
-        // }while(firebaseObj.readingDataOnFireBase(firebaseObj.checkIfValueExistInDB,`Games/${newGameCode}`));
-         //WHILE LOOP NOT WORKING AT ALL!
-
-         newGameCode= setFunctions.newRandomGameCode(6);
-
-        (Object.keys(constParameters).length===2)?
-            newCurrentCards=setFunctions.newCurrentCards(9,[],[]) :
-            newCurrentCards=setFunctions.newCurrentCards(12,[],[])
+        do{
+            newGameCode= setFunctions.newRandomGameCode(3);
+        }while(await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`)!==null)
         
-        let gameObj={cardsOnBoard:newCurrentCards,usedCards:newCurrentCards}
-
-        firebaseObj.setingValueInDataBase(`Games/${newGameCode}`,gameObj);
-        //put push to fire base most early as you can do it, to prevent collision
         Variables.setGameCode(newGameCode);
-        Variables.setGameObj(gameObj)
+        Variables.setObjConstParameters(this.state.dropDownInfo);
+        Variables.set_timer(this.state._timer?this.state._timer:10)
+
+        let newCurrentCards=setFunctions.newCurrentCards(Object.keys(this.state.dropDownInfo).length===2?9:12,[],[]);
+        
+        let startGameTime=setFunctions.timeAndDate('time');
+        Variables.setstartGameTime(startGameTime);
+        let gameObj={creationTime:startGameTime,
+            cardsOnBoard:newCurrentCards,
+            usedCards:newCurrentCards, 
+            constParameters:this.state.dropDownInfo,
+            Game_Participants:{[Variables.userId]:{[Variables.playerName]:true}}};
+        
+        Variables.setGameObj(gameObj);
+        firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`,gameObj);
+
+        this.props.moveThroughPages("boa");          
     }
 
     checkboxsChange=(event)=>{
@@ -55,9 +59,8 @@ export default class NewGame extends Component{
     }
 
     settingSpecificParameterForm=(categoryStr)=>{
-
         if(!this.state.checkboxsInfo[categoryStr+'Bool']){
-            let arrOptionsHe=ParametersInfo.cardsParameters[categoryStr][categoryStr+'He'];
+            let arrOptionsHe=GameData.cardsParameters[categoryStr][categoryStr+'He'];
 
             return (
                 <select name={categoryStr} onChange={this.settingConstParametersObj}>
@@ -76,39 +79,38 @@ export default class NewGame extends Component{
         dropDownInfo[event.target.name]=event.target.options[event.target.selectedIndex].getAttribute('code')
         this.setState({dropDownInfo:dropDownInfo});
     }
-   
-    onClickSendingConstParameters=()=>{
-        Variables.setObjConstParameters(this.state.dropDownInfo);
-        this.settingNewGame(this.state.dropDownInfo);
-        this.props.moveThroughPages("boa");
-    }
 
     setDisableNewGameButton=()=>{
-        return !(Object.keys(this.state.dropDownInfo).length+setFunctions.checkOfValidChecks(this.state.checkboxsInfo)===4);
+        return !(Object.keys(this.state.dropDownInfo).length+
+            setFunctions.checkOfValidChecks(this.state.checkboxsInfo)===4);
     }
 
     render(){
-        console.log(this.state.dropDownInfo)
         return(
-            
             <div id='new-game'>
-                {Object.keys(ParametersInfo.cardsParameters).map(par=>{
+                {Object.keys(GameData.cardsParameters).map(par=>{
                     return(<div>
                             <input 
                             type="checkbox" 
                             name={par}  
                             checked={this.state.checkboxsInfo[par+'Bool']} 
                             onChange={this.checkboxsChange} key={par}/>
-                            <span>{ParametersInfo.cardsParameters[par].nameHe}</span>
+                            <span>{GameData.cardsParameters[par].nameHe}</span>
                             
                             {this.settingSpecificParameterForm(par)}
                         </div>);
                     })
                 }
 
+            <input 
+            type="number" 
+            id="timer" 
+            value={this.state._timer}
+            onChange={(event)=>this.setState({_timer:event.target.value})}/>
+
             <button 
             disabled={this.setDisableNewGameButton()}  
-            onClick={this.onClickSendingConstParameters} 
+            onClick={this.settingNewGame} 
             >התחל משחק חדש
             </button>
 

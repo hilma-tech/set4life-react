@@ -1,9 +1,29 @@
 
-import ParametersInfo from '../data/ParametersInfo.json';
+import GameData from '../data/GameData.json';
 import Variables from './Variables.js';
+import firebaseObj from '../firebase/firebaseObj';
 
 const setFunctions = {
 
+    flag_pullXCards:false,
+
+    timeAndDate(purpose){
+        let d=new Date();
+        switch(purpose){
+            case 'time':{
+                let hour=d.getHours();
+                let min=d.getMinutes();
+                return `${hour<10?'0':''}${hour}:${min<10?'0':''}${min}`;
+            }
+            case 'date':
+                return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
+        }
+    },
+
+    exitGame(cb){
+        firebaseObj.removeDataFromDB(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`);
+        if(typeof cb ==='function') cb('sel');
+    },
 
     //return a number with help to know if valid number of checkboxs is checked
     checkOfValidChecks(obj) {
@@ -14,9 +34,6 @@ const setFunctions = {
     },
 
     isParameterValidSet(selectedCards,index) {
-        if(selectedCards.includes("00")) 
-            return {bool:false, isSimilar:false};
-
         let similar = selectedCards[0].charAt(index) === selectedCards[1].charAt(index) &&
             selectedCards[0].charAt(index) === selectedCards[2].charAt(index);
         let difference = selectedCards[0].charAt(index) !== selectedCards[1].charAt(index) &&
@@ -34,7 +51,7 @@ const setFunctions = {
     isSetBoolFunction(selectedCards) {
         let flag = true;
         let tempResult; 
-        let info =Object.keys(ParametersInfo.cardsParameters);
+        let info =Object.keys(GameData.cardsParameters);
         let result = {information:{}};
 
         if(selectedCards.includes(undefined))
@@ -42,8 +59,12 @@ const setFunctions = {
 
         for (let index = 0; index < 4; index++) {
             tempResult = this.isParameterValidSet(selectedCards,index);
-            result.information[info[index]] = tempResult.isSimilar ? selectedCards[0].charAt(index) : -1;
-            flag = flag && tempResult.bool;
+            if(Variables.objConstParameters&&Variables.objConstParameters.hasOwnProperty(info[index]))
+                result.information[info[index]]=parseInt(Variables.objConstParameters[info[index]],10)+3;
+            else{
+                result.information[info[index]] =tempResult.bool?(tempResult.isSimilar ? selectedCards[0].charAt(index): -1):-2;
+                flag&&(flag = flag && tempResult.bool);  
+            }
         }
         result.bool = flag;
         return  result; 
@@ -107,39 +128,30 @@ const setFunctions = {
     //pull x cardCodes out of an arry and enter to the array new random x cardCodes Creating a situation in which there is a set
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
-        let parsNum=Object.keys(Variables.objConstParameters).length;
-        let newCards,gameOver=false , fullUsedCards=false;
-
-        if(usedCards.length===(81/(Math.pow(3,parsNum)))){
-            currCards=currCards.filter(card=>!selectedCards.includes(card))
-
-            this.IsArrayHasSet(currCards)?fullUsedCards=true:gameOver=true;    
-        }
-        else
-        {
-            newCards =this.newCurrentCards(x, currCards, usedCards); 
+        let parmObjLength=Object.keys(Variables.objConstParameters).length;
+        let gameOver=false
         
+        if(this.flag_pullXCards||usedCards.length===(81/(Math.pow(3,parmObjLength)))){
+            this.flag_pullXCards=true;
+            currCards=currCards.filter(card=>!selectedCards.includes(card));
+            if(!this.IsArrayHasSet(currCards))gameOver=true;             
+        }
+        else{
+            let newCards =this.newCurrentCards(x, currCards, usedCards); 
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
-                currCards[index] = newCards[i]
+                currCards[index] = newCards[i];
             });
         }
-
         return{
             currentCards:currCards,
-            gameOver:gameOver,
-            fullUsedCards:fullUsedCards
-        }
-
+            gameOver:gameOver
+        };
     },
 
     // translate cardCode into src of pictures 
     //(return src)
     cardNameStringFromNumbersCode(str) {
-        if(str==="00"){
-            console.log('hereeeee')
-            return (`empty_picture.jpg`); 
-        }
         let shape = this.getShapeFromCode(str[0], "en");
         let shade = this.getShadeFromCode(str[1], "en");
         let color = this.getColorFromCode(str[2], "en");
@@ -150,20 +162,20 @@ const setFunctions = {
 
     //convert shapeCode to string 
     getShapeFromCode(code, lang) {
-        return lang ==="en"?ParametersInfo.cardsParameters.shape.shapeEn[code]:
-            ParametersInfo.cardsParameters.shape.shapeHe[code];
+        return lang ==="en"?GameData.cardsParameters.shape.shapeEn[code]:
+            GameData.cardsParameters.shape.shapeHe[code];
     },
 
     //convert shadeCode to string 
     getShadeFromCode(code, lang) {
-        return lang ==="en"?ParametersInfo.cardsParameters.shade.shadeEn[code]:
-        ParametersInfo.cardsParameters.shade.shadeHe[code];
+        return lang ==="en"?GameData.cardsParameters.shade.shadeEn[code]:
+        GameData.cardsParameters.shade.shadeHe[code];
     },
 
     //convert colorCode to string 
     getColorFromCode(code, lang) {
-        return (lang ==="en")?ParametersInfo.cardsParameters.color.colorEn[code]:
-            ParametersInfo.cardsParameters.color.colorHe[code];;
+        return (lang ==="en")?GameData.cardsParameters.color.colorEn[code]:
+            GameData.cardsParameters.color.colorHe[code];;
     },
 };
 

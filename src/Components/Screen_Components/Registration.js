@@ -1,31 +1,54 @@
 import React, {Component} from "react";
 import firebaseObj from "../../firebase/firebaseObj";
-import setFunctions from '../../SetGame/setFunctions';
-import Variables from '../../SetGame/Variables';
+import GameData from "../../data/GameData.json";
+import Variables from "../../SetGame/Variables";
+
 
 export default class Registration extends Component{
     constructor(props){
         super(props);
         this.state={
-            fullName:'',
-            phoneNum:'',
-            password:null,
-            email:''
+            personalInfo:{
+                fullName:'',
+                phoneNum:'',
+                password:'',
+                email:''
+            },
+            registStateInfo:''
         }
-        firebaseObj.createDataBase();
     }
 
     inputChange=(event)=>{
-        this.setState({[event.target.name]:event.target.value})
+        let personalInfo=this.state.personalInfo;
+        personalInfo[event.target.name]=event.target.value;
+        this.setState({personalInfo:personalInfo,registStateInfo:''})
     }
 
-    onClickRegisterButton=()=>{
-        ////////need to write check if the code exist in db
-        let playerCode=setFunctions.newRandomGameCode(6);
-        Variables.setUserId(playerCode);
-
-        firebaseObj.setingValueInDataBase(`players/${playerCode}`,this.state)
-        this.props.moveThroughPages("sel")
+    onClickRegisterButton=async()=>{
+        let emptyFilesArr=[];
+        let personalInfo=this.state.personalInfo;
+        
+        Object.values(personalInfo).map((val,i)=>
+            (!val)&&emptyFilesArr.push(GameData.registration[i]));
+        
+        if(!emptyFilesArr.length){
+            firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email,personalInfo.password)
+            .then(fbUser=>{
+                this.setState({registStateInfo:'נרשמת בהצלחה'});
+                firebaseObj.settingValueInDataBase(`PlayersInfo/${fbUser.user.uid}`,
+                    {Name:personalInfo.fullName,phoneNum:personalInfo.phoneNum});
+                },
+                error=>this.setState({registStateInfo:error.message}));
+        }
+        else{
+            let registStateInfo='שכחת למלא את השדות';
+            emptyFilesArr.map((val,i)=>{
+                registStateInfo+=(!i?': ':
+                    (i===emptyFilesArr.length-1?' ו':" ,"))+val;
+            });
+            this.setState({registStateInfo:registStateInfo});
+        }
+           
     }
 
     render(){
@@ -57,6 +80,7 @@ export default class Registration extends Component{
                 onChange={this.inputChange}></input>
 
                 <button onClick={this.onClickRegisterButton} >הבא</button>
+                {this.state.registStateInfo!==''&&<label>{this.state.registStateInfo}</label>}
             </div>
         );
     }

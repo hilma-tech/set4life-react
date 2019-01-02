@@ -1,54 +1,65 @@
 import firebase from './Def';
 
 const firebaseObj={
-    fb_db:null,
+    _db:null,
+    _auth:null,
 
     createDataBase(){
-        this.fb_db=firebase.database();
+        this._db=firebase.database();
+    },
+    createAuth(){
+        this._auth=firebase.auth();
+    },
+ 
+    settingValueInDataBase(path,value){
+        this._db.ref(path).set(value)
     },
 
-    showWhatInDataBase(){
-        console.log("show: ", this.fb_db.ref());
+    pushToFirebase(path,value){
+        this._db.ref(path).push(value);
     },
-
-    setingValueInDataBase(path,value){
-        this.fb_db.ref(path).set(value);
-    },
+    
     updatingValueInDataBase(path,value){
-        this.fb_db.ref(path).update(value);
+        this._db.ref(path).update(value);
     },
-
-    returnRef(path){
-        return this.fb_db.ref(path);
+    removeDataFromDB(path){
+        let ref=this._db.ref(path);
+        ref.remove();
     },
     
     listenerOnFirebase(cb,path){
-        let ref=this.returnRef(path);
+        let ref=this._db.ref(path);
         ref.on('value',snap=>{
             if(typeof cb ==='function') cb(snap.val());
         })
     },
 
-    pushToFirebase(path,value){
-        this.fb_db.ref(path).push(value);
-    },
-
-    readingDataOnFireBase(cb,path){
-        let ref=this.returnRef(path);
+    readingDataOnFirebaseCB(cb,path){
+        let ref=this._db.ref(path);
         ref.once('value',snap=>{
             if(typeof cb ==='function') cb(snap.val());
         })
     },
 
-    checkIfValueExistInDB(gameCodeObj){
-        if(gameCodeObj)return true;
-        return false;
+    authState(cb){
+        firebaseObj._auth.onAuthStateChanged(fbUser=>{
+            if(typeof cb ==='function') cb(fbUser);
+          });
     },
 
-    removeDataFromDB(path){
-        let ref=this.returnRef(path);
-        ref.remove();
-    }
+    async readingDataOnFirebaseAsync(path){
+        let data;
+        let ref=this._db.ref(path);
+        await ref.once('value',async (snap)=>{
+            data=snap.val();
+        })
+        return await data;
+    },
+
+    readingDataOnFirebasePromise(path){
+        let ref=this._db.ref(path);
+        ref.once('value',snap=>snap.val());
+    }  
 }
 
 export default firebaseObj;

@@ -10,38 +10,73 @@ export default class ExistGame extends Component{
         this.state={
             gameCode:'',
             invalidGameCode:false,
-            loadingImg:false
+            loadingParticipants:false,
+            participants:[],
+            loadLocatePartic:false
         }
-        firebaseObj.createDataBase();
     }
 
-    findingGameCode=(gameObj)=>{
-        if(gameObj===null)
-            this.setState({invalidGameCode:true,loadingImg:false});  
+    findingGameCode=(db_gameObj)=>{
+        if(db_gameObj===null)
+            this.setState({invalidGameCode:true,loadingParticipants:false});  
         else{
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/selectedCards`);
             firebaseObj.removeDataFromDB(`Games/${this.state.gameCode}/currentPlayerID`);
+            firebaseObj.updatingValueInDataBase(`Games/${this.state.gameCode}/Game_Participants`,{[Variables.userId]:{[Variables.playerName]:true}})
 
             Variables.setGameCode(this.state.gameCode);
-            Variables.setGameObj(gameObj);
+            Variables.setGameObj({cardsOnBoard:db_gameObj.cardsOnBoard,usedCards:db_gameObj.usedCards});
+            Variables.setObjConstParameters(db_gameObj.constParameters)
             this.props.moveThroughPages("boa");
         }  
     }
 
     onClickExistGameCodeButton=()=>{
         if(this.state.gameCode!==''){
-            this.setState({loadingImg:true})
-            firebaseObj.readingDataOnFireBase(this.findingGameCode, `Games/${this.state.gameCode}`);
+            this.setState({loadingParticipants:true})
+            firebaseObj.readingDataOnFirebaseCB(this.findingGameCode, `Games/${this.state.gameCode}`);
         }
     }
 
     inputChange=(event)=>{
-        this.setState({gameCode:event.target.value.toString(),invalidGameCode:false});
+        let str=event.target.value;
+
+        if(str.length<=3){
+            this.setState({gameCode:str.toString(),invalidGameCode:false,participants:[]});
+            
+            if(str.length===3){
+                this.setState({loadLocatePartic:true});
+                firebaseObj.readingDataOnFirebaseCB(
+                    (partic)=>{
+                        let arrPartic=[];
+                        partic&&Object.values(partic).map(value=>arrPartic.push(value.name));
+
+                    this.setState({participants:arrPartic,loadLocatePartic:false})
+                }
+                ,`Games/${str}/Game_Participants`);
+            }
+        }
     }
 
     render(){
         return(
             <div >
+                {this.state.loadLocatePartic?
+                    <img src={LoadingImg} alt='loading'/>:
+                    <p>{
+                        (()=>{
+                            let participantsList='';
+                            let partic=this.state.participants;
+                            partic.map((val,i)=>{
+                                participantsList+=((i===partic.length-1&&partic.length!==1)?' ו':(partic.length<=2)?"":" ,")+val
+                            });
+                            // console.log('participantsList',participantsList)
+                            participantsList+=`${partic.length===1?`משתתף`:`משתתפים`} במשחק כרגע `
+                            return participantsList;
+                            })()
+                        }
+                    </p>
+                }
                 <input
                 id="input"
                 name='gameCode' 
@@ -50,7 +85,7 @@ export default class ExistGame extends Component{
                 value={this.state.gameCode}
                 onChange={this.inputChange}/>
 
-                {this.state.loadingImg?
+                {this.state.loadingParticipants?
                 <img src={LoadingImg} alt='loading' />:
                 <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button>}  
 
