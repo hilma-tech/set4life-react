@@ -39,14 +39,22 @@ export default class ExistGame extends Component{
     }
 
     inputChange=(event)=>{
-        this.setState({gameCode:event.target.value.toString(),invalidGameCode:false,participants:[]});
-        
-        if(event.target.value.length===3){
-            this.setState({loadLocatePartic:true});
-            firebaseObj.readingDataOnFirebaseCB(
-                (partic)=>
-                this.setState({participants:partic?Object.keys(partic):[],loadLocatePartic:false})
-            ,`Game_Participants/${event.target.value}`);
+        let str=event.target.value;
+
+        if(str.length<=3){
+            this.setState({gameCode:str.toString(),invalidGameCode:false,participants:[]});
+            
+            if(str.length===3){
+                this.setState({loadLocatePartic:true});
+                firebaseObj.readingDataOnFirebaseCB(
+                    (partic)=>{
+                        let arrPartic=[];
+                        partic&&Object.values(partic).map(value=>arrPartic.push(value.name));
+
+                    this.setState({participants:arrPartic,loadLocatePartic:false})
+                }
+                ,`Games/${str}/Game_Participants`);
+            }
         }
     }
 
@@ -55,7 +63,19 @@ export default class ExistGame extends Component{
             <div >
                 {this.state.loadLocatePartic?
                     <img src={LoadingImg} alt='loading'/>:
-                    <p>{this.state.participants}</p>
+                    <p>{
+                        (()=>{
+                            let participantsList='';
+                            let partic=this.state.participants;
+                            partic.map((val,i)=>{
+                                participantsList+=((i===partic.length-1&&partic.length!==1)?' ו':(partic.length<=2)?"":" ,")+val
+                            });
+                            // console.log('participantsList',participantsList)
+                            participantsList+=`${partic.length===1?`משתתף`:`משתתפים`} במשחק כרגע `
+                            return participantsList;
+                            })()
+                        }
+                    </p>
                 }
                 <input
                 id="input"
