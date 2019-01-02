@@ -30,6 +30,7 @@ const Variables={
     },
     setObjConstParameters(objConstParameters) {
         this.objConstParameters = objConstParameters;
+        console.log('objConstParameters var',objConstParameters)
     },
     setGameObj(gameObj) {
         this.gameObj = gameObj;
@@ -43,12 +44,14 @@ const Variables={
     },
     setPlayerName(name){
         this.playerName=name;
-        console.log('set palyer name in var')
+        console.log('set player name in var')
     },
     set_timer(time){
         this._timer=time;
         console.log('timer',time)
     }
+
+    
 }
    
 

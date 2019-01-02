@@ -1,8 +1,6 @@
 import React, {Component} from "react";
 import firebaseObj from "../../firebase/firebaseObj";
 import GameData from "../../data/GameData.json";
-import Variables from "../../SetGame/Variables";
-
 
 export default class Registration extends Component{
     constructor(props){
@@ -62,6 +60,10 @@ export default class Registration extends Component{
                 <label>מספר טלפון</label>
                 <input name='phoneNum' type="text" placeholder="אנא הכנס את מספר הטלפון שלך"
                 onChange={this.inputChange}></input>
+
+                <label>אימייל</label>
+                <input name="email" type='text' 
+                onChange={this.inputChange}></input>
                 
                 <label>סיסמא</label>
                 <input name='password' type="password"
@@ -69,14 +71,6 @@ export default class Registration extends Component{
                 
                 <label>אימות סיסמא</label>
                 <input name='passwordValidation' type="password"
-                onChange={this.inputChange}></input>
-
-                <label>קוד</label>
-                <input name='code' type='text' 
-                onChange={this.inputChange}></input>
-
-                <label>אימייל</label>
-                <input name="email" type='text' 
                 onChange={this.inputChange}></input>
 
                 <button onClick={this.onClickRegisterButton} >הבא</button>
