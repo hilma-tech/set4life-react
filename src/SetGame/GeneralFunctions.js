@@ -1,9 +1,9 @@
 const GereralFunctions={
 
-    string_From_List(listArr,before,after){
+    string_From_List(listArr,before,after=''){
         let str=before;
         listArr.map((val,i)=>
-            str+=((i===listArr.length-1&&listArr.length!==1)?' ו':(listArr.length<=2)?"":" ,")+val);
+            str+=((i===listArr.length-1&&listArr.length!==1)?' ו':(listArr.length<=2||i===0)?"":" ,")+val);
         return str+after;     
     }
 }

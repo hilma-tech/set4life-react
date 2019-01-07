@@ -12,7 +12,6 @@ componentDidCatch(error, info) {
 }
 
 render() {
-    console.log('haerror',this.state.hasError)
     if (this.state.hasError) {
         return <h1>Oops!!! Something went wrong</h1>;
     } else {

@@ -68,7 +68,7 @@ const firebaseObj={
             let leng=snap.val()?Object.keys(snap.val()).length:0;
             Variables.setDay_numberedGame(leng+1);
             firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
-                {[leng+1]:{startGameTime:Variables.startGameTime,gameCode:Variables.gameCode}});
+                {[leng+1]:{startGameTime:Variables.creationGameTime,gameCode:Variables.gameCode}});
         });
     },
 

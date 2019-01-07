@@ -24,12 +24,10 @@ export default class NewGame extends Component{
         Variables.setGameCode(newGameCode);
         Variables.setObjConstParameters(this.state.dropDownInfo);
         Variables.set_timer(this.state._timer)
-        console.log("im here",typeof Variables.constParameters, typeof this.state.dropDownInfo)
         let newCurrentCards=setFunctions.newCurrentCards(Object.keys(this.state.dropDownInfo).length===2?9:12,[],[]);
-        console.log('newCurrentCards',newCurrentCards)
-        console.log('Object.keys(this.state.dropDownInfo).length===2',Object.keys(this.state.dropDownInfo).length===2)
+        
         let startGameTime=setFunctions.timeAndDate('time');
-        Variables.setstartGameTime(startGameTime);
+        Variables.setCreationGameTime(startGameTime);
         let gameObj={creationTime:startGameTime,
             currentCards:newCurrentCards,
             usedCards:newCurrentCards, 

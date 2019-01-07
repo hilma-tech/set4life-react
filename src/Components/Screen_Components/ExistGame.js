@@ -12,7 +12,7 @@ export default class ExistGame extends Component{
             gameCode:'',
             invalidGameCode:false,
             participants:[],
-            loadLocatePartic:false,
+            loadLocatePartic:null,
             gameObj:{}
         }
     }
@@ -23,7 +23,7 @@ export default class ExistGame extends Component{
             firebaseObj.updatingValueInDataBase(`Games/${this.state.gameCode}/Game_Participants`,
                 {[Variables.userId]:{Name:Variables.playerName,isConnected:true}});
 
-            Variables.setstartGameTime(gameObj.creationTime)
+            Variables.setCreationGameTime(gameObj.creationTime)
             Variables.setGameCode(this.state.gameCode);
             Variables.setGameObj({currentCards:gameObj.currentCards,usedCards:gameObj.usedCards});
             Variables.setObjConstParameters(gameObj.constParameters?gameObj.constParameters:{})
@@ -37,7 +37,7 @@ export default class ExistGame extends Component{
         let inputValue=event.target.value;
 
         if(inputValue.length<=3){
-            this.setState({gameCode:inputValue,invalidGameCode:false,participants:[]});
+            this.setState({gameCode:inputValue,invalidGameCode:false,participants:[],loadLocatePartic:null});
             
             if(inputValue.length===3){
                 this.setState({loadLocatePartic:true});
@@ -59,7 +59,8 @@ export default class ExistGame extends Component{
             <div >
                 {this.state.loadLocatePartic?
                     <img src={LoadingImg} alt='loading'/>:
-                    <ParticipantsList participants={this.state.participants} />
+                    this.state.loadLocatePartic!==null&&
+                        <ParticipantsList participants={this.state.participants} />
                 }
                 <input
                 id="input"
@@ -81,6 +82,8 @@ export default class ExistGame extends Component{
 
 const ParticipantsList=(props)=>(
     <p>
-        {GeneralFunctions.string_From_List(props.participants,'',` ${props.participants.length===1?`משתתף`:`משתתפים`} במשחק כרגע `)}
+        {props.participants.length?
+        GeneralFunctions.string_From_List(props.participants,'',` ${props.participants.length===1?`משתתף`:`משתתפים`} במשחק כרגע `):
+        'המשחק אינו קיים'}
     </p>
 );

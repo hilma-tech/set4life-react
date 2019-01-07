@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import firebaseObj from "../../firebase/firebaseObj";
 import GameData from "../../data/GameData.json";
+import GeneralFunctions from '../../SetGame/GeneralFunctions';
+
 
 export default class Registration extends Component{
     constructor(props){
@@ -36,17 +38,13 @@ export default class Registration extends Component{
                 firebaseObj.settingValueInDataBase(`PlayersInfo/${fbUser.user.uid}`,
                     {Name:personalInfo.fullName,phoneNum:personalInfo.phoneNum});
                 },
-                error=>this.setState({registStateInfo:error.message}));
+                error=>{
+                    this.setState({registStateInfo:GameData.errorRegistration[error.code]})
+                    console.log("error code", error.code)
+                });
         }
-        else{
-            let registStateInfo='שכחת למלא את השדות';
-            emptyFilesArr.map((val,i)=>{
-                registStateInfo+=(!i?': ':
-                    (i===emptyFilesArr.length-1?' ו':" ,"))+val;
-            });
-            this.setState({registStateInfo:registStateInfo});
-        }
-           
+        else
+            this.setState({registStateInfo:GeneralFunctions.string_From_List(emptyFilesArr,'שכחת למלא את השדות:')});       
     }
 
     render(){

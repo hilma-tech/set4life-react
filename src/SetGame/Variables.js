@@ -7,7 +7,7 @@ const Variables={
     userId:'',
     playerName:'',
     _timer:10,
-    startGameTime:'',
+    creationGameTime:'',
     _date:'',
     day_numberedGame:null,
 
@@ -17,7 +17,7 @@ const Variables={
     set_date(date){
         this._date=date;
     },
-    setstartGameTime(time){
+    setCreationGameTime(time){
         this.startGameTime=time;
     },
     setObjConstParameters(objConstParameters) {
