@@ -1,8 +1,13 @@
 import firebase from './Def';
+import Variables from '../SetGame/Variables';
+import setFunctions from '../SetGame/setFunctions';
+import {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut} from '../Components/Sections/Board';
+
 
 const firebaseObj={
     _db:null,
     _auth:null,
+    _timeOut:null,
 
     createDataBase(){
         this._db=firebase.database();
@@ -56,10 +61,24 @@ const firebaseObj={
         return await data;
     },
 
-    readingDataOnFirebasePromise(path){
-        let ref=this._db.ref(path);
-        ref.once('value',snap=>snap.val());
-    }  
+    updatingGameIdInFB(){
+        Variables.set_date(setFunctions.timeAndDate('date'));
+
+        firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
+            let leng=snap.val()?Object.keys(snap.val()).length:0;
+            Variables.setDay_numberedGame(leng+1);
+            firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
+                {[leng+1]:{startGameTime:Variables.creationGameTime,gameCode:Variables.gameCode}});
+        });
+    },
+
+    pushCorrectOrWrongSetToDB(isSet){
+        firebaseObj.pushToFirebase(`Players/${Variables.userId}/${isSet.bool?'CorrectSets':'WrongSets'}/${setFunctions.timeAndDate('date')}:${Variables.day_numberedGame}`,
+        {...isSet.information,
+        DisplaysNewCards_Till_ClickSet:((timeClickOnChooseSet-timeNewCards)/1000).toFixed(2),
+        ClickSet_Till_ChooseSet: ((timeChooseSet-timeClickOnChooseSet)/1000).toFixed(2),
+        StartGame_Till_ClickSet: ((timeClickOnChooseSet-timeStartGame)/1000).toFixed(2)});
+    }
 }
 
 export default firebaseObj;

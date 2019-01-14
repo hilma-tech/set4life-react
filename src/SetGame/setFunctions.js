@@ -20,8 +20,9 @@ const setFunctions = {
         }
     },
 
+
     exitGame(cb){
-        firebaseObj.removeDataFromDB(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`);
+        firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}/isConnected`,false);
         if(typeof cb ==='function') cb('sel');
     },
 
@@ -115,12 +116,12 @@ const setFunctions = {
 
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
-    newCurrentCards(x, arrCardsOnBoard, arrUsedCards) {
+    newCurrentCards(x, arrcurrentCards, arrUsedCards) {
         let currCards = [];
         do {
             for (let i = 0; i < x; i++) 
-                currCards.push(this.NewCardNumber([...currCards, ...arrCardsOnBoard, ...arrUsedCards])); 
-        } while (!this.IsArrayHasSet([...currCards, ...arrCardsOnBoard]));
+                currCards.push(this.NewCardNumber([...currCards, ...arrcurrentCards, ...arrUsedCards])); 
+        } while (!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
 
         return currCards;
     },

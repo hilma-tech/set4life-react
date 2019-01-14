@@ -6,6 +6,7 @@ import Variables from './SetGame/Variables';
 import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
+import ErrorBoundary from './Components/Small_Components/ErrorBoundary';
 
 class App extends Component {
   constructor(props){
@@ -47,12 +48,14 @@ class App extends Component {
 
   render() {
     return (
-      <div id="App" className='page'>
-        {this.state.pageSeen==="load"&&<div className='page'><img src={LoadingImg} alt='loading'/></div>}
-        {this.state.pageSeen==="ent"&&<Entrance moveThroughPages={this.moveThroughPages}/>}
-        {this.state.pageSeen==="sel"&&<SelectGameType moveThroughPages={this.moveThroughPages}/>}
-        {this.state.pageSeen==="boa"&&<Board moveThroughPages={this.moveThroughPages}/>} 
-      </div>
+      <ErrorBoundary>
+        <div id="App" className='page'>
+          {this.state.pageSeen==="load"&&<div className='page'><img src={LoadingImg} alt='loading'/></div>}
+          {this.state.pageSeen==="ent"&&<Entrance moveThroughPages={this.moveThroughPages}/>}
+          {this.state.pageSeen==="sel"&&<SelectGameType moveThroughPages={this.moveThroughPages}/>}
+          {this.state.pageSeen==="boa"&&<Board moveThroughPages={this.moveThroughPages}/>} 
+        </div>
+      </ErrorBoundary>
     );
   }
 }

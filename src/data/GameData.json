@@ -21,6 +21,19 @@
         }
     },
     "registration":["שם מלא","מספר טלפון","אימייל","סיסמא"]
+    ,
+    "errorRegistration":{
+        "auth/invalid-email":"כתובת האימייל שלך אינה חוקית",
+        "auth/email-already-in-use":"האימייל כבר בשימוש",
+        "auth/weak-password":"הסיסמא שלך חלשה מידי"
+
+    },
+
+    "errorLogin":{
+        "auth/user-not-found":"המשתמש אינו רשום",
+        "auth/wrong-password":"הסיסמא אינה נכונה",
+        "auth/invalid-email":"כתובת האימייל שלך אינה חוקית"
+    }
 }
 
 

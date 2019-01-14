@@ -39,7 +39,10 @@ export default class LoginPage extends Component{
                     Variables.setUserId(fbUser.user.uid);
                     this.props.moveThroughPages("sel")
                 });
-            },error=>this.setState({loginStateInfo:error.message,_loadingImg:false}));
+            },error=>{
+                this.setState({loginStateInfo:GameData.errorLogin[error.code],_loadingImg:false})
+                console.log("error login",error.code)
+             });
         else{
             let loginStateInfo='שכחת למלא את השדות';
 
@@ -74,8 +77,11 @@ export default class LoginPage extends Component{
                 </input>
 
                 <button onClick={this.clickLoginButtonEvent} >המשך</button>
-                {this.state._loadingImg&&<img src={LoadingImg} alt='loading'/>}
-                <label>{this.state.loginStateInfo}</label>
+                {this.state._loadingImg?
+                    <img src={LoadingImg} alt='loading'/>:
+                    <label>{this.state.loginStateInfo}</label>
+                }
+                
             </div>
         );
     }
