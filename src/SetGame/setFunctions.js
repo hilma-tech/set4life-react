@@ -1,30 +1,10 @@
 
 import GameData from '../data/GameData.json';
 import Variables from './Variables.js';
-import firebaseObj from '../firebase/firebaseObj';
 
 const setFunctions = {
 
     flag_pullXCards:false,
-
-    timeAndDate(purpose){
-        let d=new Date();
-        switch(purpose){
-            case 'time':{
-                let hour=d.getHours();
-                let min=d.getMinutes();
-                return `${hour<10?'0':''}${hour}:${min<10?'0':''}${min}`;
-            }
-            case 'date':
-                return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
-        }
-    },
-
-
-    exitGame(cb){
-        firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}/isConnected`,false);
-        if(typeof cb ==='function') cb('sel');
-    },
 
     //return a number with help to know if valid number of checkboxs is checked
     checkOfValidChecks(obj) {
@@ -82,7 +62,7 @@ const setFunctions = {
     //(return cardCode)
     NewCardNumber(arrCards) {
         let randoms=[];
-        let { shape, shade, color, number } = Variables.objConstParameters;
+        let { shape, shade, color, number } =Variables.objConstParameters;
 
         [shape,shade,color,number].map(value=>{
             value===undefined?randoms.push(true):randoms.push(false);
@@ -116,7 +96,7 @@ const setFunctions = {
 
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
-    newCurrentCards(x, arrcurrentCards, arrUsedCards) {
+    newCurrentCards(x, arrcurrentCards, arrUsedCards,constParameters=null) {
         let currCards = [];
         do {
             for (let i = 0; i < x; i++) 

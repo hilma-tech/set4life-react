@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 import setFunctions from '../../SetGame/setFunctions';
 import GameData from '../../data/GameData.json';
 import firebaseObj from '../../firebase/firebaseObj';
-import Variables from '../../SetGame/Variables.js'
+import Variables from '../../SetGame/Variables.js';
+import GeneralFunctions from '../../SetGame/GeneralFunctions';
 
 export default class NewGame extends Component{
     constructor(props){
@@ -13,6 +14,7 @@ export default class NewGame extends Component{
             messageErr:false,
             _timer:10
         }
+        window.history.pushState('','','newGame');
     }
 
     settingNewGame=async()=>{ 
@@ -22,22 +24,24 @@ export default class NewGame extends Component{
         }while(await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`)!==null)
         
         Variables.setGameCode(newGameCode);
-        Variables.setObjConstParameters(this.state.dropDownInfo);
         Variables.set_timer(this.state._timer)
-        let newCurrentCards=setFunctions.newCurrentCards(Object.keys(this.state.dropDownInfo).length===2?9:12,[],[]);
-        
-        let startGameTime=setFunctions.timeAndDate('time');
+        Variables.setObjConstParameters(this.state.dropDownInfo);
+
+        let constParamLength=Object.keys(this.state.dropDownInfo).length;
+        let newCurrentCards=setFunctions.newCurrentCards(constParamLength<=2&&(constParamLength===2?9:12),[],[]);
+       
+        let startGameTime=GeneralFunctions.timeAndDate('time');
         Variables.setCreationGameTime(startGameTime);
+        
         let gameObj={creationTime:startGameTime,
             currentCards:newCurrentCards,
-            usedCards:newCurrentCards, 
-            constParameters:this.state.dropDownInfo,
+            usedCards:newCurrentCards,
             Game_Participants:{[Variables.userId]:{Name:Variables.playerName,isConnected:true}}};
         
-        Variables.setGameObj(gameObj);
-        firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`,gameObj);
+        firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`,{...gameObj,constParameters:Variables.objConstParameters});
+        console.log("game obj update in db",{...gameObj,constParameters:Variables.objConstParameters})
 
-        this.props.moveThroughPages("boa");          
+        this.props.moveThroughPages("boa",gameObj);          
     }
 
     checkboxsChange=(event)=>{
@@ -62,8 +66,8 @@ export default class NewGame extends Component{
             let arrOptionsHe=GameData.cardsParameters[categoryStr][categoryStr+'He'];
 
             return (
-                <select name={categoryStr} onChange={this.settingConstParametersObj}>
-                    <option disabled="disabled" selected="selected">בחר</option>
+                <select  name={categoryStr} onChange={this.settingConstParametersObj}>
+                    <option key="-1" disabled="disabled" selected="selected">בחר</option>
                     {     
                         arrOptionsHe.map((option,i)=>
                         <option code={i}  key={i} >{option}</option>)
@@ -85,7 +89,6 @@ export default class NewGame extends Component{
     }
 
     render(){
-        console.log('drop down info',typeof this.state.dropDownInfo)
         return(
             <div id='new-game'>
                 {Object.keys(GameData.cardsParameters).map((par,i)=>{

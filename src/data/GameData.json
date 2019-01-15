@@ -26,7 +26,6 @@
         "auth/invalid-email":"כתובת האימייל שלך אינה חוקית",
         "auth/email-already-in-use":"האימייל כבר בשימוש",
         "auth/weak-password":"הסיסמא שלך חלשה מידי"
-
     },
 
     "errorLogin":{

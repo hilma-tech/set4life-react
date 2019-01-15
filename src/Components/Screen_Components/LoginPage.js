@@ -3,6 +3,7 @@ import Variables from '../../SetGame/Variables.js';
 import firebaseObj from '../../firebase/firebaseObj';
 import GameData from '../../data/GameData.json';
 import LoadingImg from '../../data/design/loading-img.gif';
+import Generalfunctions from '../../SetGame/GeneralFunctions';
 
 export default class LoginPage extends Component{
     constructor(props){
@@ -15,6 +16,7 @@ export default class LoginPage extends Component{
             loginStateInfo:'',
             _loadingImg:false
         };
+        window.history.pushState('','','login');
     }
     
     inputChange=(event)=>{
@@ -33,25 +35,19 @@ export default class LoginPage extends Component{
         
         if(!emptyFilesArr.length)
             firebaseObj._auth.signInWithEmailAndPassword(loginInfo.loginEmail,loginInfo.loginPsw)
-            .then(fbUser=>{
-                firebaseObj._db.ref(`PlayersInfo/${fbUser.user.uid}/Name`).once('value',snap=>{
-                    Variables.setPlayerName(snap.val());
-                    Variables.setUserId(fbUser.user.uid);
-                    this.props.moveThroughPages("sel")
+                .then(fbUser=>{
+                    firebaseObj._db.ref(`PlayersInfo/${fbUser.user.uid}/Name`).once('value',snap=>{
+                        Variables.setPlayerName(snap.val());
+                        Variables.setUserId(fbUser.user.uid);
+                        this.props.moveThroughPages("sel")
+                    });
+                },error=>{
+                    this.setState({loginStateInfo:GameData.errorLogin[error.code],_loadingImg:false})
+                    console.log("error login",error.code)
                 });
-            },error=>{
-                this.setState({loginStateInfo:GameData.errorLogin[error.code],_loadingImg:false})
-                console.log("error login",error.code)
-             });
-        else{
-            let loginStateInfo='שכחת למלא את השדות';
-
-            emptyFilesArr.map((val,i)=>{
-                loginStateInfo+=(!i?': ':
-                    (i===emptyFilesArr.length-1?' ו':" ,"))+val
-            });
-            this.setState({loginStateInfo:loginStateInfo,_loadingImg:false});
-        }
+        else
+            this.setState({loginStateInfo:Generalfunctions.string_From_List(emptyFilesArr,'שכחת למלא את השדות:'),
+                _loadingImg:false});
     }
 
     render(){

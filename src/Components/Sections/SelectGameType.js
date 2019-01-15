@@ -12,7 +12,7 @@ export default class GameType extends Component{
             //0-new game
             //1-exist game
         }
-       
+        window.history.pushState('','','gameType');
     }
 
     onClickGameTypeButton=(event)=>{
@@ -41,9 +41,8 @@ export default class GameType extends Component{
                     </div>
                 </div>}
 
-                {this.state.GameTypeOptions===1&&<ExistGame moveThroughPages={this.props.moveThroughPages} />}
-
-                {this.state.GameTypeOptions===0&&<NewGame moveThroughPages={this.props.moveThroughPages} />}
+                {this.state.GameTypeOptions===1&&<ExistGame moveThroughPages={this.props.moveThroughPages}/>}
+                {this.state.GameTypeOptions===0&&<NewGame moveThroughPages={this.props.moveThroughPages}/>}
             </div>
         );
     }

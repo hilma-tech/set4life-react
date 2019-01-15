@@ -2,7 +2,6 @@ import setFunctions from '../SetGame/setFunctions';
 
 const Variables={
     objConstParameters: {},
-    gameObj:{},
     gameCode:'',
     userId:'',
     playerName:'',
@@ -18,13 +17,10 @@ const Variables={
         this._date=date;
     },
     setCreationGameTime(time){
-        this.startGameTime=time;
+        this.creationGameTime=time;
     },
     setObjConstParameters(objConstParameters) {
         this.objConstParameters = objConstParameters?objConstParameters:{};
-    },
-    setGameObj(gameObj) {
-        this.gameObj = gameObj;
     },
     setGameCode(gameCode) {
         this.gameCode =gameCode;

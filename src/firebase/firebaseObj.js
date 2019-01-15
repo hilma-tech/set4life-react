@@ -2,7 +2,8 @@ import firebase from './Def';
 import Variables from '../SetGame/Variables';
 import setFunctions from '../SetGame/setFunctions';
 import {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut} from '../Components/Sections/Board';
-
+import GeneralFunctions from "../SetGame/GeneralFunctions";
+import GameData from '../data/GameData'
 
 const firebaseObj={
     _db:null,
@@ -21,11 +22,27 @@ const firebaseObj={
     },
 
     pushToFirebase(path,value){
-        this._db.ref(path).push(value);
+        console.log("db",this._db,"path",path,"value",value)
+        this._db.ref(path).push(value).then(()=>{
+            console.log("then push");
+        }).catch((err)=>{
+            console.log("error",err)
+        });
+        console.log("after push syntax")
     },
     
-    updatingValueInDataBase(path,value){
-        this._db.ref(path).update(value);
+    async updatingValueInDataBase(path,value){
+        console.log("in update function");
+        let x=0;
+        let p = await this._db.ref(path).update(value).then(()=>{
+            console.log("then update");
+            x=1;
+        }).catch((err)=>{
+            x=2;
+            console.log("error",err)
+        });
+        console.log("X",x,"p",p);
+        return x;
     },
     removeDataFromDB(path){
         let ref=this._db.ref(path);
@@ -62,7 +79,7 @@ const firebaseObj={
     },
 
     updatingGameIdInFB(){
-        Variables.set_date(setFunctions.timeAndDate('date'));
+        Variables.set_date(GeneralFunctions.timeAndDate('date'));
 
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
             let leng=snap.val()?Object.keys(snap.val()).length:0;
@@ -73,7 +90,7 @@ const firebaseObj={
     },
 
     pushCorrectOrWrongSetToDB(isSet){
-        firebaseObj.pushToFirebase(`Players/${Variables.userId}/${isSet.bool?'CorrectSets':'WrongSets'}/${setFunctions.timeAndDate('date')}:${Variables.day_numberedGame}`,
+        firebaseObj.pushToFirebase(`Players/${Variables.userId}/${isSet.bool?'CorrectSets':'WrongSets'}/${GeneralFunctions.timeAndDate('date')}:${Variables.day_numberedGame}`,
         {...isSet.information,
         DisplaysNewCards_Till_ClickSet:((timeClickOnChooseSet-timeNewCards)/1000).toFixed(2),
         ClickSet_Till_ChooseSet: ((timeChooseSet-timeClickOnChooseSet)/1000).toFixed(2),

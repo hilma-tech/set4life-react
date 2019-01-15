@@ -7,22 +7,22 @@ import EndGame from '../Screen_Components/EndGame';
 import GeneralFunctions from '../../SetGame/GeneralFunctions';
 import ErrorMes from '../Small_Components/ErrorMes';
 
-let timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut;
 
-export default class Board extends Component{
-    constructor(props){
+let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOut;
+
+export default class Board extends Component {
+    constructor(props) {
         super(props);
-        this.moveThroughPages=this.props.moveThroughPages;
-        this.gameCode=Variables.gameCode;
-
-        this.state={
-            currentCards:Variables.gameObj.currentCards,
-            selectedCards:[],
-            isSet:undefined,
-            usedCards:Variables.gameObj.usedCards,
-            gameOver:false,
-            game_Participants:[],
-            currentPlayerName:'',
+        this.moveThroughPages = this.props.moveThroughPages;
+        this.gameCode = Variables.gameCode;
+        this.state = {
+            currentCards: this.props.info.currentCards,
+            selectedCards: [],
+            isSet: undefined,
+            usedCards: this.props.info.usedCards,
+            gameOver: false,
+            game_Participants: [],
+            currentPlayerName: '',
             stageOfTheGame: 0
             /*
             stageOfTheGame values:
@@ -32,211 +32,219 @@ export default class Board extends Component{
             3-Another player is playing. lock state
              */
         }
+        window.history.pushState('','','board');
     }
-    
-    componentWillMount(){
+
+    componentWillMount() {
         firebaseObj.updatingGameIdInFB();
-        firebaseObj.listenerOnFirebase(this.handleGameObjFromFirebase,`Games/${this.gameCode}`)
-        firebaseObj.listenerOnFirebase(this.reciveCurrentUserIdFromFirebase,`Games/${this.gameCode}/currentPlayerID`);
+        firebaseObj.listenerOnFirebase(this.handleGameObjFromFirebase, `Games/${this.gameCode}`)
+        firebaseObj.listenerOnFirebase(this.reciveCurrentUserIdFromFirebase, `Games/${this.gameCode}/currentPlayerID`);
 
-        timeStartGame=timeNewCards=performance.now();
+        timeStartGame = timeNewCards = performance.now();
     }
 
-    /////////////////////////
-    componentWillUnmount(){
-        firebaseObj.removeDataFromDB(`Games/${this.gameCode}/Game_Participants/${Variables.userId}`);
-    }
-    
-    componentWillUpdate(){
-        window.onbeforeunload = (event) =>{
-            if(this.state.gameOver){
-                firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
-                Variables.setGameObj('');
-                return;
-            }
-            else
-                return true;   
+
+    componentDidMount() {
+        window.onbeforeunload = (event) => {
+            event.preventDefault();
+            alert("lalalalala");
+            console.log("leave??");
+            return "leave??";
+        };
+
+        window.onunload = async function (e) {
+            console.log('onunload', e)
+            //e.stop();
+            console.log("gameCode", this.gameCode, "my id", Variables.userId);
+            setTimeout(()=>{console.log("!!!!")},4000)
+            await firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
+            // console.log("x2",x2);
         }
     }
 
-     //callback functions for listeners on firebase
-    /////////////////////////////////////////////////////////////////////////////////////////
-    handleGameObjFromFirebase=(gameObj)=>{
+    componentWillUnmount(){
+        console.log("will umnount gameCode", this.gameCode, "my id", Variables.userId);
+    }
 
-        let {Game_Participants,
-            currentCards:newCurrentCards,
-            selectedCards:newSelectedCards}=gameObj?gameObj:{};
+
+    //callback functions for listeners on firebase
+    /////////////////////////////////////////////////////////////////////////////////////////
+    handleGameObjFromFirebase = (gameObj) => {
+        let { Game_Participants,
+            currentCards: newCurrentCards,
+            selectedCards: newSelectedCards } = gameObj ? gameObj : {};
 
         //Game_Participants
-        if(!Game_Participants)
+        let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).map(val => {
+            if (val[1].isConnected)
+                return (val[0] === Variables.userId) ? 'את/ה' : val[1].Name;
+        }) : [];
+        ArrParticipants = ArrParticipants.filter(val => val !== undefined);
+        this.setState({ game_Participants: ArrParticipants });
+        (!ArrParticipants.length) &&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
-        else{
-            let particList=[];
-            Object.entries(Game_Participants).map(val=>{
-                console.log('val game partic',val)
-                particList.push((val[0]===Variables.userId)?'אתה':val[1].Name);   
-            })
-            this.setState({game_Participants:particList})
-        }
 
         //selected cards
-        if(JSON.stringify(this.state.selectedCards)!==JSON.stringify(newSelectedCards))
-        {
-            if(!newSelectedCards)
-                newSelectedCards=[];
-            if(newSelectedCards.length===3)
-                this.setState({isSet:setFunctions.isSetBoolFunction(newSelectedCards).bool});
+        if (JSON.stringify(this.state.selectedCards) !== JSON.stringify(newSelectedCards)) {
+            if (!newSelectedCards)
+                newSelectedCards = [];
+            if (newSelectedCards.length === 3)
+                this.setState({ isSet: setFunctions.isSetBoolFunction(newSelectedCards).bool });
 
-            this.setState({selectedCards:newSelectedCards});
+            this.setState({ selectedCards: newSelectedCards });
         }
 
         //currentCards
-        (JSON.stringify(this.state.currentCards)!==JSON.stringify(newCurrentCards))&&
-            this.setState({currentCards:newCurrentCards});
+        if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards)) {
+            this.setState({ currentCards: newCurrentCards });
+        }
+
     }
 
-    reciveCurrentUserIdFromFirebase=(userIdFromFirebase)=>{
-        (userIdFromFirebase && userIdFromFirebase!=Variables.userId)?
-            this.setState({stageOfTheGame:3,isSet:undefined}) : this.setState({stageOfTheGame:0,isSet:undefined});
-        if(userIdFromFirebase){
+    reciveCurrentUserIdFromFirebase = (userIdFromFirebase) => {
+        (userIdFromFirebase && userIdFromFirebase != Variables.userId) ?
+            this.setState({ stageOfTheGame: 3, isSet: undefined }) : this.setState({ stageOfTheGame: 0, isSet: undefined });
+        if (userIdFromFirebase) {
             firebaseObj._db.ref(`PlayersInfo/${userIdFromFirebase}/Name`).once('value')
-                .then(snap=>this.setState({currentPlayerName:snap.val()}))
+                .then(snap => this.setState({ currentPlayerName: Variables.userId === userIdFromFirebase ? "את/ה" : snap.val() }))
         }
         else
-            this.setState({currentPlayerName:''});
+            this.setState({ currentPlayerName: '' });
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    selectCardFunction=(cardCode)=>{
-        let selectedCards=this.state.selectedCards;
-        console.log('cardCode',cardCode,selectedCards)
+    selectCardFunction = (cardCode) => {
+        let selectedCards = this.state.selectedCards;
+        console.log('cardCode', cardCode, selectedCards)
 
-        if(selectedCards.length<3){
-            (!selectedCards.includes(cardCode))?
-                selectedCards.push(cardCode) : selectedCards=selectedCards.filter(value=>value!==cardCode);
+        if (selectedCards.length < 3) {
+            (!selectedCards.includes(cardCode)) ?
+                selectedCards.push(cardCode) : selectedCards = selectedCards.filter(value => value !== cardCode);
         }
 
-        if(selectedCards.length===3){
-            timeChooseSet=performance.now();
+        if (selectedCards.length === 3) {
+            timeChooseSet = performance.now();
             clearTimeout(_timeOut);
             console.log('cleared timeout');
 
-            let isSet=setFunctions.isSetBoolFunction(this.state.selectedCards);
+            let isSet = setFunctions.isSetBoolFunction(this.state.selectedCards);
             firebaseObj.pushCorrectOrWrongSetToDB(isSet);
-            this.setState({isSet:isSet.bool,  stageOfTheGame: 2 });
+            this.setState({ isSet: isSet.bool, stageOfTheGame: 2 });
         }
-        this.setState({selectedCards:selectedCards});
-        firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/selectedCards`,selectedCards);
+        this.setState({ selectedCards: selectedCards });
+        firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/selectedCards`, selectedCards);
     }
 
-    clickButtonEvent=()=>{
+    clickButtonEvent = () => {
         //this.setState({stageOfTheGame: (this.state.stageOfTheGame+1)%3});
-        if(this.state.stageOfTheGame===0)
-        {
-            timeClickOnChooseSet=performance.now();
-            _timeOut=setTimeout(()=>{
+        if (this.state.stageOfTheGame === 0) {
+            timeClickOnChooseSet = performance.now();
+            _timeOut = setTimeout(() => {
                 console.log("inside setTimeOut")
-                if(this.state.selectedCards.length<3&&this.state.stageOfTheGame===1){
-                    this.setState({stageOfTheGame:0,selectedCards:[]});
+                if (this.state.selectedCards.length < 3 && this.state.stageOfTheGame === 1) {
+                    this.setState({ stageOfTheGame: 0, selectedCards: [] });
 
-                    ['selectedCards','currentPlayerID'].map(destination=>{
+                    ['selectedCards', 'currentPlayerID'].map(destination => {
                         firebaseObj.removeDataFromDB(`Games/${this.gameCode}/${destination}`);
                     })
-                    firebaseObj.pushToFirebase(`Players/${Variables.userId}/MissedSets/${setFunctions.timeAndDate('date')}:${Variables.day_numberedGame}`,
-                        {timeOut:Variables._timer, timeMissedOut:((performance.now()-timeStartGame)/1000).toFixed(2)});
+                    firebaseObj.pushToFirebase(`Players/${Variables.userId}/MissedSets/${GeneralFunctions.timeAndDate('date')}:${Variables.day_numberedGame}`,
+                        { timeOut: Variables._timer, timeMissedOut: ((performance.now() - timeStartGame) / 1000).toFixed(2) });
                 }
-            },Variables._timer*1000);
-            firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/currentPlayerID`,Variables.userId)
-            this.setState({stageOfTheGame: 1});
+            }, Variables._timer * 1000);
+            firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/currentPlayerID`, Variables.userId)
+            this.setState({ stageOfTheGame: 1 });
         }
 
-        if(this.state.stageOfTheGame===2){
-            if(this.state.isSet){
-                let objPullCards=setFunctions.pullXCardsAndEnterNewXCards(3,this.state.currentCards,this.state.selectedCards, this.state.usedCards);
-                if(objPullCards.gameOver){
-                    this.setState({gameOver:true});
+        if (this.state.stageOfTheGame === 2) {
+            if (this.state.isSet) {
+                let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
+                if (objPullCards.gameOver) {
+                    this.setState({ gameOver: true });
                     firebaseObj.removeDataFromDB(`Games/${this.gameCode}/currentCards`);
                 }
-                else{
-                    this.setState({currentCards:objPullCards.currentCards, 
-                        usedCards:[...this.state.usedCards,...this.state.selectedCards],
-                        stageOfTheGame:0, selectedCards:[]}); 
+                else {
+                    this.setState({
+                        currentCards: objPullCards.currentCards,
+                        usedCards: [...this.state.usedCards, ...this.state.selectedCards],
+                        stageOfTheGame: 0, selectedCards: []
+                    });
                     firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
-                        {currentCards:objPullCards.currentCards
-                        ,usedCards:[...this.state.usedCards,...this.state.selectedCards]});
+                        {
+                            currentCards: objPullCards.currentCards
+                            , usedCards: [...this.state.usedCards, ...this.state.selectedCards]
+                        });
                 }
-                timeNewCards=performance.now();
+                timeNewCards = performance.now();
             }
-            this.setState({isSet:undefined})
+            this.setState({ isSet: undefined })
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}/selectedCards`);
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}/currentPlayerID`);
         }
     }
-    
-    render(){
-        if(this.state.currentCards){
+    exitGame = () => {
+        this.moveThroughPages('sel');
+        firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
+    }
+
+    render() {
+        if (this.state.currentCards.length) {
             return (
                 <div id="board" className='page'>
-                    <UpperBar game_Participants={this.state.game_Participants}
-                    currentPlayerName={this.state.currentPlayerName}
-                    gameCode={this.gameCode}
-                    moveThroughPages={this.moveThroughPages}/>
-    
-                    {!this.state.gameOver&&
-                    <div id='cards'>
-                        {this.state.currentCards.map((cardCode, i)=>
-                            <Card 
-                            className='card'
-                            key={i}
-                            onclick={this.selectCardFunction} 
-                            cardCode={cardCode}
-                            selectedCards={this.state.selectedCards}
-                            isSet={this.state.isSet}
-                            stageOfTheGame={this.state.stageOfTheGame}
-                            isSelected={this.state.selectedCards.includes(cardCode)}
-                            />)
-                        }
-                    </div>}
-                    
-                    <LowerBar stageOfTheGame={this.state.stageOfTheGame} 
-                    gameOver={this.state.gameOver} 
-                    clickButtonEvent={this.clickButtonEvent} />
+                    <UpperBar game_Participants={GeneralFunctions.string_From_List(this.state.game_Participants, `המשתתפים במשחק:`)}
+                        currentPlayerName={this.state.currentPlayerName}
+                        gameCode={this.gameCode}
+                        exitGame={this.exitGame} />
+
+                    {!this.state.gameOver &&
+                        <div id='cards'>
+                            {this.state.currentCards.map((cardCode, i) =>
+                                <Card
+                                    className='card'
+                                    key={i}
+                                    onclick={this.selectCardFunction}
+                                    cardCode={cardCode}
+                                    selectedCards={this.state.selectedCards}
+                                    isSet={this.state.isSet}
+                                    stageOfTheGame={this.state.stageOfTheGame}
+                                    isSelected={this.state.selectedCards.includes(cardCode)}
+                                />)
+                            }
+                        </div>}
+
+                    <LowerBar stageOfTheGame={this.state.stageOfTheGame}
+                        gameOver={this.state.gameOver}
+                        clickButtonEvent={this.clickButtonEvent} />
                 </div>
             );
         }
         else
-         return <ErrorMes/>;   
+            return <ErrorMes />;
     }
 }
 
 
+const UpperBar = (props) => (
+    <div>
+        <p>{props.game_Participants}</p>
+        {props.currentPlayerName && <label>{props.currentPlayerName} משחק עכשיו</label>}
+        <label  >{props.gameCode} הקוד של המשחק</label>
+        <button onClick={props.exitGame} >יציאה מהמשחק</button>
+    </div>
+);
 
-const LowerBar=(props)=>( 
+const LowerBar = (props) => (
     <div id='lower-bar' >
-        {!props.gameOver&&<button onClick={props.clickButtonEvent} id="main_button" 
-        disabled={props.stageOfTheGame===1||props.stageOfTheGame===3}>
-        {props.stageOfTheGame===0?"מצאתי סט!":
-            props.stageOfTheGame===1?"סט בבחירה":
-                props.stageOfTheGame===2?"הבא":"שחקן אחר משחק"            
+        {!props.gameOver && <button onClick={props.clickButtonEvent} id="main_button"
+            disabled={props.stageOfTheGame === 1 || props.stageOfTheGame === 3}>
+            {props.stageOfTheGame === 0 ? "מצאתי סט!" :
+                props.stageOfTheGame === 1 ? "סט בבחירה" :
+                    props.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
             }
         </button>}
-        <label>{props.gameOver&&'משחק נגמר'}</label>
+        <label>{props.gameOver && 'משחק נגמר'}</label>
     </div>
 );
 
 
-const UpperBar=(props)=>(
-    <div>
-        {console.log('props.game_Participants',props.game_Participants)}
-        <p>{GeneralFunctions.string_From_List(props.game_Participants,`המשתתפים במשחק:`,'')}</p>
-        
-        {props.currentPlayerName&&<label>{props.currentPlayerName} משחק עכשיו</label>}
-        <label  >{props.gameCode} הקוד של המשחק</label>
-        <button onClick={()=>setFunctions.exitGame(props.moveThroughPages)} >יציאה מהמשחק</button>
-    </div>
-);
-
-
-
-export {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut};
+export { timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOut };

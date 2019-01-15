@@ -12,6 +12,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state={
+      info:{},
       pageSeen:"load"
       //load-load page
       //ent-EntrancePage
@@ -21,6 +22,7 @@ class App extends Component {
     firebaseObj.createAuth();
     firebaseObj.createDataBase();
     firebaseObj.authState(this.handlePlayerAuthState);
+    
   }
 
   handlePlayerAuthState=async(fbUser)=>{
@@ -37,26 +39,32 @@ class App extends Component {
     }
   }
 
-  // componentDidMount(){
-  //   let userStateInGame= window.confirm('אתה בטוח שאתה רוצה לצאת?');
-  //   this.setState({pageSeen:userStateInGame?'sel':'boa'});
-  // }
-
-  moveThroughPages=(pageName)=>{
-     this.setState({pageSeen:pageName});
+  moveThroughPages=(pageName,info={})=>{
+     this.setState({pageSeen:pageName,info:info});
   }
 
   render() {
-    return (
-      <ErrorBoundary>
-        <div id="App" className='page'>
-          {this.state.pageSeen==="load"&&<div className='page'><img src={LoadingImg} alt='loading'/></div>}
-          {this.state.pageSeen==="ent"&&<Entrance moveThroughPages={this.moveThroughPages}/>}
-          {this.state.pageSeen==="sel"&&<SelectGameType moveThroughPages={this.moveThroughPages}/>}
-          {this.state.pageSeen==="boa"&&<Board moveThroughPages={this.moveThroughPages}/>} 
-        </div>
-      </ErrorBoundary>
-    );
+    switch(this.state.pageSeen){
+      case "load":
+        return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading'/></div>;
+      case 'ent':
+        return <Entrance moveThroughPages={this.moveThroughPages}/>;
+      case "sel":
+        return <SelectGameType moveThroughPages={this.moveThroughPages}/>;
+      case "boa":
+        return <Board info={this.state.info}  moveThroughPages={this.moveThroughPages}/>;
+    }
+
+    // return (
+    //   <ErrorBoundary>
+    //     <div id="App" >
+    //       {this.state.pageSeen==="load"&&<img className="LoadingImg" src={LoadingImg} alt='loading'/>}
+    //       {this.state.pageSeen==="ent"&&<Entrance moveThroughPages={this.moveThroughPages}/>}
+    //       {this.state.pageSeen==="sel"&&<SelectGameType moveThroughPages={this.moveThroughPages}/>}
+    //       {this.state.pageSeen==="boa"&&<Board info={this.state.info}  moveThroughPages={this.moveThroughPages}/>} 
+    //     </div>
+    //   </ErrorBoundary>
+    // );
   }
 }
 

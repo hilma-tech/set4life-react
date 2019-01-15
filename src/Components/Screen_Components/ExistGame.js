@@ -15,6 +15,7 @@ export default class ExistGame extends Component{
             loadLocatePartic:null,
             gameObj:{}
         }
+        window.history.pushState('','','existGame');
     }
 
     onClickExistGameCodeButton=()=>{
@@ -25,9 +26,8 @@ export default class ExistGame extends Component{
 
             Variables.setCreationGameTime(gameObj.creationTime)
             Variables.setGameCode(this.state.gameCode);
-            Variables.setGameObj({currentCards:gameObj.currentCards,usedCards:gameObj.usedCards});
-            Variables.setObjConstParameters(gameObj.constParameters?gameObj.constParameters:{})
-            this.props.moveThroughPages("boa");
+            Variables.setObjConstParameters(gameObj.constParameters);
+            this.props.moveThroughPages("boa",gameObj);
         }
         else
             this.setState({invalidGameCode:true});
@@ -43,13 +43,15 @@ export default class ExistGame extends Component{
                 this.setState({loadLocatePartic:true});
                 firebaseObj.readingDataOnFirebaseCB(
                     (gameObj)=>{
-                        let arrPartic=[];
-                        if(gameObj)
-                            gameObj.Game_Participants&&Object.values(gameObj.Game_Participants).map(value=>arrPartic.push(value.Name));
-                        
-                        this.setState({gameObj:gameObj?gameObj:{},participants:arrPartic,loadLocatePartic:false})
-                }
-                ,`Games/${inputValue}`);
+                        let ArrParticipants=gameObj&&gameObj.Game_Participants?
+                            Object.entries(gameObj.Game_Participants).map(val=>{
+                                if(val[1].isConnected)
+                                    return val[1].Name;
+                            }):[]
+                        ArrParticipants=ArrParticipants.filter(val=>val!==undefined);
+                        this.setState({gameObj:gameObj?gameObj:{},participants:ArrParticipants,loadLocatePartic:false})
+                    }
+                    ,`Games/${inputValue}`);
             }
         }
     }
@@ -58,7 +60,7 @@ export default class ExistGame extends Component{
         return(
             <div >
                 {this.state.loadLocatePartic?
-                    <img src={LoadingImg} alt='loading'/>:
+                    <img src={LoadingImg} alt='loading' className="LoadingImg"/>:
                     this.state.loadLocatePartic!==null&&
                         <ParticipantsList participants={this.state.participants} />
                 }
