@@ -104,7 +104,7 @@ export default class NewGame extends Component{
                         </div>);
                     })
                 }
-
+            <p>טיימר של הכפתור:</p>
             <input 
             type="number" 
             id="timer" 

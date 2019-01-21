@@ -4,6 +4,7 @@ import ExistGame from '../Screen_Components/ExistGame';
 import firebaseObj from '../../firebase/firebaseObj';
 import Variables from '../../SetGame/Variables';
 
+
 export default class GameType extends Component{
     constructor(props){
         super(props);

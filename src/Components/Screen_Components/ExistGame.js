@@ -58,7 +58,20 @@ export default class ExistGame extends Component{
 
     render(){
         return(
-            <div >
+            <div>
+                <div id="existGame">
+                    <input
+                    id="input"
+                    name='gameCode' 
+                    type='text'
+                    placeholder="הכנס קוד משחק"
+                    value={this.state.gameCode}
+                    onChange={this.inputChange}/>
+
+                    {this.state.loadingParticipants?
+                    <img src={LoadingImg} alt='loading' />:
+                    <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button>}  
+                </div>
                 {this.state.loadLocatePartic?
                     <img src={LoadingImg} alt='loading' className="LoadingImg"/>:
                     this.state.loadLocatePartic!==null&&

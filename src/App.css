@@ -26,7 +26,7 @@
 }
 
 button{
-    background-color: lightskyblue;
+    background-color: #80e5ff;
     border-radius: 15%;
 }
 
@@ -36,6 +36,11 @@ button{
     align-items: center;
     font-size: 1.5rem;
     text-align: center;
+}
+
+.loading{
+    width: 50%;
+    height: 50%;
 }
 
 #login-page> * {
@@ -73,6 +78,22 @@ button{
     text-align: center;
 }
 
+#existGame{
+    display: flex;
+    align-items: center;
+    direction: rtl;
+}
+
+.check-game{
+    text-align: center;
+    margin: 5%;
+}
+#continue{
+    width: 15vw;
+    height: 5vh;
+    margin: 1%;
+}
+
 #signout{
     display: inline-block;
     top:10%;
@@ -81,6 +102,7 @@ button{
     width: 4rem;
     text-align: center;
     font-size: 1rem ;
+    margin-left: 2%
 }
 .game-type-buttons>*{
     margin:0.5rem;
@@ -107,6 +129,7 @@ button{
     height:2.8rem ;
     font-size: 1.2rem;
     text-align: center;
+    border: 0.5px solid
 }
 
 #new-game{
@@ -142,18 +165,24 @@ button{
     direction: rtl;
 }
 
-#board label{
+#game_code{
     font-size:2rem;
     font-weight: 550; 
     margin-top:2vh;
+    direction: ltr;
 }
 
-#board button{
-    width: 10rem;
-    font-size: 2rem;
+#play_now{
+    width: 90%;
+    height: 5%;
+    font-size: 1rem;
 }
 
-
+#UpperBar{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 
 
 .greyCard{
@@ -190,8 +219,20 @@ button{
     align-items: flex-start;
     justify-content: space-around;
     align-content: space-around;
+    overflow: visible;
 }
 
+#main_button{
+    width: 13rem;
+    font-size: 2rem;
+}
+
+#exitButton{
+    width: 10%;
+    height: 5%;
+    font-size: 1rem;
+    align-items: center;
+}
 
 #lower-bar>*{
  
@@ -205,7 +246,7 @@ button{
 
 .card{
     width:8vw;
-    height:16vh;
+    height:15vh;
     padding:3vh 1vw;
     margin:0.5vh 0.5vh;
     background-color: #dbdbdb;
@@ -290,35 +331,11 @@ button{
     margin-bottom:4vh;
 }
 
-@media only screen and (max-width: 600px) {
-    .card{
-        width:19vw;
-        height:9vh;
-        padding:3vh 1vw;
-        margin:0.5vh 0.5vh;
-        background-color: #dbdbdb;
-        border-radius: 0.9rem;
-    }
-
-    #cards{
-        width:81vw;
-        height:70vh;
-    }  
-    #entrance-buttons{
-        margin-left: auto;
-        margin-right: auto;
-        justify-content: center;
-    }
-    #login-page input{
-        height: 5vh;
-        width: 80vw;
-        font-size: 1.2rem;
-    }
-    #reg input{
-        text-align:center;
-        width: 80vw;
-        height: 4vh;
-    }
+#endGame{
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
 }
 
 @media only screen and (max-width: 1072px) {
@@ -335,8 +352,62 @@ button{
         width:92vw;
         height:70vh;
     }
-    #board label{
-        font-size:3rem;
+    #game_code{
+        font-size:4rem;
     }
     
+    #exitButton{
+        width: 20%;
+    }
+    #play_now{
+        width: 90%;
+        height: 5%;
+        font-size: 1rem;
+    }
 } 
+@media only screen and (max-width: 600px) {
+    .card{
+        width: 16vw;
+        height: 7vh;
+        padding: 3vh 1vw;
+        margin: 0vw 0vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+
+    #cards{
+        width:81vw;
+        height:65vh;
+    }  
+    #entrance-buttons{
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+    }
+    #login-page input{
+        height: 5vh;
+        width: 80vw;
+        font-size: 1.2rem;
+    }
+    #reg input{
+        text-align:center;
+        width: 80vw;
+        height: 4vh;
+    }
+    #game_code{
+        text-align: center;
+        font-size: 2rem;
+        direction: ltr;
+    }
+    #exitButton{
+        width: 36%;
+        text-align: center
+    }
+    #play_now{
+        width: 90%;
+        height: 5%;
+        font-size: 1rem;
+    }
+}
+
+

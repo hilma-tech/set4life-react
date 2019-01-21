@@ -5,7 +5,6 @@ import setFunctions from '../../SetGame/setFunctions.js';
 import Variables from '../../SetGame/Variables';
 import EndGame from '../Screen_Components/EndGame';
 import GeneralFunctions from '../../SetGame/GeneralFunctions';
-import ErrorMes from '../Small_Components/ErrorMes';
 
 
 let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOut;
@@ -191,7 +190,7 @@ export default class Board extends Component {
             );
         }
         else
-            return <ErrorMes />;
+         return <EndGame/>;   
     }
 }
 
@@ -199,9 +198,9 @@ export default class Board extends Component {
 const UpperBar = (props) => (
     <div>
         <p>{props.game_Participants}</p>
-        {props.currentPlayerName && <label>{props.currentPlayerName} משחק עכשיו</label>}
-        <label  >{props.gameCode} הקוד של המשחק</label>
-        <button onClick={props.exitGame} >יציאה מהמשחק</button>
+        {props.currentPlayerName && <label id="play_now">{props.currentPlayerName} משחק עכשיו</label>}
+        <label  id="game_code">{props.gameCode} הקוד של המשחק</label>
+        <button onClick={props.exitGame} id="exitButton">יציאה מהמשחק</button>
     </div>
 );
 
@@ -214,9 +213,13 @@ const LowerBar = (props) => (
                     props.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
             }
         </button>}
-        <label>{props.gameOver && 'משחק נגמר'}</label>
+        {props.gameOver&&<EndGame/>}
     </div>
 );
 
 
-export { timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOut };
+
+
+
+
+export {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut};
