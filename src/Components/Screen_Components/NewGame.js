@@ -14,7 +14,7 @@ export default class NewGame extends Component{
             messageErr:false,
             _timer:10
         }
-        window.history.pushState('','','newGame');
+        window.history.pushState('new','','newGame');
     }
 
     settingNewGame=async()=>{ 

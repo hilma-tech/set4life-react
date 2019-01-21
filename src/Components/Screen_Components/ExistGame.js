@@ -15,7 +15,7 @@ export default class ExistGame extends Component{
             loadLocatePartic:null,
             gameObj:{}
         }
-        window.history.pushState('','','existGame');
+        window.history.pushState('exist','','existGame');
     }
 
     onClickExistGameCodeButton=()=>{

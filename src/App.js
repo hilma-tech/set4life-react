@@ -7,13 +7,16 @@ import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
 import ErrorBoundary from './Components/Small_Components/ErrorBoundary';
+import GeneralFunctions from './SetGame/GeneralFunctions';
+import ChartPage from './Components/Screen_Components/ChartsPage';
+
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
       info:{},
-      pageSeen:"load"
+      pageSeen:"ChartPage"
       //load-load page
       //ent-EntrancePage
       //sel-SelectGameType
@@ -21,8 +24,25 @@ class App extends Component {
     }
     firebaseObj.createAuth();
     firebaseObj.createDataBase();
-    firebaseObj.authState(this.handlePlayerAuthState);
-    
+    // firebaseObj.authState(this.handlePlayerAuthState);
+
+    // window.addEventListener('popstate',(event)=>{
+    //   console.log('inside popstate app',event.state)
+    //   switch(event.state){
+    //     case 'reg':
+    //     case 'log':
+    //     case 'ent':
+    //       break;
+    //     case 'new':
+    //     case 'exist':
+    //       //window.history.back();
+    //       break;
+    //     case 'sel':
+    //       if(this.state.pageSeen!='sel')
+    //         this.setState({pageSeen:'sel'});
+    //       break;
+    //   }
+    //   });
   }
 
   handlePlayerAuthState=async(fbUser)=>{
@@ -31,11 +51,12 @@ class App extends Component {
       Variables.setUserId(fbUser.uid);
       let name=await firebaseObj.readingDataOnFirebaseAsync(`PlayersInfo/${fbUser.uid}/Name`);
       Variables.setPlayerName(name);
-      this.setState({pageSeen:"sel"},()=>console.log('move to sel'));
+      this.moveThroughPages("sel");
     }
     else{
       console.log("not logged in");
-      this.setState({pageSeen:"ent"});
+      Variables.setUserId(null);
+      this.moveThroughPages("ent");
     }
   }
 
@@ -43,28 +64,20 @@ class App extends Component {
      this.setState({pageSeen:pageName,info:info});
   }
 
+
   render() {
     switch(this.state.pageSeen){
+      case 'ChartPage':
+        return <ChartPage/>;
       case "load":
         return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading'/></div>;
       case 'ent':
-        return <Entrance moveThroughPages={this.moveThroughPages}/>;
+        return <Entrance screenSeenInside={this.state.screenSeenInside} moveThroughPages={this.moveThroughPages}/>;
       case "sel":
-        return <SelectGameType moveThroughPages={this.moveThroughPages}/>;
+        return <SelectGameType screenSeenInside={this.state.screenSeenInside} moveThroughPages={this.moveThroughPages}/>;
       case "boa":
         return <Board info={this.state.info}  moveThroughPages={this.moveThroughPages}/>;
     }
-
-    // return (
-    //   <ErrorBoundary>
-    //     <div id="App" >
-    //       {this.state.pageSeen==="load"&&<img className="LoadingImg" src={LoadingImg} alt='loading'/>}
-    //       {this.state.pageSeen==="ent"&&<Entrance moveThroughPages={this.moveThroughPages}/>}
-    //       {this.state.pageSeen==="sel"&&<SelectGameType moveThroughPages={this.moveThroughPages}/>}
-    //       {this.state.pageSeen==="boa"&&<Board info={this.state.info}  moveThroughPages={this.moveThroughPages}/>} 
-    //     </div>
-    //   </ErrorBoundary>
-    // );
   }
 }
 

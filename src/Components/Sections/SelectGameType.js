@@ -9,15 +9,27 @@ export default class GameType extends Component{
         super(props);
         this.state={
             GameTypeOptions:null
-            //0-new game
-            //1-exist game
+            //new-new game
+            //exist-exist game
         }
-        window.history.pushState('','','gameType');
+        window.history.pushState('sel','','gameType');
+        window.onpopstate=(event)=>{
+            console.log("in select game type",event.state);
+            switch(event.state){
+                case "new":
+                case "exist":
+                    if(this.state.GameTypeOptions!=event.state)
+                        this.setState({GameTypeOptions:event.state});
+                    break;
+                case "sel":
+                    this.setState({GameTypeOptions:null});
+            }
+        }
     }
 
     onClickGameTypeButton=(event)=>{
-        event.target.getAttribute('id')==='exsitGame'&&this.setState({GameTypeOptions:1});
-        event.target.getAttribute('id')==='newGame'&&this.setState({GameTypeOptions:0});
+        event.target.getAttribute('id')==='existGame'&&this.setState({GameTypeOptions:'exist'});
+        event.target.getAttribute('id')==='newGame'&&this.setState({GameTypeOptions:'new'});
     }
 
     signOut=()=>{
@@ -26,24 +38,30 @@ export default class GameType extends Component{
     }
 
     render(){
-        return(
-            <div id='game-type' className='page' >
-                {this.state.GameTypeOptions===null&&
-                <div>
-                    <div id="top-bar">
-                        <label>שלום {Variables.playerName}</label>
-                        <button id="signout" onClick={this.signOut} >התנתק</button>
-                    </div>
+        switch(this.state.GameTypeOptions){
+            case null:
+                return (
+                <div >
+                    <TopBar id="top-bar" signOut={this.signOut} />
                     <h1>אנא בחר את סוג המשחק הרצוי</h1>
                     <div className='game-type-buttons' >
-                        <button onClick={this.onClickGameTypeButton} id='exsitGame'>משחק קיים</button>
+                        <button onClick={this.onClickGameTypeButton} id='existGame'>משחק קיים</button>
                         <button onClick={this.onClickGameTypeButton} id='newGame'>משחק חדש</button>
                     </div>
-                </div>}
-
-                {this.state.GameTypeOptions===1&&<ExistGame moveThroughPages={this.props.moveThroughPages}/>}
-                {this.state.GameTypeOptions===0&&<NewGame moveThroughPages={this.props.moveThroughPages}/>}
-            </div>
-        );
+                </div>);
+            case 'exist':
+                    return <ExistGame moveThroughPages={this.props.moveThroughPages}/>;
+            case 'new':
+                    return <NewGame moveThroughPages={this.props.moveThroughPages}/>; 
+        }
+        
     }
 }
+
+
+const TopBar=(props)=>(
+    <div>
+        <label>שלום {Variables.playerName}</label>
+        <button id="signout" onClick={props.signOut} >התנתק</button>
+    </div>
+);

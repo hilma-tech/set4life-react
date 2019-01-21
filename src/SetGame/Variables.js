@@ -8,7 +8,7 @@ const Variables={
     _timer:10,
     creationGameTime:'',
     _date:'',
-    day_numberedGame:null,
+    day_numberedGame:0,
 
     setDay_numberedGame(num){
     this.day_numberedGame=num;

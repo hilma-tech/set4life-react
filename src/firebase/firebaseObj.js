@@ -1,6 +1,5 @@
 import firebase from './Def';
 import Variables from '../SetGame/Variables';
-import setFunctions from '../SetGame/setFunctions';
 import {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut} from '../Components/Sections/Board';
 import GeneralFunctions from "../SetGame/GeneralFunctions";
 import GameData from '../data/GameData'
@@ -22,28 +21,13 @@ const firebaseObj={
     },
 
     pushToFirebase(path,value){
-        console.log("db",this._db,"path",path,"value",value)
-        this._db.ref(path).push(value).then(()=>{
-            console.log("then push");
-        }).catch((err)=>{
-            console.log("error",err)
-        });
-        console.log("after push syntax")
+        this._db.ref(path).push(value)
     },
     
-    async updatingValueInDataBase(path,value){
-        console.log("in update function");
-        let x=0;
-        let p = await this._db.ref(path).update(value).then(()=>{
-            console.log("then update");
-            x=1;
-        }).catch((err)=>{
-            x=2;
-            console.log("error",err)
-        });
-        console.log("X",x,"p",p);
-        return x;
+    updatingValueInDataBase(path,value){
+        this._db.ref(path).update(value);
     },
+
     removeDataFromDB(path){
         let ref=this._db.ref(path);
         ref.remove();

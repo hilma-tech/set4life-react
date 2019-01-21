@@ -32,7 +32,7 @@ export default class Board extends Component {
             3-Another player is playing. lock state
              */
         }
-        window.history.pushState('','','board');
+        window.history.pushState('boa','','board');
     }
 
     componentWillMount() {
@@ -42,31 +42,6 @@ export default class Board extends Component {
 
         timeStartGame = timeNewCards = performance.now();
     }
-
-
-    componentDidMount() {
-        window.onbeforeunload = (event) => {
-            event.preventDefault();
-            alert("lalalalala");
-            console.log("leave??");
-            return "leave??";
-        };
-
-        window.onunload = async function (e) {
-            console.log('onunload', e)
-            //e.stop();
-            console.log("gameCode", this.gameCode, "my id", Variables.userId);
-            setTimeout(()=>{console.log("!!!!")},4000)
-            await firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
-            // console.log("x2",x2);
-        }
-    }
-
-    componentWillUnmount(){
-        console.log("will umnount gameCode", this.gameCode, "my id", Variables.userId);
-    }
-
-
     //callback functions for listeners on firebase
     /////////////////////////////////////////////////////////////////////////////////////////
     handleGameObjFromFirebase = (gameObj) => {
@@ -164,16 +139,13 @@ export default class Board extends Component {
                     firebaseObj.removeDataFromDB(`Games/${this.gameCode}/currentCards`);
                 }
                 else {
-                    this.setState({
-                        currentCards: objPullCards.currentCards,
+                    this.setState({currentCards: objPullCards.currentCards,
                         usedCards: [...this.state.usedCards, ...this.state.selectedCards],
-                        stageOfTheGame: 0, selectedCards: []
-                    });
+                        stageOfTheGame: 0, selectedCards: []});
+                    
                     firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
-                        {
-                            currentCards: objPullCards.currentCards
-                            , usedCards: [...this.state.usedCards, ...this.state.selectedCards]
-                        });
+                        {currentCards: objPullCards.currentCards,
+                        usedCards: [...this.state.usedCards, ...this.state.selectedCards]});
                 }
                 timeNewCards = performance.now();
             }
