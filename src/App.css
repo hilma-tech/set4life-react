@@ -78,11 +78,11 @@ button{
     text-align: center;
 }
 
-#existGame{
+/* #existGame{
     display: flex;
     align-items: center;
     direction: rtl;
-}
+} */
 
 .check-game{
     text-align: center;
@@ -93,7 +93,7 @@ button{
     height: 5vh;
     margin: 1%;
 }
-
+/* 
 #signout{
     display: inline-block;
     top:10%;
@@ -103,7 +103,7 @@ button{
     text-align: center;
     font-size: 1rem ;
     margin-left: 2%
-}
+} */
 .game-type-buttons>*{
     margin:0.5rem;
     height:6rem ;

@@ -64,6 +64,7 @@ const firebaseObj={
 
     updatingGameIdInFB(){
         Variables.set_date(GeneralFunctions.timeAndDate('date'));
+        console.log('inside update sess')
 
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
             let leng=snap.val()?Object.keys(snap.val()).length:0;

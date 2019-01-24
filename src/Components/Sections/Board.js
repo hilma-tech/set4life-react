@@ -32,6 +32,14 @@ export default class Board extends Component {
              */
         }
         window.history.pushState('boa','','board');
+        window.onpopstate = (event) => {
+            switch (event.state) {
+                case "newGame":
+                case "existGame":
+                    window.history.back();
+                    break;
+            }
+        }
     }
 
     componentWillMount() {

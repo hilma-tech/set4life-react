@@ -1,44 +1,39 @@
 import React,{Component} from 'react';
-import ChartData from '../../ChartData';
-import firebaseObj from '../../firebase/firebaseObj';
-import Variables from '../../SetGame/Variables';
-
+import ChartData from '../../Charts/ChartData';
 
 export default class ChartsPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            flag:false,
-            y_axis:[],
-            x_axis:[],
-            title:''
+            chartType:'charts'
         }
+        window.history.pushState('charts','','charts');
+        window.addEventListener('popstate',(event)=>{
+            switch(event.state){
+                case "avgTime":
+                case "numOfSets":
+                case "charts":
+                    if(this.state.chartType!==event.state)
+                        this.setState({chartType:event.state});
+                    break;
+            }
+        });
     }
-    correct_or_wrongSets=(event)=>{
-        firebaseObj.readingDataOnFirebaseCB(val=>{
-            let x_axis=Object.keys(val);
-            let y_axis=Object.values(val).map(val=>
-                val=Object.keys(val).length);
-            this.setState({x_axis:x_axis,y_axis:y_axis,flag:true,title:'correct sets'})
-        },`Players/iWhdMGvrXPbET8egC0Hoby25a9g2`)
 
+    onClickShowChart=(event)=>{
+        this.setState({chartType:event.target.getAttribute('id')}) 
     }
-    
+
     render(){
-        return(
-            <div>
-                {this.state.flag?
-                <ChartData 
-                x_axis={this.state.x_axis}
-                y_axis={this.state.y_axis}
-                title={this.state.title}/>:
-                <div>
-                    <button onClick={this.correct_or_wrongSets} >מידע על סטים</button>
-                    <button>זמן ממוצע</button>
-                </div>}
-                
-                
-            </div>
-        );
+        switch(this.state.chartType){
+            case 'charts':
+                return(
+                    <div>
+                        <button onClick={this.onClickShowChart} id='numOfSets'  >מידע על סטים</button>
+                        <button onClick={this.onClickShowChart} id='avgTime' >זמן ממוצע</button>
+                    </div>);
+            case 'avgTime':case 'numOfSets':
+                return <ChartData chartType={this.state.chartType}/>;
+        }
     }
 }

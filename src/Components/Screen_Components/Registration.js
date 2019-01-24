@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import firebaseObj from "../../firebase/firebaseObj";
 import GameData from "../../data/GameData.json";
 import GeneralFunctions from '../../SetGame/GeneralFunctions';
-import {Back_btn} from '../Small_Components/Btn_BackAndForward';
 
 
 export default class Registration extends Component{
@@ -18,7 +17,7 @@ export default class Registration extends Component{
             },
             registStateInfo:''
         }
-        window.history.pushState('','','registration');
+        window.history.pushState('reg','','registration');
     }
 
     inputChange=(event)=>{

@@ -6,17 +6,15 @@ import Variables from './SetGame/Variables';
 import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
-import ErrorBoundary from './Components/Small_Components/ErrorBoundary';
-import GeneralFunctions from './SetGame/GeneralFunctions';
 import ChartPage from './Components/Screen_Components/ChartsPage';
-
+import ErrorMes from './Components/Small_Components/ErrorMes';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
       info:{},
-      pageSeen:"ChartPage"
+      pageSeen:"load"
       //load-load page
       //ent-EntrancePage
       //sel-SelectGameType
@@ -24,25 +22,24 @@ class App extends Component {
     }
     firebaseObj.createAuth();
     firebaseObj.createDataBase();
-    // firebaseObj.authState(this.handlePlayerAuthState);
+    firebaseObj.authState(this.handlePlayerAuthState);
 
-    // window.addEventListener('popstate',(event)=>{
-    //   console.log('inside popstate app',event.state)
-    //   switch(event.state){
-    //     case 'reg':
-    //     case 'log':
-    //     case 'ent':
-    //       break;
-    //     case 'new':
-    //     case 'exist':
-    //       //window.history.back();
-    //       break;
-    //     case 'sel':
-    //       if(this.state.pageSeen!='sel')
-    //         this.setState({pageSeen:'sel'});
-    //       break;
-    //   }
-    //   });
+    window.addEventListener('popstate',(event)=>{
+      console.log('event.state',event.state,'window.history',window.history)
+      switch(event.state){
+        case 'reg':case 'log':case 'ent':
+        case "avgTime":case "numOfSets":case "charts":
+          break;
+        case 'new':
+        case 'exist':
+          window.history.back();
+          break;
+        case 'sel':
+          if(this.state.pageSeen!='sel')
+            this.setState({pageSeen:'sel'});
+          break;
+      }
+      });
   }
 
   handlePlayerAuthState=async(fbUser)=>{
@@ -64,11 +61,8 @@ class App extends Component {
      this.setState({pageSeen:pageName,info:info});
   }
 
-
   render() {
     switch(this.state.pageSeen){
-      case 'ChartPage':
-        return <ChartPage/>;
       case "load":
         return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading'/></div>;
       case 'ent':
@@ -77,6 +71,8 @@ class App extends Component {
         return <SelectGameType screenSeenInside={this.state.screenSeenInside} moveThroughPages={this.moveThroughPages}/>;
       case "boa":
         return <Board info={this.state.info}  moveThroughPages={this.moveThroughPages}/>;
+      default:
+        return <ErrorMes/>;
     }
   }
 }
