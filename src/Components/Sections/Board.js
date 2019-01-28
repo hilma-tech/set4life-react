@@ -28,17 +28,23 @@ export default class Board extends Component {
             0 - only "set" button clickable, waiting for button to be clicked
             1 - cards availible to be chosen, stay for 10 seconds after button is clicked
             2 - the button is on "next", displaying 3 chosen cards
-            3-Another player is playing. lock state
+            3-Another player is playing. lock state.
              */
         }
         window.history.pushState('boa','','board');
-        window.onpopstate = (event) => {
-            switch (event.state) {
-                case "newGame":
-                case "existGame":
-                    window.history.back();
-                    break;
-            }
+        window.onpopstate=(event) => {
+            if(event.state!=='boa'){
+                window.history.pushState('boa','','board');
+                if(window.confirm("אתה בטוח שאתה רוצה לצאת?")){
+                    switch (event.state) {
+                        case "newGame":
+                        case "existGame":
+                            firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, {isConnected: false});
+                            window.history.go('sel');
+                            break;
+                    }
+                }
+            } 
         }
     }
 
@@ -49,7 +55,22 @@ export default class Board extends Component {
 
         timeStartGame = timeNewCards = performance.now();
     }
-    //callback functions for listeners on firebase
+
+    componentDidMount() {
+        window.onbeforeunload = (event) => {
+            event.preventDefault();
+            console.log("leave??");
+            return "leave??";
+        };
+
+        window.onunload = async function (e) {
+            firebaseObj.updatingValueInDataBase(
+                `Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, 
+                {isConnected: false});
+        }
+    }
+
+    //callback functions for listeners on firebase////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
     handleGameObjFromFirebase = (gameObj) => {
         let { Game_Participants,
@@ -80,7 +101,6 @@ export default class Board extends Component {
         if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards)) {
             this.setState({ currentCards: newCurrentCards });
         }
-
     }
 
     reciveCurrentUserIdFromFirebase = (userIdFromFirebase) => {
@@ -95,10 +115,10 @@ export default class Board extends Component {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
 
     selectCardFunction = (cardCode) => {
         let selectedCards = this.state.selectedCards;
-        console.log('cardCode', cardCode, selectedCards)
 
         if (selectedCards.length < 3) {
             (!selectedCards.includes(cardCode)) ?
@@ -146,7 +166,7 @@ export default class Board extends Component {
                     firebaseObj.removeDataFromDB(`Games/${this.gameCode}/currentCards`);
                 }
                 else {
-                    this.setState({currentCards: objPullCards.currentCards,
+                    this.setState({currentCards: objPullCards.currentCards?objPullCards.currentCards:[],
                         usedCards: [...this.state.usedCards, ...this.state.selectedCards],
                         stageOfTheGame: 0, selectedCards: []});
                     
@@ -167,7 +187,7 @@ export default class Board extends Component {
     }
 
     render() {
-        if (this.state.currentCards.length) {
+        if (this.state.currentCards&&this.state.currentCards.length&&!this.state.gameOver) {
             return (
                 <div id="board" className='page'>
                     <UpperBar game_Participants={GeneralFunctions.string_From_List(this.state.game_Participants, `המשתתפים במשחק:`)}

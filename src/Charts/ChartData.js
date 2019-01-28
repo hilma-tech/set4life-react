@@ -7,25 +7,6 @@ class ChartData extends Component{
     constructor(props){
       super(props);
       this.state={
-        hittingSetButton:{
-          title:'זמן ממוצע עד הלחיצה על כפתור סט',
-          correctChart:{
-            label:'סטים נכונים',
-            borderColor: "red",
-            fill: false,
-          },
-          wrongChart:{
-            label:'סטים לא נכונים',
-            borderColor: "#3e95ce",
-            fill: false,
-            pointRadius: 0
-          }
-        },
-        choosingCorrectSet:{
-          title:'זמן ממוצע מהלחיצה על כפתור הסט עד בחירת סט נכון',
-          borderColor: "green",
-          fill:false
-        },
         numOfSets:{}
       }
       window.history.pushState(this.props.chartType,'',this.props.chartType);
@@ -33,7 +14,7 @@ class ChartData extends Component{
 
     componentDidMount(){
       if(this.props.chartType==='avgTime')
-        this.avgTimeCharts();
+        ChartFunctions.avgTimeCharts();
       else if(this.props.chartType==='numOfSets')
         this.numOfSets();
     }
@@ -102,56 +83,31 @@ class ChartData extends Component{
             }
             have=false;
         });
-        let y_axis={
-          title:'num of set',
-          correct:{ 
+        let y_axis=[
+            { 
                 data: y_axis_correct,
-                label: "correct sets",
+                label: "סטים נכונים",
                 borderColor: "#3e95ce",
                 fill: false
             },
-            wrong:{
+            {
                 data: y_axis_worng,
-                label: "wrong sets",
+                label: "סטים לא נכונים",
                 borderColor: "#3e9234",
                 fill: false
             },
-            missed:{
+            {
                 data: y_axis_missed,
-                label: "missed sets",
+                label: "סטים מפוספסים",
                 borderColor: "#3eeeee",
                 fill: false
             }
-        }
+        ]
         this.setState({numOfSets:y_axis});
-        ChartFunctions.createChart(this.state.numOfSets,'firstChart');
+        ChartFunctions.createChart(this.state.numOfSets,'firstChart','מספר הסטים בכל משחק');
     },`Players/${Variables.userId}`)
     }
 
-    
-    avgTimeCharts=()=>{
-      firebaseObj.readingDataOnFirebaseCB(playerObj=>{
-        ChartFunctions.createX_axis(playerObj.games);
-
-        //hitting set button
-        let correctChart=this.state.hittingSetButton.correctChart;
-        correctChart.data=ChartFunctions.avgTime(playerObj.CorrectSets,'hitSet');
-
-        let wrongChart=this.state.hittingSetButton.wrongChart;
-        wrongChart.data=ChartFunctions.avgTime(playerObj.WrongSets,'hitSet');
-        ///////////////////
-
-        let choosingCorrectSet=this.state.choosingCorrectSet;
-        choosingCorrectSet.data=ChartFunctions.avgTime(playerObj.CorrectSets,'chooseSet');
-        
-        this.setState({hittingSetButton:{title:this.state.hittingSetButton.title,
-          correctChart:correctChart,wrongChart:wrongChart},
-          choosingCorrectSet:choosingCorrectSet});
-        ChartFunctions.createChart(this.state.hittingSetButton,'firstChart');
-        ChartFunctions.createChart(this.state.choosingCorrectSet,'secondChart');
-
-      },`Players/${Variables.userId}`)
-    }
 
     render() {
       return(

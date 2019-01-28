@@ -77,16 +77,6 @@ export default class ExistGame extends Component{
                     this.state.loadLocatePartic!==null&&
                         <ParticipantsList participants={this.state.participants} />
                 }
-                <input
-                id="input"
-                name='gameCode' 
-                type='number'
-                max="3"
-                placeholder="הכנס קוד משחק"
-                value={this.state.gameCode}
-                onChange={this.inputChange}/>
-
-                <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button> 
 
                 {this.state.invalidGameCode&& <div id='game-not-exist' >המשחק אינו קיים. אנא נסה שנית</div>}   
             </div>

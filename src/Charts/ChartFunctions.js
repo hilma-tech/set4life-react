@@ -1,4 +1,6 @@
 import Chart from 'chart.js';
+import firebaseObj from '../firebase/firebaseObj';
+import Variables from '../SetGame/Variables';
 
 const ChartFunctions={
     arrX_axis:[],
@@ -34,13 +36,8 @@ const ChartFunctions={
         this.arrX_axis=arrX_axis;
     },
 
-    createChart(obj, idElement){
+    createChart(obj, idElement,title){
         const ctx=document.getElementById(idElement).getContext('2d');
-
-        let title=obj.title;
-        delete obj.title;
-        
-        obj=typeof obj[Object.keys(obj)[0]]==='object'?Object.values(obj):[obj];
 
         new Chart(ctx,{
             type: 'line',
@@ -62,7 +59,38 @@ const ChartFunctions={
               }
             }
         });
-    }
+    },
+
+    avgTimeCharts(){
+        firebaseObj.readingDataOnFirebaseCB(playerObj=>{
+          this.createX_axis(playerObj.games);
+  
+          let hittingSetButton=[
+                {
+                  data:this.avgTime(playerObj.CorrectSets,'hitSet'),
+                  label:'סטים נכונים',
+                  borderColor: "red",
+                  fill: false,
+                },
+                {
+                  data:this.avgTime(playerObj.WrongSets,'hitSet'),
+                  label:'סטים לא נכונים',
+                  borderColor: "#3e95ce",
+                  fill: false,
+                }
+          ]
+  
+          let choosingCorrectSet=[{
+              data:this.avgTime(playerObj.CorrectSets,'chooseSet'),
+              borderColor: "green",
+              fill:false
+            }]
+          
+          this.createChart(hittingSetButton,'firstChart','זמן ממוצע עד הלחיצה על כפתור סט');
+          this.createChart(choosingCorrectSet,'secondChart','זמן ממוצע מהלחיצה על כפתור הסט עד בחירת סט נכון');
+  
+        },`Players/${Variables.userId}`)
+      }
 }
 
 

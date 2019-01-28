@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import NewGame from '../Screen_Components/NewGame';
-import ExistGame from '../Screen_Components/ExistGame';
-import firebaseObj from '../../firebase/firebaseObj';
-import Variables from '../../SetGame/Variables';
-import ErrorMes from '../Small_Components/ErrorMes';
-import ChartPage from '../Screen_Components/ChartsPage';
+import NewGame from '../../Screen_Components/NewGame';
+import ExistGame from '../../Screen_Components/ExistGame';
+import firebaseObj from '../../../firebase/firebaseObj';
+import Variables from '../../../SetGame/Variables';
+import ErrorMes from '../../Small_Components/ErrorMes';
+import ChartPage from '../../Screen_Components/ChartsPage';
 import './select-game.css';
-
-
 
 export default class GameType extends Component {
     constructor(props) {
@@ -18,17 +16,21 @@ export default class GameType extends Component {
             //exist-exist game
         }
         window.history.pushState('sel', '', 'gameType');
-        window.onpopstate = (event) => {
+        Variables.set_selPlaceHistory(window.history.length);
+        window.addEventListener('popstate',(event) => {
+            console.log('inside popstate sel', event.state)
             switch (event.state) {
-                case "newGame":
+                case "newGame":case "existGame":
                 case 'charts':
-                case "existGame":
                 case "sel":
                     if (this.state.GameTypeOptions != event.state)
-                        this.setState({ GameTypeOptions: event.state });
+                        this.setState({ GameTypeOptions: event.state});
                     break;
+                default:
+                    window.history.pushState('sel', '', 'gameType');
             }
-        }
+
+        });
     }
 
     onClickGameTypeButton = (event) => {
@@ -50,7 +52,6 @@ export default class GameType extends Component {
 
                             <main role="main" class="inner cover">
                                 <h1 class="cover-heading">בחר את סוג המשחק שלך:</h1>
-                                <p class="lead">bitch</p>
                                 <p class="lead">
                                     <button class="btn btn-lg btn-secondary" onClick={this.onClickGameTypeButton} id='existGame'> <i class="fas fa-sign-out-alt"></i> משחק קיים</button>
                                     <button class="btn btn-lg btn-secondary" onClick={this.onClickGameTypeButton} id='newGame'> <i class="fas fa-plus"></i> משחק חדש</button>

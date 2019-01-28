@@ -65,10 +65,9 @@ const setFunctions = {
         let { shape, shade, color, number } =Variables.objConstParameters;
 
         [shape,shade,color,number].map(value=>{
-            value===undefined?randoms.push(true):randoms.push(false);
+            value===undefined ? randoms.push(true) : randoms.push(false);
         });
 
-        /// why cant i use (typeof shape==='undefiend') instead random[0]?
         do {
             randoms[0]&& (shape = Math.floor(Math.random() * 3));
             randoms[1]&& (shade = Math.floor(Math.random() * 3));

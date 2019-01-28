@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Board from './Components/Sections/Board.js';
-import SelectGameType from './Components/Sections/SelectGameType.js';
+import SelectGameType from './Components/Sections/SelectGameType/SelectGameType.js';
 import Variables from './SetGame/Variables';
 import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
-import ChartPage from './Components/Screen_Components/ChartsPage';
 import ErrorMes from './Components/Small_Components/ErrorMes';
 
 class App extends Component {
@@ -25,20 +24,17 @@ class App extends Component {
     firebaseObj.authState(this.handlePlayerAuthState);
 
     window.addEventListener('popstate',(event)=>{
-      console.log('event.state',event.state,'window.history',window.history)
-      switch(event.state){
-        case 'reg':case 'log':case 'ent':
-        case "avgTime":case "numOfSets":case "charts":
-          break;
-        case 'new':
-        case 'exist':
-          window.history.back();
-          break;
-        case 'sel':
-          if(this.state.pageSeen!='sel')
-            this.setState({pageSeen:'sel'});
-          break;
-      }
+          switch(event.state){
+          case 'reg':case 'log':case 'ent':
+          case "avgTime":case "numOfSets":case "charts":
+          case 'new':case 'exist':
+            break;
+          case 'sel':case 'boa':
+            if(this.state.pageSeen!=event.state)
+              this.setState({pageSeen:event.state});
+            break;
+
+        }
       });
   }
 
@@ -66,11 +62,11 @@ class App extends Component {
       case "load":
         return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading'/></div>;
       case 'ent':
-        return <Entrance screenSeenInside={this.state.screenSeenInside} moveThroughPages={this.moveThroughPages}/>;
+        return <Entrance moveThroughPages={this.moveThroughPages}/>;
       case "sel":
-        return <SelectGameType screenSeenInside={this.state.screenSeenInside} moveThroughPages={this.moveThroughPages}/>;
+        return <SelectGameType moveThroughPages={this.moveThroughPages}/>;
       case "boa":
-        return <Board info={this.state.info}  moveThroughPages={this.moveThroughPages}/>;
+        return <Board info={this.state.info} moveThroughPages={this.moveThroughPages}/>;
       default:
         return <ErrorMes/>;
     }
