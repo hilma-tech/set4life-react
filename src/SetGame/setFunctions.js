@@ -124,7 +124,7 @@ const setFunctions = {
             });
         }
         return{
-            currentCards:currCards,
+            currentCards:currCards?currCards:[],
             gameOver:gameOver
         };
     },

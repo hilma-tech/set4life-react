@@ -5,6 +5,7 @@ import setFunctions from '../../SetGame/setFunctions.js';
 import Variables from '../../SetGame/Variables';
 import EndGame from '../Screen_Components/EndGame';
 import GeneralFunctions from '../../SetGame/GeneralFunctions';
+import ErrorMes from '../Small_Components/ErrorMes';
 
 
 let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOut;
@@ -161,15 +162,14 @@ export default class Board extends Component {
         if (this.state.stageOfTheGame === 2) {
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-                if (objPullCards.gameOver) {
-                    this.setState({ gameOver: true });
-                    firebaseObj.removeDataFromDB(`Games/${this.gameCode}/currentCards`);
-                }
+                if (objPullCards.gameOver) 
+                    this.setState({gameOver: true});
                 else {
-                    this.setState({currentCards: objPullCards.currentCards?objPullCards.currentCards:[],
+                    console.log('objPullCards.currentCards',objPullCards.currentCards)
+                    this.setState({currentCards: objPullCards.currentCards,
                         usedCards: [...this.state.usedCards, ...this.state.selectedCards],
                         stageOfTheGame: 0, selectedCards: []});
-                    
+
                     firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
                         {currentCards: objPullCards.currentCards,
                         usedCards: [...this.state.usedCards, ...this.state.selectedCards]});
@@ -187,39 +187,41 @@ export default class Board extends Component {
     }
 
     render() {
-        if (this.state.currentCards&&this.state.currentCards.length&&!this.state.gameOver) {
-            return (
-                <div id="board" className='page'>
-                    <UpperBar game_Participants={GeneralFunctions.string_From_List(this.state.game_Participants, `המשתתפים במשחק:`)}
-                        currentPlayerName={this.state.currentPlayerName}
-                        gameCode={this.gameCode}
-                        exitGame={this.exitGame} />
-
-                    {!this.state.gameOver &&
-                        <div id='cards'>
-                            {this.state.currentCards.map((cardCode, i) =>
-                                <Card
-                                    className='card'
-                                    key={i}
-                                    onclick={this.selectCardFunction}
-                                    cardCode={cardCode}
-                                    selectedCards={this.state.selectedCards}
-                                    isSet={this.state.isSet}
-                                    stageOfTheGame={this.state.stageOfTheGame}
-                                    isSelected={this.state.selectedCards.includes(cardCode)}
-                                />)
-                            }
-                        </div>}
-
-                    <LowerBar stageOfTheGame={this.state.stageOfTheGame}
-                        gameOver={this.state.gameOver}
-                        clickButtonEvent={this.clickButtonEvent} />
-                </div>
-            );
+        console.log('gameOver',this.state.gameOver,this.state.currentCards)
+        // if (!this.state.gameOver) {
+            if(this.state.currentCards){
+                return (
+                    <div id="board" className='page'>
+                        <UpperBar game_Participants={GeneralFunctions.string_From_List(this.state.game_Participants, `המשתתפים במשחק:`)}
+                            currentPlayerName={this.state.currentPlayerName}
+                            gameCode={this.gameCode}
+                            exitGame={this.exitGame} />
+    
+                            <div id='cards'>
+                                {this.state.currentCards.map((cardCode, i) =>
+                                    <Card
+                                        className='card'
+                                        key={i}
+                                        onclick={this.selectCardFunction}
+                                        cardCode={cardCode}
+                                        selectedCards={this.state.selectedCards}
+                                        isSet={this.state.isSet}
+                                        stageOfTheGame={this.state.stageOfTheGame}
+                                        isSelected={this.state.selectedCards.includes(cardCode)}
+                                    />)
+                                }
+                            </div> 
+                            
+                        <LowerBar stageOfTheGame={this.state.stageOfTheGame}
+                            gameOver={this.state.gameOver}
+                            clickButtonEvent={this.clickButtonEvent} />
+                    </div>); 
+            }
+            else return <ErrorMes/>;    
         }
-        else
-         return <EndGame/>;   
-    }
+    //     else
+    //      return <EndGame/>;   
+    // }
 }
 
 
@@ -232,6 +234,8 @@ const UpperBar = (props) => (
     </div>
 );
 
+
+
 const LowerBar = (props) => (
     <div id='lower-bar' >
         {!props.gameOver && <button onClick={props.clickButtonEvent} id="main_button"
@@ -241,7 +245,6 @@ const LowerBar = (props) => (
                     props.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
             }
         </button>}
-        {props.gameOver&&<EndGame/>}
     </div>
 );
 
