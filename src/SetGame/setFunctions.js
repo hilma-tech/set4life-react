@@ -123,9 +123,12 @@ const setFunctions = {
     //(return arr)
     newCurrentCards(x, arrcurrentCards, arrUsedCards,constParameters=null) {
         let currCards = [];
+        console.log('num of new cards',x)
         do {
+            currCards = [];
             for (let i = 0; i < x; i++) 
                 currCards.push(this.NewCardNumber([...currCards, ...arrcurrentCards, ...arrUsedCards])); 
+            console.log('new currCards in setgame',currCards,!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
         } while (!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
 
         return currCards;
