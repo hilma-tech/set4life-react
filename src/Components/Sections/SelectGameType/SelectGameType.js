@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NewGame from '../../Screen_Components/NewGame';
+import NewGame from '../../Screen_Components/NewGame/NewGame.js';
 import ExistGame from '../../Screen_Components/ExistGame';
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables';
@@ -22,7 +22,7 @@ export default class GameType extends Component {
             switch (event.state) {
                 case "newGame":case "existGame":
                 case 'charts':
-                case "sel":
+                case "sel":case '':
                     if (this.state.GameTypeOptions != event.state)
                         this.setState({ GameTypeOptions: event.state});
                     break;
@@ -46,24 +46,18 @@ export default class GameType extends Component {
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
-                    <div dir="rtl" class="text-center body">
+                    <div class="text-center body">
                         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
                             <TopBar id="top-bar" signOut={this.signOut} />
 
                             <main role="main" class="inner cover">
                                 <h1 class="cover-heading">בחר את סוג המשחק שלך:</h1>
                                 <p class="lead">
-                                    <button class="btn btn-lg btn-secondary" onClick={this.onClickGameTypeButton} id='existGame'> <i class="fas fa-sign-out-alt"></i> משחק קיים</button>
-                                    <button class="btn btn-lg btn-secondary" onClick={this.onClickGameTypeButton} id='newGame'> <i class="fas fa-plus"></i> משחק חדש</button>
-                                    <button class="btn btn-lg btn-secondary" onClick={this.onClickGameTypeButton} id='charts'> <i class="fas fa-chart-area"></i> גרפים</button>
+                                    <button class="btn" onClick={this.onClickGameTypeButton} id='existGame'>🎲 משחק קיים</button>
+                                    <button class="btn" onClick={this.onClickGameTypeButton} id='newGame'>➕ משחק חדש</button>
                                 </p>
+                                <button class="btn" onClick={this.onClickGameTypeButton} id='charts'>📈גרפים</button>
                             </main>
-
-                            <footer class="mastfoot mt-auto">
-                                <div class="inner">
-                                    <p>וואו אחי  <a href="https://getbootstrap.com/">מטורף</a>, מה <a href="https://twitter.com/mdo">כדגכ</a>.</p>
-                                </div>
-                            </footer>
                         </div>
 
                     </div>
@@ -87,9 +81,7 @@ const TopBar = (props) => (
     <header class="masthead mb-auto">
         <div class="inner">
             <nav class="nav nav-masthead justify-content-center">
-                <a id="signout" onClick={props.signOut} class="nav-link active" href="#">התנתק</a>
-                <a class="nav-link" href="#">בלה</a>
-                <a class="nav-link" href="#">צור קשר</a>
+                <a id="signout" onClick={props.signOut}>התנתק</a>
             </nav>
             <h3 class="masthead-brand"> ברוכה הבאה, {Variables.playerName}!</h3>
 

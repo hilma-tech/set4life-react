@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Card from '../Small_Components/Card';
-import firebaseObj from '../../firebase/firebaseObj';
-import setFunctions from '../../SetGame/setFunctions.js';
-import Variables from '../../SetGame/Variables';
-import EndGame from '../Screen_Components/EndGame';
-import GeneralFunctions from '../../SetGame/GeneralFunctions';
-import ErrorMes from '../Small_Components/ErrorMes';
-
+import Card from '../../Small_Components/Card';
+import firebaseObj from '../../../firebase/firebaseObj';
+import setFunctions from '../../../SetGame/setFunctions.js';
+import Variables from '../../../SetGame/Variables';
+import EndGame from '../../Screen_Components/EndGame';
+import GeneralFunctions from '../../../SetGame/GeneralFunctions';
+import ErrorMes from '../../Small_Components/ErrorMes';
+import './board.css';
 
 let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOut;
 
@@ -187,8 +187,7 @@ export default class Board extends Component {
     }
 
     render() {
-        console.log('gameOver',this.state.gameOver,this.state.currentCards)
-        // if (!this.state.gameOver) {
+        if (!this.state.gameOver) {
             if(this.state.currentCards){
                 return (
                     <div id="board" className='page'>
@@ -208,8 +207,7 @@ export default class Board extends Component {
                                         isSet={this.state.isSet}
                                         stageOfTheGame={this.state.stageOfTheGame}
                                         isSelected={this.state.selectedCards.includes(cardCode)}
-                                    />)
-                                }
+                                    />)}
                             </div> 
                             
                         <LowerBar stageOfTheGame={this.state.stageOfTheGame}
@@ -219,18 +217,21 @@ export default class Board extends Component {
             }
             else return <ErrorMes/>;    
         }
-    //     else
-    //      return <EndGame/>;   
-    // }
+        else
+         return <EndGame/>;   
+    }
 }
 
 
 const UpperBar = (props) => (
-    <div>
-        <p>{props.game_Participants}</p>
-        {props.currentPlayerName && <label id="play_now">{props.currentPlayerName} משחק עכשיו</label>}
+    <div id='upper-bar-boa' >
+        <div id='exit-game-container' >
+            <a onClick={props.exitGame} id="exitButton">יציאה מהמשחק</a>
+        </div>
         <label  id="game_code">{props.gameCode} הקוד של המשחק</label>
-        <button onClick={props.exitGame} id="exitButton">יציאה מהמשחק</button>
+        <p>{props.game_Participants}</p>
+        <label style={{visibility:props.currentPlayerName?'visible':'hidden'}}>
+        {props.currentPlayerName} משחק עכשיו</label>
     </div>
 );
 
@@ -238,7 +239,7 @@ const UpperBar = (props) => (
 
 const LowerBar = (props) => (
     <div id='lower-bar' >
-        {!props.gameOver && <button onClick={props.clickButtonEvent} id="main_button"
+        {!props.gameOver && <button className='btn' onClick={props.clickButtonEvent} id="main_button"
             disabled={props.stageOfTheGame === 1 || props.stageOfTheGame === 3}>
             {props.stageOfTheGame === 0 ? "מצאתי סט!" :
                 props.stageOfTheGame === 1 ? "סט בבחירה" :

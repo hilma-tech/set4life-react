@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Board from './Components/Sections/Board.js';
+import Board from './Components/Sections/Board/Board.js';
 import SelectGameType from './Components/Sections/SelectGameType/SelectGameType.js';
 import Variables from './SetGame/Variables';
 import Entrance from './Components/Sections/Entrance.js';

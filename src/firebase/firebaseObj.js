@@ -1,6 +1,6 @@
 import firebase from './Def';
 import Variables from '../SetGame/Variables';
-import {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut} from '../Components/Sections/Board';
+import {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut} from '../Components/Sections/Board/Board';
 import GeneralFunctions from "../SetGame/GeneralFunctions";
 import GameData from '../data/GameData'
 

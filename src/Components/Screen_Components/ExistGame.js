@@ -59,8 +59,9 @@ export default class ExistGame extends Component{
     render(){
         return(
             <div>
-                <div id="existGame">
+                <div id="existGame" className='page'>
                     <input
+                    style={{width:'30vw',height:'7vh', fontSize:'1.7rem'}}
                     id="input"
                     name='gameCode' 
                     type='text'
@@ -70,7 +71,10 @@ export default class ExistGame extends Component{
 
                     {this.state.loadingParticipants?
                     <img src={LoadingImg} alt='loading' />:
-                    <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button>}  
+                    <button 
+                    className='btn' 
+                    onClick={this.onClickExistGameCodeButton} 
+                    id='continue' >המשך</button>}  
                 </div>
                 {this.state.loadLocatePartic?
                     <img src={LoadingImg} alt='loading' className="LoadingImg"/>:

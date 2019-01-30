@@ -1,0 +1,108 @@
+#board{
+    display:flex;
+     align-items: center;
+     flex-direction: column;
+     justify-content: space-around;
+     direction: rtl;
+ }
+
+ .greyCard{
+    border: solid 0.4rem gray;  
+ }
+ 
+ .unselectedCard, .not-active{
+    border: solid 0.4rem white;
+ }
+ 
+ .greenCard{
+    border: solid 0.4rem greenyellow; 
+ }
+ 
+ .redCard{
+    border: solid 0.4rem red;
+ }
+ 
+ .not-active {
+     pointer-events: none;
+     cursor: default;
+     opacity: 0.4;
+   }
+ 
+ #cards{
+     width:48vw;
+     height:78vh;
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     align-items: flex-start;
+     justify-content: space-around;
+     align-content: space-around;
+     overflow: visible;
+ }
+
+ .card{
+    width:22vmin;
+    height:22vmin;
+    padding:3vh 1vw;
+    margin:0.5vh 0.5vh;
+    background-color: #dbdbdb;
+    border-radius: 8px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .card{
+        width:20vmin;
+        height:20vmin;
+        padding:3vh 1vw;
+        margin:0.5vh 0.5vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+    #cards{
+        width:92vw;
+        height:70vh;
+    }
+} 
+@media only screen and (max-width: 425px) {
+    .card{
+        width: 25vmin;
+        height: 25vmin;
+        padding: 3vh 1vw;
+        margin: 0vw 0vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+    #cards{
+        width:81vw;
+        height:65vh;
+    }
+}
+
+.btn{
+    font-size: 1.2rem !important;
+}
+
+#upper-bar-boa{
+    flex-direction: row;
+}
+
+#upper-bar-boa >*{
+    display:block;
+    font-size: 1.5rem;
+    margin:1vmin;
+    height: 4vh;
+}
+
+#exit-game-container{
+    width: 100vw;
+    align-items:flex-start;
+    text-align: left;
+}
+
+#upper-bar-boa a{
+    margin-left: 5vw;
+}
+
+
+
+

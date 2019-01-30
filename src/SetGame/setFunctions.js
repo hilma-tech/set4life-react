@@ -51,6 +51,32 @@ const setFunctions = {
         return  result; 
     },
 
+    isSetBoolFunction(selectedCards)
+    {
+
+        let colorSim = selectedCards[0].charAt(0)===selectedCards[1].charAt(0) && selectedCards[0].charAt(0)===selectedCards[2].charAt(0);
+        let colorDiff = selectedCards[0].charAt(0)!==selectedCards[1].charAt(0) && selectedCards[0].charAt(0)!==selectedCards[2].charAt(0) && selectedCards[1].charAt(0)!==selectedCards[2].charAt(0);
+
+        let shapeSim = selectedCards[0].charAt(1)===selectedCards[1].charAt(1) && selectedCards[0].charAt(1)===selectedCards[2].charAt(1);
+        let shapeDiff = selectedCards[0].charAt(1)!==selectedCards[1].charAt(1) && selectedCards[0].charAt(1)!==selectedCards[2].charAt(1) && selectedCards[1].charAt(1)!==selectedCards[2].charAt(1);
+        
+        let shadingSim = selectedCards[0].charAt(2)===selectedCards[1].charAt(2) && selectedCards[0].charAt(2)===selectedCards[2].charAt(2);
+        let shadingDiff = selectedCards[0].charAt(2)!==selectedCards[1].charAt(2) && selectedCards[0].charAt(2)!==selectedCards[2].charAt(2) && selectedCards[1].charAt(2)!==selectedCards[2].charAt(2);
+
+        let numberSim = selectedCards[0].charAt(3)===selectedCards[1].charAt(3) && selectedCards[0].charAt(3)===selectedCards[2].charAt(3);
+        let numberDiff = selectedCards[0].charAt(3)!==selectedCards[1].charAt(3) && selectedCards[0].charAt(3)!==selectedCards[2].charAt(3) && selectedCards[1].charAt(3)!==selectedCards[2].charAt(3);
+               
+        return {
+            bool: (colorSim||colorDiff) && (shapeSim || shapeDiff) && (shadingSim||shadingDiff) && (numberSim||numberDiff),
+            information:{
+                color: colorSim? selectedCards[0].charAt(0):-1,
+                shape: shapeSim? selectedCards[0].charAt(1):-1,
+                shade: shadingSim? selectedCards[0].charAt(2):-1,
+                number: numberSim? selectedCards[0].charAt(3):-1
+            }   
+        }
+    },
+
     newRandomGameCode(size) {
         let num=Math.floor(Math.random()*(Math.pow(10,size)));
         let s = num + "";
@@ -124,7 +150,7 @@ const setFunctions = {
             });
         }
         return{
-            currentCards:currCards?currCards:[],
+            currentCards:currCards,
             gameOver:gameOver
         };
     },
