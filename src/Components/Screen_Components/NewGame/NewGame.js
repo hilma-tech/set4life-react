@@ -5,7 +5,6 @@ import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables.js';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import './new-game.css';
-import { isNullOrUndefined } from 'util';
 
 export default class NewGame extends Component {
     constructor(props) {
@@ -23,7 +22,7 @@ export default class NewGame extends Component {
         let newGameCode;
         do {
             newGameCode = setFunctions.newRandomGameCode(3);
-            console.log('newGameCode',newGameCode);
+            console.log('newGameCode', newGameCode);
         } while (await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`) !== null)
 
         Variables.setGameCode(newGameCode);
@@ -33,7 +32,7 @@ export default class NewGame extends Component {
         let constParamLength = Object.keys(this.state.dropDownInfo).length;
         let newCurrentCards = setFunctions.newCurrentCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);
 
-        console.log('newCurrentCards',newCurrentCards)
+        console.log('newCurrentCards', newCurrentCards)
         let startGameTime = GeneralFunctions.timeAndDate('time');
         Variables.setCreationGameTime(startGameTime);
 
@@ -44,7 +43,7 @@ export default class NewGame extends Component {
             Game_Participants: { [Variables.userId]: { Name: Variables.playerName, isConnected: true } }
         };
 
-        console.log('new game obj',gameObj);
+        console.log('new game obj', gameObj);
         firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`, { ...gameObj, constParameters: Variables.objConstParameters });
         this.props.moveThroughPages("boa", gameObj);
     }
@@ -66,12 +65,6 @@ export default class NewGame extends Component {
         this.setState({ checkboxsInfo: checkboxsInfo });
     }
 
-    // settingSpecificParameterForm = (categoryStr) => {
-    //     return (
-
-    //         );
-    // }
-
     settingConstParametersObj = (event) => {
         let dropDownInfo = this.state.dropDownInfo;
         dropDownInfo[event.target.name] = event.target.options[event.target.selectedIndex].getAttribute('code')
@@ -92,21 +85,21 @@ export default class NewGame extends Component {
         return (
             <div id='new-game' className='page'>
                 <div id='checkbox-param' >
-                    {Object.keys(GameData.cardsParameters).map((par, i) => {
-                        return (<div key={i} >
+                    {Object.keys(GameData.cardsParameters).map((par, i) => (
+                        <div key={i} >
                             <input
                                 type="checkbox"
                                 name={par}
                                 checked={this.state.checkboxsInfo[par + 'Bool']}
                                 onChange={this.checkboxsChange} key={par} />
-                            <label style={{ display: 'inline', marginLeft: '1.5vw', fontSize: '1.5rem' }}> {GameData.cardsParameters[par].nameHe}</label>
-                            {<SelectConstParameter
+                            <label> {GameData.cardsParameters[par].nameHe}</label>
+                            <SelectConstParameter
                                 checkboxsInfo={this.state.checkboxsInfo}
                                 arrOptionsHe={GameData.cardsParameters[par][par + 'He']}
                                 categoryStr={par}
-                                settingConstParametersObj={this.settingConstParametersObj} />}
-                        </div>);
-                    })}
+                                settingConstParametersObj={this.settingConstParametersObj} />
+                        </div>)
+                    )}
                 </div>
                 <label>טיימר של הכפתור:</label>
                 <input
@@ -119,8 +112,7 @@ export default class NewGame extends Component {
                 <button
                     className='btn'
                     disabled={this.setDisableNewGameButton()}
-                    onClick={this.settingNewGame}
-                >התחל משחק חדש
+                    onClick={this.settingNewGame}>התחל משחק חדש
                 </button>
             </div>
         );
@@ -141,8 +133,7 @@ const SelectConstParameter = (props) => (
             props.arrOptionsHe.map((option, i) =>
                 <option code={i} key={i} >{option}</option>)
         }
-    </select>
-);
+    </select>);
 
 
 

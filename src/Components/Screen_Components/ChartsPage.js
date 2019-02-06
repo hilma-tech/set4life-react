@@ -5,7 +5,7 @@ export default class ChartsPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            chartType:'charts'
+            chartType:'avgTime'
         }
         window.history.pushState('charts','','charts');
         window.addEventListener('popstate',(event)=>{

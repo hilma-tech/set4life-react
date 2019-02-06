@@ -27,7 +27,7 @@ export default class Board extends Component {
             /*
             stageOfTheGame values:
             0 - only "set" button clickable, waiting for button to be clicked
-            1 - cards availible to be chosen, stay for 10 seconds after button is clicked
+            1 - cards availble to be chosen, stay for 10 seconds (default) after button is clicked
             2 - the button is on "next", displaying 3 chosen cards
             3-Another player is playing. lock state.
              */
@@ -40,6 +40,7 @@ export default class Board extends Component {
                     switch (event.state) {
                         case "newGame":
                         case "existGame":
+                            window.onbeforeunload = () => {};
                             firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, {isConnected: false});
                             window.history.go('sel');
                             break;
@@ -64,7 +65,7 @@ export default class Board extends Component {
             return "leave??";
         };
 
-        window.onunload = async function (e) {
+        window.onunload = e=>{
             firebaseObj.updatingValueInDataBase(
                 `Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, 
                 {isConnected: false});
@@ -218,19 +219,19 @@ export default class Board extends Component {
             else return <ErrorMes/>;    
         }
         else
-         return <EndGame/>;   
+         return <EndGame moveThroughPages={this.moveThroughPages}/>;   
     }
 }
 
 
 const UpperBar = (props) => (
     <div id='upper-bar-boa' >
-        <div id='exit-game-container' >
+        <div id='nav-bar-boa' >
+            <p>{props.game_Participants}</p>
             <a onClick={props.exitGame} id="exitButton">יציאה מהמשחק</a>
         </div>
         <label  id="game_code">{props.gameCode} הקוד של המשחק</label>
-        <p>{props.game_Participants}</p>
-        <label style={{visibility:props.currentPlayerName?'visible':'hidden'}}>
+        <label id='current-player' style={{visibility:props.currentPlayerName?'visible':'hidden'}}>
         {props.currentPlayerName} משחק עכשיו</label>
     </div>
 );
@@ -238,7 +239,7 @@ const UpperBar = (props) => (
 
 
 const LowerBar = (props) => (
-    <div id='lower-bar' >
+    <div id='lower-bar-boa' >
         {!props.gameOver && <button className='btn' onClick={props.clickButtonEvent} id="main_button"
             disabled={props.stageOfTheGame === 1 || props.stageOfTheGame === 3}>
             {props.stageOfTheGame === 0 ? "מצאתי סט!" :

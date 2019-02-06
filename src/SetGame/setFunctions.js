@@ -42,39 +42,12 @@ const setFunctions = {
             tempResult = this.isParameterValidSet(selectedCards,index);
             if(Variables.objConstParameters&&Variables.objConstParameters.hasOwnProperty(info[index]))
                 result.information[info[index]]=parseInt(Variables.objConstParameters[info[index]],10)+3;
-            else{
-                result.information[info[index]] =tempResult.bool?(tempResult.isSimilar ? selectedCards[0].charAt(index): -1):-2;
-                flag&&(flag = flag && tempResult.bool);  
-            }
+            else
+                result.information[info[index]] =tempResult.bool?(tempResult.isSimilar ? selectedCards[0].charAt(index): -1):-2;  
+            flag&&(flag = flag && tempResult.bool);
         }
         result.bool = flag;
         return  result; 
-    },
-
-    isSetBoolFunction(selectedCards)
-    {
-
-        let colorSim = selectedCards[0].charAt(0)===selectedCards[1].charAt(0) && selectedCards[0].charAt(0)===selectedCards[2].charAt(0);
-        let colorDiff = selectedCards[0].charAt(0)!==selectedCards[1].charAt(0) && selectedCards[0].charAt(0)!==selectedCards[2].charAt(0) && selectedCards[1].charAt(0)!==selectedCards[2].charAt(0);
-
-        let shapeSim = selectedCards[0].charAt(1)===selectedCards[1].charAt(1) && selectedCards[0].charAt(1)===selectedCards[2].charAt(1);
-        let shapeDiff = selectedCards[0].charAt(1)!==selectedCards[1].charAt(1) && selectedCards[0].charAt(1)!==selectedCards[2].charAt(1) && selectedCards[1].charAt(1)!==selectedCards[2].charAt(1);
-        
-        let shadingSim = selectedCards[0].charAt(2)===selectedCards[1].charAt(2) && selectedCards[0].charAt(2)===selectedCards[2].charAt(2);
-        let shadingDiff = selectedCards[0].charAt(2)!==selectedCards[1].charAt(2) && selectedCards[0].charAt(2)!==selectedCards[2].charAt(2) && selectedCards[1].charAt(2)!==selectedCards[2].charAt(2);
-
-        let numberSim = selectedCards[0].charAt(3)===selectedCards[1].charAt(3) && selectedCards[0].charAt(3)===selectedCards[2].charAt(3);
-        let numberDiff = selectedCards[0].charAt(3)!==selectedCards[1].charAt(3) && selectedCards[0].charAt(3)!==selectedCards[2].charAt(3) && selectedCards[1].charAt(3)!==selectedCards[2].charAt(3);
-               
-        return {
-            bool: (colorSim||colorDiff) && (shapeSim || shapeDiff) && (shadingSim||shadingDiff) && (numberSim||numberDiff),
-            information:{
-                color: colorSim? selectedCards[0].charAt(0):-1,
-                shape: shapeSim? selectedCards[0].charAt(1):-1,
-                shade: shadingSim? selectedCards[0].charAt(2):-1,
-                number: numberSim? selectedCards[0].charAt(3):-1
-            }   
-        }
     },
 
     newRandomGameCode(size) {
@@ -161,31 +134,13 @@ const setFunctions = {
     // translate cardCode into src of pictures 
     //(return src)
     cardNameStringFromNumbersCode(str) {
-        let shape = this.getShapeFromCode(str[0], "en");
-        let shade = this.getShadeFromCode(str[1], "en");
-        let color = this.getColorFromCode(str[2], "en");
+        let shape = GameData.cardsParameters.shape.shapeEn[str[0]];
+        let shade = GameData.cardsParameters.shade.shadeEn[str[1]];
+        let color = GameData.cardsParameters.color.colorEn[str[2]];
         let number = str[3]==='0'?'':str[3];
 
         return (`${shape}_${shade}_${color}${number?"_"+number:''}.png`);  
-    },
-
-    //convert shapeCode to string 
-    getShapeFromCode(code, lang) {
-        return lang ==="en"?GameData.cardsParameters.shape.shapeEn[code]:
-            GameData.cardsParameters.shape.shapeHe[code];
-    },
-
-    //convert shadeCode to string 
-    getShadeFromCode(code, lang) {
-        return lang ==="en"?GameData.cardsParameters.shade.shadeEn[code]:
-        GameData.cardsParameters.shade.shadeHe[code];
-    },
-
-    //convert colorCode to string 
-    getColorFromCode(code, lang) {
-        return (lang ==="en")?GameData.cardsParameters.color.colorEn[code]:
-            GameData.cardsParameters.color.colorHe[code];;
-    },
+    }
 };
 
 export default setFunctions;

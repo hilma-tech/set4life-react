@@ -43,6 +43,7 @@ class EndGame extends Component{
     render(){
         return(
             <div className="page" id="endGame">
+            <a onClick={this.props.moveThroughPages('sel')} >חזרה למסך הראשי</a>
                 <h1>כל הכבוד</h1>
                 <h2>ניצחת</h2>
                 <p>מספר הסטים הנכונים שלך: {this.getcorrectSetLenght()}{this.state.numCorrectSet}</p>
