@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
-import Board from './Components/Sections/Board.js';
-import SelectGameType from './Components/Sections/SelectGameType.js';
+import Board from './Components/Sections/Board/Board.js';
+import SelectGameType from './Components/Sections/SelectGameType/SelectGameType.js';
 import Variables from './SetGame/Variables';
 import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
-import ErrorBoundary from './Components/Small_Components/ErrorBoundary';
-import GeneralFunctions from './SetGame/GeneralFunctions';
-import ChartPage from './Components/Screen_Components/ChartsPage';
-
+import ErrorMes from './Components/Small_Components/ErrorMes';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
       info:{},
-      pageSeen:"ChartPage"
+      pageSeen:"load"
       //load-load page
       //ent-EntrancePage
       //sel-SelectGameType
@@ -24,25 +21,21 @@ class App extends Component {
     }
     firebaseObj.createAuth();
     firebaseObj.createDataBase();
-    // firebaseObj.authState(this.handlePlayerAuthState);
+    firebaseObj.authState(this.handlePlayerAuthState);
 
-    // window.addEventListener('popstate',(event)=>{
-    //   console.log('inside popstate app',event.state)
-    //   switch(event.state){
-    //     case 'reg':
-    //     case 'log':
-    //     case 'ent':
-    //       break;
-    //     case 'new':
-    //     case 'exist':
-    //       //window.history.back();
-    //       break;
-    //     case 'sel':
-    //       if(this.state.pageSeen!='sel')
-    //         this.setState({pageSeen:'sel'});
-    //       break;
-    //   }
-    //   });
+    window.addEventListener('popstate',(event)=>{
+          switch(event.state){
+          case 'reg':case 'log':case 'ent':
+          case "avgTime":case "numOfSets":case "charts":
+          case 'new':case 'exist':
+            break;
+          case 'sel':case 'boa':
+            if(this.state.pageSeen!=event.state)
+              this.setState({pageSeen:event.state});
+            break;
+
+        }
+      });
   }
 
   handlePlayerAuthState=async(fbUser)=>{
@@ -64,20 +57,30 @@ class App extends Component {
      this.setState({pageSeen:pageName,info:info});
   }
 
-
   render() {
-    switch(this.state.pageSeen){
-      case 'ChartPage':
-        return <ChartPage/>;
-      case "load":
-        return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading'/></div>;
-      case 'ent':
-        return <Entrance screenSeenInside={this.state.screenSeenInside} moveThroughPages={this.moveThroughPages}/>;
-      case "sel":
-        return <SelectGameType screenSeenInside={this.state.screenSeenInside} moveThroughPages={this.moveThroughPages}/>;
-      case "boa":
-        return <Board info={this.state.info}  moveThroughPages={this.moveThroughPages}/>;
+    console.log("pageSeen",this.state.pageSeen)
+    if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
+      switch(this.state.pageSeen){
+        case "load":
+          return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading'/></div>;  
+        case 'ent':
+          return <Entrance moveThroughPages={this.moveThroughPages}/>;
+        case "sel":
+          return <SelectGameType moveThroughPages={this.moveThroughPages}/>;
+        case "boa":
+          return <Board info={this.state.info} moveThroughPages={this.moveThroughPages}/>;
+        default:
+          return <ErrorMes/>;
+      }
     }
+    else{
+      return <div>move to chrom</div> 
+    }
+      
+      // :
+      // <div>moov to chrom</div> 
+      // }
+    
   }
 }
 

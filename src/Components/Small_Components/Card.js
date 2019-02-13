@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import setFunctions from '../../SetGame/setFunctions.js';
 
-
 function importAll(r) {
     let images = {};
     r.keys().map((card) => { images[card.replace('./', '')] = r(card); });
@@ -9,8 +8,9 @@ function importAll(r) {
 }
 const cardImages = importAll(require.context('../../data/cards', false, /\.(png|jpe?g|svg)$/));
 
+
 export default class Card extends Component {
-    clickOnCard=(e)=>{
+    clickOnCard=()=>{
        if(this.props.stageOfTheGame===1){
         this.props.onclick(this.props.cardCode);
        }
@@ -18,12 +18,16 @@ export default class Card extends Component {
 
     settingClassNameCard=()=>{
         let classNameCard='card';
-        if(this.props.isSet){
-            classNameCard+=' greenCard';
-        }else if(this.props.isSet===false){
-            classNameCard+=' redCard';
-        }else if(this.props.isSet===undefined){
-            classNameCard+=' greyCard';
+        switch(this.props.isSet){
+            case true:
+                classNameCard+=' greenCard';
+                break;
+            case false:
+                classNameCard+=' redCard';
+                break;
+            case undefined:
+                classNameCard+=' greyCard';
+                break;
         }
         return classNameCard;  
     }

@@ -1,0 +1,182 @@
+#board{
+    align-content: space-around;
+     justify-content: center;
+     direction: rtl;
+     width: 100%;
+ }
+
+ .greyCard{
+    border: solid 0.4rem gray;  
+ }
+ 
+ .unselectedCard, .not-active{
+    border: solid 0.4rem white;
+ }
+ 
+ .greenCard{
+    border: solid 0.4rem greenyellow; 
+ }
+ 
+ .redCard{
+    border: solid 0.4rem red;
+ }
+ 
+ .not-active {
+     pointer-events: none;
+     cursor: default;
+     opacity: 0.4;
+}
+ 
+ #cards{
+     width:46vw;
+     height:60vh;
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     align-items: flex-start;
+     justify-content: space-around;
+     align-content: space-around;
+     overflow: visible;
+ }
+
+ .card{
+    width: 20vmin;
+    height:20vmin;
+    padding:3vh 1vw;
+    margin:0.5vh 0.5vh;
+    background-color: #dbdbdb;
+    border-radius: 8px;
+}
+
+.btn{
+    font-size: 1.5rem !important;
+}
+
+#upper-bar-boa{
+    flex-direction: row;
+    height: 22vh;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#upper-bar-boa >*:not(:first-child){
+    display:block;
+    margin:1vh;
+}
+
+#nav-bar-boa{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #4eb5f14f;
+    border-radius: 1vmin;
+    margin-bottom:1vh;
+    height: 6vh;
+}
+
+#nav-bar-boa >*{
+    margin:auto auto;
+    background-color: #ffffff00;
+}
+
+
+#lower-bar-boa{
+    margin-top:4.5vh;
+    justify-content: center;
+    width:100vw;
+    align-items: center;
+}
+
+#current-player{
+    font-weight: bold;
+    color:#3880ce;
+}
+
+#game_code{
+    font-weight: bold;
+    font-size:1.5rem;
+}
+#current-player{
+    font-size:1.5rem;
+}
+
+@media only screen and (max-width: 1024px) and (min-width:425px) {
+    .card{
+        width:20vmin;
+        height:20vmin;
+        padding:3vh 1vw;
+        margin:0.5vh 0.5vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+    #cards{
+        width:92vw;
+        height:60vh;
+    }
+
+    #upper-bar-boa >*{
+        font-size: 3rem;
+        margin:1vh;
+    }
+    .btn{
+        font-size: 2.8rem !important;
+    }
+    #lower-bar-boa{
+        margin-top:1vh;
+    }
+
+    #nav-bar-boa >*{
+        font-size:1.6rem;
+    }
+
+    #nav-bar-boa{
+        height: 5vh;
+    }
+    #upper-bar-boa{
+        height: 20vh;
+    }
+}
+
+
+@media only screen and (max-width: 425px) {
+    .card{
+        width: 24vmin;
+        height: 24vmin;
+        padding: 3vh 1vw;
+        margin: 0vw 0vh;
+        background-color: #dbdbdb;
+        border-radius: 0.9rem;
+    }
+    #cards{
+        width:81vw;
+        height:65vh;
+    }
+    #upper-bar-boa >*{
+        font-size: 2rem;
+        margin:0.6vh;
+    }
+    #upper-bar-boa{
+        height: 15vh;
+        margin-top:0;
+    }
+    .btn{
+        font-size: 2.1rem !important;
+    }
+    #lower-bar-boa{
+        margin-top:2vh;
+    }
+    #nav-bar-boa{
+        margin-top:0;
+    }
+    @media only screen and (min-height: 730px) {
+        #upper-bar-boa >*{
+            font-size: 2.5rem;
+        }
+        .btn{
+            font-size: 2.3rem !important;
+        }
+    }
+}
+
+

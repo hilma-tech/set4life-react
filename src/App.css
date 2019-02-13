@@ -1,413 +1,122 @@
- *{
+ 
+*{
     padding:0;
     margin:0;
     font-family:Verdana, Geneva, sans-serif;
-
+    color:black;
+    background-color:white;
+    font-size:20px;
+    direction: rtl;
+    text-align: center;
 }
 
-#app{
-    width:100vw;
-    height: 100vh; 
-}
-
-#app .LoadingImg{
-    /* display: block; */
-    margin-left: auto;
-    margin-right: auto;
-    /* margin:auto,auto; */
-    width: 50%;
-
+input{
+direction: ltr;
 }
 
 .page{
+    width:100%;
+    height:100%;
+    background-color:white;
     display: flex;
-    width:100vw;
-    height: 100vh; 
-}
-
-button{
-    background-color: #80e5ff;
-    border-radius: 15%;
-}
-
-#login-page{
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
-    text-align: center;
+    align-content: center;
+    flex-direction:column;
 }
 
-.loading{
-    width: 50%;
-    height: 50%;
+.lg-h{
+    font-size: 5rem;
+    font-weight: bold;
 }
 
-#login-page> * {
+/* .btn-primary,
+.btn-primary:hover,
+.btn-primary:focus{
+  color: rgb(8, 8, 8);
+  background-color: rgb(141, 135, 135);
+  border: .05rem solid #fff;
+} */
+
+/* .btn-lg{
+    padding: 0.2rem 0;
+    font-weight: 700;
+    margin: 2% 1%;
+    font-size:1.5rem; 
     margin:0.5rem;
-}
-
-#login-page input{
-    height: 5vh;
-    width: 40vw;
-    font-size: 1.2rem;
-}
-
-#game-type{
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-#game-type label{
-    display: block;
-    font-size: 1rem;
-    margin-bottom: 10vh;
-    direction: rtl;
-    justify-content: center;
-    align-items: center;
-    margin-right: 2rem; 
-}
-#game-type h1{
-    display: block;
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 10vh;
-    direction: rtl;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-#existGame{
-    display: flex;
-    align-items: center;
-    direction: rtl;
-}
-
-.check-game{
-    text-align: center;
-    margin: 5%;
-}
-#continue{
-    width: 15vw;
-    height: 5vh;
-    margin: 1%;
-}
-
-#signout{
-    display: inline-block;
-    top:10%;
-    left:5%;
-    height:1.7rem ;
-    width: 4rem;
-    text-align: center;
-    font-size: 1rem ;
-    margin-left: 2%
-}
-.game-type-buttons>*{
-    margin:0.5rem;
-    height:6rem ;
-    width: 10rem;
-    font-size: 1.7rem ;
-    font-weight:bold;
-}
-.game-type-buttons{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-#top-bar{
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: baseline;
-    align-self: start;
-    justify-content: space-between;
-}
-
-#game-type input[type="text"]{
-    height:2.8rem ;
-    font-size: 1.2rem;
-    text-align: center;
-    border: 0.5px solid
-}
-
-#new-game{
-    flex-direction: column;
-    direction: rtl;
-}
-
-#new-game input{
-    margin:0.7rem;
-}
-
-#new-game select{
-    margin:0.8rem;
-}
-
-#new-game span{
-    font-size:1.5rem;
-}
-
-#new-game button{
-    margin-top: 1.5rem;
-    height:3rem ;
-    width: 7rem;
-    font-size: 1rem;
-}
+    width:15vw;
+} */
 
 
-#board{
-   display:flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-around;
-    direction: rtl;
+#login-page a:link {
+    color: blue;
+    background-color: transparent;
+    text-decoration: none;
 }
-
-#game_code{
-    font-size:2rem;
-    font-weight: 550; 
-    margin-top:2vh;
-    direction: ltr;
-}
-
-#play_now{
-    width: 90%;
-    height: 5%;
-    font-size: 1rem;
-}
-
-#UpperBar{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-
-.greyCard{
-   border: solid 0.4rem gray;
-
-   
-}
-
-.unselectedCard, .not-active{
-   border: solid 0.4rem white;
-}
-
-.greenCard{
-   border: solid 0.4rem greenyellow; 
-}
-
-.redCard{
-   border: solid 0.4rem red;
-}
-
-.not-active {
-    pointer-events: none;
-    cursor: default;
-    opacity: 0.4;
-
+#login-page a:visited {
+    color:rgba(0, 0, 255, 0.575);
+    background-color: transparent;
+    text-decoration: none;
+  }
+  #login-page a:hover {
+    color:rgb(113, 113, 255);
+    background-color: transparent;
+    text-decoration: underline;
   }
 
-#cards{
-    width:48vw;
-    height:78vh;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-around;
-    align-content: space-around;
-    overflow: visible;
+
+  @media only screen and (max-width: 1024px) and (min-width:425px) {
+    *{
+      font-size:14px;
+    }
 }
 
-#main_button{
-    width: 13rem;
-    font-size: 2rem;
+@media only screen and (max-width: 425px) {
+    *{
+        font-size:10px;
+      }
 }
 
-#exitButton{
-    width: 10%;
-    height: 5%;
-    font-size: 1rem;
-    align-items: center;
+#login-page >*{
+  margin:1vh;  
 }
 
-#lower-bar>*{
- 
-    margin:2%;
+#login-page label{
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-#lower-bar button{
-    font-weight:bold;
-    padding:8%;
-}
-
-.card{
-    width:8vw;
-    height:15vh;
-    padding:3vh 1vw;
-    margin:0.5vh 0.5vh;
-    background-color: #dbdbdb;
-    border-radius: 8px;
-}
-
-
-
-
-
-
-
-
-#entrance{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-#entrance-buttons{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-#entrance-options button{
-    margin:1rem;
-    margin-top:2.5rem;
-    height:6rem ;
-    width: 12rem;
-    font-size: 1.7rem ;
-    font-weight:bold;
-    background-color: lightskyblue;
-    border-radius: 15%;
-    align-items: center;
-}
-
-#entrance-options label{
-    margin-top: 30vh;
-    font-size: 5.5rem;
-    font-weight: 600;
-    display:block;
-    text-align: center;
-}
-
-#login-page button{
-    margin:0.5rem;
-    height: 3.8rem ;
-    width: 8.5rem;
-    font-size: 1.7rem ;
-    font-weight:bold;
-}
-
-
-#reg{
-    direction: rtl;
-    text-align: center;
-}
-
-#reg > *{
-    display: block;
-    margin:0.5rem;
-}
-#reg input{
+.btn{
+    display:inline-block;
+    padding:0.3em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:400;
+    background-color:#4eb5f1;
     text-align:center;
-    width: 50vw;
-    height: 4vh;
-    border: 0.01rem solid black;
-    font-size: 1.2rem;
-}
-#reg button{
-    margin:1.5rem;
-    height:2rem ;
-    width: 5rem;
-    font-size: 1rem ;
-    font-weight:bold;
-    margin:auto auto;
-}
-
-#reg h2{
-    font-size: 4rem;
-    margin-bottom:4vh;
-}
-
-#endGame{
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    height: 60%;
-}
-
-@media only screen and (max-width: 1072px) {
-    .card{
-        width:15vw;
-        height:13vh;
-        padding:3vh 1vw;
-        margin:0.5vh 0.5vh;
-        background-color: #dbdbdb;
-        border-radius: 0.9rem;
+    transition: all 0.2s;
+    border-color: #4eb5f1;
+    }
+    .btn:hover{
+        background-color:#4095c6;
     }
 
-    #cards{
-        width:92vw;
-        height:70vh;
-    }
-    #game_code{
-        font-size:4rem;
-    }
-    
-    #exitButton{
-        width: 20%;
-    }
-    #play_now{
-        width: 90%;
-        height: 5%;
-        font-size: 1rem;
-    }
-} 
-@media only screen and (max-width: 600px) {
-    .card{
-        width: 16vw;
-        height: 7vh;
-        padding: 3vh 1vw;
-        margin: 0vw 0vh;
-        background-color: #dbdbdb;
-        border-radius: 0.9rem;
+    @media all and (max-width:30em){
+     .btn{
+        display:block;
+        margin:0.2em auto;
+        }
     }
 
-    #cards{
-        width:81vw;
-        height:65vh;
-    }  
-    #entrance-buttons{
-        margin-left: auto;
-        margin-right: auto;
-        justify-content: center;
+    #existGame >*{
+        margin:1vh;
     }
-    #login-page input{
-        height: 5vh;
-        width: 80vw;
-        font-size: 1.2rem;
-    }
-    #reg input{
-        text-align:center;
-        width: 80vw;
-        height: 4vh;
-    }
-    #game_code{
-        text-align: center;
-        font-size: 2rem;
-        direction: ltr;
-    }
-    #exitButton{
-        width: 36%;
-        text-align: center
-    }
-    #play_now{
-        width: 90%;
-        height: 5%;
-        font-size: 1rem;
-    }
-}
+
+
+
+
 
 

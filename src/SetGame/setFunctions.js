@@ -42,10 +42,9 @@ const setFunctions = {
             tempResult = this.isParameterValidSet(selectedCards,index);
             if(Variables.objConstParameters&&Variables.objConstParameters.hasOwnProperty(info[index]))
                 result.information[info[index]]=parseInt(Variables.objConstParameters[info[index]],10)+3;
-            else{
-                result.information[info[index]] =tempResult.bool?(tempResult.isSimilar ? selectedCards[0].charAt(index): -1):-2;
-                flag&&(flag = flag && tempResult.bool);  
-            }
+            else
+                result.information[info[index]] =tempResult.bool?(tempResult.isSimilar ? selectedCards[0].charAt(index): -1):-2;  
+            flag&&(flag = flag && tempResult.bool);
         }
         result.bool = flag;
         return  result; 
@@ -61,20 +60,21 @@ const setFunctions = {
     //receive an array of cards and return a random cardCode that is not in the array 
     //(return cardCode)
     NewCardNumber(arrCards) {
+        console.log("in NewCardNumber")
         let randoms=[];
         let { shape, shade, color, number } =Variables.objConstParameters;
 
         [shape,shade,color,number].map(value=>{
-            value===undefined?randoms.push(true):randoms.push(false);
+            value===undefined ? randoms.push(true) : randoms.push(false);
         });
 
-        /// why cant i use (typeof shape==='undefiend') instead random[0]?
         do {
             randoms[0]&& (shape = Math.floor(Math.random() * 3));
             randoms[1]&& (shade = Math.floor(Math.random() * 3));
             randoms[2]&& (color = Math.floor(Math.random() * 3));
             randoms[3]&& (number = Math.floor(Math.random() * 3));
         } while (arrCards.includes(`${shape}${shade}${color}${number}`))
+        console.log("shade,shape,color,number",shade,shape,color,number)
         return `${shape}${shade}${color}${number}`;
     },
 
@@ -97,12 +97,17 @@ const setFunctions = {
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
     newCurrentCards(x, arrcurrentCards, arrUsedCards,constParameters=null) {
+        console.log("in newCurrentCards")
         let currCards = [];
+        console.log('num of new cards',x)
         do {
+            currCards = [];
             for (let i = 0; i < x; i++) 
                 currCards.push(this.NewCardNumber([...currCards, ...arrcurrentCards, ...arrUsedCards])); 
+            console.log('new currCards in setgame',currCards,!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
         } while (!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
-
+        console.log("currCards",currCards)
+        console.log("num of cards", x)
         return currCards;
     },
 
@@ -133,31 +138,13 @@ const setFunctions = {
     // translate cardCode into src of pictures 
     //(return src)
     cardNameStringFromNumbersCode(str) {
-        let shape = this.getShapeFromCode(str[0], "en");
-        let shade = this.getShadeFromCode(str[1], "en");
-        let color = this.getColorFromCode(str[2], "en");
+        let shape = GameData.cardsParameters.shape.shapeEn[str[0]];
+        let shade = GameData.cardsParameters.shade.shadeEn[str[1]];
+        let color = GameData.cardsParameters.color.colorEn[str[2]];
         let number = str[3]==='0'?'':str[3];
 
         return (`${shape}_${shade}_${color}${number?"_"+number:''}.png`);  
-    },
-
-    //convert shapeCode to string 
-    getShapeFromCode(code, lang) {
-        return lang ==="en"?GameData.cardsParameters.shape.shapeEn[code]:
-            GameData.cardsParameters.shape.shapeHe[code];
-    },
-
-    //convert shadeCode to string 
-    getShadeFromCode(code, lang) {
-        return lang ==="en"?GameData.cardsParameters.shade.shadeEn[code]:
-        GameData.cardsParameters.shade.shadeHe[code];
-    },
-
-    //convert colorCode to string 
-    getColorFromCode(code, lang) {
-        return (lang ==="en")?GameData.cardsParameters.color.colorEn[code]:
-            GameData.cardsParameters.color.colorHe[code];;
-    },
+    }
 };
 
 export default setFunctions;

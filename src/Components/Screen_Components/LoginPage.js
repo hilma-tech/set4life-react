@@ -16,7 +16,7 @@ export default class LoginPage extends Component{
             loginStateInfo:'',
             _loadingImg:false
         };
-        window.history.pushState('','','login');
+        window.history.pushState('log','','login');
     }
     
     inputChange=(event)=>{
@@ -53,7 +53,7 @@ export default class LoginPage extends Component{
     render(){
         return(
             <div id='login-page' className='page' >
-                
+                <h1 className='lg-h'>Set4Life</h1>
                 <label>אימייל</label>
                 <input 
                 name='loginEmail'
@@ -72,12 +72,12 @@ export default class LoginPage extends Component{
                 onChange={this.inputChange}>
                 </input>
 
-                <button onClick={this.clickLoginButtonEvent} >המשך</button>
+                <button className='btn btn-primary' onClick={this.clickLoginButtonEvent} >המשך</button>
+                <a onClick={this.props.moveToRegistration}>עוד לא נרשמת?</a>
                 {this.state._loadingImg?
                     <img src={LoadingImg} alt='loading'/>:
                     <label>{this.state.loginStateInfo}</label>
                 }
-                
             </div>
         );
     }

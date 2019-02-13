@@ -1,6 +1,6 @@
 import firebase from './Def';
 import Variables from '../SetGame/Variables';
-import {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut} from '../Components/Sections/Board';
+import {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut} from '../Components/Sections/Board/Board';
 import GeneralFunctions from "../SetGame/GeneralFunctions";
 import GameData from '../data/GameData'
 
@@ -64,7 +64,6 @@ const firebaseObj={
 
     updatingGameIdInFB(){
         Variables.set_date(GeneralFunctions.timeAndDate('date'));
-
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
             let leng=snap.val()?Object.keys(snap.val()).length:0;
             Variables.setDay_numberedGame(leng+1);

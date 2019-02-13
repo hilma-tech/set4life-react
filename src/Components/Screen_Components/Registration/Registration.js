@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import firebaseObj from "../../firebase/firebaseObj";
-import GameData from "../../data/GameData.json";
-import GeneralFunctions from '../../SetGame/GeneralFunctions';
-import {Back_btn} from '../Small_Components/Btn_BackAndForward';
+import firebaseObj from "../../../firebase/firebaseObj";
+import GameData from "../../../data/GameData.json";
+import GeneralFunctions from '../../../SetGame/GeneralFunctions';
+import './registration.css';
 
 
 export default class Registration extends Component{
@@ -18,7 +18,7 @@ export default class Registration extends Component{
             },
             registStateInfo:''
         }
-        window.history.pushState('','','registration');
+        window.history.pushState('reg','','registration');
     }
 
     inputChange=(event)=>{
@@ -52,8 +52,8 @@ export default class Registration extends Component{
 
     render(){
         return(
-            <div id="reg">
-                <h2>הרשמה</h2>
+            <div id="reg" className='page'>
+                <h1 style={{fontWeight:700}} >הרשמה</h1>
                 <label>שם מלא</label>
                 <input name='fullName' type='text' placeholder="אנא הכנס את שמך המלא"
                 onChange={this.inputChange}></input>
@@ -74,7 +74,7 @@ export default class Registration extends Component{
                 <input name='passwordValidation' type="password"
                 onChange={this.inputChange}></input>
 
-                <button onClick={this.onClickRegisterButton} >הבא</button>
+                <button className='btn' onClick={this.onClickRegisterButton} >הבא</button>
                 {this.state.registStateInfo!==''&&<label>{this.state.registStateInfo}</label>}
             </div>
         );

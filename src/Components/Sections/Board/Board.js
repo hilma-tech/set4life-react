@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import Card from '../Small_Components/Card';
-import firebaseObj from '../../firebase/firebaseObj';
-import setFunctions from '../../SetGame/setFunctions.js';
-import Variables from '../../SetGame/Variables';
-import EndGame from '../Screen_Components/EndGame';
-import GeneralFunctions from '../../SetGame/GeneralFunctions';
-
+import Card from '../../Small_Components/Card';
+import firebaseObj from '../../../firebase/firebaseObj';
+import setFunctions from '../../../SetGame/setFunctions.js';
+import Variables from '../../../SetGame/Variables';
+import EndGame from '../../Screen_Components/EndGame';
+import GeneralFunctions from '../../../SetGame/GeneralFunctions';
+import ErrorMes from '../../Small_Components/ErrorMes';
+import './board.css';
 
 let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOut;
 
@@ -26,12 +27,27 @@ export default class Board extends Component {
             /*
             stageOfTheGame values:
             0 - only "set" button clickable, waiting for button to be clicked
-            1 - cards availible to be chosen, stay for 10 seconds after button is clicked
+            1 - cards availble to be chosen, stay for 10 seconds (default) after button is clicked
             2 - the button is on "next", displaying 3 chosen cards
-            3-Another player is playing. lock state
+            3-Another player is playing. lock state.
              */
         }
         window.history.pushState('boa','','board');
+        window.onpopstate=(event) => {
+            if(event.state!=='boa'){
+                window.history.pushState('boa','','board');
+                if(window.confirm("אתה בטוח שאתה רוצה לצאת?")){
+                    switch (event.state) {
+                        case "newGame":
+                        case "existGame":
+                            window.onbeforeunload = () => {};
+                            firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, {isConnected: false});
+                            window.history.go('sel');
+                            break;
+                    }
+                }
+            } 
+        }
     }
 
     componentWillMount() {
@@ -41,7 +57,22 @@ export default class Board extends Component {
 
         timeStartGame = timeNewCards = performance.now();
     }
-    //callback functions for listeners on firebase
+
+    componentDidMount() {
+        window.onbeforeunload = (event) => {
+            event.preventDefault();
+            console.log("leave??");
+            return "leave??";
+        };
+
+        window.onunload = e=>{
+            firebaseObj.updatingValueInDataBase(
+                `Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, 
+                {isConnected: false});
+        }
+    }
+
+    //callback functions for listeners on firebase////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
     handleGameObjFromFirebase = (gameObj) => {
         let { Game_Participants,
@@ -72,7 +103,6 @@ export default class Board extends Component {
         if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards)) {
             this.setState({ currentCards: newCurrentCards });
         }
-
     }
 
     reciveCurrentUserIdFromFirebase = (userIdFromFirebase) => {
@@ -87,10 +117,10 @@ export default class Board extends Component {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
 
     selectCardFunction = (cardCode) => {
         let selectedCards = this.state.selectedCards;
-        console.log('cardCode', cardCode, selectedCards)
 
         if (selectedCards.length < 3) {
             (!selectedCards.includes(cardCode)) ?
@@ -133,15 +163,14 @@ export default class Board extends Component {
         if (this.state.stageOfTheGame === 2) {
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-                if (objPullCards.gameOver) {
-                    this.setState({ gameOver: true });
-                    firebaseObj.removeDataFromDB(`Games/${this.gameCode}/currentCards`);
-                }
+                if (objPullCards.gameOver) 
+                    this.setState({gameOver: true});
                 else {
+                    console.log('objPullCards.currentCards',objPullCards.currentCards)
                     this.setState({currentCards: objPullCards.currentCards,
                         usedCards: [...this.state.usedCards, ...this.state.selectedCards],
                         stageOfTheGame: 0, selectedCards: []});
-                    
+
                     firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
                         {currentCards: objPullCards.currentCards,
                         usedCards: [...this.state.usedCards, ...this.state.selectedCards]});
@@ -159,61 +188,65 @@ export default class Board extends Component {
     }
 
     render() {
-        if (this.state.currentCards.length) {
-            return (
-                <div id="board" className='page'>
-                    <UpperBar game_Participants={GeneralFunctions.string_From_List(this.state.game_Participants, `המשתתפים במשחק:`)}
-                        currentPlayerName={this.state.currentPlayerName}
-                        gameCode={this.gameCode}
-                        exitGame={this.exitGame} />
-
-                    {!this.state.gameOver &&
-                        <div id='cards'>
-                            {this.state.currentCards.map((cardCode, i) =>
-                                <Card
-                                    className='card'
-                                    key={i}
-                                    onclick={this.selectCardFunction}
-                                    cardCode={cardCode}
-                                    selectedCards={this.state.selectedCards}
-                                    isSet={this.state.isSet}
-                                    stageOfTheGame={this.state.stageOfTheGame}
-                                    isSelected={this.state.selectedCards.includes(cardCode)}
-                                />)
-                            }
-                        </div>}
-
-                    <LowerBar stageOfTheGame={this.state.stageOfTheGame}
-                        gameOver={this.state.gameOver}
-                        clickButtonEvent={this.clickButtonEvent} />
-                </div>
-            );
+        if (!this.state.gameOver) {
+            if(this.state.currentCards){
+                return (
+                    <div id="board" className='page'>
+                        <UpperBar game_Participants={GeneralFunctions.string_From_List(this.state.game_Participants, `המשתתפים במשחק:`)}
+                            currentPlayerName={this.state.currentPlayerName}
+                            gameCode={this.gameCode}
+                            exitGame={this.exitGame} />
+    
+                            <div id='cards'>
+                                {this.state.currentCards.map((cardCode, i) =>
+                                    <Card
+                                        className='card'
+                                        key={i}
+                                        onclick={this.selectCardFunction}
+                                        cardCode={cardCode}
+                                        selectedCards={this.state.selectedCards}
+                                        isSet={this.state.isSet}
+                                        stageOfTheGame={this.state.stageOfTheGame}
+                                        isSelected={this.state.selectedCards.includes(cardCode)}
+                                    />)}
+                            </div> 
+                            
+                        <LowerBar stageOfTheGame={this.state.stageOfTheGame}
+                            gameOver={this.state.gameOver}
+                            clickButtonEvent={this.clickButtonEvent} />
+                    </div>); 
+            }
+            else return <ErrorMes/>;    
         }
         else
-         return <EndGame/>;   
+         return <EndGame moveThroughPages={this.moveThroughPages}/>;   
     }
 }
 
 
 const UpperBar = (props) => (
-    <div>
-        <p>{props.game_Participants}</p>
-        {props.currentPlayerName && <label id="play_now">{props.currentPlayerName} משחק עכשיו</label>}
+    <div id='upper-bar-boa' >
+        <div id='nav-bar-boa' >
+            <p>{props.game_Participants}</p>
+            <a onClick={props.exitGame} id="exitButton">יציאה מהמשחק</a>
+        </div>
         <label  id="game_code">{props.gameCode} הקוד של המשחק</label>
-        <button onClick={props.exitGame} id="exitButton">יציאה מהמשחק</button>
+        <label id='current-player' style={{visibility:props.currentPlayerName?'visible':'hidden'}}>
+        {props.currentPlayerName} משחק עכשיו</label>
     </div>
 );
 
+
+
 const LowerBar = (props) => (
-    <div id='lower-bar' >
-        {!props.gameOver && <button onClick={props.clickButtonEvent} id="main_button"
+    <div id='lower-bar-boa' >
+        {!props.gameOver && <button className='btn' onClick={props.clickButtonEvent} id="main_button"
             disabled={props.stageOfTheGame === 1 || props.stageOfTheGame === 3}>
             {props.stageOfTheGame === 0 ? "מצאתי סט!" :
                 props.stageOfTheGame === 1 ? "סט בבחירה" :
                     props.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
             }
         </button>}
-        {props.gameOver&&<EndGame/>}
     </div>
 );
 

@@ -15,7 +15,7 @@ export default class ExistGame extends Component{
             loadLocatePartic:null,
             gameObj:{}
         }
-        window.history.pushState('exist','','existGame');
+        window.history.pushState('existGame','','existGame');
     }
 
     onClickExistGameCodeButton=()=>{
@@ -59,8 +59,9 @@ export default class ExistGame extends Component{
     render(){
         return(
             <div>
-                <div id="existGame">
+                <div id="existGame" className='page'>
                     <input
+                    style={{width:'30vw',height:'7vh', fontSize:'1.7rem'}}
                     id="input"
                     name='gameCode' 
                     type='text'
@@ -70,23 +71,16 @@ export default class ExistGame extends Component{
 
                     {this.state.loadingParticipants?
                     <img src={LoadingImg} alt='loading' />:
-                    <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button>}  
+                    <button 
+                    className='btn' 
+                    onClick={this.onClickExistGameCodeButton} 
+                    id='continue' >המשך</button>}  
                 </div>
                 {this.state.loadLocatePartic?
                     <img src={LoadingImg} alt='loading' className="LoadingImg"/>:
                     this.state.loadLocatePartic!==null&&
                         <ParticipantsList participants={this.state.participants} />
                 }
-                <input
-                id="input"
-                name='gameCode' 
-                type='number'
-                max="3"
-                placeholder="הכנס קוד משחק"
-                value={this.state.gameCode}
-                onChange={this.inputChange}/>
-
-                <button onClick={this.onClickExistGameCodeButton} id='continue' >המשך</button> 
 
                 {this.state.invalidGameCode&& <div id='game-not-exist' >המשחק אינו קיים. אנא נסה שנית</div>}   
             </div>
