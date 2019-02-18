@@ -78,3 +78,7 @@
 .mastfoot {
   color: rgba(255, 255, 255, .5);
 }
+
+i{
+  background-color: rgba(255, 255, 255, 0);
+}

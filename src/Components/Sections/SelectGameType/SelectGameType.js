@@ -4,7 +4,7 @@ import ExistGame from '../../Screen_Components/ExistGame';
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables';
 import ErrorMes from '../../Small_Components/ErrorMes';
-import ChartPage from '../../Screen_Components/ChartsPage';
+import ChartPage from '../../Screen_Components/chartsPage/ChartsPage';
 import './select-game.css';
 
 export default class GameType extends Component {
@@ -12,8 +12,10 @@ export default class GameType extends Component {
         super(props);
         this.state = {
             GameTypeOptions: 'sel'
-            //new-new game
-            //exist-exist game
+            //newGame-new game
+            //existGame-exist game
+            //sel- current page
+            //charts
         }
         window.history.pushState('sel', '', 'gameType');
         Variables.set_selPlaceHistory(window.history.length);
@@ -43,20 +45,21 @@ export default class GameType extends Component {
     }
 
     render() {
+        console.log('this.state.GameTypeOptions',this.state.GameTypeOptions)
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
-                    <div class="text-center body">
-                        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                    <div className="text-center body">
+                        <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
                             <TopBar id="top-bar" signOut={this.signOut} />
 
-                            <main role="main" class="inner cover">
-                                <h1 class="cover-heading">בחר את סוג המשחק שלך:</h1>
-                                <p class="lead">
-                                    <button class="btn" onClick={this.onClickGameTypeButton} id='existGame'>🎲 משחק קיים</button>
-                                    <button class="btn" onClick={this.onClickGameTypeButton} id='newGame'>➕ משחק חדש</button>
+                            <main role="main" className="inner cover">
+                                <h1 className="cover-heading">בחר את סוג המשחק שלך:</h1>
+                                <p className="lead">
+                                    <button className="btn" onClick={this.onClickGameTypeButton} id='existGame'><i className="fas fa-dice fa-1x"></i> משחק קיים</button>
+                                    <button className="btn" onClick={this.onClickGameTypeButton} id='newGame'><i className="fas fa-plus fa-1x"></i> משחק חדש</button>
                                 </p>
-                                <button class="btn" onClick={this.onClickGameTypeButton} id='charts'>📈גרפים</button>
+                                <button className="btn" onClick={this.onClickGameTypeButton} id='charts'><i className="fas fa-chart-line fa-1x"></i> גרפים</button>
                             </main>
                         </div>
 
@@ -77,13 +80,12 @@ export default class GameType extends Component {
 
 
 const TopBar = (props) => (
-
-    <header class="masthead mb-auto">
-        <div class="inner">
-            <nav class="nav nav-masthead justify-content-center">
+    <header className="masthead mb-auto">
+        <div className="inner">
+            <nav className="nav nav-masthead justify-content-center">
                 <a id="signout" onClick={props.signOut}>התנתק</a>
             </nav>
-            <h3 class="masthead-brand"> ברוכה הבאה, {Variables.playerName}!</h3>
+            <h3 className="masthead-brand"> ברוכה הבאה, {Variables.playerName}!</h3>
 
         </div>
     </header>

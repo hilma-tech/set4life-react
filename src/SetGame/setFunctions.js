@@ -50,8 +50,8 @@ const setFunctions = {
         return  result; 
     },
 
-    newRandomGameCode(size) {
-        let num=Math.floor(Math.random()*(Math.pow(10,size)));
+    newRandomGameCode(size,customize_num=null) {
+        let num=customize_num?customize_num:Math.floor(Math.random()*(Math.pow(10,size)));
         let s = num + "";
         while (s.length < size) s = "0" + s;
         return s;

@@ -1,147 +1,146 @@
-import Chart from 'chart.js';
 import firebaseObj from '../firebase/firebaseObj';
 import Variables from '../SetGame/Variables';
+import Chart from 'chart.js';
+import { x_y_axis, chartsObj} from './X_Y_axis';
+
+
+let chartsRef = {
+  chart_1: null,
+  chart_2: null
+}
 
 const ChartFunctions = {
-  arrX_axis: [],
+  chartType: null,
 
-  creatingColorsArr(oneSetObj){
-    let param=['color','number','shade','shape'];
-    let num=4;
-    param.map(val=>{
-      if(3<=oneSetObj[val]&&oneSetObj[val]<=5)
-        num--;
-    })
-
-    switch(num){
-      case 4:
-        num="rgb(212, 244, 66)";
-        break;
-      case 3:
-        num="rgb(224, 49, 195)";
-        break;
-      case 2:
-        num="rgb(226, 107, 43)";
-        break;   
-    }
-    return num;
+  set_chartType(chartType) {
+    this.chartType = chartType;
   },
 
-  avgTime(setObj, type) {
-    let colorsArr=[];
-    switch (type) {
-      case 'hitSet':
-        type = 'DisplaysNewCards_Till_ClickSet';
-        break;
-      case 'chooseSet':
-        type = 'ClickSet_Till_ChooseSet';
-        break;
-    }
-    let arrAvg = [];
-    this.arrX_axis.map(x => {
-      if (setObj.hasOwnProperty(x)) {
-        let sum = 0;
-        let _setId;
-        for (let setId in setObj[x]){
-          sum += parseFloat(setObj[x][setId][type]);
-          (!_setId)&&(_setId=setId);
-        }
-        arrAvg.push(sum / Object.keys(setObj[x]).length);
-        colorsArr.push(this.creatingColorsArr(setObj[x][_setId]))
+  avgTime(setObj) {
+    let action;
+    for (let _chart in x_y_axis.avgTime) {
+      switch (_chart) {
+        case 'hitSet':
+          action = 'DisplaysNewCards_Till_ClickSet';
+          break;
+        case 'chooseSet':
+          action = 'ClickSet_Till_ChooseSet';
+          break;
       }
-      else{
-        arrAvg.push(0);
-        colorsArr.push("rgb(255, 255, 255)");
-      }   
-    });
-
-    return {
-      avgTime:arrAvg,
-      colorsArr:colorsArr
-    };
+      for (let y_axis in x_y_axis.avgTime[_chart]) {
+        if (y_axis !== 'x_axis') {
+          let setObjCategory = y_axis.substring(2) + 'Sets';
+          for (let level in x_y_axis.avgTime[_chart][y_axis]) {
+            x_y_axis.avgTime[_chart].x_axis[level].map((x, i) => {
+              let sum = 0;
+              if (setObj[setObjCategory].hasOwnProperty(x))
+                for (let setId in setObj[setObjCategory][x])
+                  sum += parseFloat(setObj[setObjCategory][x][setId][action]);
+              x_y_axis.avgTime[_chart][y_axis][level].push(sum);
+            });
+          }
+          chartsObj.avgTime[_chart][y_axis.substring(2)].data = x_y_axis.avgTime[_chart][y_axis].level_3
+        }
+      }
+    }
+    console.log('finish y avgTime')
   },
 
   createX_axis(gamesObj) {
-    let arrX_axis = [];
     for (let date in gamesObj)
-      for (let num in gamesObj[date])
-        arrX_axis.push(`${date}:${num}`);
-    this.arrX_axis = arrX_axis;
+      for (let num in gamesObj[date]) {
+        let arr = this.chartType === 'avgTime' ? ['hitSet', 'chooseSet'] : ['_chart'];
+        arr.map((type) => {
+          let level = x_y_axis[this.chartType][type].x_axis[`level_${gamesObj[date][num].level}`];
+          if (!level)
+            level = [`${date}:${num}`]
+          else if (!level.includes(`${date}:${num}`))
+            level.push(`${date}:${num}`);
+        });
+      }
   },
 
-  createChart(obj, idElement) {
-    const ctx = document.getElementById(idElement).getContext('2d');
-    let title = obj.title;
-    delete obj.title;
+  createChart() {
+    let chart_num = 1;
+    for (let _chart in chartsObj[this.chartType]) {
+      let ctx = document.getElementById(`chart_${chart_num}`).getContext('2d');
+      let chart_obj = chartsObj[this.chartType][_chart];
+      let title = chart_obj.title;
+      delete chart_obj.title;
 
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: this.arrX_axis,
-        datasets: Object.values(obj)
-      },
-      options: {
-        title: {
-          display: true,
-          text: title,
-          fontSize:25
+      let _chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: x_y_axis[this.chartType][_chart].x_axis.level_3,
+          datasets: Object.values(chart_obj)
         },
-        scales: {
-          yAxes: {
-            ticks: {
-              beginAtZero: true
+        options: {
+          title: {
+            display: true,
+            text: title,
+            fontSize: 25
+          },
+          scales: {
+            yAxes: {
+              ticks: {
+                beginAtZero: true
+              }
             }
           }
         }
-      }
-    });
+      });
+      chartsRef[`chart_${chart_num}`] = _chart
+      chart_num++;
+    }
   },
 
-  avgTimeCharts() {
+  updatingDataInChart(type, level) {
+    let chartRef = chartsRef[`chart_${type}`];
+    let _chart='_chart';
+
+    if (this.chartType === 'avgTime') 
+      _chart = type === 1 ? 'chooseSet' : 'hitSet';
+  
+      chartRef.data.labels = x_y_axis[this.chartType][_chart].x_axis[`level_${level}`];
+
+      for (let i = 0; i < chartRef.data.datasets.length; i++) {
+        chartRef.data.datasets[i].data = x_y_axis[this.chartType][_chart][i === 0 ? 'y_Correct' : 'y_Wrong'][`level_${level}`];
+        chartRef.update();
+      }
+  },
+
+  creatingChartInfo() {
     firebaseObj.readingDataOnFirebaseCB(playerObj => {
       this.createX_axis(playerObj.games);
-      let correct_avgTime_hit=this.avgTime(playerObj.CorrectSets, 'hitSet');
-      let wrong_avgTime_hit=this.avgTime(playerObj.WrongSets, 'hitSet');
-      let correct_avgTime_choose=this.avgTime(playerObj.CorrectSets, 'chooseSet');
-  
-      let hittingSetButton = {
-        title: 'זמן ממוצע עד הלחיצה על כפתור סט',
-        correct: {
-          data: correct_avgTime_hit.avgTime,
-          label: 'סטים נכונים',
-          borderColor: "red",
-          fill: false,
-          pointBackgroundColor: correct_avgTime_hit.colorsArr,
-          pointBorderColor:'#000000',
-          pointRadius:5
-        },
-        wrong: {
-          data:wrong_avgTime_hit.avgTime ,
-          label: 'סטים לא נכונים',
-          borderColor: "#3e95ce",
-          fill: false,
-          pointBackgroundColor: wrong_avgTime_hit.colorsArr,
-          pointBorderColor:'#000000',
-          pointRadius:5
-        }
-      }
-
-      let choosingCorrectSet = {
-        title: 'זמן ממוצע מהלחיצה על כפתור הסט עד בחירת סט נכון',
-        correct: {
-          data: correct_avgTime_choose.avgTime,
-          borderColor: "green",
-          fill: false,
-          pointBackgroundColor: correct_avgTime_choose.colorsArr,
-          pointBorderColor:'#000000',
-          pointRadius:5
-        }
-      }
-      this.createChart(hittingSetButton, 'firstChart');
-      this.createChart(choosingCorrectSet, 'secondChart');
-
+      if (this.chartType === 'avgTime')
+        this.avgTime(playerObj);
+      else
+        this.calculatesNumOfSets(playerObj);
+      this.createChart();
     }, `Players/${Variables.userId}`)
+  },
+
+  calculatesNumOfSets(setObj) {
+    for (let y_axis in x_y_axis.numOfSets._chart) {
+      if (y_axis !== 'x_axis') {
+        let setObjCategory = y_axis.substring(2) + 'Sets';
+        for (let level in x_y_axis.numOfSets._chart[y_axis]) {
+          x_y_axis.numOfSets._chart.x_axis[level].map((x) => {
+            let num = 0;
+            if (setObj[setObjCategory].hasOwnProperty(x))
+              num = Object.keys(setObj[setObjCategory]).length;
+            x_y_axis.numOfSets._chart[y_axis][level].push(num);
+          });
+        }
+        chartsObj.numOfSets._chart[y_axis.substring(2)].data = x_y_axis.numOfSets._chart[y_axis].level_3
+      }
+    }
+    console.log('finish y numOfSets', x_y_axis.numOfSets._chart)
   }
 }
 
+
 export default ChartFunctions;
+
+
+

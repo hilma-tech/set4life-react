@@ -34,6 +34,7 @@ export default class Board extends Component {
         }
         window.history.pushState('boa','','board');
         window.onpopstate=(event) => {
+            console.log('popstate boa')
             if(event.state!=='boa'){
                 window.history.pushState('boa','','board');
                 if(window.confirm("אתה בטוח שאתה רוצה לצאת?")){
@@ -41,6 +42,7 @@ export default class Board extends Component {
                         case "newGame":
                         case "existGame":
                             window.onbeforeunload = () => {};
+                            window.onpopstate=()=>{};
                             firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, {isConnected: false});
                             window.history.go('sel');
                             break;
@@ -183,8 +185,10 @@ export default class Board extends Component {
         }
     }
     exitGame = () => {
-        this.moveThroughPages('sel');
-        firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
+        window.onbeforeunload = () =>{};
+        window.onpopstate=()=>{};
+        firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, {isConnected: false});
+        window.history.go('sel');
     }
 
     render() {

@@ -2,7 +2,8 @@ import firebase from './Def';
 import Variables from '../SetGame/Variables';
 import {timeStartGame,timeNewCards,timeClickOnChooseSet,timeChooseSet,_timeOut} from '../Components/Sections/Board/Board';
 import GeneralFunctions from "../SetGame/GeneralFunctions";
-import GameData from '../data/GameData'
+import GameData from '../data/GameData';
+import setFunctions from '../SetGame/setFunctions';
 
 const firebaseObj={
     _db:null,
@@ -68,11 +69,12 @@ const firebaseObj={
 
     updatingGameIdInFB(){
         Variables.set_date(GeneralFunctions.timeAndDate('date'));
+        let level=Object.keys(Variables.objConstParameters).length===2?1:Object.keys(Variables.objConstParameters).length===1?2:3;
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
             let leng=snap.val()?Object.keys(snap.val()).length:0;
             Variables.setDay_numberedGame(leng+1);
             firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
-                {[leng+1]:{startGameTime:Variables.creationGameTime,gameCode:Variables.gameCode}});
+                {[setFunctions.newRandomGameCode(3,leng+1)]:{startGameTime:Variables.creationGameTime,gameCode:Variables.gameCode,level:level}});
         });
     },
 

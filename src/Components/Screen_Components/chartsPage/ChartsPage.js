@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import ChartData from '../../Charts/ChartData';
+import ChartData from '../../../Charts/ChartData';
+import './charts-page.css'
 
 export default class ChartsPage extends Component{
     constructor(props){
@@ -28,9 +29,9 @@ export default class ChartsPage extends Component{
         switch(this.state.chartType){
             case 'charts':
                 return(
-                    <div>
-                        <button onClick={this.onClickShowChart} id='numOfSets'  >מידע על סטים</button>
-                        <button onClick={this.onClickShowChart} id='avgTime' >זמן ממוצע</button>
+                    <div className='page'>
+                        <button className='btn' onClick={this.onClickShowChart} id='numOfSets'  >מידע על סטים</button>
+                        <button className='btn' onClick={this.onClickShowChart} id='avgTime' >זמן ממוצע</button>
                     </div>);
             case 'avgTime':case 'numOfSets':
                 return <ChartData chartType={this.state.chartType}/>;
