@@ -43,7 +43,11 @@ const firebaseObj={
     readingDataOnFirebaseCB(cb,path){
         let ref=this._db.ref(path);
         ref.once('value',snap=>{
+            if(snap.val()!==null){
             if(typeof cb ==='function') cb(snap.val());
+            }else{
+                if(typeof cb ==='function') cb({});
+            }
         })
     },
 
