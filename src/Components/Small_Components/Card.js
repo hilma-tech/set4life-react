@@ -40,12 +40,11 @@ export default class Card extends Component {
         (stageOfTheGame===1||stageOfTheGame===2) && (classNameCard+=' unselectedCard');
 
         (this.props.isSelected) && (classNameCard+=this.settingClassNameCard());
-        
         return (
             <img 
             onClick={this.props.stageOfTheGame===1?this.clickOnCard:null}
             className={classNameCard}
-            src={cardImages[setFunctions.cardNameStringFromNumbersCode(this.props.cardCode)]} 
+            src={cardImages[`${this.props.cardCode}.png`]} 
             alt="card" />
         );
     }

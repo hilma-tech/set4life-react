@@ -135,16 +135,6 @@ const setFunctions = {
         };
     },
 
-    // translate cardCode into src of pictures 
-    //(return src)
-    cardNameStringFromNumbersCode(str) {
-        let shape = GameData.cardsParameters.shape.shapeEn[str[0]];
-        let shade = GameData.cardsParameters.shade.shadeEn[str[1]];
-        let color = GameData.cardsParameters.color.colorEn[str[2]];
-        let number = str[3]==='0'?'':str[3];
-
-        return (`${shape}_${shade}_${color}${number?"_"+number:''}.png`);  
-    }
 };
 
 export default setFunctions;
