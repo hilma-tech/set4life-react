@@ -7,6 +7,7 @@ import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
 import ErrorMes from './Components/Small_Components/ErrorMes';
+import NotChrome from './Components/Small_Components/NotChrome/notChrome';
 
 class App extends Component {
   constructor(props) {
@@ -73,12 +74,12 @@ class App extends Component {
       }
     }
     else{
-      return <div>move to chrom</div> 
+      return (
+
+        <NotChrome/>
+        );
     }
       
-      // :
-      // <div>moov to chrom</div> 
-      // }
     
   }
 }
