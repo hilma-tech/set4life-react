@@ -1,0 +1,78 @@
+.chart-div{
+  width: 60vw;
+  height: 85vh;
+  margin:auto auto;
+}
+
+.chart-div canvas{
+  margin:auto auto;
+}
+
+.page-seen{
+  width: 400vw;
+  height: 400vh;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+}
+
+.chart-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content:space-around;
+  margin:5% 0;
+}
+
+.chart-seen select{
+  width: 5%;
+  text-align-last:center;
+  margin-right: 25%;
+}
+
+.circle{
+  border-radius: 50%;
+  width:4vmin;
+  height: 4vmin;
+}
+
+.upperbar-chart{
+  display:flex;
+  flex-direction: row;
+  margin:0.5% 0;  
+}
+
+.upperbar-chart >*{
+  margin:auto auto
+}
+
+.chart-terms{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  width:40%
+}
+
+.circleAndInfo-container{
+ width:50%;
+ height: 10%;
+}
+
+.circleAndInfo-container>*{
+  display: inline-block;
+}
+
+.chart-container h1{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5%;
+}
+
+
+
+
+
+
+
+  
+  

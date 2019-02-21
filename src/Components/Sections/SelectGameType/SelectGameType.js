@@ -4,7 +4,7 @@ import ExistGame from '../../Screen_Components/ExistGame';
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables';
 import ErrorMes from '../../Small_Components/ErrorMes';
-import ChartPage from '../../Screen_Components/chartsPage/ChartsPage';
+import ChartData from '../../Screen_Components/Charts/ChartData';
 import './select-game.css';
 
 export default class GameType extends Component {
@@ -71,7 +71,7 @@ export default class GameType extends Component {
             case 'newGame':
                 return <NewGame moveThroughPages={this.props.moveThroughPages} />;
             case 'charts':
-                return <ChartPage />
+                return <ChartData />
             default:
                 return <ErrorMes />;
         }

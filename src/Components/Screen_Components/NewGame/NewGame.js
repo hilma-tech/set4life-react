@@ -67,7 +67,7 @@ export default class NewGame extends Component {
 
     settingConstParametersObj = (event) => {
         let dropDownInfo = this.state.dropDownInfo;
-        dropDownInfo[event.target.name] = event.target.options[event.target.selectedIndex].getAttribute('code')
+        dropDownInfo[event.target.name] = event.target.options[event.target.selectedIndex].getAttribute('code');
         this.setState({ dropDownInfo: dropDownInfo });
     }
 
