@@ -7,6 +7,13 @@
   max-width: 42em;
 }
 
+#signout{
+  height: 5vh;
+}
+
+#existGameImg{
+  height: 8vh;
+}
 
 .btn{
   font-size:1.9rem;

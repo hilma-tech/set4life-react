@@ -6,6 +6,11 @@ import Variables from '../../../SetGame/Variables';
 import ErrorMes from '../../Small_Components/ErrorMes';
 import ChartPage from '../../Screen_Components/chartsPage/ChartsPage';
 import './select-game.css';
+import NewGameImg from '../../../data/design/add.png'
+import ExistGameImg from '../../../data/design/cards.png'
+import chartsImg from '../../../data/design/line-chart.png'
+import LogoutImg from '../../../data/design/logout.png'
+
 
 export default class GameType extends Component {
     constructor(props) {
@@ -56,7 +61,7 @@ export default class GameType extends Component {
                             <main role="main" className="inner cover">
                                 <h1 className="cover-heading">בחר את סוג המשחק שלך:</h1>
                                 <p className="lead">
-                                    <button className="btn" onClick={this.onClickGameTypeButton} id='existGame'><i className="fas fa-dice fa-1x"></i> משחק קיים</button>
+                                    <button className="btn" onClick={this.onClickGameTypeButton} id='existGame'><img src={ExistGameImg} alt="existGame" id="existGameImg"/> משחק קיים</button>
                                     <button className="btn" onClick={this.onClickGameTypeButton} id='newGame'><i className="fas fa-plus fa-1x"></i> משחק חדש</button>
                                 </p>
                                 <button className="btn" onClick={this.onClickGameTypeButton} id='charts'><i className="fas fa-chart-line fa-1x"></i> גרפים</button>
@@ -83,7 +88,7 @@ const TopBar = (props) => (
     <header className="masthead mb-auto">
         <div className="inner">
             <nav className="nav nav-masthead justify-content-center">
-                <a id="signout" onClick={props.signOut}>התנתק</a>
+                <img id="signout" onClick={props.signOut} src={LogoutImg} alt="logout"/>
             </nav>
             <h3 className="masthead-brand"> ברוכה הבאה, {Variables.playerName}!</h3>
 

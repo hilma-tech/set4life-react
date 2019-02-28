@@ -7,6 +7,7 @@ import EndGame from '../../Screen_Components/EndGame';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import ErrorMes from '../../Small_Components/ErrorMes';
 import './board.css';
+import Home from '../../../data/design/home.png'
 
 let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOut;
 
@@ -136,7 +137,7 @@ export default class Board extends Component {
 
             let isSet = setFunctions.isSetBoolFunction(this.state.selectedCards);
             firebaseObj.pushCorrectOrWrongSetToDB(isSet);
-            this.setState({ isSet: isSet.bool, stageOfTheGame: 2 });
+            this.setState({ isSet: isSet.bool, stageOfTheGame: 2});
         }
         this.setState({ selectedCards: selectedCards });
         firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/selectedCards`, selectedCards);
@@ -232,9 +233,9 @@ const UpperBar = (props) => (
     <div id='upper-bar-boa' >
         <div id='nav-bar-boa' >
             <p>{props.game_Participants}</p>
-            <a onClick={props.exitGame} id="exitButton">יציאה מהמשחק</a>
+            <label  id="game_code">  הקוד של המשחק{props.gameCode}</label>
+            <img onClick={props.exitGame} id="exitButton" src={Home} alt="home"/>
         </div>
-        <label  id="game_code">{props.gameCode} הקוד של המשחק</label>
         <label id='current-player' style={{visibility:props.currentPlayerName?'visible':'hidden'}}>
         {props.currentPlayerName} משחק עכשיו</label>
     </div>
@@ -244,7 +245,7 @@ const UpperBar = (props) => (
 
 const LowerBar = (props) => (
     <div id='lower-bar-boa' >
-        {!props.gameOver && <button className='btn' onClick={props.clickButtonEvent} id="main_button"
+        {!props.gameOver && <button className='btn' onClick={props.clickButtonEvent} id={props.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
             disabled={props.stageOfTheGame === 1 || props.stageOfTheGame === 3}>
             {props.stageOfTheGame === 0 ? "מצאתי סט!" :
                 props.stageOfTheGame === 1 ? "סט בבחירה" :

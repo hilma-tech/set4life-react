@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import setFunctions from '../../SetGame/setFunctions.js';
+import wrongSetImg from '../../data/design/wrongIcon.png'
+import correctSetImg from '../../data/design/correctIcon.png'
 
 function importAll(r) {
     let images = {};
@@ -41,11 +43,23 @@ export default class Card extends Component {
 
         (this.props.isSelected) && (classNameCard+=this.settingClassNameCard());
         return (
+            <div>
             <img 
             onClick={this.props.stageOfTheGame===1?this.clickOnCard:null}
             className={classNameCard}
             src={cardImages[`${this.props.cardCode}.png`]} 
             alt="card" />
+
+            <img 
+            className={`wrongOrRight ${(this.props.isSet&&this.props.isSelected)?'visible':'notVisible'}`}
+            src={correctSetImg} 
+            alt="correctSet"/>
+
+            <img 
+            className={`wrongOrRight ${(this.props.isSet==false&&this.props.isSelected)?'visible':'notVisible'}`}
+            src={wrongSetImg} 
+            alt="wrongSet" />
+            </div>
         );
     }
 }

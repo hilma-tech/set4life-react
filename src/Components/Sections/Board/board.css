@@ -1,32 +1,47 @@
 #board{
     align-content: space-around;
-     justify-content: center;
-     direction: rtl;
-     width: 100%;
+    justify-content: flex-start;
+    direction: rtl;
+    width: 100%;
  }
+ 
 
- .greyCard{
-    border: solid 0.4rem gray;  
- }
- 
- .unselectedCard, .not-active{
-    border: solid 0.4rem white;
- }
- 
- .greenCard{
-    border: solid 0.4rem greenyellow; 
- }
- 
- .redCard{
-    border: solid 0.4rem red;
- }
- 
- .not-active {
-     pointer-events: none;
-     cursor: default;
-     opacity: 0.4;
+.greyCard{
+   border: solid 5px #707070;  
+   color: #D9D9D9;
 }
  
+.unselectedCard, .not-active{
+   border: 1px solid #707070;
+}
+ 
+.greenCard{
+    border: solid 5px #8CC63F; 
+}
+ 
+.redCard{
+   border: solid 5px #FF1D00;
+}
+ 
+.not-active {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.4;
+}
+
+.wrongOrRight{
+    height: 5vh;
+}
+
+.notVisible{
+    visibility:collapse;
+    height: 0;
+}
+
+.visible{
+    visibility:visible;
+}
+
  #cards{
      width:46vw;
      height:60vh;
@@ -42,37 +57,44 @@
  .card{
     width: 20vmin;
     height:20vmin;
-    padding:3vh 1vw;
     margin:0.5vh 0.5vh;
     background-color: #dbdbdb;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .btn{
     font-size: 1.5rem !important;
 }
 
+#Not_fuond_set{
+    background-color: #926AFF;
+}
 #upper-bar-boa{
     flex-direction: row;
     height: 22vh;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
 }
 
+#exitButton{
+    height: 4vh;
+}
+
 #upper-bar-boa >*:not(:first-child){
     display:block;
-    margin:1vh;
+    /* margin:1vh; */
 }
 
 #nav-bar-boa{
     width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: #4eb5f14f;
-    border-radius: 1vmin;
+    background-color: #D1C1FC;
     margin-bottom:1vh;
     height: 6vh;
+    margin-top: 0%;
+    font-family: "Segoe UI";
 }
 
 #nav-bar-boa >*{
@@ -105,10 +127,8 @@
     .card{
         width:20vmin;
         height:20vmin;
-        padding:3vh 1vw;
         margin:0.5vh 0.5vh;
         background-color: #dbdbdb;
-        border-radius: 0.9rem;
     }
     #cards{
         width:92vw;
@@ -117,7 +137,7 @@
 
     #upper-bar-boa >*{
         font-size: 3rem;
-        margin:1vh;
+        /* margin:1vh; */
     }
     .btn{
         font-size: 2.8rem !important;
@@ -143,10 +163,8 @@
     .card{
         width: 24vmin;
         height: 24vmin;
-        padding: 3vh 1vw;
         margin: 0vw 0vh;
         background-color: #dbdbdb;
-        border-radius: 0.9rem;
     }
     #cards{
         width:81vw;
@@ -154,7 +172,6 @@
     }
     #upper-bar-boa >*{
         font-size: 2rem;
-        margin:0.6vh;
     }
     #upper-bar-boa{
         height: 15vh;
@@ -167,7 +184,7 @@
         margin-top:2vh;
     }
     #nav-bar-boa{
-        margin-top:0;
+        /* margin-top:0; */
     }
     @media only screen and (min-height: 730px) {
         #upper-bar-boa >*{
@@ -178,5 +195,4 @@
         }
     }
 }
-
 
