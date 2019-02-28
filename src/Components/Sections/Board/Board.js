@@ -45,7 +45,7 @@ export default class Board extends Component {
                             window.onbeforeunload = () => {};
                             window.onpopstate=()=>{};
                             firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, {isConnected: false});
-                            window.history.go('sel');
+                            this.moveThroughPages('sel')
                             break;
                     }
                 }
@@ -189,7 +189,7 @@ export default class Board extends Component {
         window.onbeforeunload = () =>{};
         window.onpopstate=()=>{};
         firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, {isConnected: false});
-        window.history.go('sel');
+        this.moveThroughPages('sel');
     }
 
     render() {

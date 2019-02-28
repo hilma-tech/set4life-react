@@ -6,12 +6,16 @@ export default class ChartsPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            chartType:'charts'
+            chartType:'avgTime_chooseSet'
+            //numOfSets
+            //avgTime_hitSet
+            //avgTime_chooseSet
         }
         window.history.pushState('charts','','charts');
         window.addEventListener('popstate',(event)=>{
             switch(event.state){
-                case "avgTime":
+                case "avgTime_hitSet":
+                case "avgTime_chooseSet":
                 case "numOfSets":
                 case "charts":
                     if(this.state.chartType!==event.state)
@@ -33,7 +37,7 @@ export default class ChartsPage extends Component{
                         <button className='btn' onClick={this.onClickShowChart} id='numOfSets'  >מידע על סטים</button>
                         <button className='btn' onClick={this.onClickShowChart} id='avgTime' >זמן ממוצע</button>
                     </div>);
-            case 'avgTime':case 'numOfSets':
+            case 'avgTime_hitSet': case 'avgTime_chooseSet':case 'numOfSets':
                 return <ChartData chartType={this.state.chartType}/>;
         }
     }

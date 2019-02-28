@@ -58,7 +58,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("pageSeen",this.state.pageSeen)
     if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
       switch(this.state.pageSeen){
         case "load":
