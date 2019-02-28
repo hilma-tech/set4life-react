@@ -24,14 +24,14 @@ export default class GameType extends Component {
         }
         window.history.pushState('sel', '', 'gameType');
         Variables.set_selPlaceHistory(window.history.length);
-        window.addEventListener('popstate',(event) => {
+        window.addEventListener('popstate', (event) => {
             console.log('inside popstate sel', event.state)
             switch (event.state) {
-                case "newGame":case "existGame":
+                case "newGame": case "existGame":
                 case 'charts':
-                case "sel":case '':
+                case "sel": case '':
                     if (this.state.GameTypeOptions != event.state)
-                        this.setState({ GameTypeOptions: event.state});
+                        this.setState({ GameTypeOptions: event.state });
                     break;
                 default:
                     window.history.pushState('sel', '', 'gameType');
@@ -41,7 +41,7 @@ export default class GameType extends Component {
     }
 
     onClickGameTypeButton = (event) => {
-        this.setState({ GameTypeOptions: event.target.getAttribute('id') });
+        this.setState({ GameTypeOptions: event.target.getAttribute('name') });
     }
 
     signOut = () => {
@@ -50,22 +50,18 @@ export default class GameType extends Component {
     }
 
     render() {
-        console.log('this.state.GameTypeOptions',this.state.GameTypeOptions)
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
                     <div className="text-center body">
-                        <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-                            <TopBar id="top-bar" signOut={this.signOut} />
-
-                            <main role="main" className="inner cover">
-                                <h1 className="cover-heading">בחר את סוג המשחק שלך:</h1>
-                                <p className="lead">
-                                    <button className="btn" onClick={this.onClickGameTypeButton} id='existGame'><img src={ExistGameImg} alt="existGame" id="existGameImg"/> משחק קיים</button>
-                                    <button className="btn" onClick={this.onClickGameTypeButton} id='newGame'><i className="fas fa-plus fa-1x"></i> משחק חדש</button>
-                                </p>
-                                <button className="btn" onClick={this.onClickGameTypeButton} id='charts'><i className="fas fa-chart-line fa-1x"></i> גרפים</button>
-                            </main>
+                        <TopBar signOut={this.signOut} />
+                        <div id='game-type-container' className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                            <h1 className="cover-heading">בחר את סוג המשחק שלך:</h1>
+                            <div>
+                                <button className="btn" onClick={this.onClickGameTypeButton} name='existGame'><img src={ExistGameImg} alt="existGame" id="existGameImg"/> משחק קיים</button>
+                                <button className="btn" onClick={this.onClickGameTypeButton} name='newGame'><i name='newGame' className="fas fa-plus fa-1x"></i> משחק חדש</button>
+                            </div>
+                            <button className="btn" onClick={this.onClickGameTypeButton} name='charts'><i name='charts' className="fas fa-chart-line fa-1x"></i> גרפים</button>
                         </div>
 
                     </div>
@@ -76,7 +72,7 @@ export default class GameType extends Component {
             case 'newGame':
                 return <NewGame moveThroughPages={this.props.moveThroughPages} />;
             case 'charts':
-                return <ChartData />
+                return <ChartData moveThroughPages={this.props.moveThroughPages} />
             default:
                 return <ErrorMes />;
         }
@@ -85,14 +81,8 @@ export default class GameType extends Component {
 
 
 const TopBar = (props) => (
-    <header className="masthead mb-auto">
-        <div className="inner">
-            <nav className="nav nav-masthead justify-content-center">
-                <img id="signout" onClick={props.signOut} src={LogoutImg} alt="logout"/>
-            </nav>
-            <h3 className="masthead-brand"> ברוכה הבאה, {Variables.playerName}!</h3>
-
-        </div>
-    </header>
-
+    <div id='upperbar-gameType' className="upper-bar">
+        <h3 > ברוכה הבאה, {Variables.playerName}!</h3>
+        <a id="signout" onClick={props.signOut}>התנתק</a>
+    </div>
 );

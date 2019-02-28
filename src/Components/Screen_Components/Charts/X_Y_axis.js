@@ -40,7 +40,7 @@ let chartTitles = {
   },
   numOfSets: {
     title: 'מספר הסטים בכל משחק',
-    _p: 'מציג את מספר הסטים שכל שחקן יצר בכל משחק לפי קטגויות שונות'
+    _p: 'מציג את מספר הסטים שכל שחקן יצר בכל משחק לפי קטגוריות שונות'
   }
 }
 
@@ -50,6 +50,7 @@ let chartsObj = {
       data: null,
       label: 'סטים נכונים',
       borderColor: "red",
+      backgroundColor:"red",
       fill: false,
       pointRadius: 5
     },
@@ -57,6 +58,7 @@ let chartsObj = {
       data: null,
       label: 'סטים לא נכונים',
       borderColor: "#3e95ce",
+      backgroundColor:"#3e95ce",
       fill: false,
       pointRadius: 5
     }
@@ -66,6 +68,7 @@ let chartsObj = {
       label: 'סט נכון',
       data: null,
       borderColor: "green",
+      backgroundColor:"green",
       fill: false,
       pointRadius: 5
     }
@@ -75,6 +78,7 @@ let chartsObj = {
       data: null,
       label: "סטים נכונים",
       borderColor: "#3e95ce",
+      backgroundColor:"#3e95ce",
       fill: false,
       pointRadius: 5
     },
@@ -82,6 +86,7 @@ let chartsObj = {
       data: null,
       label: "סטים לא נכונים",
       borderColor: "#3e9234",
+      backgroundColor:"#3e9234",
       fill: false,
       pointRadius: 5
     },
@@ -89,6 +94,7 @@ let chartsObj = {
       data: null,
       label: "סטים מפוספסים",
       borderColor: "#3eeeee",
+      backgroundColor:"#3eeeee",
       fill: false,
       pointRadius: 5
     }

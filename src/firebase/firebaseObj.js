@@ -72,7 +72,7 @@ const firebaseObj={
         let level=Object.keys(Variables.objConstParameters).length===2?1:Object.keys(Variables.objConstParameters).length===1?2:3;
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
             let leng=snap.val()?Object.keys(snap.val()).length:0;
-            Variables.setDay_numberedGame(leng+1);
+            Variables.day_numberedGame=setFunctions.newRandomGameCode(3,leng+1);
             firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
                 {[setFunctions.newRandomGameCode(3,leng+1)]:{startGameTime:Variables.creationGameTime,gameCode:Variables.gameCode,level:level}});
         });

@@ -14,10 +14,6 @@ const Variables={
     set_selPlaceHistory(place){
         this.selPlaceHistory=place
     },
-
-    setDay_numberedGame(num){
-        this.day_numberedGame=num;
-    },
     set_date(date){
         this._date=date;
     },
@@ -29,7 +25,6 @@ const Variables={
     },
     setGameCode(gameCode) {
         this.gameCode =gameCode;
-        console.log('set gamecode var',this.gameCode)
     },
     setUserId(userId) {
         this.userId = userId; 

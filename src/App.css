@@ -25,10 +25,7 @@ direction: ltr;
     flex-direction:column;
 }
 
-.lg-h{
-    font-size: 5rem;
-    font-weight: bold;
-}
+
 
 /* .btn-primary,
 .btn-primary:hover,
@@ -64,6 +61,12 @@ direction: ltr;
     text-decoration: underline;
   }
 
+  .upper-bar{
+    width:100vw;
+    background-color:#D1C1FC;
+    overflow:auto;
+  }
+
 
   @media only screen and (max-width: 1024px) and (min-width:425px) {
     *{
@@ -94,13 +97,13 @@ direction: ltr;
     text-decoration:none;
     font-family:'Roboto',sans-serif;
     font-weight:400;
-    background-color:#D1C1FC;
+    background-color:#926AFF;
     text-align:center;
     transition: all 0.2s;
-    border-color: 1px #707070;
+    border-color: #707070;
     }
     .btn:hover{
-        background-color:#D1C1FC;
+        background-color:rgb(123, 77, 247);
     }
 
     @media all and (max-width:30em){

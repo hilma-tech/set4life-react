@@ -9,10 +9,10 @@ class ChartData extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            chartType:'avgTime_hitSet'
+            chartType: 'numOfSets'
         }
         window.history.pushState('charts', '', 'charts');
-        ChartFunctions.chartType = 'avgTime_hitSet';
+        ChartFunctions.chartType = this.state.chartType;
         fillingAxis();
     }
 
@@ -28,19 +28,17 @@ class ChartData extends Component {
     }
 
     onClickChartType = (event) => {
-        this.setState({chartType:event.target.getAttribute('name')})
+        this.setState({ chartType: event.target.getAttribute('name') })
         ChartFunctions.chartType = event.target.getAttribute('name');
         ChartFunctions.updatingChartType();
     }
 
     render() {
         return (
-            <div className='chart-seen' >
-                <ChartContainer
-                    onChange={this.onChange_dropDown_level}
-                    chartType={this.state.chartType}
-                    onClickChartType={this.onClickChartType} />
-            </div>
+            <ChartContainer
+                onChange={this.onChange_dropDown_level}
+                chartType={this.state.chartType}
+                onClickChartType={this.onClickChartType} />
         );
     }
 }
@@ -49,20 +47,26 @@ class ChartData extends Component {
 ///small components////////////////////////////////////////
 
 const ChartContainer = (props) => (
-    <div className='chart-container'>
-        <div className='upperbar-chart' >
-            <h1>{chartTitles[props.chartType].title}</h1>
-            <p>{chartTitles[props.chartType]._p}</p>
+    <div className='chart-seen page-seen'>
+        <div className='upper-bar chartPage'>
+            <a onClick={() => window.history.back()}><i className="fas fa-arrow-right"></i></a>
+            <div className='chart-type-switch' >
+                <a name='numOfSets' onClick={props.onClickChartType} >מספר סטים</a>
+                <a name='avgTime_hitSet' onClick={props.onClickChartType} >זמן ממוצע ללחיצה</a>
+                <a name='avgTime_chooseSet' onClick={props.onClickChartType} >זמן ממוצע לבחירה</a>
+            </div>
             <DropDown_level
                 onChange={props.onChange}
                 name={props.chartType} />
-            <Chart_terms chartInfo={Object.values(chartsObj[props.chartType])} />
-            <button name='numOfSets' onClick={props.onClickChartType} >מספר סטים</button>
-            <button name='avgTime_hitSet' onClick={props.onClickChartType} >זמן ממוצע ללחיצה</button>
-            <button name='avgTime_chooseSet' onClick={props.onClickChartType} >זמן ממוצע לבחירה</button>
         </div>
-        <div className='chart-div' >
-            <canvas id='_chart' />
+        <div className='chart-container'>
+            <div className='chart-info'>
+                <h1>{chartTitles[props.chartType].title}</h1>
+                <p>{chartTitles[props.chartType]._p}</p>
+            </div>
+            <div className='chart-div col-xs-11' >
+                <canvas width="350" height="400" id='_chart' />
+            </div>
         </div>
     </div>
 );

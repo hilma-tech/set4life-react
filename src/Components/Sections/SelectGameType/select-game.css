@@ -89,3 +89,29 @@
 i{
   background-color: rgba(255, 255, 255, 0);
 }
+
+#game-type-container>*{
+  margin: 2% 0;
+}
+
+#game-type-container{
+  margin-top:3%
+}
+
+#upperbar-gameType{
+  display: flex;
+  flex-direction: row;
+
+}
+
+#upperbar-gameType a{
+float: left;
+}
+
+#upperbar-gameType h3{
+  background-color: transparent;
+}
+
+#game-type-container h1{
+  font-weight:bold;
+}
