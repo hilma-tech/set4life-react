@@ -9,10 +9,17 @@
 
 #signout{
   height: 5vh;
+  float: left;
+  background-color: transparent;
 }
 
 #existGameImg{
   height: 8vh;
+  background-color: transparent;
+}
+
+.charts{
+  background-color: #AC8EFC;
 }
 
 .btn{

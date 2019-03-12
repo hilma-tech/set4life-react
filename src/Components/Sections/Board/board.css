@@ -22,7 +22,9 @@
 .redCard{
    border: solid 5px #FF1D00;
 }
- 
+
+
+
 .not-active {
     pointer-events: none;
     cursor: default;
@@ -30,7 +32,7 @@
 }
 
 .wrongOrRight{
-    height: 5vh;
+    position: relative;
 }
 
 .notVisible{
@@ -40,6 +42,10 @@
 
 .visible{
     visibility:visible;
+    height: 5vh;
+    position: absolute;
+    top:0;
+    right:0;
 }
 
  #cards{
@@ -64,6 +70,7 @@
 
 .btn{
     font-size: 1.5rem !important;
+    z-index: 1;
 }
 
 #Not_fuond_set{
@@ -71,7 +78,7 @@
 }
 #upper-bar-boa{
     flex-direction: row;
-    height: 22vh;
+    height: 16vh;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
@@ -154,7 +161,7 @@
         height: 5vh;
     }
     #upper-bar-boa{
-        height: 20vh;
+        height: 13vh;
     }
 }
 

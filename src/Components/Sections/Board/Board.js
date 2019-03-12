@@ -166,8 +166,8 @@ export default class Board extends Component {
         if (this.state.stageOfTheGame === 2) {
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-                if (objPullCards.gameOver) 
-                    this.setState({gameOver: true});
+                if (objPullCards.gameOver) {
+                    this.setState({gameOver: true});}
                 else {
                     console.log('objPullCards.currentCards',objPullCards.currentCards)
                     this.setState({currentCards: objPullCards.currentCards,
@@ -189,7 +189,7 @@ export default class Board extends Component {
         window.onbeforeunload = () =>{};
         window.onpopstate=()=>{};
         firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, {isConnected: false});
-        this.moveThroughPages('sel');
+        this.setState({gameOver:true});
     }
 
     render() {
@@ -224,7 +224,7 @@ export default class Board extends Component {
             else return <ErrorMes/>;    
         }
         else
-         return <EndGame moveThroughPages={this.moveThroughPages}/>;   
+            return <EndGame moveThroughPages={this.moveThroughPages}/>;   
     }
 }
 
@@ -234,7 +234,7 @@ const UpperBar = (props) => (
         <div id='nav-bar-boa' >
             <p>{props.game_Participants}</p>
             <label  id="game_code">  הקוד של המשחק{props.gameCode}</label>
-            <img onClick={props.exitGame} id="exitButton" src={Home} alt="home"/>
+            <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>
         </div>
         <label id='current-player' style={{visibility:props.currentPlayerName?'visible':'hidden'}}>
         {props.currentPlayerName} משחק עכשיו</label>

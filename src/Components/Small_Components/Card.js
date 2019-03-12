@@ -43,22 +43,24 @@ export default class Card extends Component {
 
         (this.props.isSelected) && (classNameCard+=this.settingClassNameCard());
         return (
-            <div>
+            <div className="wrongOrRight">
             <img 
             onClick={this.props.stageOfTheGame===1?this.clickOnCard:null}
             className={classNameCard}
             src={cardImages[`${this.props.cardCode}.png`]} 
             alt="card" />
 
+            {(this.props.isSet&&this.props.isSelected)?
             <img 
-            className={`wrongOrRight ${(this.props.isSet&&this.props.isSelected)?'visible':'notVisible'}`}
+            className={`${(this.props.isSet&&this.props.isSelected)?'visible':'notVisible'}`}
             src={correctSetImg} 
-            alt="correctSet"/>
+            alt="correctSet"/>:null}
 
+            {(this.props.isSet==false&&this.props.isSelected)?
             <img 
-            className={`wrongOrRight ${(this.props.isSet==false&&this.props.isSelected)?'visible':'notVisible'}`}
+            className={`${(this.props.isSet==false&&this.props.isSelected)?'visible':'notVisible'}`}
             src={wrongSetImg} 
-            alt="wrongSet" />
+            alt="wrongSet" />:null}
             </div>
         );
     }

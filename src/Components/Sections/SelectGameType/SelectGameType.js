@@ -58,10 +58,10 @@ export default class GameType extends Component {
                         <div id='game-type-container' className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
                             <h1 className="cover-heading">בחר את סוג המשחק שלך:</h1>
                             <div>
-                                <button className="btn" onClick={this.onClickGameTypeButton} name='existGame'><img src={ExistGameImg} alt="existGame" id="existGameImg"/> משחק קיים</button>
-                                <button className="btn" onClick={this.onClickGameTypeButton} name='newGame'><i name='newGame' className="fas fa-plus fa-1x"></i> משחק חדש</button>
+                                <button className="btn" onClick={this.onClickGameTypeButton} name='existGame'><img src={ExistGameImg} alt="existGame" id="existGameImg" onClick={this.onClickGameTypeButton} name='existGame'/> משחק קיים</button>
+                                <button className="btn" onClick={this.onClickGameTypeButton} name='newGame'><i name='newGame' className="fas fa-plus fa-1x" onClick={this.onClickGameTypeButton} name='newGame'></i> משחק חדש</button>
                             </div>
-                            <button className="btn" onClick={this.onClickGameTypeButton} name='charts'><i name='charts' className="fas fa-chart-line fa-1x"></i> גרפים</button>
+                            <button className="btn charts" onClick={this.onClickGameTypeButton} name='charts'><i name='charts' className="fas fa-chart-line fa-1x" onClick={this.onClickGameTypeButton} name='charts'></i> גרפים</button>
                         </div>
 
                     </div>
@@ -83,6 +83,6 @@ export default class GameType extends Component {
 const TopBar = (props) => (
     <div id='upperbar-gameType' className="upper-bar">
         <h3 > ברוכה הבאה, {Variables.playerName}!</h3>
-        <a id="signout" onClick={props.signOut}>התנתק</a>
+        <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout"/>
     </div>
 );
