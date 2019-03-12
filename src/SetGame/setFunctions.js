@@ -3,9 +3,6 @@ import GameData from '../data/GameData.json';
 import Variables from './Variables.js';
 
 const setFunctions = {
-
-    flag_pullXCards:false,
-
     //return a number with help to know if valid number of checkboxs is checked
     checkOfValidChecks(obj) {
         let objArr = Object.values(obj);
@@ -60,7 +57,6 @@ const setFunctions = {
     //receive an array of cards and return a random cardCode that is not in the array 
     //(return cardCode)
     NewCardNumber(arrCards) {
-        console.log("in NewCardNumber")
         let randoms=[];
         let { shape, shade, color, number } =Variables.objConstParameters;
 
@@ -74,7 +70,6 @@ const setFunctions = {
             randoms[2]&& (color = Math.floor(Math.random() * 3));
             randoms[3]&& (number = Math.floor(Math.random() * 3));
         } while (arrCards.includes(`${shape}${shade}${color}${number}`))
-        console.log("shade,shape,color,number",shade,shape,color,number)
         return `${shape}${shade}${color}${number}`;
     },
 
@@ -97,17 +92,12 @@ const setFunctions = {
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
     newCurrentCards(x, arrcurrentCards, arrUsedCards,constParameters=null) {
-        console.log("in newCurrentCards")
         let currCards = [];
-        console.log('num of new cards',x)
         do {
             currCards = [];
             for (let i = 0; i < x; i++) 
                 currCards.push(this.NewCardNumber([...currCards, ...arrcurrentCards, ...arrUsedCards])); 
-            console.log('new currCards in setgame',currCards,!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
         } while (!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
-        console.log("currCards",currCards)
-        console.log("num of cards", x)
         return currCards;
     },
 
@@ -115,21 +105,22 @@ const setFunctions = {
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
         let parmObjLength=Object.keys(Variables.objConstParameters).length;
-        let gameOver=false
-        
-        if(this.flag_pullXCards||usedCards.length===(81/(Math.pow(3,parmObjLength)))){
-            this.flag_pullXCards=true;
+        let gameOver=false;
+        let newCards=[];
+
+        if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
             currCards=currCards.filter(card=>!selectedCards.includes(card));
             if(!this.IsArrayHasSet(currCards))gameOver=true;             
         }
         else{
-            let newCards =this.newCurrentCards(x, currCards, usedCards); 
+            newCards =this.newCurrentCards(x, currCards, usedCards);
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
                 currCards[index] = newCards[i];
             });
         }
         return{
+            newCards:newCards,
             currentCards:currCards,
             gameOver:gameOver
         };

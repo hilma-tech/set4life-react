@@ -16,14 +16,13 @@ export default class GameType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            GameTypeOptions: 'charts'
+            GameTypeOptions: 'sel'
             //newGame-new game
             //existGame-exist game
             //sel- current page
             //charts
         }
         window.history.pushState('sel', '', 'gameType');
-        Variables.set_selPlaceHistory(window.history.length);
         window.addEventListener('popstate', (event) => {
             console.log('inside popstate sel', event.state)
             switch (event.state) {
@@ -60,7 +59,7 @@ export default class GameType extends Component {
                             <div className="container-fluid">
                                 <div className="row">
                                     <div className="col text-left">
-                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='existGame'><i class="fas fa-dice ml-1"></i> משחק קיים</button>
+                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='existGame'><img name='existGame' src={ExistGameImg} alt="existGame" id="existGameImg"/> משחק קיים</button>
 
                                     </div>
                                     <div className="col text-right">
@@ -75,7 +74,7 @@ export default class GameType extends Component {
                                 </div>
                             </div>
                         </div>
-                        {/* <img src={ExistGameImg} alt="existGame" id="existGameImg"/> */}
+                        {/*  */}
                     </div>
 
                 );

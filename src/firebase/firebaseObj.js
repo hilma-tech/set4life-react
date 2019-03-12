@@ -67,7 +67,7 @@ const firebaseObj={
     },
 
     updatingGameIdInFB(){
-        Variables.set_date(GeneralFunctions.timeAndDate('date'));
+        Variables._date=GeneralFunctions.timeAndDate('date');
         let level=Object.keys(Variables.objConstParameters).length===2?1:Object.keys(Variables.objConstParameters).length===1?2:3;
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
             let leng=snap.val()?Object.keys(snap.val()).length:0;

@@ -13,7 +13,7 @@ export default class NewGame extends Component {
             checkboxsInfo: { colorBool: true, shapeBool: true, shadeBool: true, numberBool: true },
             dropDownInfo: {},
             messageErr: false,
-            _timer: 10
+            _timer: 15
         }
         window.history.pushState('newGame', '', 'newGame');
     }
@@ -22,29 +22,28 @@ export default class NewGame extends Component {
         let newGameCode;
         do {
             newGameCode = setFunctions.newRandomGameCode(3);
-            console.log('newGameCode', newGameCode);
         } while (await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`) !== null)
 
-        Variables.gameCode=newGameCode;
-        Variables._timer=this.state._timer;
-        Variables.objConstParameters=this.state.dropDownInfo;
+        let startGameTime = GeneralFunctions.timeAndDate('time');
 
+        Object.assign(Variables,{gameCode:newGameCode,
+            _timer:this.state._timer,
+            objConstParameters:this.state.dropDownInfo,
+            creationGameTime:startGameTime});
+            
         let constParamLength = Object.keys(this.state.dropDownInfo).length;
         let newCurrentCards = setFunctions.newCurrentCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);
 
-        console.log('newCurrentCards', newCurrentCards)
-        let startGameTime = GeneralFunctions.timeAndDate('time');
-        Variables.setCreationGameTime(startGameTime);
-
         let gameObj = {
+            timeOut_choosingCards:this.state._timer,
             creationTime: startGameTime,
             currentCards: newCurrentCards,
             usedCards: newCurrentCards,
+            constParameters: Variables.objConstParameters,
             Game_Participants: { [Variables.userId]: { Name: Variables.playerName, isConnected: true } }
         };
 
-        console.log('new game obj', gameObj);
-        firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`, { ...gameObj, constParameters: Variables.objConstParameters });
+        firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`, gameObj);
         this.props.moveThroughPages("boa", gameObj);
     }
 
