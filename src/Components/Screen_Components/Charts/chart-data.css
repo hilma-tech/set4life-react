@@ -109,7 +109,18 @@ p{
 
 .chartPage a{
   float: right;
-  padding: 0 2vw;
+  /* padding: 0 2vw; */
+}
+
+.upper-bar > * {
+  position: relative;
+}
+
+.w-7 {
+  width: 7%;
+}
+.no-bg {
+  background: transparent;
 }
 
 

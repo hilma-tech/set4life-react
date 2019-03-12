@@ -25,9 +25,9 @@ export default class NewGame extends Component {
             console.log('newGameCode', newGameCode);
         } while (await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`) !== null)
 
-        Variables.setGameCode(newGameCode);
-        Variables.set_timer(this.state._timer)
-        Variables.setObjConstParameters(this.state.dropDownInfo);
+        Variables.gameCode=newGameCode;
+        Variables._timer=this.state._timer;
+        Variables.objConstParameters=this.state.dropDownInfo;
 
         let constParamLength = Object.keys(this.state.dropDownInfo).length;
         let newCurrentCards = setFunctions.newCurrentCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);

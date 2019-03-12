@@ -5,7 +5,7 @@ const Variables={
     gameCode:'',
     userId:'',
     playerName:'',
-    _timer:10,
+    _timer:15,
     creationGameTime:'',
     _date:'',
     day_numberedGame:0,

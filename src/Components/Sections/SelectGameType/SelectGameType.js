@@ -16,7 +16,7 @@ export default class GameType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            GameTypeOptions: 'sel'
+            GameTypeOptions: 'charts'
             //newGame-new game
             //existGame-exist game
             //sel- current page
@@ -57,13 +57,25 @@ export default class GameType extends Component {
                         <TopBar signOut={this.signOut} />
                         <div id='game-type-container' className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
                             <h1 className="cover-heading">בחר את סוג המשחק שלך:</h1>
-                            <div>
-                                <button className="btn" onClick={this.onClickGameTypeButton} name='existGame'><img src={ExistGameImg} alt="existGame" id="existGameImg" onClick={this.onClickGameTypeButton} name='existGame'/> משחק קיים</button>
-                                <button className="btn" onClick={this.onClickGameTypeButton} name='newGame'><i name='newGame' className="fas fa-plus fa-1x" onClick={this.onClickGameTypeButton} name='newGame'></i> משחק חדש</button>
-                            </div>
-                            <button className="btn charts" onClick={this.onClickGameTypeButton} name='charts'><i name='charts' className="fas fa-chart-line fa-1x" onClick={this.onClickGameTypeButton} name='charts'></i> גרפים</button>
-                        </div>
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <div className="col text-left">
+                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='existGame'><i class="fas fa-dice ml-1"></i> משחק קיים</button>
 
+                                    </div>
+                                    <div className="col text-right">
+                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='newGame'><i name='newGame' className="fas fa-plus fa-1x ml-1"></i> משחק חדש</button>
+
+                                    </div>
+                                </div>
+                                <div className="row justify-content-center mt-3">
+                                    <div className="col">
+                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='charts'><i name='charts' className="fas fa-chart-line fa-1x ml-1"></i> גרפים</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/* <img src={ExistGameImg} alt="existGame" id="existGameImg"/> */}
                     </div>
 
                 );

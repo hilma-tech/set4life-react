@@ -7,67 +7,13 @@ const ChartFunctions = {
   chartType: null,
   chartRef: null,
 
-  ////setting y axis/////////////////////////////////////
-  avgTime(setObj) {
-    ['avgTime_hitSet', 'avgTime_chooseSet'].map(chartType => {
-      let action;
-      if (chartType === 'avgTime_hitSet')
-        action = 'DisplaysNewCards_Till_ClickSet';
-      else if (chartType === 'avgTime_chooseSet')
-        action = 'ClickSet_Till_ChooseSet';
-
-
-      for (let y_axis in x_y_axis[chartType]) {
-        if (y_axis !== 'x_axis') {
-          let setObjCategory = y_axis.substring(2) + 'Sets';
-          for (let level in x_y_axis[chartType][y_axis]) {
-            x_y_axis[chartType].x_axis[level].map(x => {
-              let sum = 0;
-              if (setObj[setObjCategory]&&setObj[setObjCategory].hasOwnProperty(x)){
-                for (let setId in setObj[setObjCategory][x])
-                sum += parseFloat(setObj[setObjCategory][x][setId][action]);
-              }
-              x_y_axis[chartType][y_axis][level].push(sum);
-            });
-          }
-          chartsObj[chartType][y_axis.substring(2)].data = x_y_axis[chartType][y_axis].level_3
-        }
-      }
-    });
-    console.log('finish y avgTime')
-  },
-
-  calculatesNumOfSets(setObj) {
-    for (let y_axis in x_y_axis.numOfSets) {
-      if (y_axis !== 'x_axis') {
-        let setObjCategory = y_axis.substring(2) + 'Sets';
-        for (let level in x_y_axis.numOfSets.x_axis) {
-          x_y_axis.numOfSets.x_axis[level].map(x => {
-            let num = 0;
-            if (setObj[setObjCategory]&&setObj[setObjCategory].hasOwnProperty(x))
-              num = Object.keys(setObj[setObjCategory]).length;
-            x_y_axis.numOfSets[y_axis][level].push(num);
-          });
-        }
-        chartsObj.numOfSets[y_axis.substring(2)].data = x_y_axis.numOfSets[y_axis].level_3
-      }
-    }
-    console.log('finish y numOfSets')
-  },
-  ////////////////////////////////////////////////////////////////////////////////////////
-
-  createX_axis(gamesObj) {
-    ['numOfSets', 'avgTime_hitSet', 'avgTime_chooseSet'].map(chartType => {
-      for (let date in gamesObj)
-        for (let num in gamesObj[date]) {
-          let level = x_y_axis[chartType].x_axis[`level_${gamesObj[date][num].level}`];
-          if (!level)
-            level = [`${date}:${num}`];
-          else if (!level.includes(`${date}:${num}`))
-            level.push(`${date}:${num}`);
-        }
-  })
-    console.log('finish x_y_axis')
+  creatingChartInfo() {
+    firebaseObj.readingDataOnFirebaseCB(playerObj => {
+      this.createX_axis(playerObj.games);
+      this.avgTime(playerObj);
+      this.calculatesNumOfSets(playerObj);
+      this.createChart();
+    }, `Players/${Variables.userId}`)
   },
 
   createChart() {
@@ -104,40 +50,95 @@ const ChartFunctions = {
     this.chartRef = _chart
   },
 
-  updatingChartType() {
-    this.chartRef.data.labels = x_y_axis[this.chartType].x_axis.level_3;
+  createX_axis(gamesObj) {
+    ['numOfSets', 'avgTime_hitSet', 'avgTime_chooseSet'].map(chartType => {
+      for (let date in gamesObj)
+        for (let num in gamesObj[date]) {
+          let level = x_y_axis[chartType].x_axis[`level_${gamesObj[date][num].level}`];
+          if (!level)
+            level = [`${date}:${num}`];
+          else if (!level.includes(`${date}:${num}`))
+            level.push(`${date}:${num}`);
+        }
+    })
+    console.log('finish x_axis')
+  },
+
+
+  ////setting y axis//////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  avgTime(setObj) {
+    ['avgTime_hitSet', 'avgTime_chooseSet'].map(chartType => {
+      let action;
+      if (chartType === 'avgTime_hitSet')
+        action = 'DisplaysNewCards_Till_ClickSet';
+      else if (chartType === 'avgTime_chooseSet')
+        action = 'ClickSet_Till_ChooseSet';
+
+      for (let y_axis in x_y_axis[chartType]) {
+        if (y_axis !== 'x_axis') {
+          let setObjCategory = y_axis.substring(2) + 'Sets';
+          for (let level in x_y_axis[chartType][y_axis]) {
+            x_y_axis[chartType].x_axis[level].map(x => {
+              let sum = 0;
+              if (setObj[setObjCategory] && setObj[setObjCategory].hasOwnProperty(x)) {
+                for (let setId in setObj[setObjCategory][x])
+                  sum += parseFloat(setObj[setObjCategory][x][setId][action]);
+              }
+              x_y_axis[chartType][y_axis][level].push(sum);
+            });
+          }
+          chartsObj[chartType][y_axis.substring(2)].data = x_y_axis[chartType][y_axis].level_3
+        }
+      }
+    });
+    console.log('finish y avgTime')
+  },
+
+  calculatesNumOfSets(setObj) {
+    for (let y_axis in x_y_axis.numOfSets) {
+      if (y_axis !== 'x_axis') {
+        let setObjCategory = y_axis.substring(2) + 'Sets';
+        for (let level in x_y_axis.numOfSets.x_axis) {
+          x_y_axis.numOfSets.x_axis[level].map(x => {
+            let num = 0;
+            if (setObj[setObjCategory] && setObj[setObjCategory].hasOwnProperty(x))
+              num = Object.keys(setObj[setObjCategory]).length;
+            x_y_axis.numOfSets[y_axis][level].push(num);
+          });
+        }
+        chartsObj.numOfSets[y_axis.substring(2)].data = x_y_axis.numOfSets[y_axis].level_3
+      }
+    }
+    console.log('finish y numOfSets')
+  },
+  ////////////////////////////////////////////////////////////////////////////////////////
+
+
+  /////////////////////////update functions/////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  updatingChartType(level) {
+    this.chartRef.data.labels = x_y_axis[this.chartType].x_axis[`level_${level}`];
     this.chartRef.data.datasets = Object.values(chartsObj[this.chartType]);
     this.chartRef.update();
   },
 
   updatingDataInChart(level) {
     this.chartRef.data.labels = x_y_axis[this.chartType].x_axis[`level_${level}`];
-    let setCategory;
+    let arrSetCategory=['y_Correct','y_Wrong','y_Missed'];
     for (let i = 0; i < this.chartRef.data.datasets.length; i++) {
-      switch (i + 1) {
-        case 1:
-          setCategory = 'y_Correct'
-          break;
-        case 2:
-          setCategory = 'y_Wrong'
-          break;
-        case 3:
-          setCategory = 'y_Missed'
-          break;
-      }
-      this.chartRef.data.datasets[i].data = x_y_axis[this.chartType][setCategory][`level_${level}`];
+      this.chartRef.data.datasets[i].data = x_y_axis[this.chartType][arrSetCategory[i]][`level_${level}`];
       this.chartRef.update();
+      for (let chartType in x_y_axis) {
+        for (let y_axis in x_y_axis[chartType]) {
+          if (y_axis !== 'x_axis')
+            chartsObj[chartType][y_axis.substring(2)].data = x_y_axis[chartType][y_axis][`level_${level}`];
+        }
+      }
     }
-  },
-
-  creatingChartInfo() {
-    firebaseObj.readingDataOnFirebaseCB(playerObj => {
-      this.createX_axis(playerObj.games);
-      this.avgTime(playerObj);
-      this.calculatesNumOfSets(playerObj);
-      this.createChart();
-    }, `Players/${Variables.userId}`)
   }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 

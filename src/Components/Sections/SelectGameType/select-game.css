@@ -23,7 +23,7 @@
 }
 
 .btn{
-  font-size:1.9rem;
+  /* font-size:1.9rem; */
   font-weight:550;
 }
 
@@ -107,8 +107,9 @@ i{
 
 #upperbar-gameType{
   display: flex;
+  align-items: center;
   flex-direction: row;
-
+  justify-content: space-between;
 }
 
 #upperbar-gameType a{

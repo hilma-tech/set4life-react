@@ -49,16 +49,16 @@ let chartsObj = {
     Correct: {
       data: null,
       label: 'סטים נכונים',
-      borderColor: "red",
-      backgroundColor:"red",
+      borderColor: "#8CC63F",
+      backgroundColor:"#8CC63F",
       fill: false,
       pointRadius: 5
     },
     Wrong: {
       data: null,
       label: 'סטים לא נכונים',
-      borderColor: "#3e95ce",
-      backgroundColor:"#3e95ce",
+      borderColor: "#FF1D00",
+      backgroundColor:"#FF1D00",
       fill: false,
       pointRadius: 5
     }
@@ -67,8 +67,8 @@ let chartsObj = {
     Correct: {
       label: 'סט נכון',
       data: null,
-      borderColor: "green",
-      backgroundColor:"green",
+      borderColor: "#8CC63F",
+      backgroundColor:"#8CC63F",
       fill: false,
       pointRadius: 5
     }
@@ -77,24 +77,24 @@ let chartsObj = {
     Correct: {
       data: null,
       label: "סטים נכונים",
-      borderColor: "#3e95ce",
-      backgroundColor:"#3e95ce",
+      borderColor: "#8CC63F",
+      backgroundColor:"#8CC63F",
       fill: false,
       pointRadius: 5
     },
     Wrong: {
       data: null,
       label: "סטים לא נכונים",
-      borderColor: "#3e9234",
-      backgroundColor:"#3e9234",
+      borderColor: "#FF1D00",
+      backgroundColor:"#FF1D00",
       fill: false,
       pointRadius: 5
     },
     Missed: {
       data: null,
       label: "סטים מפוספסים",
-      borderColor: "#3eeeee",
-      backgroundColor:"#3eeeee",
+      borderColor: "orange",
+      backgroundColor:"orange",
       fill: false,
       pointRadius: 5
     }

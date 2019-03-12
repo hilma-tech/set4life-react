@@ -67,7 +67,7 @@ export default class LoginPage extends Component{
                 <input
                 name='loginPsw' 
                 type='password'
-                placeholder="אנא הכנס את הססמא שלך"
+                placeholder="אנא הכנס את הסיסמא שלך"
                 value={this.state.loginPsw}
                 onChange={this.inputChange}>
                 </input>

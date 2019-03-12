@@ -65,6 +65,8 @@ direction: ltr;
     width:100vw;
     background-color:#D1C1FC;
     overflow:auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
 
@@ -89,10 +91,14 @@ direction: ltr;
     font-weight: bold;
 }
 
+.text-primary {
+    color: rgb(91, 64, 167) !important;
+}
+
 .btn{
     display:inline-block;
-    padding:0.3em 1.2em;
-    margin:0 0.3em 0.3em 0;
+    /* padding:0.3em 1.2em; */
+    /* margin:0 0.3em 0.3em 0; */
     box-sizing: border-box;
     text-decoration:none;
     font-family:'Roboto',sans-serif;
