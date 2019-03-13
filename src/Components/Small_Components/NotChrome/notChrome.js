@@ -6,7 +6,6 @@ import './NotChrome.css'
 
 class NotChrome extends Component{
     render(){
-        console.log("not chrome")
         return(
             <div>
                 <img id="ChromePopUp" src={ChromePopUp} alt='Chrome'/>

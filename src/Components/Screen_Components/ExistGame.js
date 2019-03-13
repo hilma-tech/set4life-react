@@ -26,8 +26,8 @@ export default class ExistGame extends Component {
 
             Object.assign(Variables, {
                 gameCode: this.state.gameCode,
-                _timer: gameObj._timer,
-                objConstParameters: gameObj.constParameters,
+                _timer: gameObj.timeOut_choosingCards,
+                objConstParameters: gameObj.constParameters?gameObj.constParameters:{},
                 creationGameTime: gameObj.creationTime
             });
 

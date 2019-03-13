@@ -68,7 +68,8 @@ const firebaseObj={
 
     updatingGameIdInFB(){
         Variables._date=GeneralFunctions.timeAndDate('date');
-        let level=Object.keys(Variables.objConstParameters).length===2?1:Object.keys(Variables.objConstParameters).length===1?2:3;
+        let level=Variables.objConstParameters?3-Object.keys(Variables.objConstParameters).length:3;
+
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
             let leng=snap.val()?Object.keys(snap.val()).length:0;
             Variables.day_numberedGame=setFunctions.newRandomGameCode(3,leng+1);

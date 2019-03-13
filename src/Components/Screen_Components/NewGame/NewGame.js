@@ -33,7 +33,7 @@ export default class NewGame extends Component {
             
         let constParamLength = Object.keys(this.state.dropDownInfo).length;
         let newCurrentCards = setFunctions.newCurrentCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);
-
+        
         let gameObj = {
             timeOut_choosingCards:this.state._timer,
             creationTime: startGameTime,

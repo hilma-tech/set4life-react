@@ -168,6 +168,7 @@ export default class Board extends Component {
                     ['selectedCards', 'currentPlayerID'].map(destination => {
                         firebaseObj.removeDataFromDB(`Games/${this.gameCode}/${destination}`);
                     })
+
                     firebaseObj.pushToFirebase(`Players/${Variables.userId}/MissedSets/${GeneralFunctions.timeAndDate('date')}:${Variables.day_numberedGame}`,
                         { timeOut: Variables._timer, timeMissedOut: ((performance.now() - timeStartGame) / 1000).toFixed(2) });
                 }
