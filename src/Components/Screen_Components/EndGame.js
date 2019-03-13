@@ -9,6 +9,11 @@ class EndGame extends Component{
             numCorrectSet:0,
             numWrongSet:0
         }
+        console.log('im unside end');
+
+        window.onbeforeunload = () => { };
+        window.onpopstate = () => { };
+        firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
     }
     componentDidMount(){
         firebaseObj.readingDataOnFirebaseCB(

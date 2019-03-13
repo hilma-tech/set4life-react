@@ -105,13 +105,10 @@ const setFunctions = {
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
         let parmObjLength=Object.keys(Variables.objConstParameters).length;
-        let gameOver=false;
         let newCards=[];
 
-        if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
+        if(usedCards.length===(81/(Math.pow(3,parmObjLength))))
             currCards=currCards.filter(card=>!selectedCards.includes(card));
-            if(!this.IsArrayHasSet(currCards))gameOver=true;             
-        }
         else{
             newCards =this.newCurrentCards(x, currCards, usedCards);
             selectedCards.map((card,i) => {
@@ -122,7 +119,6 @@ const setFunctions = {
         return{
             newCards:newCards,
             currentCards:currCards,
-            gameOver:gameOver
         };
     },
 

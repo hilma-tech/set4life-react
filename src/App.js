@@ -54,6 +54,7 @@ class App extends Component {
   }
 
   moveThroughPages = (pageName, info = {}) => {
+    console.log("page name",pageName)
     this.setState({ pageSeen: pageName, info: info });
   }
 
