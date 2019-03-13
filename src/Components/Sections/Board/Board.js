@@ -8,6 +8,7 @@ import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import ErrorMes from '../../Small_Components/ErrorMes';
 import './board.css';
 import Home from '../../../data/design/home.png'
+import UserIcon from '../../Small_Components/UserIcon';
 
 //timeStartGame- the time when the game start
 //timeNewCards- the time when new cards are showen in the board (3 new cards after correct set or the new cards in the beginning of the game)
@@ -15,6 +16,8 @@ import Home from '../../../data/design/home.png'
 //timeChooseSet- the time when we choose set
 let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet,
     _timeOutChoosingSet, _timeOutNextBtn;
+
+let ab=<div>bla bla</div>
 
 export default class Board extends Component {
     constructor(props) {
@@ -89,11 +92,9 @@ export default class Board extends Component {
             selectedCards: newSelectedCards } = gameObj ? gameObj : {};
 
         //Game_Participants
-        let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).map(val => {
-            if (val[1].isConnected)
-                return (val[0] === Variables.userId) ? 'את/ה' : val[1].Name;
-        }) : [];
-        ArrParticipants = ArrParticipants.filter(val => val !== undefined);
+        let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
+            val[1].isConnected) : [];
+
         this.setState({ game_Participants: ArrParticipants });
         (!ArrParticipants.length) &&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
@@ -206,10 +207,11 @@ export default class Board extends Component {
     }
 
     render() {
+        console.log('partis', this.state.ArrParticipants)
         if (!this.state.exitGame && this.state.currentCards) {
             return (
                 <div id="board" className='page'>
-                    <UpperBar game_Participants={GeneralFunctions.string_From_List(this.state.game_Participants, `המשתתפים במשחק:`)}
+                    <UpperBar game_Participants={this.state.game_Participants}
                         currentPlayerName={this.state.currentPlayerName}
                         gameCode={this.gameCode}
                         exitGame={this.exitGame} />
@@ -240,10 +242,13 @@ export default class Board extends Component {
 }
 
 
-const UpperBar = (props) => (
+const UpperBar = (props) =>(
     <div id='upper-bar-boa' >
         <div id='nav-bar-boa' >
-            <p>{props.game_Participants}</p>
+        <div>
+            {props.game_Participants.map((val) =>
+                <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} />)}
+        </div>
             <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
             <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>
         </div>
@@ -251,7 +256,6 @@ const UpperBar = (props) => (
             {props.currentPlayerName} משחק עכשיו</label>
     </div>
 );
-
 
 
 const LowerBar = (props) => (
