@@ -50,9 +50,14 @@ export default class Registration extends Component{
             this.setState({registStateInfo:GeneralFunctions.string_From_List(emptyFilesArr,'שכחת למלא את השדות:')});       
     }
 
+    keypressed=(e)=>{
+        if(e.key==="Enter")
+            this.onClickRegisterButton();
+    }
+
     render(){
         return(
-            <div id="reg" className='page'>
+            <div id="reg" className='page' onKeyPress={this.keypressed}>
                 <h1 style={{fontWeight:700}} >הרשמה</h1>
                 <label>שם מלא</label>
                 <input name='fullName' type='text' placeholder="אנא הכנס את שמך המלא"

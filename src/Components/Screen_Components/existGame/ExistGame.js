@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import LoadingImg from '../../data/design/loading-img.gif';
-import Variables from '../../SetGame/Variables.js';
-import firebaseObj from '../../firebase/firebaseObj';
-import GeneralFunctions from '../../SetGame/GeneralFunctions';
+import LoadingImg from '../../../data/design/loading-img.gif';
+import Variables from '../../../SetGame/Variables.js';
+import firebaseObj from '../../../firebase/firebaseObj';
+import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 
 
 export default class ExistGame extends Component {
@@ -60,10 +60,15 @@ export default class ExistGame extends Component {
         }
     }
 
+    keypressed=(e)=>{
+        if(e.key==="Enter")
+            this.onClickExistGameCodeButton();
+    }
+
     render() {
         return (
-            <div>
-                <div id="existGame" className='page'>
+            <div className='page' onKeyPress={this.keypressed}>
+                    <h3>אנא הכנס קוד משחק:</h3>
                     <input
                         style={{ width: '30vw', height: '7vh', fontSize: '1.7rem' }}
                         id="input"
@@ -79,14 +84,11 @@ export default class ExistGame extends Component {
                             className='btn'
                             onClick={this.onClickExistGameCodeButton}
                             id='continue' >המשך</button>}
-                </div>
                 {this.state.loadLocatePartic ?
                     <img src={LoadingImg} alt='loading' className="LoadingImg" /> :
                     this.state.loadLocatePartic !== null &&
                     <ParticipantsList participants={this.state.participants} />
                 }
-
-                {this.state.invalidGameCode && <div id='game-not-exist' >המשחק אינו קיים. אנא נסה שנית</div>}
             </div>
         );
     }
@@ -97,6 +99,6 @@ const ParticipantsList = (props) => (
     <p>
         {props.participants.length ?
             GeneralFunctions.string_From_List(props.participants, '', ` ${props.participants.length === 1 ? `משתתף` : `משתתפים`} במשחק כרגע `) :
-            'המשחק אינו קיים'}
+            'המשחק אינו קיים. אנא נסה שנית'}
     </p>
 );

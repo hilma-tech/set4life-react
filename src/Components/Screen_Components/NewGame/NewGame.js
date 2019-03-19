@@ -80,9 +80,14 @@ export default class NewGame extends Component {
             this.setState({ _timer: event.target.value })
     }
 
+    keypressed=(e)=>{
+        if(e.key==="Enter")
+            this.settingNewGame();
+    }
+
     render() {
         return (
-            <div id='new-game' className='page'>
+            <div id='new-game' className='page' onKeyPress={this.keypressed}>
                 <div id='checkbox-param' >
                     {Object.keys(GameData.cardsParameters).map((par, i) => (
                         <div key={i} >

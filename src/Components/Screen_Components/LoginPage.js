@@ -50,9 +50,14 @@ export default class LoginPage extends Component{
                 _loadingImg:false});
     }
 
+    keypressed=(e)=>{
+        if(e.key==="Enter")
+            this.clickLoginButtonEvent();
+    }
+
     render(){
         return(
-            <div id='login-page' className='page' >
+            <div id='login-page' className='page' onKeyPress={this.keypressed}>
                 <h1 className='lg-h'>Set4Life</h1>
                 <label>אימייל</label>
                 <input 

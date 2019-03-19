@@ -44,8 +44,9 @@
     visibility:visible;
     height: 5vh;
     position: absolute;
-    top:0;
-    right:0;
+    top:-3%;
+    right:-3%;
+    background-color: transparent;
 }
 
  #cards{

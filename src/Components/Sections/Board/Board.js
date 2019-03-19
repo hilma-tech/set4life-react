@@ -30,6 +30,7 @@ export default class Board extends Component {
             game_Participants: [],
             currentPlayerName: '',
             exitGame: false,
+            missed:false,
             stageOfTheGame: 0
             /*
             stageOfTheGame values:
@@ -163,8 +164,8 @@ export default class Board extends Component {
             _timeOutChoosingSet = setTimeout(() => {
                 console.log("inside setTimeOut")
                 if (this.state.selectedCards.length < 3 && this.state.stageOfTheGame === 1) {
-                    this.setState({ stageOfTheGame: 0, selectedCards: [] });
-
+                    this.setState({ stageOfTheGame: 0, selectedCards: [] ,missed:true});
+                    // setTimeout(()=>{this.setState({missed:false})},1000)
                     ['selectedCards', 'currentPlayerID'].map(destination => {
                         firebaseObj.removeDataFromDB(`Games/${this.gameCode}/${destination}`);
                     })
@@ -173,6 +174,7 @@ export default class Board extends Component {
                         { timeOut: Variables._timer, timeMissedOut: ((performance.now() - timeStartGame) / 1000).toFixed(2) });
                 }
             }, Variables._timer * 1000);
+            console.log("Variables.userId",Variables.userId,"this.gameCode",this.gameCode)
             firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/currentPlayerID`, Variables.userId)
             this.setState({ stageOfTheGame: 1 });
         }
@@ -186,7 +188,8 @@ export default class Board extends Component {
                     currentCards: objPullCards.currentCards,
                     usedCards: [...this.state.usedCards, ...objPullCards.newCards],
                     stageOfTheGame: 0,
-                    selectedCards: []
+                    selectedCards: [],
+                    exitGame:objPullCards.endGame
                 });
                 firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
                     {
@@ -212,7 +215,8 @@ export default class Board extends Component {
                     <UpperBar game_Participants={GeneralFunctions.string_From_List(this.state.game_Participants, `המשתתפים במשחק:`)}
                         currentPlayerName={this.state.currentPlayerName}
                         gameCode={this.gameCode}
-                        exitGame={this.exitGame} />
+                        exitGame={this.exitGame} 
+                        missed={this.state.missed}/>
 
                     <div id='cards'>
                         {this.state.currentCards.map((cardCode, i) =>
@@ -235,7 +239,8 @@ export default class Board extends Component {
                 </div>);
         }
         else
-            return <EndGame moveThroughPages={this.moveThroughPages} />;
+            {console.log("cuurent cards",this.state.currentCards)
+            return <EndGame moveThroughPages={this.moveThroughPages} />;}
     }
 }
 
@@ -247,6 +252,7 @@ const UpperBar = (props) => (
             <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
             <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>
         </div>
+        {/* {props.missed?<label>זמנך עבר</label>:null} */}
         <label id='current-player' style={{ visibility: props.currentPlayerName ? 'visible' : 'hidden' }}>
             {props.currentPlayerName} משחק עכשיו</label>
     </div>

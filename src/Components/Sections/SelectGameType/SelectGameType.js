@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NewGame from '../../Screen_Components/NewGame/NewGame.js';
-import ExistGame from '../../Screen_Components/ExistGame';
+import ExistGame from '../../Screen_Components/existGame/ExistGame';
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables';
 import ErrorMes from '../../Small_Components/ErrorMes';

@@ -91,7 +91,7 @@ const setFunctions = {
 
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
-    newCurrentCards(x, arrcurrentCards, arrUsedCards,constParameters=null) {
+    newCurrentCards(x, arrcurrentCards, arrUsedCards) {
         let currCards = [];
         do {
             currCards = [];
@@ -106,11 +106,15 @@ const setFunctions = {
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
         let parmObjLength=Object.keys(Variables.objConstParameters).length;
         let newCards=[];
+        let endGame=false;
 
-        if(usedCards.length===(81/(Math.pow(3,parmObjLength))))
+        if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
             currCards=currCards.filter(card=>!selectedCards.includes(card));
-        else{
-            newCards =this.newCurrentCards(x, currCards, usedCards);
+            endGame=this.IsArrayHasSet(currCards);
+        }
+        else{ 
+            let newCurrCards=currCards.filter(card=>!selectedCards.includes(card))
+            newCards =this.newCurrentCards(x, newCurrCards, usedCards);
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
                 currCards[index] = newCards[i];
@@ -119,6 +123,7 @@ const setFunctions = {
         return{
             newCards:newCards,
             currentCards:currCards,
+            endGame:endGame
         };
     },
 
