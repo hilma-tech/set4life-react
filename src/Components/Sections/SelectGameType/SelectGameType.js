@@ -9,7 +9,8 @@ import './select-game.css';
 import NewGameImg from '../../../data/design/add.png'
 import ExistGameImg from '../../../data/design/cards.png'
 import chartsImg from '../../../data/design/line-chart.png'
-import LogoutImg from '../../../data/design/logout.png'
+import LogoutImg from '../../../data/design/logout.png';
+import UserIcon from '../../Small_Components/UserIcon';
 
 
 export default class GameType extends Component {
@@ -58,11 +59,11 @@ export default class GameType extends Component {
                             <h1 className="cover-heading">בחר את סוג המשחק שלך:</h1>
                             <div className="container-fluid">
                                 <div className="row">
-                                    <div className="col text-left">
+                                    <div className="col-md text-center">
                                         <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='existGame'><img name='existGame' src={ExistGameImg} alt="existGame" id="existGameImg"/> משחק קיים</button>
 
                                     </div>
-                                    <div className="col text-right">
+                                    <div className="col-md text-center">
                                         <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='newGame'><i name='newGame' className="fas fa-plus fa-1x ml-1"></i> משחק חדש</button>
 
                                     </div>
@@ -93,7 +94,7 @@ export default class GameType extends Component {
 
 const TopBar = (props) => (
     <div id='upperbar-gameType' className="upper-bar">
-        <h3 > ברוכה הבאה, {Variables.playerName}!</h3>
+        <UserIcon name={Variables.playerName}/>
         <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout"/>
     </div>
 );
