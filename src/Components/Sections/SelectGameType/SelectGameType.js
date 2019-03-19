@@ -94,7 +94,7 @@ export default class GameType extends Component {
 
 const TopBar = (props) => (
     <div id='upperbar-gameType' className="upper-bar">
-        <UserIcon name={Variables.playerName}/>
+        <UserIcon name={Variables.playerName} src={Variables.profilePicUrl}/>
         <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout"/>
     </div>
 );

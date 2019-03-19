@@ -7,6 +7,7 @@ import setFunctions from '../SetGame/setFunctions';
 const firebaseObj={
     _db:null,
     _auth:null,
+    _storage:null,
     _timeOut:null,
 
     createDataBase(){
@@ -14,6 +15,9 @@ const firebaseObj={
     },
     createAuth(){
         this._auth=firebase.auth();
+    },
+    createStorage(){
+        this._storage=firebase.storage();
     },
  
     settingValueInDataBase(path,value){

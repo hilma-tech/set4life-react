@@ -17,8 +17,6 @@ import UserIcon from '../../Small_Components/UserIcon';
 let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet,
     _timeOutChoosingSet, _timeOutNextBtn;
 
-let ab=<div>bla bla</div>
-
 export default class Board extends Component {
     constructor(props) {
         super(props);
@@ -95,10 +93,9 @@ export default class Board extends Component {
         //Game_Participants
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
             val[1].isConnected) : [];
-
         this.setState({ game_Participants: ArrParticipants });
-        (!ArrParticipants.length) &&
-            firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
+        // (!ArrParticipants.length) &&
+        //     firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
         //selected cards
         if (JSON.stringify(this.state.selectedCards) !== JSON.stringify(newSelectedCards)) {
@@ -184,19 +181,22 @@ export default class Board extends Component {
             clearTimeout(_timeOutNextBtn);
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-
+                console.log('usedCards',this.state.usedCards,'newCards',objPullCards.newCards);
+                let usedCards=[...this.state.usedCards, ...objPullCards.newCards];
                 this.setState({
                     currentCards: objPullCards.currentCards,
-                    usedCards: [...this.state.usedCards, ...objPullCards.newCards],
+                    usedCards:usedCards,
                     stageOfTheGame: 0,
                     selectedCards: [],
                     exitGame:objPullCards.endGame
                 });
+
                 firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
-                    {
-                        currentCards: objPullCards.currentCards,
-                        usedCards: [...this.state.usedCards, ...this.state.selectedCards]
-                    });
+                {
+                    currentCards: objPullCards.currentCards,
+                    usedCards:usedCards
+                });
+
                 timeNewCards = performance.now();
             }
             this.setState({ isSet: undefined })
@@ -210,7 +210,6 @@ export default class Board extends Component {
     }
 
     render() {
-        console.log('partis', this.state.ArrParticipants)
         if (!this.state.exitGame && this.state.currentCards) {
             return (
                 <div id="board" className='page'>
@@ -252,7 +251,7 @@ const UpperBar = (props) =>(
         <div id='nav-bar-boa' >
         <div>
             {props.game_Participants.map((val) =>
-                <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} />)}
+                <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[0]} />)}
         </div>
             <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
             <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>

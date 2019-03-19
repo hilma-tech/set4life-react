@@ -91,13 +91,13 @@ const setFunctions = {
 
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
-    newCurrentCards(x, arrcurrentCards, arrUsedCards) {
+    newCurrentCards(x, newCurrentCards, arrUsedCards,selectedCards) {
         let currCards = [];
         do {
             currCards = [];
             for (let i = 0; i < x; i++) 
-                currCards.push(this.NewCardNumber([...currCards, ...arrcurrentCards, ...arrUsedCards])); 
-        } while (!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
+                currCards.push(this.NewCardNumber([...currCards, ...newCurrentCards, ...arrUsedCards, ...selectedCards])); 
+        } while (!this.IsArrayHasSet([...currCards, ...newCurrentCards]));
         return currCards;
     },
 
@@ -114,7 +114,7 @@ const setFunctions = {
         }
         else{ 
             let newCurrCards=currCards.filter(card=>!selectedCards.includes(card))
-            newCards =this.newCurrentCards(x, newCurrCards, usedCards);
+            newCards =this.newCurrentCards(x, newCurrCards, usedCards,selectedCards);
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
                 currCards[index] = newCards[i];
