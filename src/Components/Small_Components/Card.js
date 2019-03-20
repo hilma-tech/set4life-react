@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import setFunctions from '../../SetGame/setFunctions.js';
-
+import wrongSetImg from '../../data/design/wrongIcon.png'
+import correctSetImg from '../../data/design/correctIcon.png'
 
 function importAll(r) {
     let images = {};
@@ -9,8 +10,9 @@ function importAll(r) {
 }
 const cardImages = importAll(require.context('../../data/cards', false, /\.(png|jpe?g|svg)$/));
 
+
 export default class Card extends Component {
-    clickOnCard=(e)=>{
+    clickOnCard=()=>{
        if(this.props.stageOfTheGame===1){
         this.props.onclick(this.props.cardCode);
        }
@@ -18,12 +20,16 @@ export default class Card extends Component {
 
     settingClassNameCard=()=>{
         let classNameCard='card';
-        if(this.props.isSet){
-            classNameCard+=' greenCard';
-        }else if(this.props.isSet===false){
-            classNameCard+=' redCard';
-        }else if(this.props.isSet===undefined){
-            classNameCard+=' greyCard';
+        switch(this.props.isSet){
+            case true:
+                classNameCard+=' greenCard';
+                break;
+            case false:
+                classNameCard+=' redCard';
+                break;
+            case undefined:
+                classNameCard+=' greyCard';
+                break;
         }
         return classNameCard;  
     }
@@ -36,13 +42,26 @@ export default class Card extends Component {
         (stageOfTheGame===1||stageOfTheGame===2) && (classNameCard+=' unselectedCard');
 
         (this.props.isSelected) && (classNameCard+=this.settingClassNameCard());
-        
         return (
+            <div className="wrongOrRight">
             <img 
             onClick={this.props.stageOfTheGame===1?this.clickOnCard:null}
             className={classNameCard}
-            src={cardImages[setFunctions.cardNameStringFromNumbersCode(this.props.cardCode)]} 
+            src={cardImages[`${this.props.cardCode}.png`]} 
             alt="card" />
+
+            {(this.props.isSet&&this.props.isSelected)?
+            <img 
+            className={`${(this.props.isSet&&this.props.isSelected)?'visible':'notVisible'}`}
+            src={correctSetImg} 
+            alt="correctSet"/>:null}
+
+            {(this.props.isSet==false&&this.props.isSelected)?
+            <img 
+            className={`${(this.props.isSet==false&&this.props.isSelected)?'visible':'notVisible'}`}
+            src={wrongSetImg} 
+            alt="wrongSet" />:null}
+            </div>
         );
     }
 }

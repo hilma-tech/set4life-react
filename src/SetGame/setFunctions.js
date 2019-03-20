@@ -1,31 +1,8 @@
 
 import GameData from '../data/GameData.json';
 import Variables from './Variables.js';
-import firebaseObj from '../firebase/firebaseObj';
 
 const setFunctions = {
-
-    flag_pullXCards:false,
-
-    timeAndDate(purpose){
-        let d=new Date();
-        switch(purpose){
-            case 'time':{
-                let hour=d.getHours();
-                let min=d.getMinutes();
-                return `${hour<10?'0':''}${hour}:${min<10?'0':''}${min}`;
-            }
-            case 'date':
-                return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
-        }
-    },
-
-
-    exitGame(cb){
-        firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}/isConnected`,false);
-        if(typeof cb ==='function') cb('sel');
-    },
-
     //return a number with help to know if valid number of checkboxs is checked
     checkOfValidChecks(obj) {
         let objArr = Object.values(obj);
@@ -62,17 +39,16 @@ const setFunctions = {
             tempResult = this.isParameterValidSet(selectedCards,index);
             if(Variables.objConstParameters&&Variables.objConstParameters.hasOwnProperty(info[index]))
                 result.information[info[index]]=parseInt(Variables.objConstParameters[info[index]],10)+3;
-            else{
-                result.information[info[index]] =tempResult.bool?(tempResult.isSimilar ? selectedCards[0].charAt(index): -1):-2;
-                flag&&(flag = flag && tempResult.bool);  
-            }
+            else
+                result.information[info[index]] =tempResult.bool?(tempResult.isSimilar ? selectedCards[0].charAt(index): -1):-2;  
+            flag&&(flag = flag && tempResult.bool);
         }
         result.bool = flag;
         return  result; 
     },
 
-    newRandomGameCode(size) {
-        let num=Math.floor(Math.random()*(Math.pow(10,size)));
+    newRandomGameCode(size,customize_num=null) {
+        let num=customize_num?customize_num:Math.floor(Math.random()*(Math.pow(10,size)));
         let s = num + "";
         while (s.length < size) s = "0" + s;
         return s;
@@ -82,13 +58,12 @@ const setFunctions = {
     //(return cardCode)
     NewCardNumber(arrCards) {
         let randoms=[];
-        let { shape, shade, color, number } = Variables.objConstParameters;
+        let { shape, shade, color, number } =Variables.objConstParameters;
 
         [shape,shade,color,number].map(value=>{
-            value===undefined?randoms.push(true):randoms.push(false);
+            value===undefined ? randoms.push(true) : randoms.push(false);
         });
 
-        /// why cant i use (typeof shape==='undefiend') instead random[0]?
         do {
             randoms[0]&& (shape = Math.floor(Math.random() * 3));
             randoms[1]&& (shade = Math.floor(Math.random() * 3));
@@ -119,10 +94,10 @@ const setFunctions = {
     newCurrentCards(x, arrcurrentCards, arrUsedCards) {
         let currCards = [];
         do {
+            currCards = [];
             for (let i = 0; i < x; i++) 
                 currCards.push(this.NewCardNumber([...currCards, ...arrcurrentCards, ...arrUsedCards])); 
         } while (!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
-
         return currCards;
     },
 
@@ -130,54 +105,28 @@ const setFunctions = {
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
         let parmObjLength=Object.keys(Variables.objConstParameters).length;
-        let gameOver=false
-        
-        if(this.flag_pullXCards||usedCards.length===(81/(Math.pow(3,parmObjLength)))){
-            this.flag_pullXCards=true;
+        let newCards=[];
+        let endGame=false;
+
+        if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
             currCards=currCards.filter(card=>!selectedCards.includes(card));
-            if(!this.IsArrayHasSet(currCards))gameOver=true;             
+            endGame=this.IsArrayHasSet(currCards);
         }
-        else{
-            let newCards =this.newCurrentCards(x, currCards, usedCards); 
+        else{ 
+            let newCurrCards=currCards.filter(card=>!selectedCards.includes(card))
+            newCards =this.newCurrentCards(x, newCurrCards, usedCards);
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
                 currCards[index] = newCards[i];
             });
         }
         return{
+            newCards:newCards,
             currentCards:currCards,
-            gameOver:gameOver
+            endGame:endGame
         };
     },
 
-    // translate cardCode into src of pictures 
-    //(return src)
-    cardNameStringFromNumbersCode(str) {
-        let shape = this.getShapeFromCode(str[0], "en");
-        let shade = this.getShadeFromCode(str[1], "en");
-        let color = this.getColorFromCode(str[2], "en");
-        let number = str[3]==='0'?'':str[3];
-
-        return (`${shape}_${shade}_${color}${number?"_"+number:''}.png`);  
-    },
-
-    //convert shapeCode to string 
-    getShapeFromCode(code, lang) {
-        return lang ==="en"?GameData.cardsParameters.shape.shapeEn[code]:
-            GameData.cardsParameters.shape.shapeHe[code];
-    },
-
-    //convert shadeCode to string 
-    getShadeFromCode(code, lang) {
-        return lang ==="en"?GameData.cardsParameters.shade.shadeEn[code]:
-        GameData.cardsParameters.shade.shadeHe[code];
-    },
-
-    //convert colorCode to string 
-    getColorFromCode(code, lang) {
-        return (lang ==="en")?GameData.cardsParameters.color.colorEn[code]:
-            GameData.cardsParameters.color.colorHe[code];;
-    },
 };
 
 export default setFunctions;

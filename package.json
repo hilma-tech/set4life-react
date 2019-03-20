@@ -2,9 +2,10 @@
   "name": "set4life-react",
   "version": "0.1.0",
   "private": true,
-  "homepage":".",
+  "homepage": ".",
   "dependencies": {
-    "firebase": "^5.5.6",
+    "chart.js": "^2.7.3",
+    "firebase": "^5.5.5",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.5"
