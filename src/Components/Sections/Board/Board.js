@@ -210,7 +210,7 @@ export default class Board extends Component {
     }
 
     render() {
-        console.log('partis', this.state.ArrParticipants)
+        // console.log('partis', this.state.ArrParticipants)
         if (!this.state.exitGame && this.state.currentCards) {
             return (
                 <div id="board" className='page'>
