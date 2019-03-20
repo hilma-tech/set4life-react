@@ -28,7 +28,7 @@ export default class Board extends Component {
             currentCards: this.props.info.currentCards,
             selectedCards: [],
             isSet: undefined,
-            usedCards: this.props.info.usedCards,
+            usedCards: this.props.info.usedCards.slice(),
             disableBeforeNext: false,
             game_Participants: [],
             currentPlayerName: '',
@@ -182,20 +182,25 @@ export default class Board extends Component {
 
         if (this.state.stageOfTheGame === 2) {
             clearTimeout(_timeOutNextBtn);
+            console.log("USED CARDS (12??)",this.state.usedCards)
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-
+                console.log("obj pull cards in stage 2",objPullCards)
+                console.log("USED CARDS (12??)",this.state.usedCards)
+                let used_cards=[...this.state.usedCards, ...objPullCards.newCards];
+                console.log("USED CARDS (15??)",used_cards);
                 this.setState({
                     currentCards: objPullCards.currentCards,
-                    usedCards: [...this.state.usedCards, ...objPullCards.newCards],
+                    usedCards: used_cards,
                     stageOfTheGame: 0,
                     selectedCards: [],
                     exitGame:objPullCards.endGame
                 });
+                console.log("push to firebase", "usedcard",this.state.usedCards)
                 firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
                     {
                         currentCards: objPullCards.currentCards,
-                        usedCards: [...this.state.usedCards, ...this.state.selectedCards]
+                        usedCards: used_cards
                     });
                 timeNewCards = performance.now();
             }
@@ -211,7 +216,8 @@ export default class Board extends Component {
 
     render() {
         // console.log('partis', this.state.ArrParticipants)
-        if (!this.state.exitGame && this.state.currentCards) {
+        //console.log("exitGame",!this.state.exitGame , "currentCards",this.state.currentCards, "=",(!this.state.exitGame) && this.state.currentCards)
+        if ((!this.state.exitGame) && this.state.currentCards) {
             return (
                 <div id="board" className='page'>
                     <UpperBar game_Participants={this.state.game_Participants}

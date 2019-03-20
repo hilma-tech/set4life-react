@@ -97,9 +97,9 @@ const setFunctions = {
             currCards = [];
             for (let i = 0; i < x; i++) 
                 currCards.push(this.NewCardNumber(currCards.concat(arrcurrentCards,arrUsedCards,selectedCards))); 
-            console.log("currCards",currCards)
-            console.log("usde card",arrUsedCards)
-            console.log("selectedCards",selectedCards)
+            //console.log("currCards",currCards)
+            //console.log("usde card",arrUsedCards)
+            //console.log("selectedCards",selectedCards)
         } while (!this.IsArrayHasSet([...currCards, ...arrcurrentCards]));
         return currCards;
     },
@@ -107,29 +107,37 @@ const setFunctions = {
     //pull x cardCodes out of an arry and enter to the array new random x cardCodes Creating a situation in which there is a set
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
+        console.log("pullXCardsAndEnterNewXCards",x, currCards, selectedCards, usedCards);
         let parmObjLength=Object.keys(Variables.objConstParameters).length;
         let newCards=[];
         let endGame=false;
-
+        //usedCards=usedCards.slice();
+        console.log("used",usedCards);
         if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
             currCards=currCards.filter(card=>!selectedCards.includes(card));
-            endGame=this.IsArrayHasSet(currCards);
+            console.log("newCurrCards",currCards);
+            endGame=!this.IsArrayHasSet(currCards);
+            console.log("endGame",endGame);
         }
         else{ 
+            console.log("used",usedCards);
             let newCurrCards=currCards.filter(card=>!selectedCards.includes(card))
+            console.log("used",usedCards);
             newCards =this.newCurrentCards(x, newCurrCards, usedCards, selectedCards);
+            console.log("used",usedCards);
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
                 currCards[index] = newCards[i];
             });
         }
+        console.log("used",usedCards);
+        console.log("new",newCards, "curr",currCards, "used",usedCards);
         return{
             newCards:newCards,
             currentCards:currCards,
             endGame:endGame
         };
     },
-
 };
 
 export default setFunctions;
