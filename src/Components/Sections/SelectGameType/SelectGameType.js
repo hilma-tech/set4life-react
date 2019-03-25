@@ -64,13 +64,13 @@ export default class GameType extends Component {
 
                                     </div>
                                     <div className="col-md text-center">
-                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='newGame'><i name='newGame' className="fas fa-plus fa-1x ml-1"></i> משחק חדש</button>
+                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='newGame'><img name='newGame' className="fas fa-plus fa-1x ml-1" src={NewGameImg} alt="new game"/> משחק חדש</button>
 
                                     </div>
                                 </div>
                                 <div className="row justify-content-center mt-3">
                                     <div className="col">
-                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='charts'><i name='charts' className="fas fa-chart-line fa-1x ml-1"></i> גרפים</button>
+                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='charts'><img name='charts' className="fas fa-chart-line fa-1x ml-1" src={chartsImg} alt="charts"/> גרפים</button>
                                     </div>
                                 </div>
                             </div>
