@@ -58,7 +58,7 @@ class App extends Component {
   }
 
   render() {
-    // if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
+    if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
       switch(this.state.pageSeen){
         case "load":
           return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading'/></div>;  
@@ -71,13 +71,13 @@ class App extends Component {
         default:
           return <ErrorMes/>;
       }
-    // }
-    // else{
-    //   return (
+    }
+    else{
+      return (
 
-    //     <NotChrome/>
-    //     );
-    // }
+        <NotChrome/>
+        );
+    }
       
     
   }

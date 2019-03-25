@@ -7,8 +7,8 @@ import EndGame from '../../Screen_Components/EndGame';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import ErrorMes from '../../Small_Components/ErrorMes';
 import './board.css';
-import Home from '../../../data/design/home.png'
 import UserIcon from '../../Small_Components/UserIcon';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 //timeStartGame- the time when the game start
 //timeNewCards- the time when new cards are showen in the board (3 new cards after correct set or the new cards in the beginning of the game)
@@ -33,7 +33,6 @@ export default class Board extends Component {
             game_Participants: [],
             currentPlayerName: '',
             exitGame: false,
-            missed:false,
             stageOfTheGame: 0
             /*
             stageOfTheGame values:
@@ -165,8 +164,8 @@ export default class Board extends Component {
             _timeOutChoosingSet = setTimeout(() => {
                 console.log("inside setTimeOut")
                 if (this.state.selectedCards.length < 3 && this.state.stageOfTheGame === 1) {
-                    this.setState({ stageOfTheGame: 0, selectedCards: [] ,missed:true});
-                    // setTimeout(()=>{this.setState({missed:false})},1000)
+                    this.setState({ stageOfTheGame: 0, selectedCards: []});
+                    ToastsStore.success("נגמר הזמן!");
                     ['selectedCards', 'currentPlayerID'].map(destination => {
                         firebaseObj.removeDataFromDB(`Games/${this.gameCode}/${destination}`);
                     })
@@ -223,8 +222,7 @@ export default class Board extends Component {
                     <UpperBar game_Participants={this.state.game_Participants}
                         currentPlayerName={this.state.currentPlayerName}
                         gameCode={this.gameCode}
-                        exitGame={this.exitGame} 
-                        missed={this.state.missed}/>
+                        exitGame={this.exitGame}/>
 
                     <div id='cards'>
                         {this.state.currentCards.map((cardCode, i) =>
@@ -244,6 +242,8 @@ export default class Board extends Component {
                         currentCards={this.state.currentCards}
                         clickButtonEvent={this.clickButtonEvent}
                         disableBeforeNext={this.state.disableBeforeNext} />
+                    
+                    <ToastsContainer store={ToastsStore} closeOnClick rtl="true"/>
                 </div>);
         }
         else
@@ -263,7 +263,6 @@ const UpperBar = (props) =>(
             <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
             <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>
         </div>
-        {/* {props.missed?<label>זמנך עבר</label>:null} */}
         <label id='current-player' style={{ visibility: props.currentPlayerName ? 'visible' : 'hidden' }}>
             {props.currentPlayerName} משחק עכשיו</label>
     </div>

@@ -8,7 +8,7 @@
 }
 
 #signout{
-  height: 5vh;
+  height: 9vh;
   float: left;
   background-color: transparent;
 }
@@ -110,6 +110,7 @@ i{
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
+  height: 120px;
 }
 
 #upperbar-gameType a{
@@ -122,4 +123,5 @@ float: left;
 
 #game-type-container h1{
   font-weight:bold;
+  text-align: start;
 }
