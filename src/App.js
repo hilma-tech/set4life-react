@@ -8,6 +8,7 @@ import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
 import ErrorMes from './Components/Small_Components/ErrorMes';
 import NotChrome from './Components/Small_Components/NotChrome/notChrome';
+import { isNull } from 'util';
 
 class App extends Component {
   constructor(props) {
@@ -45,13 +46,16 @@ class App extends Component {
       // firebaseObj._storage.ref(`ProfilePics/${fbUser.uid}`).getDownloadURL().then(url=>{
       //   Variables.profilePicUrl=url
       // });
-      let name = await firebaseObj.readingDataOnFirebaseAsync(`PlayersInfo/${fbUser.uid}/Name`);
-      Object.assign(Variables,{userId:fbUser.uid,playerName:name})
-      this.moveThroughPages("sel");
+      firebaseObj.readingDataOnFirebaseCB(info_obj=>{
+        Object.assign(Variables,
+          {userId:fbUser.uid,playerName:info_obj.Name,profilePic:info_obj.ProfilePic});
+          this.moveThroughPages("sel");
+      },`PlayersInfo/${fbUser.uid}`);
     }
     else {
       console.log("not logged in");
-      Variables.userId=null;
+      Object.assign(Variables,
+        {userId:null,playerName:null,profilePic:null});
       this.moveThroughPages("ent");
     }
   }
