@@ -3,16 +3,11 @@
  */
 
  
-.cover-container {
+/* .cover-container {
   max-width: 42em;
 }
-
-#signout{
-  height: 9vh;
-  float: left;
-  background-color: transparent;
-}
-
+*/
+/*
 #existGameImg{
   height: 8vh;
   background-color: transparent;
@@ -22,15 +17,15 @@
   background-color: #AC8EFC;
 }
 
-.btn{
+.btn{ */
   /* font-size:1.9rem; */
-  font-weight:550;
-}
+  /* font-weight:550;
+} */
 
 /*
- * Header
- */
-.masthead {
+* Header
+*/
+/* .masthead {
   margin-bottom: 2rem;
 }
 
@@ -45,7 +40,7 @@
   background-color: transparent;
   border-bottom: .25rem solid transparent;
   margin: 0% 8%;
-
+  
 }
 
 .nav-masthead .nav-link:hover,
@@ -70,12 +65,12 @@
     float: left;
   }
 }
-
+*/
 
 /*
- * Cover
- */
-.cover {
+* Cover
+*/
+/* .cover {
   padding: 0 1.5rem;
   margin: 8% 2%;
 }
@@ -83,13 +78,13 @@
   padding: .75rem 1.25rem;
   font-weight: 700;
   margin: 2% 1%;
-}
+} */
 
 
 /*
- * Footer
- */
-.mastfoot {
+* Footer
+*/
+/* .mastfoot {
   color: rgba(255, 255, 255, .5);
 }
 
@@ -114,7 +109,7 @@ i{
 }
 
 #upperbar-gameType a{
-float: left;
+  float: left;
 }
 
 #upperbar-gameType h3{
@@ -124,4 +119,72 @@ float: left;
 #game-type-container h1{
   font-weight:bold;
   text-align: start;
+}
+
+.iconsButtons{
+  height: 3vh;
+  background-color: transparent;  
+} */
+
+.sel-body{
+}
+
+#upperbar-gameType{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #D1C1FC;
+  align-items: center;
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
+#signout{
+  height: 9vh;
+  float: left;
+  background-color: transparent;
+}
+
+h1{
+  text-align: start;
+  font-weight: 800;
+  margin: 6vw;
+}
+
+.buttonsIcons{
+  height: 7vh;
+  background-color: transparent;
+}
+
+.gameTypeButtons{
+  background-color: #926AFF;
+  height: 10vh;
+  width: 40vh;
+}
+
+.graphButton{
+  background-color: #AC8EFC;
+  /* padding: 1vh; */
+  width: 12vw;
+  height: 10vh;
+  /* display: flex;
+  align-items: flex-end; */
+}
+
+.UserIcon{
+  background-color: transparent;
+  margin-top: 1%;
+}
+
+.buttons{
+  border: 1px solid #707070;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.graphsIcon{
+  height: 5vh;
+  background-color: transparent;
+  margin-left: 0.5vw;
 }

@@ -53,29 +53,20 @@ export default class GameType extends Component {
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
-                    <div className="text-center body">
+                    <div className="sel-body">
                         <TopBar signOut={this.signOut} />
-                        <div id='game-type-container' className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-                            <h1 className="cover-heading">בחר את סוג המשחק שלך:</h1>
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-md text-center">
-                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='existGame'><img name='existGame' src={ExistGameImg} alt="existGame" id="existGameImg"/> משחק קיים</button>
-
-                                    </div>
-                                    <div className="col-md text-center">
-                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='newGame'><img name='newGame' className="fas fa-plus fa-1x ml-1" src={NewGameImg} alt="new game"/> משחק חדש</button>
-
-                                    </div>
+                        <div id='game-type-container'>
+                            <h1>בחר את סוג המשחק שלך</h1>
+                            <div>
+                                <div>
+                                    <button onClick={this.onClickGameTypeButton} name='existGame' className="gameTypeButtons buttons"><img name='existGame' src={ExistGameImg} alt="existGame" className="buttonsIcons" /> משחק קיים</button>
+                                    <button onClick={this.onClickGameTypeButton} name='newGame' className="gameTypeButtons buttons"><img name='newGame' src={NewGameImg} alt="new game" className="buttonsIcons" /> משחק חדש</button>
                                 </div>
-                                <div className="row justify-content-center mt-3">
-                                    <div className="col">
-                                        <button className="btn btn-primary" onClick={this.onClickGameTypeButton} name='charts'><img name='charts' className="fas fa-chart-line fa-1x ml-1" src={chartsImg} alt="charts"/> גרפים</button>
-                                    </div>
+                                <div>
+                                    <button onClick={this.onClickGameTypeButton} name='charts' className="graphButton buttons"><img name='charts' src={chartsImg} alt="charts" className="graphsIcon" /> גרפים</button>
                                 </div>
                             </div>
                         </div>
-                        {/*  */}
                     </div>
 
                 );
@@ -93,8 +84,8 @@ export default class GameType extends Component {
 
 
 const TopBar = (props) => (
-    <div id='upperbar-gameType' className="upper-bar">
-        <UserIcon name={Variables.playerName}/>
-        <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout"/>
+    <div id='upperbar-gameType'>
+        <UserIcon name={Variables.playerName} />
+        <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout" />
     </div>
 );
