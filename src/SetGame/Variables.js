@@ -9,6 +9,8 @@ const Variables={
     creationGameTime:'',
     _date:'',
     day_numberedGame:0,
+    profilePicUrl:null,
+    ParticipantsPics_url:[],
 
     setUserId(userId) {
         this.userId = userId; 

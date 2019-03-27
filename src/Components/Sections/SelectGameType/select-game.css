@@ -167,8 +167,8 @@ h1{
   /* padding: 1vh; */
   width: 12vw;
   height: 10vh;
-  /* display: flex;
-  align-items: flex-end; */
+  display: flex;
+  align-items: flex-end;
 }
 
 .UserIcon{
@@ -187,4 +187,8 @@ h1{
   height: 5vh;
   background-color: transparent;
   margin-left: 0.5vw;
+}
+
+.graphButton div{
+  background-color: #AC8EFC;
 }

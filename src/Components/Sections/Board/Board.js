@@ -17,8 +17,6 @@ import {ToastsContainer, ToastsStore} from 'react-toasts';
 let timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet,
     _timeOutChoosingSet, _timeOutNextBtn;
 
-let ab=<div>bla bla</div>
-
 export default class Board extends Component {
     constructor(props) {
         super(props);
@@ -94,10 +92,9 @@ export default class Board extends Component {
         //Game_Participants
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
             val[1].isConnected) : [];
-
         this.setState({ game_Participants: ArrParticipants });
-        (!ArrParticipants.length) &&
-            firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
+        // (!ArrParticipants.length) &&
+        //     firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
         //selected cards
         if (JSON.stringify(this.state.selectedCards) !== JSON.stringify(newSelectedCards)) {
@@ -258,7 +255,7 @@ const UpperBar = (props) =>(
         <div id='nav-bar-boa' >
         <div>
             {props.game_Participants.map((val) =>
-                <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} />)}
+                <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[0]} />)}
         </div>
             <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
             <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>

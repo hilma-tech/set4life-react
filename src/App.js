@@ -22,6 +22,7 @@ class App extends Component {
     }
     firebaseObj.createAuth();
     firebaseObj.createDataBase();
+    firebaseObj.createStorage();
     firebaseObj.authState(this.handlePlayerAuthState);
 
     window.onpopstate = (event) => {
@@ -41,14 +42,16 @@ class App extends Component {
   handlePlayerAuthState = async (fbUser) => {
     if (fbUser) {
       console.log('fbUser', fbUser);
-      Variables.setUserId(fbUser.uid);
+      // firebaseObj._storage.ref(`ProfilePics/${fbUser.uid}`).getDownloadURL().then(url=>{
+      //   Variables.profilePicUrl=url
+      // });
       let name = await firebaseObj.readingDataOnFirebaseAsync(`PlayersInfo/${fbUser.uid}/Name`);
-      Variables.setPlayerName(name);
+      Object.assign(Variables,{userId:fbUser.uid,playerName:name})
       this.moveThroughPages("sel");
     }
     else {
       console.log("not logged in");
-      Variables.setUserId(null);
+      Variables.userId=null;
       this.moveThroughPages("ent");
     }
   }

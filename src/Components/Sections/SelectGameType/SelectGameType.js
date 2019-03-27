@@ -63,7 +63,7 @@ export default class GameType extends Component {
                                     <button onClick={this.onClickGameTypeButton} name='newGame' className="gameTypeButtons buttons"><img name='newGame' src={NewGameImg} alt="new game" className="buttonsIcons" /> משחק חדש</button>
                                 </div>
                                 <div>
-                                    <button onClick={this.onClickGameTypeButton} name='charts' className="graphButton buttons"><img name='charts' src={chartsImg} alt="charts" className="graphsIcon" /> גרפים</button>
+                                    <button onClick={this.onClickGameTypeButton} name='charts' className="graphButton buttons"><img name='charts' src={chartsImg} alt="charts" className="graphsIcon" /> <span>גרפים</span> </button>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@ export default class GameType extends Component {
 
 const TopBar = (props) => (
     <div id='upperbar-gameType'>
-        <UserIcon name={Variables.playerName} />
-        <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout" />
+        <UserIcon name={Variables.playerName} src={Variables.profilePicUrl}/>
+        <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout"/>
     </div>
 );
