@@ -50,6 +50,7 @@ export default class GameType extends Component {
     }
 
     render() {
+        console.log('Variables.profilePicUrl',Variables.profilePicUrl)
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
@@ -85,7 +86,7 @@ export default class GameType extends Component {
 
 const TopBar = (props) => (
     <div id='upperbar-gameType'>
-        <UserIcon name={Variables.playerName} src={Variables.profilePicUrl}/>
+        <UserIcon name={Variables.playerName} src={Variables.profilePic}/>
         <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout"/>
     </div>
 );

@@ -1,0 +1,7 @@
+#user-icon div{
+    background-color:red; 
+}
+
+#user-icon div >*{
+    background-color:transparent; 
+}
