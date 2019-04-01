@@ -9,15 +9,7 @@ const Variables={
     creationGameTime:'',
     _date:'',
     day_numberedGame:0,
-    profilePic:null,
-    ParticipantsPics_url:[],
-
-    setUserId(userId) {
-        this.userId = userId; 
-    },
-    setPlayerName(name){
-        this.playerName=name;
-    }
+    profilePic:"default"
 }
 
 export default Variables;

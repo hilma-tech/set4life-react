@@ -7,8 +7,9 @@ import EndGame from '../../Screen_Components/EndGame';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import ErrorMes from '../../Small_Components/ErrorMes';
 import './board.css';
-import UserIcon from '../../Small_Components/UserIcon';
-import {ToastsContainer, ToastsStore} from 'react-toasts';
+import UserIcon from '../../Small_Components/UserIcon/UserIcon';
+import { ToastsContainer, ToastsStore } from 'react-toasts';
+import SaveGame from '../../Small_Components/SaveGame/SaveGame';
 
 //timeStartGame- the time when the game start
 //timeNewCards- the time when new cards are showen in the board (3 new cards after correct set or the new cards in the beginning of the game)
@@ -161,7 +162,7 @@ export default class Board extends Component {
             _timeOutChoosingSet = setTimeout(() => {
                 console.log("inside setTimeOut")
                 if (this.state.selectedCards.length < 3 && this.state.stageOfTheGame === 1) {
-                    this.setState({ stageOfTheGame: 0, selectedCards: []});
+                    this.setState({ stageOfTheGame: 0, selectedCards: [] });
                     ToastsStore.success("נגמר הזמן!");
                     ['selectedCards', 'currentPlayerID'].map(destination => {
                         firebaseObj.removeDataFromDB(`Games/${this.gameCode}/${destination}`);
@@ -171,28 +172,28 @@ export default class Board extends Component {
                         { timeOut: Variables._timer, timeMissedOut: ((performance.now() - timeStartGame) / 1000).toFixed(2) });
                 }
             }, Variables._timer * 1000);
-            console.log("Variables.userId",Variables.userId,"this.gameCode",this.gameCode)
+            console.log("Variables.userId", Variables.userId, "this.gameCode", this.gameCode)
             firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/currentPlayerID`, Variables.userId)
             this.setState({ stageOfTheGame: 1 });
         }
 
         if (this.state.stageOfTheGame === 2) {
             clearTimeout(_timeOutNextBtn);
-            console.log("USED CARDS (12??)",this.state.usedCards)
+            console.log("USED CARDS (12??)", this.state.usedCards)
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-                console.log("obj pull cards in stage 2",objPullCards)
-                console.log("USED CARDS (12??)",this.state.usedCards)
-                let used_cards=[...this.state.usedCards, ...objPullCards.newCards];
-                console.log("USED CARDS (15??)",used_cards);
+                console.log("obj pull cards in stage 2", objPullCards)
+                console.log("USED CARDS (12??)", this.state.usedCards)
+                let used_cards = [...this.state.usedCards, ...objPullCards.newCards];
+                console.log("USED CARDS (15??)", used_cards);
                 this.setState({
                     currentCards: objPullCards.currentCards,
                     usedCards: used_cards,
                     stageOfTheGame: 0,
                     selectedCards: [],
-                    exitGame:objPullCards.endGame
+                    exitGame: objPullCards.endGame
                 });
-                console.log("push to firebase", "usedcard",this.state.usedCards)
+                console.log("push to firebase", "usedcard", this.state.usedCards)
                 firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
                     {
                         currentCards: objPullCards.currentCards,
@@ -211,15 +212,13 @@ export default class Board extends Component {
     }
 
     render() {
-        // console.log('partis', this.state.ArrParticipants)
-        //console.log("exitGame",!this.state.exitGame , "currentCards",this.state.currentCards, "=",(!this.state.exitGame) && this.state.currentCards)
         if ((!this.state.exitGame) && this.state.currentCards) {
             return (
                 <div id="board" className='page'>
                     <UpperBar game_Participants={this.state.game_Participants}
                         currentPlayerName={this.state.currentPlayerName}
                         gameCode={this.gameCode}
-                        exitGame={this.exitGame}/>
+                        exitGame={this.exitGame} />
 
                     <div id='cards'>
                         {this.state.currentCards.map((cardCode, i) =>
@@ -239,24 +238,23 @@ export default class Board extends Component {
                         currentCards={this.state.currentCards}
                         clickButtonEvent={this.clickButtonEvent}
                         disableBeforeNext={this.state.disableBeforeNext} />
-                    
-                    <ToastsContainer store={ToastsStore} closeOnClick rtl="true"/>
+
+                    <ToastsContainer store={ToastsStore} closeOnClick rtl="true" />
                 </div>);
         }
-        else
-            {console.log("cuurent cards",this.state.currentCards)
-            return <EndGame moveThroughPages={this.moveThroughPages} />;}
+        else 
+            return <SaveGame moveThroughPages={this.moveThroughPages} />       
     }
 }
 
 
-const UpperBar = (props) =>(
+const UpperBar = (props) => (
     <div id='upper-bar-boa' >
         <div id='nav-bar-boa' >
-        <div>
-            {props.game_Participants.map((val) =>
-                <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[0]} />)}
-        </div>
+            <div>
+                {props.game_Participants.map((val) =>
+                    <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='down' />)}
+            </div>
             <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
             <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>
         </div>
@@ -268,13 +266,14 @@ const UpperBar = (props) =>(
 
 const LowerBar = (props) => (
     <div id='lower-bar-boa' >
-        {props.currentCards && <button className='btn' onClick={props.clickButtonEvent} id={props.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
-            disabled={props.stageOfTheGame === 1 || props.stageOfTheGame === 3 || (props.stageOfTheGame === 2 && props.disableBeforeNext)}>
-            {props.stageOfTheGame === 0 ? "מצאתי סט!" :
-                props.stageOfTheGame === 1 ? "סט בבחירה" :
-                    props.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
-            }
-        </button>}
+        {props.currentCards &&
+            <button className='btn' onClick={props.clickButtonEvent} id={props.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
+                disabled={props.stageOfTheGame === 1 || props.stageOfTheGame === 3 || (props.stageOfTheGame === 2 && props.disableBeforeNext)}>
+                {props.stageOfTheGame === 0 ? "מצאתי סט!" :
+                    props.stageOfTheGame === 1 ? "סט בבחירה" :
+                        props.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
+                }
+            </button>}
     </div>
 );
 

@@ -10,7 +10,7 @@ import NewGameImg from '../../../data/design/add.png'
 import ExistGameImg from '../../../data/design/cards.png'
 import chartsImg from '../../../data/design/line-chart.png'
 import LogoutImg from '../../../data/design/logout.png';
-import UserIcon from '../../Small_Components/UserIcon';
+import UserIcon from '../../Small_Components/UserIcon/UserIcon';
 
 
 export default class GameType extends Component {
@@ -50,7 +50,6 @@ export default class GameType extends Component {
     }
 
     render() {
-        console.log('Variables.profilePicUrl',Variables.profilePicUrl)
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
@@ -60,7 +59,8 @@ export default class GameType extends Component {
                             <h1>בחר את סוג המשחק שלך</h1>
                             <div>
                                 <div>
-                                    <button onClick={this.onClickGameTypeButton} name='existGame' className="gameTypeButtons buttons"><img name='existGame' src={ExistGameImg} alt="existGame" className="buttonsIcons" /> משחק קיים</button>
+                                    <button onClick={this.onClickGameTypeButton} name='existGame' className="gameTypeButtons buttons">
+                                    <img name='existGame' src={ExistGameImg} alt="existGame" className="buttonsIcons" /> משחק קיים</button>
                                     <button onClick={this.onClickGameTypeButton} name='newGame' className="gameTypeButtons buttons"><img name='newGame' src={NewGameImg} alt="new game" className="buttonsIcons" /> משחק חדש</button>
                                 </div>
                                 <div>
@@ -86,7 +86,7 @@ export default class GameType extends Component {
 
 const TopBar = (props) => (
     <div id='upperbar-gameType'>
-        <UserIcon name={Variables.playerName} src={Variables.profilePic}/>
+        <UserIcon _direction='left' name={Variables.playerName} src={Variables.profilePic}/>
         <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout"/>
     </div>
 );

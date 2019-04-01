@@ -6,3 +6,7 @@
     text-align: center; 
 }
 
+#reg input[type="file"]{
+    content: 'fgf'
+}
+

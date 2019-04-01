@@ -6,6 +6,14 @@ import Variables from '../../../SetGame/Variables.js';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import './new-game.css';
 
+
+let dropdown_refs={
+    shape:null,
+    shade:null,
+    color:null,
+    number:null
+}
+
 export default class NewGame extends Component {
     constructor(props) {
         super(props);
@@ -26,21 +34,23 @@ export default class NewGame extends Component {
 
         let startGameTime = GeneralFunctions.timeAndDate('time');
 
-        Object.assign(Variables,{gameCode:newGameCode,
-            _timer:this.state._timer,
-            objConstParameters:this.state.dropDownInfo,
-            creationGameTime:startGameTime});
-            
+        Object.assign(Variables, {
+            gameCode: newGameCode,
+            _timer: this.state._timer,
+            objConstParameters: this.state.dropDownInfo,
+            creationGameTime: startGameTime
+        });
+
         let constParamLength = Object.keys(this.state.dropDownInfo).length;
         let newCurrentCards = setFunctions.newCurrentCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);
-        
+
         let gameObj = {
-            timeOut_choosingCards:this.state._timer,
+            timeOut_choosingCards: this.state._timer,
             creationTime: startGameTime,
             currentCards: newCurrentCards,
             usedCards: newCurrentCards,
             constParameters: Variables.objConstParameters,
-            Game_Participants: { [Variables.userId]: { Name: Variables.playerName, isConnected: true } }
+            Game_Participants: { [Variables.userId]: { Name: Variables.playerName, ProfilePic: Variables.profilePic, isConnected: true } }
         };
 
         firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`, gameObj);
@@ -53,6 +63,7 @@ export default class NewGame extends Component {
         if (!checkboxsInfo[`${event.target.name}Bool`]) {
             let dropDownInfo = this.state.dropDownInfo;
             delete dropDownInfo[event.target.name];
+            dropdown_refs[event.target.name].selectedIndex = 0;
             this.setState({ dropDownInfo: dropDownInfo });
 
             checkboxsInfo[`${event.target.name}Bool`] = true;
@@ -80,8 +91,8 @@ export default class NewGame extends Component {
             this.setState({ _timer: event.target.value })
     }
 
-    keypressed=(e)=>{
-        if(e.key==="Enter")
+    keypressed = (e) => {
+        if (e.key === "Enter")
             this.settingNewGame();
     }
 
@@ -89,20 +100,14 @@ export default class NewGame extends Component {
         return (
             <div id='new-game' className='page' onKeyPress={this.keypressed}>
                 <div id='checkbox-param' >
-                    {Object.keys(GameData.cardsParameters).map((par, i) => (
-                        <div key={i} >
-                            <input
-                                type="checkbox"
-                                name={par}
-                                checked={this.state.checkboxsInfo[par + 'Bool']}
-                                onChange={this.checkboxsChange} key={par} />
-                            <label> {GameData.cardsParameters[par].nameHe}</label>
-                            <SelectConstParameter
-                                checkboxsInfo={this.state.checkboxsInfo}
-                                arrOptionsHe={GameData.cardsParameters[par][par + 'He']}
-                                categoryStr={par}
-                                settingConstParametersObj={this.settingConstParametersObj} />
-                        </div>)
+                    {Object.keys(GameData.cardsParameters).map((par_name, i) => (
+                        <CheckboxConstParameter
+                            par_name={par_name}
+                            checkboxsInfo={this.state.checkboxsInfo}
+                            i={i}
+                            key={i}
+                            checkboxsChange={this.checkboxsChange}
+                            settingConstParametersObj={this.settingConstParametersObj} />)
                     )}
                 </div>
                 <label>טיימר של הכפתור:</label>
@@ -123,16 +128,30 @@ export default class NewGame extends Component {
     }
 }
 
+const CheckboxConstParameter = (props) => (
+    <div key={props.i} >
+        <input
+            type="checkbox"
+            name={props.par_name}
+            checked={props.checkboxsInfo[props.par_name + 'Bool']}
+            onChange={props.checkboxsChange} key={props.par_name} />
+        <label> {GameData.cardsParameters[props.par_name].nameHe}</label>
+        <SelectConstParameter
+            checkboxsInfo={props.checkboxsInfo}
+            arrOptionsHe={GameData.cardsParameters[props.par_name][props.par_name + 'He']}
+            categoryStr={props.par_name}
+            settingConstParametersObj={props.settingConstParametersObj} />
+    </div>)
 
 
 
-
-const SelectConstParameter = (props) => (
+const SelectConstParameter = (props) =>(
     <select
+        ref={el=>dropdown_refs[props.categoryStr]=el}
         style={{ visibility: (!props.checkboxsInfo[props.categoryStr + 'Bool']) ? 'visible' : 'hidden' }}
         name={props.categoryStr}
         onChange={props.settingConstParametersObj}>
-        <option key="-1" disabled="disabled" selected="selected">בחר</option>
+        <option key="-1" disabled="disabled" selected={true}>בחר</option>
         {
             props.arrOptionsHe.map((option, i) =>
                 <option code={i} key={i} >{option}</option>)

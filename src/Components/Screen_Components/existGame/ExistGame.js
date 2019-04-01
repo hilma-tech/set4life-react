@@ -22,12 +22,12 @@ export default class ExistGame extends Component {
         if (Object.keys(this.state.gameObj).length) {
             let gameObj = this.state.gameObj;
             firebaseObj.updatingValueInDataBase(`Games/${this.state.gameCode}/Game_Participants`,
-                { [Variables.userId]: { Name: Variables.playerName, isConnected: true } });
+                { [Variables.userId]: { Name: Variables.playerName, ProfilePic: Variables.profilePic, isConnected: true } });
 
             Object.assign(Variables, {
                 gameCode: this.state.gameCode,
                 _timer: gameObj.timeOut_choosingCards,
-                objConstParameters: gameObj.constParameters?gameObj.constParameters:{},
+                objConstParameters: gameObj.constParameters ? gameObj.constParameters : {},
                 creationGameTime: gameObj.creationTime
             });
 
@@ -60,30 +60,32 @@ export default class ExistGame extends Component {
         }
     }
 
-    keypressed=(e)=>{
-        if(e.key==="Enter")
+    keypressed = (e) => {
+        if (e.key === "Enter")
             this.onClickExistGameCodeButton();
     }
 
     render() {
+        console.log('participants',this.state.participants.length===1)
         return (
             <div className='page' onKeyPress={this.keypressed}>
-                    <h3>אנא הכנס קוד משחק:</h3>
-                    <input
-                        style={{ width: '30vw', height: '7vh', fontSize: '1.7rem' }}
-                        id="input"
-                        name='gameCode'
-                        type='text'
-                        placeholder="הכנס קוד משחק"
-                        value={this.state.gameCode}
-                        onChange={this.inputChange} />
+                <h3>אנא הכנס קוד משחק:</h3>
+                <input
+                    style={{ width: '30vw', height: '7vh', fontSize: '1.7rem' }}
+                    id="input"
+                    name='gameCode'
+                    type='text'
+                    placeholder="הכנס קוד משחק"
+                    value={this.state.gameCode}
+                    onChange={this.inputChange} />
 
-                    {this.state.loadingParticipants ?
-                        <img src={LoadingImg} alt='loading' /> :
-                        <button
-                            className='btn'
-                            onClick={this.onClickExistGameCodeButton}
-                            id='continue' >המשך</button>}
+                {this.state.loadingParticipants ?
+                    <img src={LoadingImg} alt='loading' /> :
+                    <button
+                        className='btn'
+                        onClick={this.onClickExistGameCodeButton}
+                        id='continue'
+                        disabled={this.state.participants.length>=4} >המשך</button>}
                 {this.state.loadLocatePartic ?
                     <img src={LoadingImg} alt='loading' className="LoadingImg" /> :
                     this.state.loadLocatePartic !== null &&
@@ -97,7 +99,8 @@ export default class ExistGame extends Component {
 
 const ParticipantsList = (props) => (
     <p>
-        {props.participants.length ?
+        {props.participants.length>=4?'המשחק מכיל כבר כמות מקסימאלית של משתתפים':
+            props.participants.length ?
             GeneralFunctions.string_From_List(props.participants, '', ` ${props.participants.length === 1 ? `משתתף` : `משתתפים`} במשחק כרגע `) :
             'המשחק אינו קיים. אנא נסה שנית'}
     </p>

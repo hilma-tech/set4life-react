@@ -3,6 +3,7 @@ import firebaseObj from "../../../firebase/firebaseObj";
 import GameData from "../../../data/GameData.json";
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import './registration.css';
+import userIcon from '../../../data/design/userIcon.png';
 
 
 export default class Registration extends Component {
@@ -18,7 +19,7 @@ export default class Registration extends Component {
             },
             registStateInfo: '',
             pic_percentage: 0,
-            pic: null
+            profilePic: null
         }
         window.history.pushState('reg', '', 'registration');
         firebaseObj.createStorage();
@@ -30,50 +31,62 @@ export default class Registration extends Component {
         this.setState({ personalInfo: personalInfo, registStateInfo: '' })
     }
 
-
-    onClickRegisterButton=async()=>{
-        let emptyFilesArr=[];
-        let personalInfo=this.state.personalInfo;
-        
-        Object.values(personalInfo).map((val,i)=>
-            (!val)&&emptyFilesArr.push(GameData.registration[i]));
-        
-        if(!emptyFilesArr.length){
-            firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email,personalInfo.password)
-            .then(fbUser=>{
-                this.setState({registStateInfo:'נרשמת בהצלחה'});
-                let task = firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).put(this.state.pic);
-                task.on('state_changed', (snap) => {console.log('task',task.snapshot.downloadURL) },
-                    function error(err) {
-                        console.log('ERROR', err)
-                    },
-                    ()=> {
-                        console.log('task complete',task.snapshot.downloadURL)
-                        firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).getDownloadURL().then(url => {
-                            firebaseObj.settingValueInDataBase(`PlayersInfo/${fbUser.user.uid}`,
-                    { Name: personalInfo.fullName, phoneNum: personalInfo.phoneNum,ProfilePic:url });
-                            firebaseObj.pushToFirebase(`PlayersInfo/${fbUser.user.uid}`, {ProfilePic:url})
-                        });
-                    });
-                },
-                error=>{
-                    this.setState({registStateInfo:GameData.errorRegistration[error.code]})
-                    console.log("error code", error.code)
-                });
-        }
-        else
-            this.setState({registStateInfo:GeneralFunctions.string_From_List(emptyFilesArr,'שכחת למלא את השדות:')});       
+    updating_PlayerInfo_fb = (userId,profilePic = null) => {
+        firebaseObj.settingValueInDataBase(`PlayersInfo/${userId}`,
+            {
+                Name: this.state.personalInfo.fullName,
+                phoneNum: this.state.personalInfo.phoneNum,
+                ProfilePic: profilePic?profilePic:userIcon
+            });
     }
 
-    keypressed=(e)=>{
-        if(e.key==="Enter")
+    onClickRegisterButton = async () => {
+        let emptyFilesArr = [];
+        let personalInfo = this.state.personalInfo;
+
+        Object.values(personalInfo).map((val, i) =>
+            (!val) && emptyFilesArr.push(GameData.registration[i]));
+
+        if (!emptyFilesArr.length) {
+            firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
+                .then(fbUser => {
+                    this.setState({ registStateInfo: 'נרשמת בהצלחה' });
+                    if (this.state.profilePic) {
+                        let task = firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).put(this.state.profilePic);
+                        task.on('state_changed', () => { }, () => { },
+                            function finish() {
+                                firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).getDownloadURL().then(url => {
+                                    this.updating_PlayerInfo_fb(fbUser.user.uid,url);
+                                });
+                            });
+                    }
+                    else this.updating_PlayerInfo_fb(fbUser.user.uid);
+
+                },
+                    error => {
+                        this.setState({ registStateInfo: GameData.errorRegistration[error.code] })
+                        console.log("error code", error.code)
+                    });
+        }
+        else
+            this.setState({ registStateInfo: GeneralFunctions.string_From_List(emptyFilesArr, 'שכחת למלא את השדות:') });
+    }
+
+    keypressed = (e) => {
+        if (e.key === "Enter")
             this.onClickRegisterButton();
     }
 
-    render(){
-        return(
+    uploadProfilePic = (event) => {
+        if (event.target.files[0]) {
+            this.setState({ profilePic: event.target.files[0] })
+        }
+    }
+
+    render() {
+        return (
             <div id="reg" className='page' onKeyPress={this.keypressed}>
-                <h1 style={{fontWeight:700}} >הרשמה</h1>
+                <h1 style={{ fontWeight: 700 }} >הרשמה</h1>
                 <label>שם מלא</label>
                 <input name='fullName' type='text' placeholder="אנא הכנס את שמך המלא"
                     onChange={this.inputChange}></input>

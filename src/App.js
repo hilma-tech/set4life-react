@@ -8,7 +8,7 @@ import firebaseObj from './firebase/firebaseObj';
 import LoadingImg from './data/design/loading-img.gif';
 import ErrorMes from './Components/Small_Components/ErrorMes';
 import NotChrome from './Components/Small_Components/NotChrome/notChrome';
-import { isNull } from 'util';
+import SaveGame from './Components/Small_Components/SaveGame/SaveGame' 
 
 class App extends Component {
   constructor(props) {
@@ -43,19 +43,16 @@ class App extends Component {
   handlePlayerAuthState = async (fbUser) => {
     if (fbUser) {
       console.log('fbUser', fbUser);
-      // firebaseObj._storage.ref(`ProfilePics/${fbUser.uid}`).getDownloadURL().then(url=>{
-      //   Variables.profilePicUrl=url
-      // });
-      firebaseObj.readingDataOnFirebaseCB(info_obj=>{
+      firebaseObj.readingDataOnFirebaseCB(info_obj => {
         Object.assign(Variables,
-          {userId:fbUser.uid,playerName:info_obj.Name,profilePic:info_obj.ProfilePic});
-          this.moveThroughPages("sel");
-      },`PlayersInfo/${fbUser.uid}`);
+          { userId: fbUser.uid, playerName: info_obj.Name, profilePic: info_obj.ProfilePic });
+        this.moveThroughPages("sel");
+      }, `PlayersInfo/${fbUser.uid}`);
     }
     else {
       console.log("not logged in");
       Object.assign(Variables,
-        {userId:null,playerName:null,profilePic:null});
+        { userId: null, playerName: null, profilePic:"default" });
       this.moveThroughPages("ent");
     }
   }
@@ -65,28 +62,29 @@ class App extends Component {
   }
 
   render() {
-    if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
-      switch(this.state.pageSeen){
-        case "load":
-          return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading'/></div>;  
-        case 'ent':
-          return <Entrance moveThroughPages={this.moveThroughPages}/>;
-        case "sel":
-          return <SelectGameType moveThroughPages={this.moveThroughPages}/>;
-        case "boa":
-          return <Board info={this.state.info} moveThroughPages={this.moveThroughPages}/>;
-        default:
-          return <ErrorMes/>;
-      }
-    }
-    else{
-      return (
+    return <SaveGame/>
+    // if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
+    // switch (this.state.pageSeen) {
+    //   case "load":
+    //     return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading' /></div>;
+    //   case 'ent':
+    //     return <Entrance moveThroughPages={this.moveThroughPages} />;
+    //   case "sel":
+    //     return <SelectGameType moveThroughPages={this.moveThroughPages} />;
+    //   case "boa":
+    //     return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
+    //   default:
+    //     return <ErrorMes />;
+    // }
+    // }
+    // else{
+    //   return (
 
-        <NotChrome/>
-        );
-    }
-      
-    
+    //     <NotChrome/>
+    //     );
+    // }
+
+
   }
 }
 
