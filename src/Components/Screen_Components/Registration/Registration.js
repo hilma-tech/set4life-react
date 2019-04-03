@@ -14,15 +14,23 @@ export default class Registration extends Component {
                 fullName: '',
                 phoneNum: '',
                 email: '',
-                password: ''
-
+                password: '',
+                passwordAgain: ''
             },
             registStateInfo: '',
-            pic_percentage: 0,
             profilePic: null
         }
         window.history.pushState('reg', '', 'registration');
-        firebaseObj.createStorage();
+    }
+
+
+    registrationValidation = () => {
+        let personalInfo = this.state.personalInfo;
+        return {
+            phoneNum: personalInfo.phoneNum.match(/^05\d([-]{0,1})\d{7}$/),
+            passwordAgain: personalInfo.password === personalInfo.passwordAgain,
+            both: personalInfo.phoneNum.match(/^05\d([-]{0,1})\d{7}$/) && personalInfo.password === personalInfo.passwordAgain
+        }
     }
 
     inputChange = (event) => {
@@ -31,16 +39,16 @@ export default class Registration extends Component {
         this.setState({ personalInfo: personalInfo, registStateInfo: '' })
     }
 
-    updating_PlayerInfo_fb = (userId,profilePic = null) => {
+    updating_PlayerInfo_fb = (userId, profilePic = null) => {
         firebaseObj.settingValueInDataBase(`PlayersInfo/${userId}`,
             {
                 Name: this.state.personalInfo.fullName,
                 phoneNum: this.state.personalInfo.phoneNum,
-                ProfilePic: profilePic?profilePic:userIcon
+                ProfilePic: profilePic ? profilePic : userIcon
             });
     }
 
-    onClickRegisterButton = async () => {
+    onClickRegisterButton = () => {
         let emptyFilesArr = [];
         let personalInfo = this.state.personalInfo;
 
@@ -48,25 +56,32 @@ export default class Registration extends Component {
             (!val) && emptyFilesArr.push(GameData.registration[i]));
 
         if (!emptyFilesArr.length) {
-            firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
-                .then(fbUser => {
-                    this.setState({ registStateInfo: 'נרשמת בהצלחה' });
-                    if (this.state.profilePic) {
-                        let task = firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).put(this.state.profilePic);
-                        task.on('state_changed', () => { }, () => { },
-                            function finish() {
-                                firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).getDownloadURL().then(url => {
-                                    this.updating_PlayerInfo_fb(fbUser.user.uid,url);
+            let _valid = this.registrationValidation()
+            if (_valid.both) {
+                firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
+                    .then(fbUser => {
+                        this.setState({ registStateInfo: 'נרשמת בהצלחה' });
+                        if (this.state.profilePic) {
+                            let task = firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).put(this.state.profilePic);
+                            task.on('state_changed', () => { }, () => { },
+                                function finish() {
+                                    firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).getDownloadURL().then(url => {
+                                        this.updating_PlayerInfo_fb(fbUser.user.uid, url);
+                                    });
                                 });
-                            });
-                    }
-                    else this.updating_PlayerInfo_fb(fbUser.user.uid);
+                        }
+                        else this.updating_PlayerInfo_fb(fbUser.user.uid);
 
-                },
-                    error => {
-                        this.setState({ registStateInfo: GameData.errorRegistration[error.code] })
-                        console.log("error code", error.code)
-                    });
+                    },
+                        error => {
+                            this.setState({ registStateInfo: GameData.errorRegistration[error.code] })
+                            console.log("error code", error.code)
+                        });
+            }
+            else{
+                let _error=_valid.passwordAgain&&GameData.errorRegistration.passwordAgain+_valid.both&&" ,"+_valid.phoneNum&&GameData.errorRegistration.phoneNum;
+                this.setState({registStateInfo:_error})
+            }
         }
         else
             this.setState({ registStateInfo: GeneralFunctions.string_From_List(emptyFilesArr, 'שכחת למלא את השדות:') });
@@ -104,11 +119,10 @@ export default class Registration extends Component {
                     onChange={this.inputChange}></input>
 
                 <label>אימות סיסמא</label>
-                <input name='passwordValidation' type="password"
+                <input name='passwordAgain' type="password"
                     onChange={this.inputChange}></input>
 
                 <label>תמונת פרופיל</label>
-                <label>{this.state.pic_percentage}</label>
                 <input name='uplode_pic' type="file"
                     onChange={this.uploadProfilePic}></input>
 
