@@ -9,7 +9,7 @@ export default class Entrance extends Component{
         super(props);
         this.state={
             loading: true,
-            EntranceOption:'reg'
+            EntranceOption:'log'
             //'log'-login
             //'reg'-Registration
         }

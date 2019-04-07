@@ -28,8 +28,8 @@ export default class Registration extends Component {
         let personalInfo = this.state.personalInfo;
         let phoneNum = personalInfo.phoneNum.match(/^05\d([-]{0,1})\d{7}$/) ? true : false;
         return {
-            phoneNum: !phoneNum,
-            passwordAgain: personalInfo.password !== personalInfo.passwordAgain,
+            phoneNum: phoneNum,
+            passwordAgain: personalInfo.password === personalInfo.passwordAgain,
         }
     }
 
@@ -57,7 +57,7 @@ export default class Registration extends Component {
 
         if (!emptyFilesArr.length) {
             let _valid = this.registrationValidation()
-            if (_valid.both) {
+            if (_valid.phoneNum&& _valid.passwordAgain) {
                 firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
                     .then(fbUser => {
                         this.setState({ registStateInfo: 'נרשמת בהצלחה' });
@@ -80,9 +80,9 @@ export default class Registration extends Component {
             }
             else {
                 let arr=[];
-                if(_valid.phoneNum)
+                if(!_valid.phoneNum)
                     arr.push(GameData.errorRegistration.phoneNum);
-                if(_valid.passwordAgain)
+                if(!_valid.passwordAgain)
                     arr.push(GameData.errorRegistration.passwordAgain);
                 this.setState({ registStateInfo: GeneralFunctions.string_From_List(arr) });
             }
