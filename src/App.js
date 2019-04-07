@@ -62,27 +62,27 @@ class App extends Component {
   }
 
   render() {
-    return <SaveGame/>
-    // if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
-    // switch (this.state.pageSeen) {
-    //   case "load":
-    //     return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading' /></div>;
-    //   case 'ent':
-    //     return <Entrance moveThroughPages={this.moveThroughPages} />;
-    //   case "sel":
-    //     return <SelectGameType moveThroughPages={this.moveThroughPages} />;
-    //   case "boa":
-    //     return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
-    //   default:
-    //     return <ErrorMes />;
-    // }
-    // }
-    // else{
-    //   return (
+    // return <SaveGame/>
+    if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
+    switch (this.state.pageSeen) {
+      case "load":
+        return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading' /></div>;
+      case 'ent':
+        return <Entrance moveThroughPages={this.moveThroughPages} />;
+      case "sel":
+        return <SelectGameType moveThroughPages={this.moveThroughPages} />;
+      case "boa":
+        return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
+      default:
+        return <ErrorMes />;
+    }
+    }
+    else{
+      return (
 
-    //     <NotChrome/>
-    //     );
-    // }
+        <NotChrome/>
+        );
+    }
 
 
   }

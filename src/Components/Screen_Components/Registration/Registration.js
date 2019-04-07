@@ -26,10 +26,10 @@ export default class Registration extends Component {
 
     registrationValidation = () => {
         let personalInfo = this.state.personalInfo;
+        let phoneNum = personalInfo.phoneNum.match(/^05\d([-]{0,1})\d{7}$/) ? true : false;
         return {
-            phoneNum: personalInfo.phoneNum.match(/^05\d([-]{0,1})\d{7}$/),
-            passwordAgain: personalInfo.password === personalInfo.passwordAgain,
-            both: personalInfo.phoneNum.match(/^05\d([-]{0,1})\d{7}$/) && personalInfo.password === personalInfo.passwordAgain
+            phoneNum: !phoneNum,
+            passwordAgain: personalInfo.password !== personalInfo.passwordAgain,
         }
     }
 
@@ -78,9 +78,13 @@ export default class Registration extends Component {
                             console.log("error code", error.code)
                         });
             }
-            else{
-                let _error=_valid.passwordAgain&&GameData.errorRegistration.passwordAgain+_valid.both&&" ,"+_valid.phoneNum&&GameData.errorRegistration.phoneNum;
-                this.setState({registStateInfo:_error})
+            else {
+                let arr=[];
+                if(_valid.phoneNum)
+                    arr.push(GameData.errorRegistration.phoneNum);
+                if(_valid.passwordAgain)
+                    arr.push(GameData.errorRegistration.passwordAgain);
+                this.setState({ registStateInfo: GeneralFunctions.string_From_List(arr) });
             }
         }
         else
