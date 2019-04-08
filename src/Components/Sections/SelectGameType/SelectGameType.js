@@ -41,6 +41,7 @@ export default class GameType extends Component {
     }
 
     onClickGameTypeButton = (event) => {
+        console.log("in onClickGameTypeButton",event.target.getAttribute('name') )
         this.setState({ GameTypeOptions: event.target.getAttribute('name') });
     }
 
@@ -53,28 +54,26 @@ export default class GameType extends Component {
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
-                    <div className="sel-body">
+                    <div id="sel-body">
                         <TopBar signOut={this.signOut} />
                         <div id='game-type-container'>
                             <h1>בחר את סוג המשחק שלך</h1>
                             <div>
-                                <div>
+                                <div className="gameType">
                                     <button onClick={this.onClickGameTypeButton} name='existGame' className="gameTypeButtons buttons">
                                     <img name='existGame' src={ExistGameImg} alt="existGame" className="buttonsIcons" /> משחק קיים</button>
                                     <button onClick={this.onClickGameTypeButton} name='newGame' className="gameTypeButtons buttons"><img name='newGame' src={NewGameImg} alt="new game" className="buttonsIcons" /> משחק חדש</button>
                                 </div>
-                                <div>
                                     <button onClick={this.onClickGameTypeButton} name='charts' className="graphButton buttons"><img name='charts' src={chartsImg} alt="charts" className="graphsIcon" /> <span>גרפים</span> </button>
-                                </div>
                             </div>
                         </div>
                     </div>
 
                 );
             case 'existGame':
-                return <ExistGame moveThroughPages={this.props.moveThroughPages} />;
+                return <ExistGame moveThroughPages={this.props.moveThroughPages} onClickGameTypeButton={this.onClickGameTypeButton}/>;
             case 'newGame':
-                return <NewGame moveThroughPages={this.props.moveThroughPages} />;
+                return <NewGame moveThroughPages={this.props.moveThroughPages} onClickGameTypeButton={this.onClickGameTypeButton}/>;
             case 'charts':
                 return <ChartData moveThroughPages={this.props.moveThroughPages} />
             default:
@@ -85,7 +84,7 @@ export default class GameType extends Component {
 
 
 const TopBar = (props) => (
-    <div id='upperbar-gameType'>
+    <div className='upperBar'>
         <UserIcon _direction='left' name={Variables.playerName} src={Variables.profilePic}/>
         <img src={LogoutImg} id="signout" onClick={props.signOut} alt="Logout"/>
     </div>

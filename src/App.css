@@ -45,21 +45,6 @@ direction: ltr;
 } */
 
 
-#login-page a:link {
-    color: blue;
-    background-color: transparent;
-    text-decoration: none;
-}
-#login-page a:visited {
-    color:rgba(0, 0, 255, 0.575);
-    background-color: transparent;
-    text-decoration: none;
-  }
-  #login-page a:hover {
-    color:rgb(113, 113, 255);
-    background-color: transparent;
-    text-decoration: underline;
-  }
 
   .upper-bar{
     width:100vw;
@@ -70,26 +55,17 @@ direction: ltr;
   }
 
 
-  @media only screen and (max-width: 1024px) and (min-width:425px) {
+  /* @media only screen and (max-width: 1024px) and (min-width:425px) {
     *{
       font-size:14px;
     }
-}
+} */
 
-@media only screen and (max-width: 425px) {
+/* @media only screen and (max-width: 425px) {
     *{
         font-size:10px;
       }
-}
-
-#login-page >*{
-  margin:1vh;  
-}
-
-#login-page label{
-    font-size: 1.5rem;
-    font-weight: bold;
-}
+} */
 
 .text-primary {
     color: rgb(91, 64, 167) !important;
@@ -103,7 +79,6 @@ direction: ltr;
     text-decoration:none;
     font-family:'Roboto',sans-serif;
     font-weight:400;
-    background-color:#926AFF;
     text-align:center;
     transition: all 0.2s;
     border-color: #707070;
@@ -112,18 +87,31 @@ direction: ltr;
         background-color:rgb(123, 77, 247);
     }
 
-    @media all and (max-width:30em){
+    /* @media all and (max-width:30em){
      .btn{
         display:block;
         margin:0.2em auto;
         }
-    }
+    } */
 
-    #existGame >*{
+    /* #existGame >*{
         margin:1vh;
-    }
+    } */
 
+button{
+  border: 1px solid #707070;
+}
 
+.upperBar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #D1C1FC;
+  align-items: center;
+  padding-right: 1%;
+  padding-left: 1%;
+  border-bottom: 1px solid #707070;
+}
 
 
 

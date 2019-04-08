@@ -1,12 +1,55 @@
-#reg >*{
-    margin:0.4vw;  
+#reg{
+    height: 100vh;
+}
+
+.header, #reg h1 span{
+    padding-bottom: 0;
+    align-self: end;
+    font-weight: 900;
+    font-size: 3.8rem;
+    margin-bottom: 0%;
+    line-height: 0.5;
+}
+
+
+#reg .top img{
+    width: 13vw;
+} 
+
+#reg h1 span{
+    color: #4500FF;
+}
+
+.bottomReg{
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto 57% ;
+    grid-column-gap: 1vw;
+    grid-row-gap: 2vh;
+
 }
 
 #reg input{
-    text-align: center; 
+    justify-self: start;
+    height: 7vh;
+    border: 1px solid #707070;
 }
 
-#reg input[type="file"]{
-    content: 'fgf'
+#reg label{
+    justify-self: end;
+    align-self: center;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    font-weight: 800;
 }
 
+.regHeader{
+    font-size: 2rem;
+    color: #4500FF;
+    font-weight: 800;
+    margin-top: 3vh;
+}
+
+#reg button{
+
+}

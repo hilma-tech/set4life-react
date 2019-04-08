@@ -1,0 +1,142 @@
+.top{
+    display: grid;
+    grid-template-rows: auto 0vh;
+    grid-template-columns: 17vw auto 17vw;
+}
+
+#login-page{
+    height: 100vh;
+}
+
+#cardsLeft{
+    justify-self: end;
+}
+
+.top img{
+    width: 17vw;
+} 
+
+#login-page h1, #login-page h1 span{
+    padding-bottom: 0;
+    align-self: end;
+    font-weight: 900;
+    font-size: 3.8rem;
+}
+
+#login-page h1 span{
+    color: #4500FF;
+}
+
+.bottom{
+    margin-top: 6vh;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center */
+}
+
+#login-page button{
+    background-color: #926AFF;
+    width: 11vw;
+    align-self: center;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    height: 8vh;
+    margin-top: 4vh;
+}
+
+#login-page input{
+  border: 1px solid #707070;
+  background-color: #ffffff;
+  height: 7vh;
+  font-size: 1rem;
+  width: 18vw;
+  margin-right: 3vw;
+  margin-top: 3.6vh;
+}
+
+#login-page a{
+    color: #4500FF;
+}
+
+#login-page a, #login-page label{
+    font-weight: 800;
+}
+
+#login-page label{
+    font-size: 1.2rem;
+}
+
+.fildes{
+    height: 13vh;
+}
+
+.fildes label{
+    padding-top: 3vh;
+}
+
+#login-page .loading{
+    height: 8vh;
+    margin-top: 4vh;
+    align-self: center;
+}
+
+@media (max-width: 1118px) {
+    #login-page{
+        height: 100vh;
+    }
+    
+    .top{
+        grid-template-rows: auto;
+        grid-template-columns: auto;
+        grid-template-areas:
+        "cardsLeft . cardsRight"
+        "header header header"
+    }
+    #cardsLeft{
+        grid-area: cardsRight;
+    }
+
+    #cardsRight{
+        grid-area: cardsLeft;
+    }
+
+    #cardsRight, #cardsLeft{
+        width: 24vh;
+    }
+
+    .header{
+        grid-area: header;
+    }
+
+    #login-page h1, #login-page h1 span{
+        font-size: 5rem;
+    }
+
+    #login-page label{
+        font-size: 1.6rem;
+    }
+
+
+    #login-page input{
+        height: 6vh;
+        font-size: 1rem;
+        width: 41vw;
+        margin-right: 3vw;
+        margin-top: 3.5vh;
+    }
+
+    #login-page a{
+        position: absolute;
+        bottom: 7vh;
+        right: 40%;
+    }
+
+
+    #login-page button{
+        width: 23vw;
+        font-size: 1.8rem;
+        height: 8vh;
+        margin-top: 7vh;
+    }
+}

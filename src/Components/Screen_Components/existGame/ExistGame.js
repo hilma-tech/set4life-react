@@ -3,6 +3,10 @@ import LoadingImg from '../../../data/design/loading-img.gif';
 import Variables from '../../../SetGame/Variables.js';
 import firebaseObj from '../../../firebase/firebaseObj';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
+import UserIcon from '../../Small_Components/UserIcon/UserIcon';
+import arrow from '../../../data/design/left-arrow.png';
+import './existgame.css';
+
 
 
 export default class ExistGame extends Component {
@@ -68,23 +72,25 @@ export default class ExistGame extends Component {
     render() {
         console.log('participants',this.state.participants.length===1)
         return (
-            <div className='page' onKeyPress={this.keypressed}>
-                <h3>אנא הכנס קוד משחק:</h3>
+            <div onKeyPress={this.keypressed} id="existGame">
+                <div className="upperBar">
+                <UserIcon name={Variables.playerName} src={Variables.profilePic} />
+                <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel'/>
+                </div>
+                <h3> הכנס קוד משחק:</h3>
                 <input
-                    style={{ width: '30vw', height: '7vh', fontSize: '1.7rem' }}
                     id="input"
                     name='gameCode'
                     type='text'
                     placeholder="הכנס קוד משחק"
                     value={this.state.gameCode}
                     onChange={this.inputChange} />
+                <br/>
 
                 {this.state.loadingParticipants ?
                     <img src={LoadingImg} alt='loading' /> :
                     <button
-                        className='btn'
                         onClick={this.onClickExistGameCodeButton}
-                        id='continue'
                         disabled={this.state.participants.length>=4} >המשך</button>}
                 {this.state.loadLocatePartic ?
                     <img src={LoadingImg} alt='loading' className="LoadingImg" /> :

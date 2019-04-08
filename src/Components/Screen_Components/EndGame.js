@@ -52,7 +52,7 @@ class EndGame extends Component{
                 <h2>ניצחת</h2>
                 <p>מספר הסטים הנכונים שלך: {this.state.numCorrectSet}</p>
                 <p>מספר הסטים הלא נכונים שלך: </p> {this.state.numWrongSet}
-                <p>זמן ממוצע לבחירת סט: {!this.state.avgTime?0:this.state.avgTime}</p>
+                <p>זמן ממוצע לבחירת סט: {!this.state.avgTime?0:(Math.floor((this.state.avgTime)*10))/10}</p>
 
                 
             </div>

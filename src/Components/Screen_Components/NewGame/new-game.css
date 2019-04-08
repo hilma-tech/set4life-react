@@ -1,18 +1,81 @@
-#new-game >*{
+/* #new-game >*{
     margin:1vh;
     display: block;
     justify-content: center;
     align-items: center; 
     font-size: 1.5rem;
-}
+} */
 
-#new-game #checkbox-param{
+/* #new-game #checkbox-param{
     align-items: right;
     justify-content:center;
-}
+} */
 
-#checkbox-param label{
+/* #checkbox-param label{
     display: inline;
     margin-left: 1.5vw;
     font-size: 1.5rem;
+} */
+
+
+#new-game{
+    
+}
+
+#new-game h3{
+    margin-top: 15vh;
+    margin-bottom: 5vh;
+    font-weight: 900;
+    font-size: 2.2rem;
+}
+
+#new-game input[type="number"]{
+    width: 5vw;
+    border:1px solid #707070;
+    text-align: center;
+    margin-right: 1vw
+}
+
+#new-game label, #new-game input[type="number"]{
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+#new-game button{
+    background-color: #926AFF;
+    border-radius: 10px;
+    width: 10vw;
+    height: 10vh;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-top: 5vh;
+}
+
+.checkDiv{
+    text-align: right;
+    margin-right: 45%;
+}
+
+.chackBoxs{
+    text-align: end;
+}
+
+@media (max-width: 1118px) {
+    #new-game button{
+        height: 10vh;
+        width: 24vw;
+        font-size: 2rem;
+        margin-top: 7vh;
+    }
+
+    #new-game h3{
+        margin-top: 15vh;
+        margin-bottom: 5vh;
+        font-weight: 900;
+        font-size: 3rem;
+    }
+
+    #new-game label, #new-game input[type="number"]{
+        font-size: 1rem;
+    }
 }

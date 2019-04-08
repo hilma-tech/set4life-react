@@ -57,13 +57,12 @@
   border-bottom-color: #fff;
 }
 
-@media (min-width: 48em) {
-  .masthead-brand {
-    float: right;
-  }
-  .nav-masthead {
-    float: left;
-  }
+.masthead-brand {
+  float: right;
+}
+.nav-masthead {
+  float: left;
+}
 }
 */
 
@@ -126,26 +125,14 @@ i{
   background-color: transparent;  
 } */
 
-.sel-body{
-}
-
-#upperbar-gameType{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: #D1C1FC;
-  align-items: center;
-  padding-right: 1%;
-  padding-left: 1%;
-}
-
 #signout{
   height: 9vh;
+  margin-left: 1.4vw;
   float: left;
   background-color: transparent;
 }
 
-h1{
+#sel-body h1{
   text-align: start;
   font-weight: 800;
   margin: 6vw;
@@ -158,17 +145,22 @@ h1{
 
 .gameTypeButtons{
   background-color: #926AFF;
-  height: 10vh;
+  height: 12vh;
   width: 40vh;
+  margin: 0 6vw;
+  font-size: 1.2rem;
 }
 
 .graphButton{
   background-color: #AC8EFC;
   /* padding: 1vh; */
-  width: 12vw;
-  height: 10vh;
+  width: 15vw;
+  height: 12vh;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
+  justify-content:center;
+  margin: auto;
+  margin-top: 5vw;
 }
 
 .UserIcon{
@@ -180,15 +172,50 @@ h1{
   border: 1px solid #707070;
   border-radius: 10px;
   font-weight: 800;
-  font-size: 1.2rem;
 }
 
 .graphsIcon{
-  height: 5vh;
+  height: 2rem;
   background-color: transparent;
   margin-left: 0.5vw;
 }
 
-.graphButton div{
+.graphButton span{
   background-color: #AC8EFC;
+  padding: 0;
+  position: relative;
+  bottom: 0;
+  font-size: 1.4rem;
 }
+              
+@media (max-width: 1118px) {
+  .graphButton{
+    width: 27vw;
+    height: 10vh;
+  }
+  .graphButton span{
+
+    font-size: 1.5rem;
+  }
+  .gameTypeButtons{
+    margin-top: 5vh;
+    font-size: 2rem;
+  }
+  #sel-body h1{
+    text-align: center;
+    margin-top: 10vh;
+  }
+  #signout{
+    height: 6vh;
+  }
+  .gameType{
+    margin-top: 2vh; 
+  }
+}
+
+
+
+
+
+
+

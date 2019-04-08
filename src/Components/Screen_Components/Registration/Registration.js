@@ -4,6 +4,8 @@ import GameData from "../../../data/GameData.json";
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import './registration.css';
 import userIcon from '../../../data/design/userIcon.png';
+import cardsRight from '../../../data/design/cardsRight.png';
+import cardsLeft from '../../../data/design/cardsLeft.png';
 
 
 export default class Registration extends Component {
@@ -34,6 +36,7 @@ export default class Registration extends Component {
     }
 
     inputChange = (event) => {
+        console.log(event.target.name)
         let personalInfo = this.state.personalInfo;
         personalInfo[event.target.name] = event.target.value;
         this.setState({ personalInfo: personalInfo, registStateInfo: '' })
@@ -104,33 +107,41 @@ export default class Registration extends Component {
 
     render() {
         return (
-            <div id="reg" className='page' onKeyPress={this.keypressed}>
-                <h1 style={{ fontWeight: 700 }} >הרשמה</h1>
-                <label>שם מלא</label>
-                <input name='fullName' type='text' placeholder="אנא הכנס את שמך המלא"
-                    onChange={this.inputChange}></input>
+            <div id="reg" onKeyPress={this.keypressed}>
+                <div className="top">
+                    <img src={cardsRight} alt="cards" id="cardsRight" />
+                    <h1 className="header">Set<span>4</span>Life</h1>
+                    <img src={cardsLeft} alt="cards" id="cardsLeft" />
+                </div>
+                <h1 className="regHeader">הרשמה</h1>
+                <div className="bottomReg">
 
-                <label>מספר טלפון</label>
-                <input name='phoneNum' type="text" placeholder="אנא הכנס את מספר הטלפון שלך"
-                    onChange={this.inputChange}></input>
+                    <label>שם מלא</label>
+                    <input name='fullName' type='text' placeholder="הכנס שם מלא"
+                        onChange={this.inputChange}></input>
 
-                <label>אימייל</label>
-                <input name="email" type='text'
-                    onChange={this.inputChange}></input>
+                    <label>מספר טלפון</label>
+                    <input name='phoneNum' type="text" placeholder="הכנס מספר טלפון"
+                    onChange={this.inputChange} />
 
-                <label>סיסמא</label>
-                <input name='password' type="password"
-                    onChange={this.inputChange}></input>
+                    <label>אימייל</label>
+                    <input name="email" type='text'
+                        onChange={this.inputChange}></input>
 
-                <label>אימות סיסמא</label>
-                <input name='passwordAgain' type="password"
-                    onChange={this.inputChange}></input>
+                    <label>סיסמא</label>
+                    <input name='password' type="password"
+                        onChange={this.inputChange}></input>
 
-                <label>תמונת פרופיל</label>
-                <input name='uplode_pic' type="file"
-                    onChange={this.uploadProfilePic}></input>
-
-                <button className='btn' onClick={this.onClickRegisterButton} >הבא</button>
+                    <label>אימות סיסמא</label>
+                    <input name='passwordAgain' type="password"
+                        onChange={this.inputChange}></input>
+                </div>
+                <div>
+                    <label>תמונת פרופיל</label>
+                    <input name='uplode_pic' type="file"
+                        onChange={this.uploadProfilePic}></input>
+                </div>
+                <button className='btn' onClick={this.onClickRegisterButton}>הבא</button>
                 {this.state.registStateInfo !== '' && <label>{this.state.registStateInfo}</label>}
             </div>
         );

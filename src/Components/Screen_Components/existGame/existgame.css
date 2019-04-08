@@ -1,3 +1,29 @@
-#existGame{
-    
+
+#existGame h3{
+    font-weight: 800;
+    margin-top: 17vh;
+    margin-bottom: 8vh;
+    font-size: 2.5rem;
+}
+
+.arrow{
+    height: 5vh;
+    background-color: transparent;
+}
+
+#existGame input{
+    height: 10vh;
+    margin: auto;
+    border: 1px solid #707070;
+}
+
+#existGame button{
+    margin: 3vh;
+    background-color: #926AFF;
+    font-size: 1.4rem;
+    font-weight: 800;
+    height: 8vh;
+    width: 12vw;
+    border-radius: 10px;
+    border: 1px solid #707070;
 }

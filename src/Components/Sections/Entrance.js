@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LoginPage from '../Screen_Components/LoginPage.js';
+import LoginPage from '../Screen_Components/Login/LoginPage.js';
 import Registration from '../Screen_Components/Registration/Registration.js';
 import ErrorMes from '../Small_Components/ErrorMes';
 
@@ -9,7 +9,7 @@ export default class Entrance extends Component{
         super(props);
         this.state={
             loading: true,
-            EntranceOption:'log'
+            EntranceOption:'reg'
             //'log'-login
             //'reg'-Registration
         }

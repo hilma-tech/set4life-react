@@ -15,7 +15,7 @@ class App extends Component {
     super(props);
     this.state = {
       info: {},
-      pageSeen: "load"
+      pageSeen: "ent"
       //load-load page
       //ent-EntrancePage
       //sel-SelectGameType
@@ -62,7 +62,6 @@ class App extends Component {
   }
 
   render() {
-    // return <SaveGame/>
     if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
     switch (this.state.pageSeen) {
       case "load":

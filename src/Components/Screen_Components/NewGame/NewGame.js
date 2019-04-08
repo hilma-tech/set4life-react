@@ -5,6 +5,8 @@ import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables.js';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import './new-game.css';
+import arrow from '../../../data/design/left-arrow.png'
+import UserIcon from '../../Small_Components/UserIcon/UserIcon';
 
 
 let dropdown_refs={
@@ -98,8 +100,13 @@ export default class NewGame extends Component {
 
     render() {
         return (
-            <div id='new-game' className='page' onKeyPress={this.keypressed}>
-                <div id='checkbox-param' >
+            <div id="new-game" onKeyPress={this.keypressed}>
+                <div className="upperBar">
+                <UserIcon name={Variables.playerName} src={Variables.profilePic} />
+                <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel'/>
+                </div>
+                <h3>משחק חדש: </h3>
+                <div className="chackBoxs">
                     {Object.keys(GameData.cardsParameters).map((par_name, i) => (
                         <CheckboxConstParameter
                             par_name={par_name}
@@ -113,15 +120,13 @@ export default class NewGame extends Component {
                 <label>טיימר של הכפתור:</label>
                 <input
                     type="number"
-                    id="timer"
                     min="2"
                     value={this.state._timer}
                     onChange={this.settingTimeOut} />
-
+                <br/>
                 <button
-                    className='btn'
                     disabled={this.setDisableNewGameButton()}
-                    onClick={this.settingNewGame}>התחל משחק חדש
+                    onClick={this.settingNewGame}>התחל
                 </button>
             </div>
         );
@@ -129,9 +134,10 @@ export default class NewGame extends Component {
 }
 
 const CheckboxConstParameter = (props) => (
-    <div key={props.i} >
+    <div key={props.i} className="checkDiv">
         <input
             type="checkbox"
+
             name={props.par_name}
             checked={props.checkboxsInfo[props.par_name + 'Bool']}
             onChange={props.checkboxsChange} key={props.par_name} />
