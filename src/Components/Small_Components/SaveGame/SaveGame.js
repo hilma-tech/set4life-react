@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './save-game.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import EndGame from '../../Screen_Components/EndGame';
+import EndGame from '../../Screen_Components/EndGame/EndGame';
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables';
 
@@ -10,43 +10,41 @@ export default class SaveGame extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showen: true,
-            clickOption: false
+            choseOption: false
         }
     }
 
     toggle = (event) => {
-        this.setState({
-            showen: !this.state.showen,
-            clickOption: true
-        });
-
         if (event.target.getAttribute('name') === 'no') {
             ['CorrectSets', 'MissedSets', 'WrongSets'].map(set_type => {
                 firebaseObj.removeDataFromDB(`Players/${Variables.userId}/${set_type}/${Variables._date}:${Variables.day_numberedGame}`)
-            })
+            });
+            firebaseObj.removeDataFromDB(`games/${Variables._date}/${Variables.day_numberedGame}`);
+            this.props.moveThroughPages('sel');
         }
 
     }
 
     render() {
-        if (!this.state.clickOption) {
-            return <div  id='save-game' >
-                <Modal size='lg' centered={true} isOpen={this.state.showen} className={this.props.className}>
-                    <ModalBody >
-                        <h1>האם אתה רוצה לשמור את המשחק?</h1>
-                    </ModalBody>
-                    <ModalFooter>
-                        <div className='d-flex justify-content-center'>
-                            <Button className='primary mx-5' style={{ backgroundColor: 'green' }} onClick={this.toggle} name='yes'>כן</Button>
-                            <Button className='primary mx-5' style={{ backgroundColor: 'red' }} onClick={this.toggle} name='no'>לא</Button>
+        console.log(this.props.moveThroughPages)
+        return <div style={{ height: '100vh' }} className='container' id='save-game' >
+            <div className='h-100 d-flex align-items-center justify-content-center'>
+                <div className='h-lg-50 h-md-75 d-flex flex-column justify-content-around'>
+                    <div>
+                        <h1 className='display-4'>האם אתה רוצה לשמור את המשחק?</h1>
+                        <p className='lead' >במידה ותשמור את תוצאות המשחק, הם יופיעו בגרפים המסכמים את פעילותך באפליקציה.</p>
+                    </div>
+                    <div className='d-flex flex-lg-row flex-md-column w-lg-100 w-md-75 justify-content-lg-around align-items-md-center my-md-4' >
+                        <div className='col-md-10 col-lg-6' >
+                            <button className='btn btn-success btn-lg btn-block text-body' onClick={this.toggle} name='yes'>כן</button>
                         </div>
-                    </ModalFooter>
-                </Modal>
+                        <div className='col-md-10 col-lg-6 my-md-3'>
+                            <button className='btn btn-danger btn-lg btn-block text-body' onClick={this.toggle} name='no'>לא</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        }
-        else
-            return <EndGame moveThroughPages={this.props.moveThroughPages} />;
+        </div>
     }
 }
 

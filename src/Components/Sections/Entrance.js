@@ -9,12 +9,11 @@ export default class Entrance extends Component{
         super(props);
         this.state={
             loading: true,
-            EntranceOption:'reg'
+            EntranceOption:'log'
             //'log'-login
             //'reg'-Registration
         }
         window.onpopstate=(event)=>{
-            console.log('event.state ent',event.state)
             switch(event.state){
                 case "reg":
                 case "log":

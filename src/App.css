@@ -2,7 +2,8 @@
 *{
     padding:0;
     margin:0;
-    font-family:Verdana, Geneva, sans-serif;
+    /* font-family:Verdana, Helvetica; */
+    font-family:  -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     color:black;
     background-color:transparent;
     font-size:20px;
@@ -17,7 +18,7 @@ direction: ltr;
 .page{
     width:100vw;
     height:100vh;
-    background-color:white;
+    background-color:'white';
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,10 +72,10 @@ direction: ltr;
     color: rgb(91, 64, 167) !important;
 }
 
-.btn{
+/* .btn{
     display:inline-block;
-    /* padding:0.3em 1.2em; */
-    /* margin:0 0.3em 0.3em 0; */
+    padding:0.3em 1.2em;
+    margin:0 0.3em 0.3em 0;
     box-sizing: border-box;
     text-decoration:none;
     font-family:'Roboto',sans-serif;
@@ -85,7 +86,7 @@ direction: ltr;
     }
     .btn:hover{
         background-color:rgb(123, 77, 247);
-    }
+    } */
 
     /* @media all and (max-width:30em){
      .btn{

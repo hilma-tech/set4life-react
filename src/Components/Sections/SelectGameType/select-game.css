@@ -119,28 +119,12 @@ i{
   font-weight:bold;
   text-align: start;
 }
+*/
 
-.iconsButtons{
-  height: 3vh;
-  background-color: transparent;  
-} */
-
-#signout{
-  height: 9vh;
-  margin-left: 1.4vw;
-  float: left;
-  background-color: transparent;
-}
-
-#sel-body h1{
+/* #sel-body h1{
   text-align: start;
   font-weight: 800;
   margin: 6vw;
-}
-
-.buttonsIcons{
-  height: 7vh;
-  background-color: transparent;
 }
 
 .gameTypeButtons{
@@ -153,7 +137,6 @@ i{
 
 .graphButton{
   background-color: #AC8EFC;
-  /* padding: 1vh; */
   width: 15vw;
   height: 12vh;
   display: flex;
@@ -168,11 +151,6 @@ i{
   margin-top: 1%;
 }
 
-.buttons{
-  border: 1px solid #707070;
-  border-radius: 10px;
-  font-weight: 800;
-}
 
 .graphsIcon{
   height: 2rem;
@@ -211,6 +189,27 @@ i{
   .gameType{
     margin-top: 2vh; 
   }
+} */
+
+
+
+
+#signout{
+  height: 9vh;
+  margin-left: 1.4vw;
+  float: left;
+  background-color: transparent;
+}
+
+.buttonsIcons{
+  height: 7vh;
+  background-color: transparent;
+}
+
+.buttons{
+  border: 1px solid #707070;
+  border-radius: 10px;
+  font-weight: 800;
 }
 
 

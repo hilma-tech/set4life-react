@@ -9,11 +9,11 @@ import arrow from '../../../data/design/left-arrow.png'
 import UserIcon from '../../Small_Components/UserIcon/UserIcon';
 
 
-let dropdown_refs={
-    shape:null,
-    shade:null,
-    color:null,
-    number:null
+let dropdown_refs = {
+    shape: null,
+    shade: null,
+    color: null,
+    number: null
 }
 
 export default class NewGame extends Component {
@@ -100,34 +100,37 @@ export default class NewGame extends Component {
 
     render() {
         return (
-            <div id="new-game" onKeyPress={this.keypressed}>
-                <div className="upperBar">
-                <UserIcon name={Variables.playerName} src={Variables.profilePic} />
-                <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel'/>
-                </div>
-                <h3>משחק חדש: </h3>
-                <div className="chackBoxs">
-                    {Object.keys(GameData.cardsParameters).map((par_name, i) => (
-                        <CheckboxConstParameter
-                            par_name={par_name}
-                            checkboxsInfo={this.state.checkboxsInfo}
-                            i={i}
-                            key={i}
-                            checkboxsChange={this.checkboxsChange}
-                            settingConstParametersObj={this.settingConstParametersObj} />)
-                    )}
-                </div>
-                <label>טיימר של הכפתור:</label>
-                <input
-                    type="number"
-                    min="2"
-                    value={this.state._timer}
-                    onChange={this.settingTimeOut} />
-                <br/>
-                <button
-                    disabled={this.setDisableNewGameButton()}
-                    onClick={this.settingNewGame}>התחל
+            <div className='page' >
+                <div id="new-game" className='container-fluid h-100 w-100' onKeyPress={this.keypressed}>
+                    <nav className="navbar bg-danger d-flex flex-row justify-content-between p-lg-2 p-md-3">
+                        <UserIcon name={Variables.playerName} src={Variables.profilePic} />
+                        <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
+                    </nav>
+                    <h3>משחק חדש: </h3>
+                    <div className="chackBoxs">
+                        {Object.keys(GameData.cardsParameters).map((par_name, i) => (
+                            <CheckboxConstParameter
+                                par_name={par_name}
+                                checkboxsInfo={this.state.checkboxsInfo}
+                                i={i}
+                                key={i}
+                                checkboxsChange={this.checkboxsChange}
+                                settingConstParametersObj={this.settingConstParametersObj} />)
+                        )}
+                    </div>
+                    <label>טיימר של הכפתור:</label>
+                    <input
+                        type="number"
+                        min="2"
+                        value={this.state._timer}
+                        onChange={this.settingTimeOut} />
+                    <br />
+                    <button
+                        disabled={this.setDisableNewGameButton()}
+                        onClick={this.settingNewGame}>התחל
                 </button>
+                </div>
+
             </div>
         );
     }
@@ -151,9 +154,9 @@ const CheckboxConstParameter = (props) => (
 
 
 
-const SelectConstParameter = (props) =>(
+const SelectConstParameter = (props) => (
     <select
-        ref={el=>dropdown_refs[props.categoryStr]=el}
+        ref={el => dropdown_refs[props.categoryStr] = el}
         style={{ visibility: (!props.checkboxsInfo[props.categoryStr + 'Bool']) ? 'visible' : 'hidden' }}
         name={props.categoryStr}
         onChange={props.settingConstParametersObj}>

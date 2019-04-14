@@ -3,13 +3,12 @@ import Card from '../../Small_Components/Card';
 import firebaseObj from '../../../firebase/firebaseObj';
 import setFunctions from '../../../SetGame/setFunctions.js';
 import Variables from '../../../SetGame/Variables';
-import EndGame from '../../Screen_Components/EndGame';
+import EndGame from '../../Screen_Components/EndGame/EndGame';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import ErrorMes from '../../Small_Components/ErrorMes';
 import './board.css';
 import UserIcon from '../../Small_Components/UserIcon/UserIcon';
 import { ToastsContainer, ToastsStore } from 'react-toasts';
-import SaveGame from '../../Small_Components/SaveGame/SaveGame';
 
 //timeStartGame- the time when the game start
 //timeNewCards- the time when new cards are showen in the board (3 new cards after correct set or the new cards in the beginning of the game)
@@ -94,8 +93,8 @@ export default class Board extends Component {
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
             val[1].isConnected) : [];
         this.setState({ game_Participants: ArrParticipants });
-        // (!ArrParticipants.length) &&
-        //     firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
+        (!ArrParticipants.length) &&
+            firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
         //selected cards
         if (JSON.stringify(this.state.selectedCards) !== JSON.stringify(newSelectedCards)) {
@@ -243,7 +242,7 @@ export default class Board extends Component {
                 </div>);
         }
         else 
-            return <SaveGame moveThroughPages={this.moveThroughPages} />       
+            return <EndGame moveThroughPages={this.moveThroughPages} />       
     }
 }
 

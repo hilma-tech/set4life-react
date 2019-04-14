@@ -6,6 +6,7 @@ import { x_y_axis, chartsObj } from './X_Y_axis';
 const ChartFunctions = {
   chartType: null,
   chartRef: null,
+  _load:true,
 
   creatingChartInfo() {
     firebaseObj.readingDataOnFirebaseCB(playerObj => {
@@ -42,10 +43,10 @@ const ChartFunctions = {
           labels: {
             fontSize: 20,
             padding: 20,
-            usePointStyle: true
+            usePointStyle: true,
           }
         }
-      }
+    }
     });
     this.chartRef = _chart
   },
@@ -126,7 +127,7 @@ const ChartFunctions = {
 
   updatingDataInChart(level) {
     this.chartRef.data.labels = x_y_axis[this.chartType].x_axis[`level_${level}`];
-    let arrSetCategory=['y_Correct','y_Wrong','y_Missed'];
+    let arrSetCategory = ['y_Correct', 'y_Wrong', 'y_Missed'];
     for (let i = 0; i < this.chartRef.data.datasets.length; i++) {
       this.chartRef.data.datasets[i].data = x_y_axis[this.chartType][arrSetCategory[i]][`level_${level}`];
       this.chartRef.update();
