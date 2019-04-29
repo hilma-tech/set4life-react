@@ -101,34 +101,45 @@ export default class NewGame extends Component {
     render() {
         return (
             <div className='page' >
-                <div id="new-game" className='container-fluid h-100 w-100' onKeyPress={this.keypressed}>
-                    <nav className="navbar bg-danger d-flex flex-row justify-content-between p-lg-2 p-md-3">
+                <div id="new-game" className='page container-fluid h-100 w-100' onKeyPress={this.keypressed}>
+                    <nav className="navbar w-100 bg-danger d-flex flex-row justify-content-between p-lg-2 p-md-3">
                         <UserIcon name={Variables.playerName} src={Variables.profilePic} />
                         <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                     </nav>
-                    <h3>משחק חדש: </h3>
-                    <div className="chackBoxs">
-                        {Object.keys(GameData.cardsParameters).map((par_name, i) => (
-                            <CheckboxConstParameter
-                                par_name={par_name}
-                                checkboxsInfo={this.state.checkboxsInfo}
-                                i={i}
-                                key={i}
-                                checkboxsChange={this.checkboxsChange}
-                                settingConstParametersObj={this.settingConstParametersObj} />)
-                        )}
+
+                    <div className='container h-100 d-flex flex-column justify-content-center   '>
+                        <div className='container h-75 d-flex flex-column justify-content-around'>
+                            <h1 className='display-3'>משחק חדש: </h1>
+                            <div className="container w-75">
+                                {Object.keys(GameData.cardsParameters).map((par_name, i) => (
+                                    <CheckboxConstParameter
+                                        par_name={par_name}
+                                        checkboxsInfo={this.state.checkboxsInfo}
+                                        i={i}
+                                        key={i}
+                                        checkboxsChange={this.checkboxsChange}
+                                        settingConstParametersObj={this.settingConstParametersObj} />)
+                                )}
+                                <div>
+                                    <label className='h2 font-weight-light ml-1'>זמן לבחירת סט:</label>
+                                    <input
+                                        className='col-2'
+                                        type="number"
+                                        min="2"
+                                        value={this.state._timer}
+                                        onChange={this.settingTimeOut} />
+
+                                </div>
+                                <button
+                            className='btn btn-secondary btn-lg mt-4 rounded text-center'
+                            style={{width:'45vw',height:'7vh'}}
+                                disabled={this.setDisableNewGameButton()}
+                                onClick={this.settingNewGame}>התחל</button>
+                            </div>
+                        </div>
+
                     </div>
-                    <label>טיימר של הכפתור:</label>
-                    <input
-                        type="number"
-                        min="2"
-                        value={this.state._timer}
-                        onChange={this.settingTimeOut} />
-                    <br />
-                    <button
-                        disabled={this.setDisableNewGameButton()}
-                        onClick={this.settingNewGame}>התחל
-                </button>
+
                 </div>
 
             </div>
@@ -137,14 +148,16 @@ export default class NewGame extends Component {
 }
 
 const CheckboxConstParameter = (props) => (
-    <div key={props.i} className="checkDiv">
-        <input
-            type="checkbox"
-
-            name={props.par_name}
-            checked={props.checkboxsInfo[props.par_name + 'Bool']}
-            onChange={props.checkboxsChange} key={props.par_name} />
-        <label> {GameData.cardsParameters[props.par_name].nameHe}</label>
+    <div key={props.i} className="container w-75 d-flex flex-row mb-3 col-lg-8 align-items-baseline">
+        <div className='container col-lg-7 d-flex justify-content-start'>
+            <input
+            className='_ckeckbox'
+                type="checkbox"
+                name={props.par_name}
+                checked={props.checkboxsInfo[props.par_name + 'Bool']}
+                onChange={props.checkboxsChange} key={props.par_name}/>
+            <label className='m-0 h2 font-weight-light'> {GameData.cardsParameters[props.par_name].nameHe}</label>
+        </div>
         <SelectConstParameter
             checkboxsInfo={props.checkboxsInfo}
             arrOptionsHe={GameData.cardsParameters[props.par_name][props.par_name + 'He']}
@@ -156,6 +169,7 @@ const CheckboxConstParameter = (props) => (
 
 const SelectConstParameter = (props) => (
     <select
+        className='_dropdown mr-auto ml-3 col-md-4 col-lg-4'
         ref={el => dropdown_refs[props.categoryStr] = el}
         style={{ visibility: (!props.checkboxsInfo[props.categoryStr + 'Bool']) ? 'visible' : 'hidden' }}
         name={props.categoryStr}

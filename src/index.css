@@ -21,3 +21,26 @@ code {
   height: 100%;
   width: 100%;
 }
+
+
+html {
+  font-size: 1rem;
+}
+
+@media (min-width: 576px)  {
+  html {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  html {
+    font-size: 1.6rem;
+  }
+}

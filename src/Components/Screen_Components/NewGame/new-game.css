@@ -18,7 +18,7 @@
 } */
 
 
-#new-game{
+/* #new-game{
     
 }
 
@@ -78,4 +78,24 @@
     #new-game label, #new-game input[type="number"]{
         font-size: 1rem;
     }
-}
+} */
+
+
+@media (min-width: 768px) { 
+    #new-game ._ckeckbox{
+        height:5vh;
+        width: 5vw;
+    }
+ }
+
+
+@media (min-width: 992px) { 
+    #new-game ._ckeckbox{
+        height:1.5vw;
+    }
+
+    ._dropdown{
+        height:2vw;
+    }
+
+ }
