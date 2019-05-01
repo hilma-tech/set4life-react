@@ -12,10 +12,10 @@ class EndGame extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            avgTime: null,
+            avgTime: 0,
             numCorrectSet: 0,
             numWrongSet: 0,
-            moveTo_SaveGame:false
+            moveTo_SaveGame: false
         }
         window.onbeforeunload = () => { };
         window.onpopstate = () => { };
@@ -24,18 +24,26 @@ class EndGame extends Component {
     componentDidMount() {
         firebaseObj.readingDataOnFirebaseCB((playerObj) => {
 
-            let correctSet = playerObj.CorrectSets?playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`]:null;
-            let wrongSet = playerObj.WrongSets?playerObj.WrongSets[`${Variables._date}:${Variables.day_numberedGame}`]:null;
+            let correctSet = playerObj.CorrectSets ? playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`] : null;
+            let wrongSet = playerObj.WrongSets ? playerObj.WrongSets[`${Variables._date}:${Variables.day_numberedGame}`] : null;
 
-            let numCorrectSets=correctSet?correctSet.length:0;
-            let numWrongSets=wrongSet?wrongSet.length:0;
+            console.log('playerObj', playerObj, correctSet, wrongSet)
 
-            this.setState({ numCorrectSet: numCorrectSets, numWrongSet: numWrongSets });
+            let numCorrectSets = correctSet ? Object.keys(correctSet).length : 0;
+            let numWrongSets = wrongSet ? Object.keys(wrongSet).length : 0;
+            let avgTime = 0;
+
+            if (correctSet)Object.values(correctSet).forEach((val) =>
+                    avgTime += (parseFloat(val.DisplaysNewCards_Till_ClickSet) + parseFloat(val.ClickSet_Till_ChooseSet)));
+
+                    avgTime=(Math.floor(avgTime * 10)) / 10;
+
+            this.setState({ numCorrectSet: numCorrectSets, numWrongSet: numWrongSets, avgTime: avgTime });
         }, `Players/${Variables.userId}`);
     }
 
     render() {
-        if(!this.state.moveTo_SaveGame){
+        if (!this.state.moveTo_SaveGame) {
             return (
                 <div style={{ height: '100vh' }} className="container-fluid" id="endGame">
                     <div className=' h-100 d-flex align-items-center justify-content-center'>
@@ -45,14 +53,14 @@ class EndGame extends Component {
                             <img className="img-fluid w-25 my-2" src={Party_Popper} style={{ backgroundColor: 'none' }} />
                             <div>
                                 <ul className="list-group d-inline-block justify-content-end w-sm-75 w-md-50 list-group-flush">
-                                    <li className="list-group-item">מספר הסטים <span style={{color:'#28a745'}}>הנכונים</span> שלך: {this.state.numCorrectSet}</li>
-                                    <li className="list-group-item">מספר הסטים <span style={{color:'#dc3545'}}>הלא נכונים</span> שלך: {this.state.numWrongSet}</li>
-                                    <li className="list-group-item">זמן ממוצע לבחירת סט: {!this.state.avgTime ? 0 : (Math.floor((this.state.avgTime) * 10)) / 10} שניות</li>
+                                    <li className="list-group-item">מספר הסטים <span style={{ color: '#28a745' }}>הנכונים</span> שלך:  <span className='info-text'>{this.state.numCorrectSet}</span></li>
+                                    <li className="list-group-item">מספר הסטים <span style={{ color: '#dc3545' }}>הלא נכונים</span> שלך:  <span className='info-text'>{this.state.numWrongSet}</span></li>
+                                    <li className="list-group-item">זמן ממוצע לבחירת סט:  <span className='info-text'>{this.state.avgTime} </span> שניות</li>
                                 </ul>
                             </div>
-                            <button className='btn btn-primary my-3 w-25 h-25' onClick={()=>this.setState({moveTo_SaveGame:true})} >המשך</button>
+                            <button className='btn btn-primary my-3 w-25 h-25' onClick={() => this.setState({ moveTo_SaveGame: true })} >המשך</button>
                         </div>
-    
+
                     </div>
                 </div>
             );
