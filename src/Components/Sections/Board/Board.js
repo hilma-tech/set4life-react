@@ -93,7 +93,7 @@ export default class Board extends Component {
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
             val[1].isConnected) : [];
         this.setState({ game_Participants: ArrParticipants });
-        (!ArrParticipants.length) &&
+        (!ArrParticipants.length||this.state.exitGame) &&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
         //selected cards
@@ -178,13 +178,9 @@ export default class Board extends Component {
 
         if (this.state.stageOfTheGame === 2) {
             clearTimeout(_timeOutNextBtn);
-            console.log("USED CARDS (12??)", this.state.usedCards)
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-                console.log("obj pull cards in stage 2", objPullCards)
-                console.log("USED CARDS (12??)", this.state.usedCards)
                 let used_cards = [...this.state.usedCards, ...objPullCards.newCards];
-                console.log("USED CARDS (15??)", used_cards);
                 this.setState({
                     currentCards: objPullCards.currentCards,
                     usedCards: used_cards,
@@ -192,7 +188,7 @@ export default class Board extends Component {
                     selectedCards: [],
                     exitGame: objPullCards.endGame
                 });
-                console.log("push to firebase", "usedcard", this.state.usedCards)
+
                 firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
                     {
                         currentCards: objPullCards.currentCards,

@@ -105,28 +105,20 @@ const setFunctions = {
     //pull x cardCodes out of an arry and enter to the array new random x cardCodes Creating a situation in which there is a set
     //return arr (the new array) 
     pullXCardsAndEnterNewXCards(x, currCards, selectedCards, usedCards) {
-        console.log("pullXCardsAndEnterNewXCards",x, currCards, selectedCards, usedCards);
         let parmObjLength=Object.keys(Variables.objConstParameters).length;
         let newCards=[];
-        let endGame=false;
-        //usedCards=usedCards.slice();
         if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
             currCards=currCards.filter(card=>!selectedCards.includes(card));
         }
         else{ 
-            let newCurrCards=currCards.filter(card=>!selectedCards.includes(card))
-            if(usedCards.length===((81/(Math.pow(3,parmObjLength)))-3)){
-                newCards =this.newCurrentCards(x, newCurrCards, usedCards,selectedCards,true);
-            }
-            else{
-                newCards =this.newCurrentCards(x, newCurrCards, usedCards,selectedCards,false);
-            }
+            let newCurrCards=currCards.filter(card=>!selectedCards.includes(card));
+            newCards =this.newCurrentCards(x, newCurrCards, usedCards,selectedCards,((81/(Math.pow(3,parmObjLength)))-3));
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
                 currCards[index] = newCards[i];
             });
         }
-        endGame=!this.IsArrayHasSet(currCards);
+        let endGame=!this.IsArrayHasSet(currCards);
         return{
             newCards:newCards,
             currentCards:currCards,
