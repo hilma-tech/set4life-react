@@ -91,13 +91,14 @@ const setFunctions = {
 
     // מקבל את מספר הקלפים שהוא צריך להחזיר, ומספר מערכים שהוא צריך לקחת בחשבון ומחזיר מערך של קלפים ששונים אחד מהשני ויש ביניהם סט אחד לפחות
     //(return arr)
-    newCurrentCards(x, newCurrentCards, arrUsedCards,selectedCards) {
+    newCurrentCards(x, newCurrentCards, arrUsedCards,selectedCards,lastCards) {
         let currCards = [];
         do {
             currCards = [];
             for (let i = 0; i < x; i++) 
                 currCards.push(this.NewCardNumber(currCards.concat(newCurrentCards,arrUsedCards,selectedCards))); 
-        } while (!this.IsArrayHasSet([...currCards, ...newCurrentCards]));
+        } while ((!this.IsArrayHasSet([...currCards, ...newCurrentCards]))&&(!lastCards));
+        // &&(!lastCards)
         return currCards;
     },
 
@@ -109,24 +110,23 @@ const setFunctions = {
         let newCards=[];
         let endGame=false;
         //usedCards=usedCards.slice();
-        console.log("used",usedCards);
         if(usedCards.length===(81/(Math.pow(3,parmObjLength)))){
             currCards=currCards.filter(card=>!selectedCards.includes(card));
-            console.log("newCurrCards",currCards);
-            endGame=!this.IsArrayHasSet(currCards);
-            console.log("endGame",endGame);
         }
         else{ 
-            console.log("used",usedCards);
             let newCurrCards=currCards.filter(card=>!selectedCards.includes(card))
-            newCards =this.newCurrentCards(x, newCurrCards, usedCards,selectedCards);
+            if(usedCards.length===((81/(Math.pow(3,parmObjLength)))-3)){
+                newCards =this.newCurrentCards(x, newCurrCards, usedCards,selectedCards,true);
+            }
+            else{
+                newCards =this.newCurrentCards(x, newCurrCards, usedCards,selectedCards,false);
+            }
             selectedCards.map((card,i) => {
                 let index = currCards.indexOf(card);
                 currCards[index] = newCards[i];
             });
         }
-        console.log("used",usedCards);
-        console.log("new",newCards, "curr",currCards, "used",usedCards);
+        endGame=!this.IsArrayHasSet(currCards);
         return{
             newCards:newCards,
             currentCards:currCards,

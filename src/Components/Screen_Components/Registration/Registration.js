@@ -135,8 +135,7 @@ export default class Registration extends Component {
                     <label>אימות סיסמא</label>
                     <input name='passwordAgain' type="password"
                         onChange={this.inputChange}></input>
-                </div>
-                <div>
+                        
                     <label>תמונת פרופיל</label>
                     <input name='uplode_pic' type="file"
                         onChange={this.uploadProfilePic}></input>

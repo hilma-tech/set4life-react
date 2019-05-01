@@ -1,4 +1,4 @@
-#reg{
+/*#reg{
     height: 100vh;
 }
 
@@ -8,7 +8,6 @@
     font-weight: 900;
     font-size: 3.8rem;
     margin-bottom: 0%;
-    line-height: 0.5;
 }
 
 
@@ -33,7 +32,10 @@
     justify-self: start;
     height: 7vh;
     border: 1px solid #707070;
+    width: 22vw;
 }
+
+
 
 #reg label{
     justify-self: end;
@@ -48,8 +50,56 @@
     color: #4500FF;
     font-weight: 800;
     margin-top: 3vh;
+    margin-bottom: 0;
 }
 
 #reg button{
-
+    margin-top: 2vh;
+    background-color: #926AFF;
+    width: 11vw;
+    align-self: center;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    height: 8vh;
 }
+@media (max-width: 1118px) {
+    #reg{
+        height: 100vh;
+    }
+
+    #cardsRight, #cardsLeft{
+        width: 24vh;
+    }
+    
+    .header, #reg h1 span{
+        font-size: 5rem;
+    }
+
+    .regHeader{
+        font-size: 3rem;
+        margin-top: 0;
+    }
+    
+    #reg label{
+        font-size: 1.6rem;
+    }
+    
+    
+    #reg input{
+        height: 6vh;
+        font-size: 1rem;
+        width: 41vw;
+        margin-right: 3vw;
+    }
+    #reg button{
+                
+        width: 23vw;
+        font-size: 1.8rem;
+        height: 8vh;
+    }
+    /* 
+    margin-top: 7vh;
+     *../
+}
+*/
