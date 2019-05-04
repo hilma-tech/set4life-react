@@ -103,3 +103,55 @@
      *../
 }
 */
+
+#reg div input{
+    margin:1.2vh auto;
+    height: 6vh;
+    font-size: 1.3rem;
+}
+
+#reg div input[type='file']{
+    display:none;
+}
+
+#reg #profile-pic{
+    height: 15vh;
+    width: 15vh;
+}
+
+#reg #uploader-icon{
+    height: 8vh;
+    width: 8vh;
+}
+
+#upload_profilePic_container label{
+    border-style: dashed;
+    width:18vh;
+    height:18vh;
+    display: inline-flex;
+    justify-content:center ;
+}
+#upload_profilePic_container p{
+    width: 35vh;
+    font-size: 1rem;
+    text-align: center;
+}
+
+#reg #upload_profilePic_container{
+    margin: 2vh 0;
+}
+
+
+@media (min-width: 992px) {
+
+    #reg .lg-screen{
+        width:39.3vw;
+    }
+
+    #upload_profilePic_container p{
+        width: 67vh;
+        font-size: 1.1rem;
+        text-align: right;
+
+    }
+ }

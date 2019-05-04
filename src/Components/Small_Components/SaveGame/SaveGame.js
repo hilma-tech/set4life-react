@@ -20,13 +20,11 @@ export default class SaveGame extends Component {
                 firebaseObj.removeDataFromDB(`Players/${Variables.userId}/${set_type}/${Variables._date}:${Variables.day_numberedGame}`)
             });
             firebaseObj.removeDataFromDB(`games/${Variables._date}/${Variables.day_numberedGame}`);
-            this.props.moveThroughPages('sel');
         }
-
+        this.props.moveThroughPages('sel');
     }
 
     render() {
-        console.log(this.props.moveThroughPages)
         return <div style={{ height: '100vh' }} className='container' id='save-game' >
             <div className='h-100 d-flex align-items-center justify-content-center'>
                 <div className='h-lg-50 h-md-75 d-flex flex-column justify-content-around'>
