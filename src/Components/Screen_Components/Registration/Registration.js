@@ -7,6 +7,7 @@ import userIcon from '../../../data/design/userIcon.png';
 import cardsRight from '../../../data/design/cardsRight.png';
 import cardsLeft from '../../../data/design/cardsLeft.png';
 import PhotoUploader from '../../../data/design/photo-uploader.png';
+import Variables from '../../../SetGame/Variables';
 
 
 export default class Registration extends Component {
@@ -37,19 +38,9 @@ export default class Registration extends Component {
     }
 
     inputChange = (event) => {
-        console.log(event.target.name)
         let personalInfo = this.state.personalInfo;
         personalInfo[event.target.name] = event.target.value;
         this.setState({ personalInfo: personalInfo, registStateInfo: '' })
-    }
-
-    updating_PlayerInfo_fb = (userId, profilePic = null) => {
-        firebaseObj.settingValueInDataBase(`PlayersInfo/${userId}`,
-            {
-                Name: this.state.personalInfo.fullName,
-                phoneNum: this.state.personalInfo.phoneNum,
-                ProfilePic: profilePic ? profilePic : userIcon
-            });
     }
 
     onClickRegisterButton = () => {
@@ -62,19 +53,29 @@ export default class Registration extends Component {
         if (!emptyFilesArr.length) {
             let _valid = this.registrationValidation()
             if (_valid.phoneNum && _valid.passwordAgain) {
+                Variables.playerName=this.state.fullName;
+                Variables.profilePic=this.state.profilePic ? this.state.profilePic : userIcon;
                 firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
                     .then(fbUser => {
                         this.setState({ registStateInfo: 'נרשמת בהצלחה' });
+                        let updating_PlayerInfo_fb = (userId, profilePic = null) => {
+                            firebaseObj.settingValueInDataBase(`PlayersInfo/${userId}`,
+                                {
+                                    Name: this.state.personalInfo.fullName,
+                                    phoneNum: this.state.personalInfo.phoneNum,
+                                    ProfilePic: profilePic ? profilePic : userIcon
+                                });
+                        }
                         if (this.state.profilePic) {
                             let task = firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).put(this.state.profilePic);
                             task.on('state_changed', () => { }, () => { },
                                 function finish() {
                                     firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).getDownloadURL().then(url => {
-                                        this.updating_PlayerInfo_fb(fbUser.user.uid, url);
+                                        updating_PlayerInfo_fb(fbUser.user.uid, url)
                                     });
                                 });
                         }
-                        else this.updating_PlayerInfo_fb(fbUser.user.uid);
+                        else updating_PlayerInfo_fb(fbUser.user.uid);
 
                     },
                         error => {
@@ -109,11 +110,6 @@ export default class Registration extends Component {
     render() {
         return (
             <div id='reg' className='page container-fluid d-flex flex-column' onKeyPress={this.keypressed}>
-                {/* <div className="top">
-                    <img src={cardsRight} alt="cards" id="cardsRight" />
-                    <h1 className="header">Set<span>4</span>Life</h1>
-                    <img src={cardsLeft} alt="cards" id="cardsLeft" />
-                </div> */}
                 <nav className='navbar bg-danger w-100 sticky-top'>
                     <label className='mx-auto'>set4life</label>
                 </nav>
@@ -123,9 +119,9 @@ export default class Registration extends Component {
                     <div className="container mb-3">
                         <div id='upload_profilePic_container' className='d-flex col-md-9 mx-md-auto col-lg-8 p-0 lg-screen'>
                             <label className="rounded text-right ml-2 my-auto">
-                                <input name='uplode_pic' type="file" accept="image/*" placeholder='תמונת פרופיל'
+                                <input name='uplode_pic' type="file" placeholder='תמונת פרופיל'
                                     onChange={this.uploadProfilePic} />
-                                <img id='profile-pic' className='my-auto img-thumbnail' src={PhotoUploader} />
+                                <img id='profile-pic' className='my-auto img-thumbnail' src={this.state.profilePic ? URL.createObjectURL(this.state.profilePic) : PhotoUploader} />
                             </label>
                             <p className='d-inline my-auto'>אנא לחץ על הסמל בשביל להעלות תמונת פרופיל. במידה ולא תעלה תמונה, תופיע תמונת ברירת מחדל.</p>
                         </div>

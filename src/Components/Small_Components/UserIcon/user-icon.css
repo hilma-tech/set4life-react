@@ -1,21 +1,20 @@
-@media (min-width: 768px) { 
-    #user-icon img{
-        width:10vh;
-        height: 10vh;
-    }
-    #user-icon label{
-        font-size: 2.3rem;
-        margin-right: 2vw;
-    }
-
+#user-icon .left img{
+    width:10vh;
+    height: 10vh;
+}
+#user-icon .left label{
+    font-size: 2.3rem;
+    margin-right: 2vw;
 }
 
-@media (min-width: 1200px) { 
-    #user-icon img{
+
+
+@media (min-width: 992px) { 
+    #user-icon .left img{
         width:14vh;
         height: 14vh;
     }
-    #user-icon label{
+    #user-icon .left label{
         font-size: 2rem;
         margin-right: 1vw;
     }

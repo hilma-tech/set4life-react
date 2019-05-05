@@ -11,6 +11,7 @@ import NotChrome from './Components/Small_Components/NotChrome/notChrome';
 import SaveGame from './Components/Small_Components/SaveGame/SaveGame';
 import EndGame from './Components/Screen_Components/EndGame/EndGame';
 import ChartData from './Components/Screen_Components/Charts/ChartData';
+import UserIcon from './Components/Small_Components/UserIcon/UserIcon';
 
 class App extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class App extends Component {
     firebaseObj.authState(this.handlePlayerAuthState);
 
     window.onpopstate = (event) => {
-      console.log('app popstate',event.state)
+      console.log('app popstate', event.state)
       switch (event.state) {
         case 'reg': case 'log': case 'ent':
         case "avgTime": case "numOfSets": case "charts":
@@ -55,7 +56,7 @@ class App extends Component {
     else {
       console.log("not logged in");
       Object.assign(Variables,
-        { userId: null, playerName: null, profilePic:"default" });
+        { userId: null, playerName: null, profilePic: "default" });
       this.moveThroughPages("ent");
     }
   }
@@ -65,29 +66,23 @@ class App extends Component {
   }
 
   render() {
-    return <Entrance/>
-    if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime))||(document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)){
-    switch (this.state.pageSeen) {
-      case "load":
-        return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading' /></div>;
-      case 'ent':
-        return <Entrance moveThroughPages={this.moveThroughPages} />;
-      case "sel":
-        return <SelectGameType moveThroughPages={this.moveThroughPages} />;
-      case "boa":
-        return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
-      default:
-        return <ErrorMes />;
-    }
-    }
-    else{
-      return (
-
-        <NotChrome/>
-        );
+    // return <UserIcon name='marimi' src={require('./data/design/userIconMarimi.png')} _direction='down' />
+    if ((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) || (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)) {
+      switch (this.state.pageSeen) {
+        case "load":
+          return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading' /></div>;
+        case 'ent':
+          return <Entrance moveThroughPages={this.moveThroughPages} />;
+        case "sel":
+          return <SelectGameType moveThroughPages={this.moveThroughPages} />;
+        case "boa":
+          return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
+        default:
+          return <ErrorMes />;
+      }
     }
 
-
+    else return <NotChrome />
   }
 }
 

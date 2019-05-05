@@ -93,7 +93,7 @@ export default class Board extends Component {
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
             val[1].isConnected) : [];
         this.setState({ game_Participants: ArrParticipants });
-        (!ArrParticipants.length||this.state.exitGame) &&
+        (!ArrParticipants.length || this.state.exitGame) &&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
         //selected cards
@@ -209,53 +209,54 @@ export default class Board extends Component {
     render() {
         if ((!this.state.exitGame) && this.state.currentCards) {
             return (
-                <div id="board" className='page'>
+                <div id="board" className='page container-fluid'>
                     <UpperBar game_Participants={this.state.game_Participants}
-                        currentPlayerName={this.state.currentPlayerName}
                         gameCode={this.gameCode}
                         exitGame={this.exitGame} />
 
-                    <div id='cards'>
-                        {this.state.currentCards.map((cardCode, i) =>
-                            <Card
-                                className='card'
-                                key={i}
-                                onclick={this.selectCardFunction}
-                                cardCode={cardCode}
-                                selectedCards={this.state.selectedCards}
-                                isSet={this.state.isSet}
-                                stageOfTheGame={this.state.stageOfTheGame}
-                                isSelected={this.state.selectedCards.includes(cardCode)}
-                            />)}
+                    <div className='container h-100'>
+                        <label id='current-player' style={{ visibility: this.state.currentPlayerName ? 'visible' : 'hidden' }}>
+                            {this.state.currentPlayerName} משחק עכשיו</label>
+
+                        <div id='cards' className='container d-flex flex-wrap'>
+                            {this.state.currentCards.map((cardCode, i) =>
+                                <Card
+                                    className='card'
+                                    key={i}
+                                    onclick={this.selectCardFunction}
+                                    cardCode={cardCode}
+                                    selectedCards={this.state.selectedCards}
+                                    isSet={this.state.isSet}
+                                    stageOfTheGame={this.state.stageOfTheGame}
+                                    isSelected={this.state.selectedCards.includes(cardCode)}
+                                />)}
+                        </div>
+
+                        <LowerBar stageOfTheGame={this.state.stageOfTheGame}
+                            currentCards={this.state.currentCards}
+                            clickButtonEvent={this.clickButtonEvent}
+                            disableBeforeNext={this.state.disableBeforeNext} />
+
+                        <ToastsContainer store={ToastsStore} closeOnClick rtl="true" />
+
                     </div>
-
-                    <LowerBar stageOfTheGame={this.state.stageOfTheGame}
-                        currentCards={this.state.currentCards}
-                        clickButtonEvent={this.clickButtonEvent}
-                        disableBeforeNext={this.state.disableBeforeNext} />
-
-                    <ToastsContainer store={ToastsStore} closeOnClick rtl="true" />
                 </div>);
         }
-        else 
-            return <EndGame moveThroughPages={this.moveThroughPages} />       
+        else
+            return <EndGame moveThroughPages={this.moveThroughPages} />
     }
 }
 
 
 const UpperBar = (props) => (
-    <div id='upper-bar-boa' >
-        <div id='nav-bar-boa' >
-            <div>
-                {props.game_Participants.map((val) =>
-                    <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='down' />)}
-            </div>
-            <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
-            <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>
+    <nav className='navbar bg-danger' >
+        <div>
+            {props.game_Participants.map((val) =>
+                <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='down' />)}
         </div>
-        <label id='current-player' style={{ visibility: props.currentPlayerName ? 'visible' : 'hidden' }}>
-            {props.currentPlayerName} משחק עכשיו</label>
-    </div>
+        <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
+        <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>
+    </nav>
 );
 
 

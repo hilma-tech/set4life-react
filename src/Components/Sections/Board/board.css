@@ -1,9 +1,9 @@
-#board{
+/* #board{
     align-content: space-around;
     justify-content: flex-start;
     direction: rtl;
     width: 100%;
- }
+ } */
  
 
 .greyCard{
@@ -69,9 +69,9 @@
     border-radius: 4px;
 }
 
-/* .btn{
+.btn{
     font-size: 1.5rem !important;
-} */
+}
 
 #Not_fuond_set{
     background-color: #926AFF;
@@ -90,7 +90,7 @@
 
 #upper-bar-boa >*:not(:first-child){
     display:block;
-    /* margin:1vh; */
+    margin:1vh;
 }
 
 #nav-bar-boa{
@@ -144,7 +144,7 @@
 
     #upper-bar-boa >*{
         font-size: 3rem;
-        /* margin:1vh; */
+        margin:1vh;
     }
     #lower-bar-boa{
         margin-top:1vh;
@@ -188,7 +188,7 @@
         margin-top:2vh;
     }
     #nav-bar-boa{
-        /* margin-top:0; */
+        margin-top:0;
     }
     @media only screen and (min-height: 730px) {
         #upper-bar-boa >*{

@@ -13,8 +13,8 @@ let label_style = {
 }
 
 const UserIcon = (props) => (
-    <div id='user-icon' className='d-flex flex-row align-items-center  mr-1 col-lg-5 col-md-6' >
-        <img src={props.src} width="50" height="50" />
+    <div id='user-icon' className='d-flex flex-row align-items-center mr-1 col-lg-5 col-md-6' >
+        <img className='rounded' src={props.src} width="50" height="50" />
         <label style={label_style[props._direction]} >{props.name}</label>
     </div>
 );

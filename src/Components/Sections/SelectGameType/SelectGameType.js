@@ -17,7 +17,7 @@ export default class GameType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            GameTypeOptions: 'sel'
+            GameTypeOptions: 'newGame'
             //newGame-new game
             //existGame-exist game
             //sel- current page
@@ -51,6 +51,7 @@ export default class GameType extends Component {
     }
 
     render() {
+        console.log('Variables',Variables)
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
