@@ -87,7 +87,8 @@ export default class Board extends Component {
     handleGameObjFromFirebase = (gameObj) => {
         let { Game_Participants,
             currentCards: newCurrentCards,
-            selectedCards: newSelectedCards } = gameObj ? gameObj : {};
+            selectedCards: newSelectedCards,
+            usedCards } = gameObj ? gameObj : {};
 
         //Game_Participants
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
@@ -107,9 +108,12 @@ export default class Board extends Component {
         }
 
         //currentCards
-        if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards)) {
+        if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards)) 
             this.setState({ currentCards: newCurrentCards });
-        }
+
+        //usedCards
+        if (JSON.stringify(this.state.usedCards) !== JSON.stringify(usedCards)) 
+            this.setState({ usedCards: usedCards });
     }
 
     reciveCurrentUserIdFromFirebase = (userIdFromFirebase) => {
