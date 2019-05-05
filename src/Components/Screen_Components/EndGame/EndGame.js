@@ -27,16 +27,17 @@ class EndGame extends Component {
             let correctSet = playerObj.CorrectSets ? playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`] : null;
             let wrongSet = playerObj.WrongSets ? playerObj.WrongSets[`${Variables._date}:${Variables.day_numberedGame}`] : null;
 
-            console.log('playerObj', playerObj, correctSet, wrongSet)
 
             let numCorrectSets = correctSet ? Object.keys(correctSet).length : 0;
             let numWrongSets = wrongSet ? Object.keys(wrongSet).length : 0;
             let avgTime = 0;
 
-            if (correctSet)Object.values(correctSet).forEach((val) =>
+            if (correctSet) {
+                Object.values(correctSet).forEach((val) =>
                     avgTime += (parseFloat(val.DisplaysNewCards_Till_ClickSet) + parseFloat(val.ClickSet_Till_ChooseSet)));
-
-                    avgTime=(Math.floor(avgTime * 10)) / 10;
+                avgTime = (avgTime / numCorrectSets);
+            }
+            avgTime = ((Math.floor(avgTime * 10)) / 10);
 
             this.setState({ numCorrectSet: numCorrectSets, numWrongSet: numWrongSets, avgTime: avgTime });
         }, `Players/${Variables.userId}`);
