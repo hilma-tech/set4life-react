@@ -94,7 +94,7 @@ export default class Board extends Component {
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
             val[1].isConnected) : [];
         this.setState({ game_Participants: ArrParticipants });
-        (!ArrParticipants.length || this.state.exitGame) &&
+        (!ArrParticipants.length || (this.state.exitGame&&!ArrParticipants.length)) &&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
         //selected cards
