@@ -100,57 +100,57 @@ export default class NewGame extends Component {
 
     render() {
         return (
-                <div id="new-game" className='page container-fluid h-100 w-100' onKeyPress={this.keypressed}>
-                    <nav className="navbar w-100 bg-danger d-flex flex-row justify-content-between p-lg-2 p-md-3">
-                        <UserIcon name={Variables.playerName} src={Variables.profilePic} />
-                        <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
-                    </nav>
+            <div id="new-game" className='page container-fluid h-100 w-100' onKeyPress={this.keypressed}>
+                <nav className="navbar w-100 bg-danger d-flex flex-row justify-content-between p-lg-2 p-md-3">
+                    <UserIcon name={Variables.playerName} src={Variables.profilePic} />
+                    <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
+                </nav>
 
-                    <div className='container h-75 d-flex flex-column align-items-center justify-content-center'>
+                <div className='container h-75 d-flex flex-column align-items-center justify-content-center'>
 
-                        <div className='container h-75 col-md-10 col-lg-6 mt-md-5 mt-lg-3 d-flex flex-column'
-                        style={{height:'20%'}}>
-                            <h1 className='display-4 mb-md-3 mb-lg-1'>משחק חדש: </h1>
-                            <div className=" col-md-10 col-lg-12 ">
-                                <div>
-                                    {Object.keys(GameData.cardsParameters).map((par_name, i) => (
-                                        <CheckboxConstParameter
-                                            par_name={par_name}
-                                            checkboxsInfo={this.state.checkboxsInfo}
-                                            i={i}
-                                            key={i}
-                                            checkboxsChange={this.checkboxsChange}
-                                            settingConstParametersObj={this.settingConstParametersObj} />)
-                                    )}
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <label className='h4 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
-                                    <input
-                                        className='col-2'
-                                        type="number"
-                                        min="2"
-                                        value={this.state._timer}
-                                        onChange={this.settingTimeOut} />
-
-                                </div>
-
-                                <button
-                                    className='btn btn-secondary btn-lg mt-md-4 my-lg-2 rounded text-center'
-                                    disabled={this.setDisableNewGameButton()}
-                                    onClick={this.settingNewGame}>התחל</button>
+                    <div className='container h-75 col-md-10 col-lg-6 d-flex flex-column'
+                        style={{ height: '20%' }}>
+                        <h1 className='display-4 mb-md-3 mb-lg-1'>משחק חדש: </h1>
+                        <div className=" col-md-10 col-lg-10 ">
+                            <div>
+                                {Object.keys(GameData.cardsParameters).map((par_name, i) => (
+                                    <CheckboxConstParameter
+                                        par_name={par_name}
+                                        checkboxsInfo={this.state.checkboxsInfo}
+                                        i={i}
+                                        key={i}
+                                        checkboxsChange={this.checkboxsChange}
+                                        settingConstParametersObj={this.settingConstParametersObj} />)
+                                )}
                             </div>
-                        </div>
+                            <div className='d-flex justify-content-start align-items-center'>
+                                <label className='h4 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
+                                <input
+                                    style={{ fontSize: '0.9rem', height: '7vh' }}
+                                    className='col-2 p-0'
+                                    type="number"
+                                    min="2"
+                                    value={this.state._timer}
+                                    onChange={this.settingTimeOut} />
 
+                            </div>
+
+                            <button
+                                className='btn btn-secondary mt-md-4 mt-lg-2 rounded text-center'
+                                disabled={this.setDisableNewGameButton()}
+                                onClick={this.settingNewGame}>התחל</button>
+                        </div>
                     </div>
+
                 </div>
+            </div>
         );
     }
 }
 
 const CheckboxConstParameter = (props) => (
-    <div key={props.i} className="container-fluid mb-md-2 mb-lg-0 d-flex align-items-center">
+    <div id='checkbox-constParameters' key={props.i} className="container-fluid mb-md-2 mb-lg-0 d-flex align-items-center">
         <input
-            className='_ckeckbox'
             type="checkbox"
             name={props.par_name}
             checked={props.checkboxsInfo[props.par_name + 'Bool']}
@@ -169,7 +169,7 @@ const CheckboxConstParameter = (props) => (
 
 const SelectConstParameter = (props) => (
     <select
-        className='_dropdown h-50 mr-auto ml-3 col-md-4 col-lg-3'
+        className='h-50 mr-auto ml-3 col-md-4 col-lg-3'
         ref={el => dropdown_refs[props.categoryStr] = el}
         style={{ visibility: (!props.checkboxsInfo[props.categoryStr + 'Bool']) ? 'visible' : 'hidden' }}
         name={props.categoryStr}

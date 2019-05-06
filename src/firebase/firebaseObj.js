@@ -21,7 +21,6 @@ const firebaseObj={
     },
  
     settingValueInDataBase(path,value){
-        console.log("set path",path,"value",value)
         this._db.ref(path).set(value)
     },
 
