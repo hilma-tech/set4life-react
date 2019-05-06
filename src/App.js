@@ -18,7 +18,7 @@ class App extends Component {
     super(props);
     this.state = {
       info: {},
-      pageSeen: "ent"
+      pageSeen: "sel"
       //load-load page
       //ent-EntrancePage
       //sel-SelectGameType

@@ -17,7 +17,7 @@ export default class GameType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            GameTypeOptions: 'sel'
+            GameTypeOptions: 'newGame'
             //newGame-new game
             //existGame-exist game
             //sel- current page

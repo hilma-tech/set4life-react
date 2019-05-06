@@ -106,12 +106,12 @@ export default class NewGame extends Component {
                         <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                     </nav>
 
-                    <div className='container h-100 d-flex flex-column align-items-center justify-content-center'>
+                    <div className='container h-75 d-flex flex-column align-items-center justify-content-center'>
 
-                        <div className='container h-75 col-md-10 col-lg-7 mt-md-5 mt-lg-3 d-flex flex-column'
+                        <div className='container h-75 col-md-10 col-lg-6 mt-md-5 mt-lg-3 d-flex flex-column'
                         style={{height:'20%'}}>
-                            <h1 className='display-3 mb-md-3 mb-lg-1'>משחק חדש: </h1>
-                            <div className="mt-md-2 col-md-10 ">
+                            <h1 className='display-4 mb-md-3 mb-lg-1'>משחק חדש: </h1>
+                            <div className=" col-md-10 col-lg-12 ">
                                 <div>
                                     {Object.keys(GameData.cardsParameters).map((par_name, i) => (
                                         <CheckboxConstParameter
@@ -124,7 +124,7 @@ export default class NewGame extends Component {
                                     )}
                                 </div>
                                 <div className='d-flex justify-content-start'>
-                                    <label className='h2 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
+                                    <label className='h4 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
                                     <input
                                         className='col-2'
                                         type="number"
@@ -156,7 +156,7 @@ const CheckboxConstParameter = (props) => (
             checked={props.checkboxsInfo[props.par_name + 'Bool']}
             onChange={props.checkboxsChange} key={props.par_name} />
 
-        <label className='h2 mr-2 font-weight-light'> {GameData.cardsParameters[props.par_name].nameHe}</label>
+        <label className='h4 mr-2 font-weight-light'> {GameData.cardsParameters[props.par_name].nameHe}</label>
 
         <SelectConstParameter
             checkboxsInfo={props.checkboxsInfo}
@@ -169,7 +169,7 @@ const CheckboxConstParameter = (props) => (
 
 const SelectConstParameter = (props) => (
     <select
-        className='_dropdown h-50 mr-auto ml-3 col-md-4 col-lg-4'
+        className='_dropdown h-50 mr-auto ml-3 col-md-4 col-lg-3'
         ref={el => dropdown_refs[props.categoryStr] = el}
         style={{ visibility: (!props.checkboxsInfo[props.categoryStr + 'Bool']) ? 'visible' : 'hidden' }}
         name={props.categoryStr}

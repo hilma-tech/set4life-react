@@ -31,6 +31,7 @@ export default class Board extends Component {
             game_Participants: [],
             currentPlayerName: '',
             exitGame: false,
+            endGame:false,
             stageOfTheGame: 0
             /*
             stageOfTheGame values:
@@ -94,7 +95,7 @@ export default class Board extends Component {
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
             val[1].isConnected) : [];
         this.setState({ game_Participants: ArrParticipants });
-        (!ArrParticipants.length || (this.state.exitGame&&!ArrParticipants.length)) &&
+        (!ArrParticipants.length || this.state.endGame)&&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
         //selected cards
@@ -190,7 +191,7 @@ export default class Board extends Component {
                     usedCards: objPullCards.newUsedCards,
                     stageOfTheGame: 0,
                     selectedCards: [],
-                    exitGame: objPullCards.endGame
+                    endGame: objPullCards.endGame
                 });
 
                 firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
