@@ -1,7 +1,7 @@
 import setFunctions from '../SetGame/setFunctions';
 
 const Variables={
-    objConstParameters: {},
+    constParameters: {},
     gameCode:'',
     userId:'',
     playerName:'',

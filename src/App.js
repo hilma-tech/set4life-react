@@ -66,7 +66,7 @@ class App extends Component {
   }
 
   render() {
-    // return <UserIcon name='marimi' src={require('./data/design/userIconMarimi.png')} _direction='down' />
+    // return <UserIcon name='marimi' src={require('./data/design/userIconMarimi.png')} _direction='bottom' />
     if ((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) || (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)) {
       switch (this.state.pageSeen) {
         case "load":

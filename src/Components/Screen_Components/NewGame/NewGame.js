@@ -39,19 +39,19 @@ export default class NewGame extends Component {
         Object.assign(Variables, {
             gameCode: newGameCode,
             _timer: this.state._timer,
-            objConstParameters: this.state.dropDownInfo,
+            constParameters: this.state.dropDownInfo,
             creationGameTime: startGameTime
         });
 
         let constParamLength = Object.keys(this.state.dropDownInfo).length;
-        let newCurrentCards = setFunctions.newCurrentCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);
+        let newCurrentCards = setFunctions.createNewCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);
 
         let gameObj = {
             timeOut_choosingCards: this.state._timer,
             creationTime: startGameTime,
             currentCards: newCurrentCards,
             usedCards: newCurrentCards,
-            constParameters: Variables.objConstParameters,
+            constParameters: Variables.constParameters,
             Game_Participants: { [Variables.userId]: { Name: Variables.playerName, ProfilePic: Variables.profilePic, isConnected: true } }
         };
 
@@ -123,8 +123,8 @@ export default class NewGame extends Component {
                                             settingConstParametersObj={this.settingConstParametersObj} />)
                                     )}
                                 </div>
-                                <div>
-                                    <label className='h2 font-weight-light ml-1'>זמן לבחירת סט:</label>
+                                <div className='d-flex justify-content-start'>
+                                    <label className='h2 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
                                     <input
                                         className='col-2'
                                         type="number"

@@ -1,21 +1,38 @@
-#user-icon .left img{
-    width:10vh;
-    height: 10vh;
-}
-#user-icon .left label{
-    font-size: 2.3rem;
-    margin-right: 2vw;
+
+#user-icon img.left{
+    width: 12vw;
+    height: 12vw;
 }
 
+#user-icon label.left{
+    margin-right: 1vw;
+    font-size: 2.2rem;
+}
+
+#user-icon .bottom{
+    display: flex;
+    flex-direction: column;
+}
+
+#user-icon img.bottom{
+    width: 6vw;
+    height: 6vw;
+}
+
+#user-icon label.bottom{
+    display:inline-block;
+    margin-right: 1vw;
+    font-size: 1rem;
+}
 
 
-@media (min-width: 992px) { 
-    #user-icon .left img{
-        width:14vh;
-        height: 14vh;
+@media only screen and (min-width: 992px){
+    #user-icon img.left{
+        width: 7vw;
+        height: 7vw;
     }
-    #user-icon .left label{
-        font-size: 2rem;
-        margin-right: 1vw;
-    }
+    
+    #user-icon label.left{
+        font-size: 1.5rem;
+    }  
  }

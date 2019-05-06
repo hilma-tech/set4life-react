@@ -184,10 +184,10 @@ export default class Board extends Component {
             clearTimeout(_timeOutNextBtn);
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-                let used_cards = [...this.state.usedCards, ...objPullCards.newCards];
+
                 this.setState({
                     currentCards: objPullCards.currentCards,
-                    usedCards: used_cards,
+                    usedCards: objPullCards.newUsedCards,
                     stageOfTheGame: 0,
                     selectedCards: [],
                     exitGame: objPullCards.endGame
@@ -196,7 +196,7 @@ export default class Board extends Component {
                 firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
                     {
                         currentCards: objPullCards.currentCards,
-                        usedCards: used_cards
+                        usedCards: objPullCards.newUsedCards
                     });
                 timeNewCards = performance.now();
             }

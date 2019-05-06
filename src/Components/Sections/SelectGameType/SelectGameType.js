@@ -17,7 +17,7 @@ export default class GameType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            GameTypeOptions: 'newGame'
+            GameTypeOptions: 'sel'
             //newGame-new game
             //existGame-exist game
             //sel- current page
@@ -36,12 +36,10 @@ export default class GameType extends Component {
                 default:
                     window.history.pushState('sel', '', 'gameType');
             }
-
         });
     }
 
     onClickGameTypeButton = (event) => {
-        console.log("in onClickGameTypeButton",event.target.getAttribute('name') )
         this.setState({ GameTypeOptions: event.target.getAttribute('name') });
     }
 
@@ -51,7 +49,6 @@ export default class GameType extends Component {
     }
 
     render() {
-        console.log('Variables',Variables)
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
@@ -66,7 +63,6 @@ export default class GameType extends Component {
                             </div>
                         </div>
                     </div>
-
                 );
             case 'existGame':
                 return <ExistGame moveThroughPages={this.props.moveThroughPages} onClickGameTypeButton={this.onClickGameTypeButton}/>;
