@@ -31,7 +31,7 @@ export default class Board extends Component {
             game_Participants: [],
             currentPlayerName: '',
             exitGame: false,
-            endGame:false,
+            endGame: false,
             stageOfTheGame: 0
             /*
             stageOfTheGame values:
@@ -95,7 +95,7 @@ export default class Board extends Component {
         let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
             val[1].isConnected) : [];
         this.setState({ game_Participants: ArrParticipants });
-        !ArrParticipants.length&&
+        !ArrParticipants.length &&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
         //selected cards
@@ -109,13 +109,12 @@ export default class Board extends Component {
         }
 
         //currentCards
-        if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards)) {
-            console.log('inside listener current cards',[newCurrentCards,this.state.currentCards ] )
-            this.setState({ currentCards: newCurrentCards?newCurrentCards:[] });
-        }
+        if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards)) 
+            this.setState({ currentCards: newCurrentCards ? newCurrentCards : [] });
+        
 
         //usedCards
-        if (JSON.stringify(this.state.usedCards) !== JSON.stringify(usedCards)) 
+        if (JSON.stringify(this.state.usedCards) !== JSON.stringify(usedCards))
             this.setState({ usedCards: usedCards });
     }
 
@@ -178,7 +177,6 @@ export default class Board extends Component {
                         { timeOut: Variables._timer, timeMissedOut: ((performance.now() - timeStartGame) / 1000).toFixed(2) });
                 }
             }, Variables._timer * 1000);
-            console.log("Variables.userId", Variables.userId, "this.gameCode", this.gameCode)
             firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/currentPlayerID`, Variables.userId)
             this.setState({ stageOfTheGame: 1 });
         }
@@ -187,23 +185,25 @@ export default class Board extends Component {
             clearTimeout(_timeOutNextBtn);
             if (this.state.isSet) {
                 let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-                
-                console.log('objPullCards.endGame',objPullCards.endGame)
-                if(objPullCards.endGame)
+
+                if (objPullCards.endGame)
                     firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 
-                this.setState({
-                    currentCards: objPullCards.currentCards,
-                    usedCards: objPullCards.newUsedCards,
-                    stageOfTheGame: 0,
-                    selectedCards: []
-                });
-
-                firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
-                    {
+                else {
+                    this.setState({
                         currentCards: objPullCards.currentCards,
-                        usedCards: objPullCards.newUsedCards
+                        usedCards: objPullCards.newUsedCards,
+                        stageOfTheGame: 0,
+                        selectedCards: []
                     });
+
+                    firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
+                        {
+                            currentCards: objPullCards.currentCards,
+                            usedCards: objPullCards.newUsedCards
+                        });
+
+                }
                 timeNewCards = performance.now();
             }
             this.setState({ isSet: undefined })
@@ -217,7 +217,7 @@ export default class Board extends Component {
     }
 
     render() {
-        if ((!this.state.exitGame) && this.state.currentCards) {
+        if ((!this.state.exitGame) && this.state.currentCards.length) {
             return (
                 <div id="board" className='page container-fluid'>
                     <UpperBar game_Participants={this.state.game_Participants}
