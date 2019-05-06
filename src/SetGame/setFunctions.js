@@ -84,7 +84,7 @@ const setFunctions = {
             newCards = [];
             for (let i = 0; i < x; i++) 
                 newCards.push(this.NewCardNumber(newCards.concat(filtered_currentCards,usedCards))); 
-        } while (!this.IsArrayHasSet([...newCards, ...filtered_currentCards])&&!lastCards);
+        } while (!this.IsArrayHasSet([...newCards, ...filtered_currentCards],true)&&!lastCards);
         return newCards;
     },
 
@@ -98,8 +98,8 @@ const setFunctions = {
             currentCards=currentCards.filter(card=>!selectedCards.includes(card));
 
         else{ 
-            let newCurrCards=currCards.filter(card=>!selectedCards.includes(card));
-            newCards =this.newCurrentCards(x, newCurrCards, usedCards,selectedCards,(usedCards.length===((81/(Math.pow(3,parmObjLength)))-3)));
+            let newCurrCards=currentCards.filter(card=>!selectedCards.includes(card));
+            newCards =this.createNewCards(x, newCurrCards, usedCards,usedCards.length===(81/(Math.pow(3,constParameters_length))-3));
             selectedCards.map((card,i) => {
                 let index = currentCards.indexOf(card);
                 currentCards[index] = newCards[i];
