@@ -93,7 +93,7 @@ export default class Registration extends Component {
             }
         }
         else
-            this.setState({ registStateInfo: GeneralFunctions.string_From_List(emptyFilesArr, 'שכחת למלא את השדות:') });
+            this.setState({ registStateInfo: GeneralFunctions.string_From_List(emptyFilesArr, 'שכחת למלא את השדות: ') });
     }
 
     keypressed = (e) => {
@@ -110,14 +110,14 @@ export default class Registration extends Component {
     render() {
         return (
             <div id='reg' className='page container-fluid d-flex flex-column' onKeyPress={this.keypressed}>
-                <nav className='navbar bg-danger w-100 sticky-top'>
+                <nav className='navbar bg-danger w-100 sticky-top p-lg-0'>
                     <label className='mx-auto'>set4life</label>
                 </nav>
 
-                <div className='h-100'>
-                    <h1 className="display-1">הרשמה</h1>
-                    <div className="container mb-3">
-                        <div id='upload_profilePic_container' className='d-flex col-md-9 mx-md-auto col-lg-8 p-0 lg-screen'>
+                <div className=''>
+                    <h1 className="display-2 my-0 py-lg-0">הרשמה</h1>
+                    <div className="container mb-md-3 mb-lg-1">
+                        <div id='upload_profilePic_container' className='d-flex col-md-9 mx-auto col-lg-8 p-0 lg-screen'>
                             <label className="rounded text-right ml-2 my-auto">
                                 <input name='uplode_pic' type="file" placeholder='תמונת פרופיל'
                                     onChange={this.uploadProfilePic} />
@@ -125,24 +125,26 @@ export default class Registration extends Component {
                             </label>
                             <p className='d-inline my-auto'>אנא לחץ על הסמל בשביל להעלות תמונת פרופיל. במידה ולא תעלה תמונה, תופיע תמונת ברירת מחדל.</p>
                         </div>
-                        <input className='col-md-9 d-md-block col-lg-4 d-lg-inline mx-lg-0' name='fullName' type='text' placeholder="שם מלא"
+                        <input className='col-md-9 d-md-block col-lg-3 d-lg-inline mx-lg-0 mb-lg-0' name='fullName' type='text' placeholder="שם מלא"
                             onChange={this.inputChange}></input>
 
-                        <input className='col-md-9 d-md-block col-lg-4 mr-lg-2 d-lg-inline mx-lg-0' name='phoneNum' type="text" placeholder="מספר טלפון"
+                        <input className='col-md-9 d-md-block col-lg-3 mr-lg-2 d-lg-inline mx-lg-0 mb-lg-0' name='phoneNum' type="text" placeholder="מספר טלפון"
                             onChange={this.inputChange} />
 
                         <input className='col-md-9 col-lg-9 d-md-block lg-screen' name="email" type='text' placeholder='אימייל'
                             onChange={this.inputChange}></input>
 
-                        <input className='col-md-9 lg-screen' name='password' type="password" placeholder='סיסמא'
+                        <input className='col-md-9 lg-screen d-block' name='password' type="password" placeholder='סיסמא'
                             onChange={this.inputChange} />
 
-                        <input className='col-md-9 lg-screen' name='passwordAgain' type="password" placeholder='אימות סיסמא'
+                        <input className='col-md-9 lg-screen d-block mb-lg-0' name='passwordAgain' type="password" placeholder='אימות סיסמא'
                             onChange={this.inputChange} />
 
                     </div>
-                    <button className='btn btn-secondary btn-lg' onClick={this.onClickRegisterButton}>הבא</button>
-                    {this.state.registStateInfo !== '' && <label>{this.state.registStateInfo}</label>}
+                    <button className='btn btn-secondary btn-lg ' onClick={this.onClickRegisterButton}>הבא</button>
+                    {this.state.registStateInfo !== '' && 
+                    <label id='state-info' className='d-block text-danger mt-1 col-11 mx-auto'>{this.state.registStateInfo}</label>
+                    } 
 
                 </div>
 

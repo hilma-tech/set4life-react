@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Card from '../../Small_Components/Card';
+import Card from '../../Small_Components/Card/Card';
 import firebaseObj from '../../../firebase/firebaseObj';
 import setFunctions from '../../../SetGame/setFunctions.js';
 import Variables from '../../../SetGame/Variables';
@@ -109,9 +109,9 @@ export default class Board extends Component {
         }
 
         //currentCards
-        if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards)) 
+        if (JSON.stringify(this.state.currentCards) !== JSON.stringify(newCurrentCards))
             this.setState({ currentCards: newCurrentCards ? newCurrentCards : [] });
-        
+
 
         //usedCards
         if (JSON.stringify(this.state.usedCards) !== JSON.stringify(usedCards))
@@ -219,16 +219,14 @@ export default class Board extends Component {
     render() {
         if ((!this.state.exitGame) && this.state.currentCards.length) {
             return (
-                <div id="board" className='page container-fluid'>
+                <div id="board" className='container-fluid'>
                     <UpperBar game_Participants={this.state.game_Participants}
                         gameCode={this.gameCode}
-                        exitGame={this.exitGame} />
+                        exitGame={this.exitGame}
+                        currentPlayerName={this.state.currentPlayerName}/>
 
-                    <div className='container h-100'>
-                        <label id='current-player' style={{ visibility: this.state.currentPlayerName ? 'visible' : 'hidden' }}>
-                            {this.state.currentPlayerName} משחק עכשיו</label>
-
-                        <div id='cards' className='container d-flex flex-wrap'>
+                    <div className='container'>
+                        <div id='cards' className='container'>
                             {this.state.currentCards.map((cardCode, i) =>
                                 <Card
                                     className='card'
@@ -242,10 +240,14 @@ export default class Board extends Component {
                                 />)}
                         </div>
 
-                        <LowerBar stageOfTheGame={this.state.stageOfTheGame}
-                            currentCards={this.state.currentCards}
-                            clickButtonEvent={this.clickButtonEvent}
-                            disableBeforeNext={this.state.disableBeforeNext} />
+                        {this.state.currentCards &&
+                            <button className='btn btn-info mt-2' onClick={this.clickButtonEvent} id={this.state.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
+                                disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
+                                {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
+                                    this.state.stageOfTheGame === 1 ? "סט בבחירה" :
+                                    this.state.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
+                                }
+                            </button>}
 
                         <ToastsContainer store={ToastsStore} closeOnClick rtl="true" />
 
@@ -257,31 +259,26 @@ export default class Board extends Component {
     }
 }
 
-
-const UpperBar = (props) => (
-    <nav className='navbar bg-danger' >
-        <div>
-            {props.game_Participants.map((val) =>
-                <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='down' />)}
+const UpperBar=(props)=>(
+    <div className='bg-danger navbar'>
+        <div className=' col-lg-3 px-0 border border-dark rounded'>
+        {props.game_Participants.map((val) =>
+        <div className='d-flex flex-wrap justify-content-center'>
+            <UserIcon name={(val[0] === Variables.userId) ? ' בלה בלה את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
+            <UserIcon name={(val[0] === Variables.userId) ? ' bvbv את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
+            <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
+            <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
+        </div>)}
+        <label className='h6 text-primary' style={{ visibility: props.currentPlayerName ? 'visible' : 'hidden' }}>
+                            {props.currentPlayerName} משחק עכשיו</label>
         </div>
-        <label id="game_code">  הקוד של המשחק{props.gameCode}</label>
-        <button onClick={props.exitGame} id="exitButton">צא מהמשחק</button>
-    </nav>
-);
-
-
-const LowerBar = (props) => (
-    <div id='lower-bar-boa' >
-        {props.currentCards &&
-            <button className='btn' onClick={props.clickButtonEvent} id={props.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
-                disabled={props.stageOfTheGame === 1 || props.stageOfTheGame === 3 || (props.stageOfTheGame === 2 && props.disableBeforeNext)}>
-                {props.stageOfTheGame === 0 ? "מצאתי סט!" :
-                    props.stageOfTheGame === 1 ? "סט בבחירה" :
-                        props.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
-                }
-            </button>}
+        <label className='h4 col-5'>קוד המשחק {props.gameCode}</label>
+        <button className='btn btn-primary col-2' onClick={props.exitGame}>יציאה</button>
     </div>
-);
+)
+
+
+
 
 
 export { timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOutChoosingSet };

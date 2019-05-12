@@ -1,202 +1,35 @@
-/* #board{
-    align-content: space-around;
-    justify-content: flex-start;
-    direction: rtl;
-    width: 100%;
- } */
- 
 
-.greyCard{
-   border: solid 5px #707070;  
-   color: #D9D9D9;
-}
- 
-.unselectedCard, .not-active{
-   border: 1px solid #707070;
-}
- 
-.greenCard{
-    border: solid 5px #8CC63F; 
-}
- 
-.redCard{
-   border: solid 5px #FF1D00;
-}
-
-
-
-.not-active {
-    pointer-events: none;
-    cursor: default;
-    opacity: 0.4;
-}
-
-.wrongOrRight{
-    position: relative;
-}
-
-.notVisible{
-    visibility:collapse;
-    height: 0;
-}
-
-.visible{
-    visibility:visible;
-    height: 5vh;
-    position: absolute;
-    top:-3%;
-    right:-3%;
-    background-color: transparent;
-}
-
- #cards{
-     width:46vw;
-     height:60vh;
-     display: flex;
-     flex-direction: row;
-     flex-wrap: wrap;
-     align-items: flex-start;
-     justify-content: space-around;
-     align-content: space-around;
-     overflow: visible;
- }
-
- .card{
-    width: 20vmin;
-    height:20vmin;
-    margin:0.5vh 0.5vh;
-    background-color: #dbdbdb;
-    border-radius: 4px;
-}
-
-.btn{
-    font-size: 1.5rem !important;
-}
-
-#Not_fuond_set{
-    background-color: #926AFF;
-}
-#upper-bar-boa{
-    flex-direction: row;
-    height: 16vh;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-}
-
-#exitButton{
-    height: 4vh;
-}
-
-#upper-bar-boa >*:not(:first-child){
-    display:block;
-    margin:1vh;
-}
-
-#nav-bar-boa{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    background-color: #D1C1FC;
-    margin-bottom:1vh;
-    height: 6vh;
-    margin-top: 0%;
-    font-family: "Segoe UI";
-}
-
-#nav-bar-boa >*{
-    margin:auto auto;
-    background-color: #ffffff00;
-}
-
-
-#lower-bar-boa{
-    margin-top:4.5vh;
-    justify-content: center;
-    width:100vw;
-    align-items: center;
-}
 
 #current-player{
     font-weight: bold;
     color:#3880ce;
+    font-size:1.5rem;
 }
 
 #game_code{
     font-weight: bold;
     font-size:1.5rem;
 }
-#current-player{
-    font-size:1.5rem;
-}
 
-@media only screen and (max-width: 1024px) and (min-width:425px) {
-    .card{
-        width:20vmin;
-        height:20vmin;
-        margin:0.5vh 0.5vh;
-        background-color: #dbdbdb;
-    }
+#board div.navbar label.h4{
+    font-size: 2.2rem;
+}
+ #cards{
+     display: flex;
+     flex-wrap: wrap;
+    justify-content:center;
+    width:80vw;
+    height:70vh;
+    overflow: visible;
+} 
+
+@media(min-width: 992px){
     #cards{
-        width:92vw;
-        height:60vh;
-    }
-
-    #upper-bar-boa >*{
-        font-size: 3rem;
-        margin:1vh;
-    }
-    #lower-bar-boa{
-        margin-top:1vh;
-    }
-
-    #nav-bar-boa >*{
-        font-size:1.6rem;
-    }
-
-    #nav-bar-boa{
-        height: 5vh;
-    }
-    #upper-bar-boa{
-        height: 13vh;
+        width:70vw;
+        height:50vh;
+        overflow: visible;
     }
 }
 
 
-@media only screen and (max-width: 425px) {
-    .card{
-        width: 24vmin;
-        height: 24vmin;
-        margin: 0vw 0vh;
-        background-color: #dbdbdb;
-    }
-    #cards{
-        width:81vw;
-        height:65vh;
-    }
-    #upper-bar-boa >*{
-        font-size: 2rem;
-    }
-    #upper-bar-boa{
-        height: 15vh;
-        margin-top:0;
-    }
-    .btn{
-        font-size: 2.1rem !important;
-    }
-    #lower-bar-boa{
-        margin-top:2vh;
-    }
-    #nav-bar-boa{
-        margin-top:0;
-    }
-    @media only screen and (min-height: 730px) {
-        #upper-bar-boa >*{
-            font-size: 2.5rem;
-        }
-        .btn{
-            font-size: 2.3rem !important;
-        }
-    }
-}
 

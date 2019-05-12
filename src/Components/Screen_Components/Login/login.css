@@ -27,7 +27,7 @@
     color: #4500FF;
 }
 
-.bottom{
+#login-page .bottom{
     margin-top: 6vh;
     display: flex;
     flex-direction: column;

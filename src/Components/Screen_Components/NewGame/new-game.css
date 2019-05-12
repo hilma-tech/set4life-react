@@ -6,21 +6,56 @@
     font-size: 2rem;
 }
 
-
 #new-game #checkbox-constParameters input[type='checkbox']{
     height:5vw;
     width: 5vw;
 }
 
-#new-game #checkbox-constParameters label{
-    font-size: 3rem;
+#new-game #checkbox-constParameters label,#timer-for-set{
+    font-size: 2.3rem;
+}
+
+@media (max-width: 992px){
+    #new-game{
+        width:100vw;
+        height: 100vh;
+    } 
 }
 
 
-@media (min-width: 992px) { 
-    #new-game ._ckeckbox{
-        height:1.7vw;
-        width: 1.7vw;
+@media (min-width: 992px) {
+    #new-game button{
+        height: 10vh;
+        font-size: 1.27rem !important;
+        width:10vw;
+        padding: 0;
+    }
+
+    #checkbox-constParameters{
+        height: 10vh;
+    }
+
+    #new-game #checkbox-constParameters select{
+        font-size: 0.9rem;
+        height: 7vh;
+        width: 6vw;
+    }
+    #new-game #checkbox-constParameters select option{
+        font-size: 1rem;
+    }
+    
+    #new-game #checkbox-constParameters input[type='checkbox']{
+        height:2vw;
+        width: 2vw;
+    }
+    
+    #new-game #checkbox-constParameters label,
+    #timer-for-set{
+        font-size: 1.5rem;
+    }
+
+    #header_new-game{
+        font-size: 3rem;
     }
  }
 

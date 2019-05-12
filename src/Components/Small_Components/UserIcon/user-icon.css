@@ -1,38 +1,76 @@
-
-#user-icon img.left{
+._tooltip{
+    font-size: 1rem !important;
+}
+/* .defaultImg{
+    border:3px solid blue;
+} */
+.user-icon.left{
+    max-width:50vw;
+}
+.user-icon.left img{
     width: 12vw;
     height: 12vw;
+    margin:auto 0;
 }
 
-#user-icon label.left{
+.user-icon.left label{
     margin-right: 1vw;
     font-size: 2.2rem;
+    margin:auto 1vw;
 }
 
-#user-icon .bottom{
-    display: flex;
-    flex-direction: column;
+.user-icon.bottom{
+    max-width:15vw;
+    max-height: 15vw;
+    margin:1vw;
+    display: inline-block;
 }
 
-#user-icon img.bottom{
+.user-icon.bottom img{
     width: 6vw;
     height: 6vw;
+    display:block;
+    margin:0 auto;
 }
 
-#user-icon label.bottom{
-    display:inline-block;
+.user-icon.bottom label{
     margin-right: 1vw;
     font-size: 1rem;
+    margin:0 auto;
 }
 
 
-@media only screen and (min-width: 992px){
-    #user-icon img.left{
-        width: 7vw;
-        height: 7vw;
+@media(min-width: 992px){
+    .user-icon.left{
+       max-width:20vw;
+    }
+    .user-icon.left img{
+        width: 6vw;
+        height: 6vw;
+        margin:auto 0;
     }
     
-    #user-icon label.left{
-        font-size: 1.5rem;
-    }  
+    .user-icon.left label{
+        margin-right: 1vw;
+        font-size: 1.4rem;
+        margin:auto 1vw 0;
+    }
+    
+    .user-icon.bottom{
+        max-width:15vw;
+        max-height:15vw;
+    }
+    
+    .user-icon.bottom img{
+        width: 3.5vw;
+        height: 3.5vw;
+        display:block;
+        margin:0 auto;
+    }
+    
+    .user-icon.bottom label{
+        margin-right: 1vw;
+        font-size: 0.8rem;
+        margin:0 auto;
+    }
  }

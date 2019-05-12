@@ -1,30 +1,15 @@
-.container-fluid{
+#chart-data{
   padding:0
 }
 
 #chart-data .btn-group button{
   background-color:var(--light_pink);
+  font-size:1rem!important;
 }
 
 #chart-data img{
   width:5vw;
   height: 5vw;
-}
-
-@media (min-width: 992px){
-  #dropdown_and_buttons{
-    margin-left: 0
-  }
-  #chart-data{
-    height: 100vh;
-  }
-}
-
-@media (min-width: 768px) {  
-  #chart-data img{
-    width:5vh;
-    height: 5vh;
-  }
 }
 
 #chart-data
@@ -38,7 +23,50 @@
 #chart-data 
 .btn-secondary{
   background-color: var(--light_pink);
+}
 
+#drop_down_chart label{
+  color:#e6b2c6;
+}
+
+#drop_down_chart select{
+  background-color: #f6e5e5;
+  text-align-last:center;
+}
+
+
+@media (min-width: 992px){
+  #dropdown_and_buttons{
+    margin-left: 0
+  }
+
+  #drop_down_chart label{
+    font-size: 1rem;
+  }
+
+  #drop_down_chart select{
+    font-size: 0.98em!important;
+    height: 8.5vh!important;
+  }
+
+  #chart-data .btn-group button{
+    background-color:var(--light_pink);
+    font-size:0.8rem!important;
+  }
+
+  .chart-info h1{
+    font-size:1.8rem;
+    font-weight: bold;
+  }
+
+  .chart-info p{
+    font-size:0.9rem;
+  }
+
+  #chart-data img{
+    width:3vw;
+    height: 3vw;
+  }
 }
 
 
