@@ -114,6 +114,8 @@ export default class Board extends Component {
             this.setState({ currentCards: newCurrentCards ? newCurrentCards : [] });
 
 
+        
+
         //usedCards
         if (JSON.stringify(this.state.usedCards) !== JSON.stringify(usedCards))
             this.setState({ usedCards: usedCards });
@@ -155,7 +157,7 @@ export default class Board extends Component {
             this.setState({ isSet: isSet.bool, stageOfTheGame: 2 }, () => {
                 _timeOutNextBtn = setTimeout(() => {
                     this.setState({ stageOfTheGame: 0, selectedCards: [] })
-                }, 30000)
+                }, 15000)
             });
             //timeout of the disable "next" btn
             // setTimeout(()=>this.setState({disableBeforeNext:false}),5000)
