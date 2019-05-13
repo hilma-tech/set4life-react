@@ -1,5 +1,3 @@
-import setFunctions from '../SetGame/setFunctions';
-
 const Variables={
     constParameters: {},
     gameCode:'',

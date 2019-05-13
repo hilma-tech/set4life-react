@@ -30,6 +30,7 @@ export default class Board extends Component {
             disableBeforeNext: false,
             game_Participants: [],
             currentPlayerName: '',
+            currentPlayerId:'',
             exitGame: false,
             endGame: false,
             stageOfTheGame: 0
@@ -119,14 +120,16 @@ export default class Board extends Component {
     }
 
     reciveCurrentUserIdFromFirebase = (userIdFromFirebase) => {
-        (userIdFromFirebase && userIdFromFirebase != Variables.userId) ?
-            this.setState({ stageOfTheGame: 3, isSet: undefined }) : this.setState({ stageOfTheGame: 0, isSet: undefined });
-        if (userIdFromFirebase) {
-            firebaseObj._db.ref(`PlayersInfo/${userIdFromFirebase}/Name`).once('value')
-                .then(snap => this.setState({ currentPlayerName: Variables.userId === userIdFromFirebase ? "את/ה" : snap.val() }))
-        }
-        else
-            this.setState({ currentPlayerName: '' });
+        this.setState({ stageOfTheGame:(userIdFromFirebase && userIdFromFirebase != Variables.userId)?3:0,
+             isSet: undefined,currentPlayerId:userIdFromFirebase });
+
+            console.log('inside listener current player',userIdFromFirebase)
+        // if (userIdFromFirebase) {
+        //     firebaseObj._db.ref(`PlayersInfo/${userIdFromFirebase}/Name`).once('value')
+        //         .then(snap => this.setState({ currentPlayerName: Variables.userId === userIdFromFirebase ? "את/ה" : snap.val() }))
+        // }
+        // else
+        //     this.setState({ currentPlayerName: '' });
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +155,7 @@ export default class Board extends Component {
             this.setState({ isSet: isSet.bool, stageOfTheGame: 2 }, () => {
                 _timeOutNextBtn = setTimeout(() => {
                     this.setState({ stageOfTheGame: 0, selectedCards: [] })
-                }, 60000)
+                }, 30000)
             });
             //timeout of the disable "next" btn
             // setTimeout(()=>this.setState({disableBeforeNext:false}),5000)
@@ -217,13 +220,14 @@ export default class Board extends Component {
     }
 
     render() {
+        console.log('currentPlayerID render',this.state.currentPlayerId)
         if ((!this.state.exitGame) && this.state.currentCards.length) {
             return (
                 <div id="board" className='container-fluid'>
                     <UpperBar game_Participants={this.state.game_Participants}
                         gameCode={this.gameCode}
                         exitGame={this.exitGame}
-                        currentPlayerName={this.state.currentPlayerName}/>
+                        currentPlayerId={this.state.currentPlayerId}/>
 
                     <div className='container'>
                         <div id='cards' className='container'>
@@ -241,7 +245,7 @@ export default class Board extends Component {
                         </div>
 
                         {this.state.currentCards &&
-                            <button className='btn btn-info mt-2' onClick={this.clickButtonEvent} id={this.state.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
+                            <button className='btn btn-info mt-1' onClick={this.clickButtonEvent} id={this.state.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :
@@ -261,16 +265,17 @@ export default class Board extends Component {
 
 const UpperBar=(props)=>(
     <div className='bg-danger navbar'>
-        <div className=' col-lg-3 px-0 border border-dark rounded'>
-        {props.game_Participants.map((val) =>
-        <div className='d-flex flex-wrap justify-content-center'>
-            <UserIcon name={(val[0] === Variables.userId) ? ' בלה בלה את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
-            <UserIcon name={(val[0] === Variables.userId) ? ' bvbv את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
-            <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
-            <UserIcon name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
-        </div>)}
-        <label className='h6 text-primary' style={{ visibility: props.currentPlayerName ? 'visible' : 'hidden' }}>
-                            {props.currentPlayerName} משחק עכשיו</label>
+        <div id='participant-list' className='px-0  rounded d-flex flex-wrap justify-content-center'>
+        {props.game_Participants.map(val=>
+        <div>
+            <UserIcon currentPlayer={props.currentPlayerId===Variables.userId} name={(val[0] === Variables.userId) ? 'בלה בלה את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
+            <UserIcon currentPlayer={null} name={(val[0] === Variables.userId) ? 'bvbv את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
+        </div>
+            
+        )}
+        
+        {/* <label className='h6 text-primary' style={{ visibility: props.currentPlayerName ? 'visible' : 'hidden' }}>
+                            {props.currentPlayerName} משחק עכשיו</label> */}
         </div>
         <label className='h4 col-5'>קוד המשחק {props.gameCode}</label>
         <button className='btn btn-primary col-2' onClick={props.exitGame}>יציאה</button>

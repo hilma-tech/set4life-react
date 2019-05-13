@@ -3,19 +3,24 @@ import './user-icon.css';
 import ReactTooltip from 'react-tooltip';
 import UserIconImg from '../../../data/design/userIcon.png';
 
+// identify 2 players with the same default photo 
+// (props.src===UserIconImg?'defaultImg':'')
 
-const UserIcon = (props) => {
-    console.log(props.src,UserIconImg,props.src===UserIconImg)
-    return(
-    <div className={'user-icon ' + props._direction} >
-        <img className={(props.src===UserIconImg?'defaultImg':'')+' rounded'} src={props.src} width="50" height="50" data-tip={props.name} />
-        {props._direction === 'left' ?
-            <label>{props.name}</label> :
-            <ReactTooltip className='_tooltip' place="bottom" type="dark" effect="solid" />
-        }
+let takesFirstWordInSentence = (sentence) => {
+    return sentence.substring(0, sentence.indexOf(" ")!==-1?sentence.indexOf(" "):sentence.length);
+}
 
+    const UserIcon = (props) => {
+        console.log('name', props.currentPlayer)
+        return (
+            <div id={props.currentPlayer ? 'currentPlayer' : ''} className={'user-icon ' + props._direction} >
+                <img className='rounded' src={props.src} width="50" height="50" data-tip={props.name} />
+                <label >
+                {props._direction === 'bottom'?takesFirstWordInSentence(props.name):props.name}</label>
+                {props._direction === 'bottom' &&
+                    <ReactTooltip className='_tooltip' place="bottom" type="dark" effect="solid" />}
+            </div>
+        );
+    }
 
-    </div>
-);}
-
-export default UserIcon;
+    export default UserIcon;

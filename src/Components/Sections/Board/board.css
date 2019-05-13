@@ -1,5 +1,3 @@
-
-
 #current-player{
     font-weight: bold;
     color:#3880ce;
@@ -25,9 +23,15 @@
 
 @media(min-width: 992px){
     #cards{
-        width:70vw;
-        height:50vh;
+        margin-top:1vh;
+        width:50vw;
+        height:67vh;
         overflow: visible;
+    }
+
+    #participant-list{
+        width:27vw;
+        height: 13.5vh;
     }
 }
 
