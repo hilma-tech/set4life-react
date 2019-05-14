@@ -30,7 +30,7 @@ export default class Board extends Component {
             disableBeforeNext: false,
             game_Participants: [],
             currentPlayerName: '',
-            currentPlayerId:'',
+            currentPlayerId: '',
             exitGame: false,
             endGame: false,
             stageOfTheGame: 0
@@ -83,7 +83,7 @@ export default class Board extends Component {
             firebaseObj.updatingValueInDataBase(
                 `Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`,
                 { isConnected: false });
-        } 
+        }
     }
 
     //callback functions for listeners on firebase////////////////////////////////////////////
@@ -115,26 +115,26 @@ export default class Board extends Component {
             this.setState({ currentCards: newCurrentCards ? newCurrentCards : [] });
 
 
-        
+
 
         //usedCards
         if (JSON.stringify(this.state.usedCards) !== JSON.stringify(usedCards))
             this.setState({ usedCards: usedCards });
     }
 
-
+    //currentPlayerID
     reciveCurrentUserIdFromFirebase = (userIdFromFirebase) => {
-        this.setState({ stageOfTheGame:(userIdFromFirebase && userIdFromFirebase != Variables.userId)?3:0,
-             isSet: undefined,currentPlayerId:userIdFromFirebase });
-            console.log('inside listener current player',userIdFromFirebase)
+        this.setState({
+            stageOfTheGame: (userIdFromFirebase && userIdFromFirebase != Variables.userId) ? 3 : 0,
+            isSet: undefined, currentPlayerId: userIdFromFirebase
+        });
+        console.log('inside listener current player', userIdFromFirebase)
     }
-
     /////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    outOfNextButton=()=>{
+    outOfNextButton = () => {
         if (this.state.isSet) {
-            console.log('inside clear func')
             let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
 
             if (objPullCards.endGame)
@@ -218,8 +218,25 @@ export default class Board extends Component {
         }
     }
 
-    
+
     exitGame = () => {
+        clearTimeout(_timeOutNextBtn);
+        if (this.state.isSet) {
+            let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
+
+            if (objPullCards.endGame)
+                firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
+
+            else {
+                firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
+                    {
+                        currentCards: objPullCards.currentCards,
+                        usedCards: objPullCards.newUsedCards,
+                        selectedCards: [],
+                        currentPlayerID:''
+                    });
+            }
+        }
         this.setState({ exitGame: true })
     }
 
@@ -231,7 +248,7 @@ export default class Board extends Component {
                     <UpperBar game_Participants={this.state.game_Participants}
                         gameCode={this.gameCode}
                         exitGame={this.exitGame}
-                        currentPlayerId={this.state.currentPlayerId}/>
+                        currentPlayerId={this.state.currentPlayerId} />
 
                     <div className='container'>
                         <div id='cards' className='container'>
@@ -253,7 +270,7 @@ export default class Board extends Component {
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :
-                                    this.state.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
+                                        this.state.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
                                 }
                             </button>}
 
@@ -267,13 +284,13 @@ export default class Board extends Component {
     }
 }
 
-const UpperBar=(props)=>(
+const UpperBar = (props) => (
     <div className='bg-danger navbar'>
 
         <div id='participant-list' className='px-0  rounded d-flex flex-wrap justify-content-center'>
-        {props.game_Participants.map(val=>
-            <UserIcon currentPlayer={props.currentPlayerId===Variables.userId} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} 
-            src={val[1].ProfilePic} _direction='bottom' />)}
+            {props.game_Participants.map(val =>
+                <UserIcon currentPlayer={props.currentPlayerId === Variables.userId} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
+                    src={val[1].ProfilePic} _direction='bottom' />)}
         </div>
 
         <label className='h4 col-5'>קוד המשחק {props.gameCode}</label>

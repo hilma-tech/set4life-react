@@ -45,20 +45,20 @@ class EndGame extends Component {
     render() {
         if (!this.state.moveTo_SaveGame) {
             return (
-                <div style={{ height: '100vh' }} className="container-fluid" id="endGame">
-                    <div className=' h-100 d-flex align-items-center justify-content-center'>
-                        <div className='"d-flex flex-column'>
-                            <h1 className='display-1' >כל הכבוד!</h1>
+                <div id="endGame" className="container">
+                    <div className=' d-flex align-items-center justify-content-center'>
+                        <div className='d-flex flex-column'>
+                            <h1 className='display-4' >כל הכבוד!</h1>
                             <h2 className="lead" >ניצחת</h2>
-                            <img className="img-fluid w-25 my-2" src={Party_Popper} style={{ backgroundColor: 'none' }} />
+                            <img className="img-fluid" src={Party_Popper} />
                             <div>
                                 <ul className="list-group d-inline-block justify-content-end w-sm-75 w-md-50 list-group-flush">
-                                    <li className="list-group-item">מספר הסטים <span style={{ color: '#28a745' }}>הנכונים</span> שלך:  <span className='info-text'>{this.state.numCorrectSet}</span></li>
-                                    <li className="list-group-item">מספר הסטים <span style={{ color: '#dc3545' }}>הלא נכונים</span> שלך:  <span className='info-text'>{this.state.numWrongSet}</span></li>
+                                    <li className="list-group-item">מספר הסטים <span className='text-success'>הנכונים</span> שלך:  <span className='info-text'>{this.state.numCorrectSet}</span></li>
+                                    <li className="list-group-item">מספר הסטים <span className='text-danger'>הלא נכונים</span> שלך:  <span className='info-text'>{this.state.numWrongSet}</span></li>
                                     <li className="list-group-item">זמן ממוצע לבחירת סט:  <span className='info-text'>{this.state.avgTime} </span> שניות</li>
                                 </ul>
                             </div>
-                            <button className='btn btn-primary my-3 w-25 h-25' onClick={() => this.setState({ moveTo_SaveGame: true })} >המשך</button>
+                            <button className='btn btn-primary w-25 h-25 align-self-center' onClick={() => this.setState({ moveTo_SaveGame: true })} >המשך</button>
                         </div>
 
                     </div>

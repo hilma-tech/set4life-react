@@ -1,5 +1,16 @@
+#endGame img{
+    width:9vw;
+    margin:0 auto;
+    background-color: none;
+}
+
 #endGame h2{
-    font-size: 2.2rem;
+    font-size: 3vw;
+}
+
+#endGame ul li,
+#endGame ul li span{
+    font-size: 1.8vw;
 }
 
 .info-text{

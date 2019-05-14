@@ -43,6 +43,11 @@ const firebaseObj={
             if(typeof cb ==='function') cb(snap.val());
         })
     },
+    
+    removeListener(listenerRef,path,type='value'){
+        let ref=this._db.ref(path);
+        ref.off(type,listenerRef)
+    },
 
     readingDataOnFirebaseCB(cb,path){
         let ref=this._db.ref(path);
