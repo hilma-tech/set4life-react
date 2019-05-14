@@ -44,10 +44,18 @@ class App extends Component {
     }
   }
 
+  checkCurrentGame = (userId) => {
+    firebaseObj.readingDataOnFirebaseCB(user_gameInfo => {
+      if (user_gameInfo.currentGame)
+        console.log('exist')
+    }, `Players/${userId}`);
+  }
+
   handlePlayerAuthState = async (fbUser) => {
     if (fbUser) {
       console.log('fbUser', fbUser);
       firebaseObj.readingDataOnFirebaseCB(info_obj => {
+        this.checkCurrentGame(fbUser.uid);
         Object.assign(Variables,
           { userId: fbUser.uid, playerName: info_obj.Name, profilePic: info_obj.ProfilePic });
         this.moveThroughPages("sel");
@@ -63,7 +71,7 @@ class App extends Component {
 
   moveThroughPages = (pageName, info = {}) => {
     this.setState({ pageSeen: pageName, info: info });
-    console.log({info})
+    console.log({ info })
   }
 
   render() {

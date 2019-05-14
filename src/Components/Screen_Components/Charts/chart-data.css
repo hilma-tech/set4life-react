@@ -32,6 +32,8 @@
 #chart-data 
 .btn-secondary{
   background-color: var(--light_pink);
+  font-size:3vh!important;
+  white-space: nowrap;
 }
 
 #drop_down_chart label{
@@ -41,6 +43,7 @@
 #drop_down_chart select{
   background-color: #f6e5e5;
   text-align-last:center;
+  width:20vw;
 }
 
 #chart-info h1{
@@ -56,8 +59,54 @@
   padding:0;
 }
 
-
 @media (min-width: 992px){
+
+  #drop_down_chart select{
+    font-size: 3vh!important;
+    height: 8vh!important;
+  }
+
+  #drop_down_chart select option{
+    font-size: 1rem!important;
+  }
+
+  #drop_down_chart label{
+    font-size: 2.5vh;
+  }
+
+  #chart-data .btn-group button{
+    background-color:var(--light_pink);
+    font-size:2vh!important;
+    width:40%!important;
+    height:10vh;
+    white-space:normal;
+  }
+ 
+  #chart-info h1{
+    font-size:5.12vh;
+  }
+
+  #chart-info p{
+    font-size:2.5vh;
+  }
+
+  #chart-info{
+    margin-bottom: 0.5em;
+  }
+
+  #chart-container{
+    margin-top:1.5em;
+  }
+
+  #chart-data nav{
+    padding:1em 0;
+  }
+
+}
+
+
+
+@media (min-width: 1200px){
   #dropdown_and_buttons{
     margin-left: 0
   }
@@ -67,22 +116,32 @@
   }
 
   #drop_down_chart select{
-    font-size: 0.98em!important;
-    height: 8.5vh!important;
+    font-size: 3.4vh!important;
+    height: 8vh!important;
+  }
+
+  #drop_down_chart select option{
+    font-size: 1rem!important;
   }
 
   #chart-data .btn-group button{
     background-color:var(--light_pink);
-    font-size:0.8rem!important;
+    font-size:3.4vh!important;
+    width:55vw!important;
+    height:8vh;
+    white-space: nowrap;
+  }
+
+  #chart-data .btn-group{
+    margin:0 auto;
   }
 
   #chart-info h1{
-    font-size:1.8rem;
-    font-weight: bold;
+    font-size:7.9vh;
   }
 
   #chart-info p{
-    font-size:0.9rem;
+    font-size:3.5vh;
   }
 
   #chart-info{
@@ -96,6 +155,10 @@
   #chart-data img{
     width:3vw;
     height: 3vw;
+  }
+
+  #chart-data nav{
+    padding:1em 0;
   }
 }
 

@@ -70,9 +70,8 @@ class ChartData extends Component {
 const ChartPage = (props) => (
     <div id='chart-data' className='container-fluid' style={{ direction: 'rtl' }}>
         <nav className='navbar px-0' style={{ backgroundColor: 'var(--dark_purple)' }}>
-            <div id='dropdown_and_buttons' 
-            className="container col-md-11 col-lg-11 d-flex  m-lg-0" >
-                <div class="btn-group col-md-12 col-lg-5 mx-auto justify-content-center" role="group" aria-label="Basic example" style={{ direction: 'ltr' }}>
+            <div id='dropdown_and_buttons' className="container col-11 d-flex  m-lg-0" >
+                <div class="btn-group col-md-12 col-lg-5 justify-content-center" role="group" aria-label="Basic example" style={{ direction: 'ltr' }}>
                     <button class="btn btn-secondary text-body active" type="button" onClick={props.onClickChartType} name='numOfSets' id='numOfSets' href="#numOfSets" disabled={props.group_buttons.numOfSets} >מספר הסטים</button>
                     <button class="btn btn-secondary text-body" type="button" onClick={props.onClickChartType} name='avgTime_hitSet' id='avgTime_hitSet' href="#avgTime_hitSet" disabled={props.group_buttons.avgTime_hitSet} >זמן ממוצע ללחיצה</button>
                     <button class="btn btn-secondary text-body" type="button" onClick={props.onClickChartType} name='avgTime_chooseSet' id='avgTime_chooseSet' href="#avgTime_chooseSet" disabled={props.group_buttons.avgTime_chooseSet} >זמן ממוצע לבחירה</button>
@@ -109,9 +108,9 @@ const Chart_terms = (props) => (
 
 const displayLevels = ['קל', 'בינוני', 'קשה'];
 const DropDown_level = (props) => (
-    <div id='drop_down_chart' className="d-flex ml-5 col-lg-4 col-md-10 text-align-center mx-auto mt-md-3 m-lg-0">
-        <label className="no-bg col-lg-5 col-md-5 p-0 my-lg-auto text-lg-left ml-lg-1">רמת קושי:</label>
-        <select className="d-flex form-control col-lg-4 col-md-3" name={props.chartType} onChange={props.onChange} >
+    <div id='drop_down_chart' className="d-flex ml-5 col-lg-4 col-md-10 justify-content-center mx-auto mt-md-3 m-lg-0">
+        <label className="no-bg my-auto ml-1">רמת קושי:</label>
+        <select className="d-flex form-control " name={props.chartType} onChange={props.onChange} >
             {displayLevels.map((level, i) =>
                 <option key={i} num={i + 1} selected={i + 1 === 3}>{level}</option>)}
         </select>
