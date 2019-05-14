@@ -1,5 +1,14 @@
 #chart-data{
-  padding:0
+  padding:0;
+  height:100vh;
+}
+
+#lineChart{
+  height: 60vh;
+}
+
+#chart-container{
+  height: 70%;
 }
 
 #chart-data .btn-group button{
@@ -34,6 +43,19 @@
   text-align-last:center;
 }
 
+#chart-info h1{
+  font-size: 2.2rem;
+}
+
+#chart-info p{
+  font-size: 1rem;
+}
+
+#dropdown_and_buttons{
+  margin:1vh auto 0 auto;
+  padding:0;
+}
+
 
 @media (min-width: 992px){
   #dropdown_and_buttons{
@@ -54,13 +76,21 @@
     font-size:0.8rem!important;
   }
 
-  .chart-info h1{
+  #chart-info h1{
     font-size:1.8rem;
     font-weight: bold;
   }
 
-  .chart-info p{
+  #chart-info p{
     font-size:0.9rem;
+  }
+
+  #chart-info{
+    margin-bottom: 0.5em;
+  }
+
+  #chart-container{
+    margin-top:1.5em;
   }
 
   #chart-data img{

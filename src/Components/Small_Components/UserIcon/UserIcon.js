@@ -7,20 +7,17 @@ import UserIconImg from '../../../data/design/userIcon.png';
 // (props.src===UserIconImg?'defaultImg':'')
 
 let takesFirstWordInSentence = (sentence) => {
-    return sentence.substring(0, sentence.indexOf(" ")!==-1?sentence.indexOf(" "):sentence.length);
+    return sentence.substring(0, sentence.indexOf(" ") !== -1 ? sentence.indexOf(" ") : sentence.length);
 }
 
-    const UserIcon = (props) => {
-        console.log('name', props.currentPlayer)
-        return (
-            <div id={props.currentPlayer ? 'currentPlayer' : ''} className={'user-icon ' + props._direction} >
-                <img className='rounded' src={props.src} width="50" height="50" data-tip={props.name} />
-                <label >
-                {props._direction === 'bottom'?takesFirstWordInSentence(props.name):props.name}</label>
-                {props._direction === 'bottom' &&
-                    <ReactTooltip className='_tooltip' place="bottom" type="dark" effect="solid" />}
-            </div>
-        );
-    }
+const UserIcon = (props) => (
+    <div id={props.currentPlayer ? 'currentPlayer' : ''} className={'user-icon ' + props._direction} >
+        <img className='rounded' src={props.src} width="50" height="50" data-tip={props.name} />
+        <label >
+            {props._direction === 'bottom' ? takesFirstWordInSentence(props.name) : props.name}</label>
+        {props._direction === 'bottom' &&
+            <ReactTooltip className='_tooltip' place="bottom" type="dark" effect="solid" />}
+    </div>
+);
 
-    export default UserIcon;
+export default UserIcon;

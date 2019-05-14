@@ -56,7 +56,7 @@ class ChartData extends Component {
 
     render() {
         return (
-            <ChartContainer
+            <ChartPage
                 onChange={this.onChange_dropDown_level}
                 chartType={this.state.chartType}
                 onClickChartType={this.onClickChartType}
@@ -67,11 +67,11 @@ class ChartData extends Component {
 
 ///small components////////////////////////////////////////
 
-const ChartContainer = (props) => (
+const ChartPage = (props) => (
     <div id='chart-data' className='container-fluid' style={{ direction: 'rtl' }}>
         <nav className='navbar px-0' style={{ backgroundColor: 'var(--dark_purple)' }}>
             <div id='dropdown_and_buttons' 
-            className="container col-md-10 col-lg-11 d-flex flex-lg-row flex-md-row justify-content-md-center mt-md-2 mx-0 m-lg-0" >
+            className="container col-md-11 col-lg-11 d-flex  m-lg-0" >
                 <div class="btn-group col-md-12 col-lg-5 mx-auto justify-content-center" role="group" aria-label="Basic example" style={{ direction: 'ltr' }}>
                     <button class="btn btn-secondary text-body active" type="button" onClick={props.onClickChartType} name='numOfSets' id='numOfSets' href="#numOfSets" disabled={props.group_buttons.numOfSets} >מספר הסטים</button>
                     <button class="btn btn-secondary text-body" type="button" onClick={props.onClickChartType} name='avgTime_hitSet' id='avgTime_hitSet' href="#avgTime_hitSet" disabled={props.group_buttons.avgTime_hitSet} >זמן ממוצע ללחיצה</button>
@@ -83,13 +83,13 @@ const ChartContainer = (props) => (
             </div>
             <a className="col-1 p-0 mr-auto" onClick={() => window.history.back()}><img src={LeftArrow} /></a>
         </nav>
-        <div className='container-fluid mt-md-2 col-md-10 col-lg-11'>
-            <div className='chart-info'>
+        <div id='chart-container' className='col-md-11 mx-auto'>
+            <div id='chart-info'>
                 <h1 className='h1 font-weight-light mt-md-3 m-lg-0 col-lg-12' >{chartTitles[props.chartType].title}</h1>
                 <p className='lead m-lg-0' >{chartTitles[props.chartType]._p}</p>
             </div>
             <div id="lineChart" className='chart-div container col-lg-11 col-md-12' >
-                <canvas width="450" height="380" id='_chart' />
+                <canvas id='_chart' />
             </div>
         </div>
     </div>

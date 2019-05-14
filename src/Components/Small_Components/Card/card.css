@@ -52,8 +52,8 @@
 }
 
 @media(min-width: 992px){
-    /* ._card-div{
-        margin:1.5vh;
-    } */
+    ._card-div{
+        margin:1vh;
+    }
 }
  

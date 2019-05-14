@@ -22,6 +22,19 @@ export default class ExistGame extends Component {
         window.history.pushState('existGame', '', 'existGame');
     }
 
+    componentwillMount(){
+        firebaseObj.listenerOnFirebase(gameObj => {
+            let ArrParticipants = gameObj && gameObj.Game_Participants ?
+                Object.entries(gameObj.Game_Participants).map(val => {
+                    if (val[1].isConnected)
+                        return val[1].Name;
+                }) : []
+            ArrParticipants =ArrParticipants.length?ArrParticipants.filter(val => val !== undefined):ArrParticipants;
+            this.setState({ gameObj: gameObj ? gameObj : {}, participants: ArrParticipants, loadLocatePartic: false });
+        }
+        , `Games/${this.state.gameCode}`)
+    }
+
     onClickExistGameCodeButton = () => {
         if (Object.keys(this.state.gameObj).length) {
             let gameObj = this.state.gameObj;

@@ -62,6 +62,7 @@ export default class Board extends Component {
         }
     }
 
+
     componentWillMount() {
         firebaseObj.updatingGameIdInFB();
         firebaseObj.listenerOnFirebase(this.handleGameObjFromFirebase, `Games/${this.gameCode}`)
@@ -69,6 +70,7 @@ export default class Board extends Component {
 
         timeStartGame = timeNewCards = performance.now();
     }
+
 
     componentDidMount() {
         window.onbeforeunload = (event) => {
@@ -81,7 +83,7 @@ export default class Board extends Component {
             firebaseObj.updatingValueInDataBase(
                 `Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`,
                 { isConnected: false });
-        }
+        } 
     }
 
     //callback functions for listeners on firebase////////////////////////////////////////////
@@ -105,7 +107,6 @@ export default class Board extends Component {
                 newSelectedCards = [];
             if (newSelectedCards.length === 3)
                 this.setState({ isSet: setFunctions.isSetBoolFunction(newSelectedCards).bool });
-
             this.setState({ selectedCards: newSelectedCards });
         }
 
@@ -121,21 +122,45 @@ export default class Board extends Component {
             this.setState({ usedCards: usedCards });
     }
 
+
     reciveCurrentUserIdFromFirebase = (userIdFromFirebase) => {
         this.setState({ stageOfTheGame:(userIdFromFirebase && userIdFromFirebase != Variables.userId)?3:0,
              isSet: undefined,currentPlayerId:userIdFromFirebase });
-
             console.log('inside listener current player',userIdFromFirebase)
-        // if (userIdFromFirebase) {
-        //     firebaseObj._db.ref(`PlayersInfo/${userIdFromFirebase}/Name`).once('value')
-        //         .then(snap => this.setState({ currentPlayerName: Variables.userId === userIdFromFirebase ? "את/ה" : snap.val() }))
-        // }
-        // else
-        //     this.setState({ currentPlayerName: '' });
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
+
+    outOfNextButton=()=>{
+        if (this.state.isSet) {
+            console.log('inside clear func')
+            let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
+
+            if (objPullCards.endGame)
+                firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
+
+            else {
+                this.setState({
+                    currentCards: objPullCards.currentCards,
+                    usedCards: objPullCards.newUsedCards,
+                    stageOfTheGame: 0,
+                    selectedCards: []
+                });
+
+                firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
+                    {
+                        currentCards: objPullCards.currentCards,
+                        usedCards: objPullCards.newUsedCards
+                    });
+            }
+            timeNewCards = performance.now();
+        }
+        this.setState({ isSet: undefined })
+        firebaseObj.removeDataFromDB(`Games/${this.gameCode}/selectedCards`);
+        firebaseObj.removeDataFromDB(`Games/${this.gameCode}/currentPlayerID`);
+    }
+
 
     selectCardFunction = (cardCode) => {
         let selectedCards = this.state.selectedCards;
@@ -156,8 +181,8 @@ export default class Board extends Component {
             //timeout of the "next" btn
             this.setState({ isSet: isSet.bool, stageOfTheGame: 2 }, () => {
                 _timeOutNextBtn = setTimeout(() => {
-                    this.setState({ stageOfTheGame: 0, selectedCards: [] })
-                }, 15000)
+                    this.outOfNextButton();
+                }, 10000)
             });
             //timeout of the disable "next" btn
             // setTimeout(()=>this.setState({disableBeforeNext:false}),5000)
@@ -165,6 +190,7 @@ export default class Board extends Component {
         this.setState({ selectedCards: selectedCards });
         firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/selectedCards`, selectedCards);
     }
+
 
     clickButtonEvent = () => {
         if (this.state.stageOfTheGame === 0) {
@@ -188,41 +214,17 @@ export default class Board extends Component {
 
         if (this.state.stageOfTheGame === 2) {
             clearTimeout(_timeOutNextBtn);
-            if (this.state.isSet) {
-                let objPullCards = setFunctions.pullXCardsAndEnterNewXCards(3, this.state.currentCards, this.state.selectedCards, this.state.usedCards);
-
-                if (objPullCards.endGame)
-                    firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
-
-                else {
-                    this.setState({
-                        currentCards: objPullCards.currentCards,
-                        usedCards: objPullCards.newUsedCards,
-                        stageOfTheGame: 0,
-                        selectedCards: []
-                    });
-
-                    firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
-                        {
-                            currentCards: objPullCards.currentCards,
-                            usedCards: objPullCards.newUsedCards
-                        });
-
-                }
-                timeNewCards = performance.now();
-            }
-            this.setState({ isSet: undefined })
-            firebaseObj.removeDataFromDB(`Games/${this.gameCode}/selectedCards`);
-            firebaseObj.removeDataFromDB(`Games/${this.gameCode}/currentPlayerID`);
+            this.outOfNextButton();
         }
     }
 
+    
     exitGame = () => {
         this.setState({ exitGame: true })
     }
 
+
     render() {
-        console.log('currentPlayerID render',this.state.currentPlayerId)
         if ((!this.state.exitGame) && this.state.currentCards.length) {
             return (
                 <div id="board" className='container-fluid'>
@@ -267,25 +269,18 @@ export default class Board extends Component {
 
 const UpperBar=(props)=>(
     <div className='bg-danger navbar'>
+
         <div id='participant-list' className='px-0  rounded d-flex flex-wrap justify-content-center'>
         {props.game_Participants.map(val=>
-        <div>
-            <UserIcon currentPlayer={props.currentPlayerId===Variables.userId} name={(val[0] === Variables.userId) ? 'בלה בלה את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
-            <UserIcon currentPlayer={null} name={(val[0] === Variables.userId) ? 'bvbv את/ה' : val[1].Name} src={val[1].ProfilePic} _direction='bottom' />
+            <UserIcon currentPlayer={props.currentPlayerId===Variables.userId} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name} 
+            src={val[1].ProfilePic} _direction='bottom' />)}
         </div>
-            
-        )}
-        
-        {/* <label className='h6 text-primary' style={{ visibility: props.currentPlayerName ? 'visible' : 'hidden' }}>
-                            {props.currentPlayerName} משחק עכשיו</label> */}
-        </div>
+
         <label className='h4 col-5'>קוד המשחק {props.gameCode}</label>
+
         <button className='btn btn-primary col-2' onClick={props.exitGame}>יציאה</button>
     </div>
-)
-
-
-
+);
 
 
 export { timeStartGame, timeNewCards, timeClickOnChooseSet, timeChooseSet, _timeOutChoosingSet };
