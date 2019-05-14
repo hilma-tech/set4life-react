@@ -31,7 +31,7 @@ export default class NewGame extends Component {
     settingNewGame = async () => {
         let newGameCode;
         do {
-            newGameCode = setFunctions.newRandomGameCode(3);
+            newGameCode = setFunctions.add0beforGameCode(3);
         } while (await firebaseObj.readingDataOnFirebaseAsync(`Games/${newGameCode}`) !== null)
 
         let startGameTime = GeneralFunctions.timeAndDate('time');

@@ -113,7 +113,7 @@ const setFunctions = {
         };
     },
     
-    newRandomGameCode(size,customize_num=null) {
+    add0beforGameCode(size,customize_num=null) {
         let num=customize_num?customize_num:Math.floor(Math.random()*(Math.pow(10,size)));
         let s = num + "";
         while (s.length < size) s = "0" + s;

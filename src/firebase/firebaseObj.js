@@ -76,10 +76,13 @@ const firebaseObj={
 
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap=>{
             let leng=snap.val()?Object.keys(snap.val()).length:0;
-            Variables.day_numberedGame=setFunctions.newRandomGameCode(3,leng+1);
+            Variables.day_numberedGame=setFunctions.add0beforGameCode(3,leng+1);
             firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
-                {[setFunctions.newRandomGameCode(3,leng+1)]:{startGameTime:Variables.creationGameTime,gameCode:Variables.gameCode,level:level}});
+                {[setFunctions.add0beforGameCode(3,leng+1)]:{startGameTime:Variables.creationGameTime,gameCode:Variables.gameCode,level:level}});
+            firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}`,
+                {currentGame:{gameCode:Variables.gameCode,index:{date:Variables._date,day_numberedGame:[setFunctions.add0beforGameCode(3,leng+1)]}}});
         });
+
     },
 
     pushCorrectOrWrongSetToDB(isSet){
