@@ -48,7 +48,7 @@ class EndGame extends Component {
                 <div id="endGame" className="container">
                     <div className=' d-flex align-items-center justify-content-center'>
                         <div className='d-flex flex-column'>
-                            <h1 className='display-4' >כל הכבוד!</h1>
+                            <h1 className='display-4 m-0' >כל הכבוד!</h1>
                             <h2 className="lead" >ניצחת</h2>
                             <img className="img-fluid" src={Party_Popper} />
                             <div>
@@ -58,12 +58,12 @@ class EndGame extends Component {
                                     <li className="list-group-item">זמן ממוצע לבחירת סט:  <span className='info-text'>{this.state.avgTime} </span> שניות</li>
                                 </ul>
                             </div>
-                            <button className='btn btn-primary w-25 h-25 align-self-center' onClick={() => this.setState({ moveTo_SaveGame: true })} >המשך</button>
+                            <button className='btn btn-primary' onClick={() => this.setState({ moveTo_SaveGame: true })} >המשך</button>
                         </div>
 
                     </div>
                 </div>
-            );
+                );
         }
         else return <SaveGame moveThroughPages={this.props.moveThroughPages} />
     }

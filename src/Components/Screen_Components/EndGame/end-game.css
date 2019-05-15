@@ -1,18 +1,73 @@
+#endGame{
+    margin-top: 4vh;
+}
 #endGame img{
-    width:9vw;
-    margin:0 auto;
+    width:33vw;
+    margin:1.5vh auto;
     background-color: none;
 }
 
-#endGame h2{
-    font-size: 3vw;
+#endGame .display-4{
+    font-size: 16vw;
+}
+
+#endGame .lead{
+    font-size: 9vw;
 }
 
 #endGame ul li,
-#endGame ul li span{
-    font-size: 1.8vw;
+#endGame ul li span:not(.info-text){
+    font-size: 4vw;
 }
 
 .info-text{
-    font-size: 1.2rem;
+    font-size: 5.5vw;
 }
+
+#endGame button{
+    width: 25vw;
+    height: 9vh;
+    align-self: center;
+    font-size:5vw;
+    padding: 0;
+    margin-top: 2vh;
+}
+
+
+@media (min-width: 992px) {
+    #endGame{
+        margin-top: 0vh;
+    }
+    #endGame img{
+        width:11vw;
+        margin:0 auto;
+        background-color: none;
+    }
+    
+    #endGame .display-4{
+        font-size: 8.5vw;
+    }
+    
+    #endGame .lead{
+        font-size: 3vw;
+    }
+    
+    #endGame ul li,
+    #endGame ul li span:not(.info-text){
+        font-size: 1.4vw;
+        padding:1.4vh;
+    }
+    
+    #endGame button{
+        width: 7vw;
+        height: 9vh;
+        align-self: center;
+        font-size:1.75vw;
+        padding: 0;
+    }
+    
+    .info-text{
+        font-size: 2vw;
+    }
+ }
+
