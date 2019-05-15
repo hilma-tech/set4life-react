@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables.js';
+import './current-game.css';
 
 export default class CurrentGame extends Component {
     enterCurrentGame = () => {
-        console.log('im here', this.props.currentGame)
         firebaseObj.readingDataOnFirebaseCB(gameObj => {
             Object.assign(Variables, {
                 gameCode: this.props.currentGame.gameCode,
@@ -12,7 +12,6 @@ export default class CurrentGame extends Component {
                 constParameters: gameObj.constParameters ? gameObj.constParameters : {},
                 creationGameTime: gameObj.creationTime
             });
-            console.log('im Variables', Variables)
             this.props.moveThroughPages("boa", gameObj);
         }, `Games/${this.props.currentGame.gameCode}`)
     }
@@ -23,7 +22,8 @@ export default class CurrentGame extends Component {
 
     render() {
         return (
-            <div class="modal fade in" id='current-game_modal' data-backdrop="static" role="dialog" style={{display:'block'}}>
+            <div class="modal fade show" tabindex="-1"  aria-labelledby="exampleModalLabel"
+            data-backdrop="static" role="dialog" style={{ display: 'block' }}>
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
