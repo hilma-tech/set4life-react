@@ -85,7 +85,7 @@ const firebaseObj={
             firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
                 {[setFunctions.add0beforGameCode(3,leng+1)]:{startGameTime:Variables.creationGameTime,gameCode:Variables.gameCode,level:level}});
             firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}`,
-                {currentGame:{gameCode:Variables.gameCode,index:{date:Variables._date,day_numberedGame:[setFunctions.add0beforGameCode(3,leng+1)]}}});
+                {currentGame:{gameCode:Variables.gameCode,index:{date:Variables._date,day_numberedGame:(setFunctions.add0beforGameCode(3,leng+1))}}});
         });
 
     },

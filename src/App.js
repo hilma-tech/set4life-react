@@ -18,7 +18,8 @@ class App extends Component {
     super(props);
     this.state = {
       info: {},
-      pageSeen: "sel"
+      pageSeen: "sel",
+      currentGame: false
       //load-load page
       //ent-EntrancePage
       //sel-SelectGameType
@@ -46,8 +47,7 @@ class App extends Component {
 
   checkCurrentGame = (userId) => {
     firebaseObj.readingDataOnFirebaseCB(user_gameInfo => {
-      if (user_gameInfo.currentGame)
-        console.log('exist')
+      this.setState({currentGame:(user_gameInfo.currentGame?user_gameInfo.currentGame:false)})
     }, `Players/${userId}`);
   }
 
@@ -57,7 +57,7 @@ class App extends Component {
       firebaseObj.readingDataOnFirebaseCB(info_obj => {
         this.checkCurrentGame(fbUser.uid);
         Object.assign(Variables,
-          { userId: fbUser.uid, playerName: info_obj.Name, profilePic: info_obj.ProfilePic });
+          { playerName: info_obj.Name,userId:fbUser.uid, profilePic: info_obj.ProfilePic });
         this.moveThroughPages("sel");
       }, `PlayersInfo/${fbUser.uid}`);
     }
@@ -74,7 +74,6 @@ class App extends Component {
   }
 
   render() {
-    return <EndGame />
     if ((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) || (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)) {
       switch (this.state.pageSeen) {
         case "load":
@@ -82,7 +81,7 @@ class App extends Component {
         case 'ent':
           return <Entrance moveThroughPages={this.moveThroughPages} />;
         case "sel":
-          return <SelectGameType moveThroughPages={this.moveThroughPages} />;
+          return <SelectGameType moveThroughPages={this.moveThroughPages} currentGame={this.state.currentGame}/>;
         case "boa":
           return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
         default:
