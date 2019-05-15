@@ -289,7 +289,7 @@ const UpperBar = (props) => (
 
         <div id='participant-list' className='px-0  rounded d-flex flex-wrap justify-content-center'>
             {props.game_Participants.map(val =>
-                <UserIcon currentPlayer={props.currentPlayerId === Variables.userId} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
+                <UserIcon currentPlayer={props.currentPlayerId === val[0]} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
                     src={val[1].ProfilePic} _direction='bottom' />)}
         </div>
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NewGame from '../../Screen_Components/NewGame/NewGame.js';
 import ExistGame from '../../Screen_Components/existGame/ExistGame';
+import CurrentGame from '../../Screen_Components/CurrentGame/CurrentGame';
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables';
 import ErrorMes from '../../Small_Components/ErrorMes';
@@ -17,11 +18,13 @@ export default class GameType extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentGame:null,
             GameTypeOptions: 'sel'
             //newGame-new game
             //existGame-exist game
             //sel- current page
             //charts
+            //currentGame
         }
         window.history.pushState('sel', '', 'gameType');
         window.addEventListener('popstate', (event) => {
@@ -37,6 +40,7 @@ export default class GameType extends Component {
                     window.history.pushState('sel', '', 'gameType');
             }
         });
+        this.checkCurrentGame();
     }
 
 
@@ -49,9 +53,13 @@ export default class GameType extends Component {
         this.props.moveThroughPages("ent");
     }
 
-    render() {
+    checkCurrentGame = () => {
+        firebaseObj.readingDataOnFirebaseCB(currentGame => {
+            this.setState({ GameTypeOptions: 'currentGame',currentGame:currentGame});
+        }, `Players/${Variables.userId}/currentGame`);
+    }
 
-        console.log("current game",this.props.currentGame)
+    render() {
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
@@ -73,6 +81,8 @@ export default class GameType extends Component {
                 return <NewGame moveThroughPages={this.props.moveThroughPages} onClickGameTypeButton={this.onClickGameTypeButton} />;
             case 'charts':
                 return <ChartData moveThroughPages={this.props.moveThroughPages} />
+            case 'currentGame':
+                return <CurrentGame currentGame={this.state.currentGame} moveThroughPages={this.props.moveThroughPages} />
             default:
                 return <ErrorMes />;
         }
