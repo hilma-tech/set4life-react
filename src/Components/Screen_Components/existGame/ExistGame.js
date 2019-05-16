@@ -35,7 +35,7 @@ export default class ExistGame extends Component {
                 creationGameTime: gameObj.creationTime
             });
 
-            this.props.moveThroughPages("boa", gameObj);
+            this.props.moveThroughPages("boa", gameObj,true);
         }
         else
             this.setState({ invalidGameCode: true });

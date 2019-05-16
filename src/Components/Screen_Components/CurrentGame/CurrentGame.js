@@ -17,7 +17,9 @@ export default class CurrentGame extends Component {
     }
 
     deleteCurrentGame = () => {
-
+        console.log('Variables.userId',Variables.userId)
+        firebaseObj.removeDataFromDB(`Players/${Variables.userId}/currentGame`);
+        this.props.deleteCurrentGameInSel();
     }
 
     render() {

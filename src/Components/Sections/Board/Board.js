@@ -83,6 +83,7 @@ export default class Board extends Component {
             firebaseObj.updatingValueInDataBase(
                 `Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`,
                 { isConnected: false });
+            firebaseObj.removeDataFromDB(`Players/${Variables.userId}/currentGame`);
         }
     }
 
@@ -233,7 +234,7 @@ export default class Board extends Component {
                         currentCards: objPullCards.currentCards,
                         usedCards: objPullCards.newUsedCards,
                         selectedCards: [],
-                        currentPlayerID:''
+                        currentPlayerID: ''
                     });
             }
         }
@@ -266,7 +267,7 @@ export default class Board extends Component {
                         </div>
 
                         {this.state.currentCards &&
-                            <button className='btn btn-info mt-1' onClick={this.clickButtonEvent} id={this.state.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
+                            <button id='the-button' className='btn btn-info mt-3' onClick={this.clickButtonEvent} id={this.state.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :

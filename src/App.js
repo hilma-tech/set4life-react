@@ -18,9 +18,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      info: {},
-      pageSeen: "sel",
-      currentGame: null
+      info: null,
+      existGame: false,
+      pageSeen: "load"
       //load-load page
       //ent-EntrancePage
       //sel-SelectGameType
@@ -51,10 +51,9 @@ class App extends Component {
     if (fbUser) {
       console.log('fbUser', fbUser);
       firebaseObj.readingDataOnFirebaseCB(info_obj => {
-        Variables.playerName=info_obj.Name;
         Object.assign(Variables,
-          {userId:fbUser.uid, profilePic: info_obj.ProfilePic });
-        this.moveThroughPages("sel");
+          {userId:fbUser.uid, profilePic: info_obj.ProfilePic,playerName: info_obj.Name });
+        this.moveThroughPages("sel")
       }, `PlayersInfo/${fbUser.uid}`);
     }
     else {
@@ -65,12 +64,12 @@ class App extends Component {
     }
   }
 
-  moveThroughPages = (pageName, info = {}) => {
-    this.setState({ pageSeen: pageName, info: info });
+
+  moveThroughPages = (pageName, info = {}, existGame = false) => {
+    this.setState({ pageSeen: pageName, info: info, existGame: existGame });
   }
 
   render() {
-    console.log('app currentGame',this.state.currentGame)
     if ((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) || (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)) {
       switch (this.state.pageSeen) {
         case "load":
@@ -78,9 +77,10 @@ class App extends Component {
         case 'ent':
           return <Entrance moveThroughPages={this.moveThroughPages} />;
         case "sel":
-          return <SelectGameType currentGame={this.state.currentGame} moveThroughPages={this.moveThroughPages}/>;
+          return <SelectGameType moveThroughPages={this.moveThroughPages} />;
         case "boa":
-          return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
+          return <Board existGame={this.state.existGame}
+            info={this.state.info} moveThroughPages={this.moveThroughPages} />;
         default:
           return <ErrorMes />;
       }

@@ -1,11 +1,9 @@
 .greyCard{
-    border: 2px solid #afadad;
-    /* box-shadow: 0 4px #e6e3e3; */
+    border: 2px solid #707070;
     transform: translateY(4px);
  }
  
  .unselectedCard{
-    /* border: 1px solid #707070; */
     cursor: pointer;
     outline: none;
     line-height:0;

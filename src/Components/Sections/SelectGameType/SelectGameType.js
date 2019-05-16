@@ -12,14 +12,16 @@ import ExistGameImg from '../../../data/design/cards.png'
 import chartsImg from '../../../data/design/line-chart.png'
 import LogoutImg from '../../../data/design/logout.png';
 import UserIcon from '../../Small_Components/UserIcon/UserIcon';
+import LoadingImg from '../../../data/design/loading-img.gif';
 
 
 export default class GameType extends Component {
     constructor(props) {
         super(props);
+        this.checkCurrentGame();
         this.state = {
-            currentGame:null,
-            GameTypeOptions: 'sel'
+            currentGame: null,
+            GameTypeOptions: 'load'
             //newGame-new game
             //existGame-exist game
             //sel- current page
@@ -40,9 +42,7 @@ export default class GameType extends Component {
                     window.history.pushState('sel', '', 'gameType');
             }
         });
-        this.checkCurrentGame();
     }
-
 
     onClickGameTypeButton = (event) => {
         this.setState({ GameTypeOptions: event.target.getAttribute('name') });
@@ -55,15 +55,21 @@ export default class GameType extends Component {
 
     checkCurrentGame = () => {
         firebaseObj.readingDataOnFirebaseCB(currentGame => {
-            this.setState({ currentGame:currentGame});
+            console.log('currentGame', currentGame)
+            this.setState({ currentGame: currentGame, GameTypeOptions: 'sel' });
         }, `Players/${Variables.userId}/currentGame`);
     }
 
+    deleteCurrentGameInSel = () => {
+        this.setState({ currentGame: null });
+    }
+
     render() {
+        console.log('Variables',Variables)
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
-                    <div id="container d-flex flex-column" style={{ height: '100vh' }}>
+                    <div id="container d-flex flex-column" style={{height:'100vh'}}>
                         <TopBar signOut={this.signOut} />
                         <div className='container h-75 d-flex flex-column  justify-content-center '>
                             <h1 className='display-4' >בחר את סוג המשחק שלך</h1>
@@ -73,17 +79,18 @@ export default class GameType extends Component {
                                 <button className="btn btn-secondary btn-lg col-lg-5  m-2 mb-md-3" onClick={this.onClickGameTypeButton} name='charts'><img name='charts' src={chartsImg} alt="charts" className="buttonsIcons" /> גרפים </button>
                             </div>
                         </div>
-                        {this.state.currentGame&&<CurrentGame currentGame={this.state.currentGame} moveThroughPages={this.props.moveThroughPages} />}
+                        {Object.keys(this.state.currentGame).length ?
+                            <CurrentGame deleteCurrentGameInSel={this.deleteCurrentGameInSel} currentGame={this.state.currentGame} moveThroughPages={this.props.moveThroughPages} /> : ''}
                     </div>
                 );
             case 'existGame':
                 return <ExistGame moveThroughPages={this.props.moveThroughPages} onClickGameTypeButton={this.onClickGameTypeButton} />;
             case 'newGame':
                 return <NewGame moveThroughPages={this.props.moveThroughPages} onClickGameTypeButton={this.onClickGameTypeButton} />;
+            case 'load':
+                return <div><img src={LoadingImg} /></div>
             case 'charts':
                 return <ChartData moveThroughPages={this.props.moveThroughPages} />
-            case 'currentGame':
-                return <CurrentGame currentGame={this.state.currentGame} moveThroughPages={this.props.moveThroughPages} />
             default:
                 return <ErrorMes />;
         }
