@@ -79,7 +79,7 @@ export default class GameType extends Component {
                                 <button className="btn btn-secondary btn-lg col-lg-5  m-2 mb-md-3" onClick={this.onClickGameTypeButton} name='charts'><img name='charts' src={chartsImg} alt="charts" className="buttonsIcons" /> גרפים </button>
                             </div>
                         </div>
-                        {Object.keys(this.state.currentGame).length ?
+                        {this.state.currentGame&&Object.keys(this.state.currentGame).length ?
                             <CurrentGame deleteCurrentGameInSel={this.deleteCurrentGameInSel} currentGame={this.state.currentGame} moveThroughPages={this.props.moveThroughPages} /> : ''}
                     </div>
                 );
