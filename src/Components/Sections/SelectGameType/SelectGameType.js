@@ -21,7 +21,7 @@ export default class GameType extends Component {
         this.checkCurrentGame();
         this.state = {
             currentGame: null,
-            GameTypeOptions: 'load'
+            GameTypeOptions: 'sel'
             //newGame-new game
             //existGame-exist game
             //sel- current page
@@ -55,7 +55,6 @@ export default class GameType extends Component {
 
     checkCurrentGame = () => {
         firebaseObj.readingDataOnFirebaseCB(currentGame => {
-            console.log('currentGame', currentGame)
             this.setState({ currentGame: currentGame, GameTypeOptions: 'sel' });
         }, `Players/${Variables.userId}/currentGame`);
     }
@@ -65,7 +64,6 @@ export default class GameType extends Component {
     }
 
     render() {
-        console.log('Variables',Variables)
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (

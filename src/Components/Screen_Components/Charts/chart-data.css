@@ -106,7 +106,7 @@
 
 
 
-@media (min-width: 1200px){
+@media (min-width: 992px){
   #dropdown_and_buttons{
     margin-left: 0
   }
@@ -116,19 +116,19 @@
   }
 
   #drop_down_chart select{
-    font-size: 3.4vh!important;
+    font-size: 2vw!important;
     height: 8vh!important;
   }
 
   #drop_down_chart select option{
-    font-size: 1rem!important;
+    font-size: 2vw!important;
   }
 
   #chart-data .btn-group button{
     background-color:var(--light_pink);
-    font-size:3.4vh!important;
+    font-size:2vw!important;
     width:55vw!important;
-    height:8vh;
+    height:4vw;
     white-space: nowrap;
   }
 

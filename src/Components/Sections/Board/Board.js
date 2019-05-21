@@ -129,7 +129,6 @@ export default class Board extends Component {
             stageOfTheGame: (userIdFromFirebase && userIdFromFirebase != Variables.userId) ? 3 : 0,
             isSet: undefined, currentPlayerId: userIdFromFirebase
         });
-        console.log('inside listener current player', userIdFromFirebase)
     }
     /////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////

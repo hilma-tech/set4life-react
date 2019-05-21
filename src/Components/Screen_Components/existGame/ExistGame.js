@@ -7,16 +7,17 @@ import UserIcon from '../../Small_Components/UserIcon/UserIcon';
 import arrow from '../../../data/design/left-arrow.png';
 import './existgame.css';
 
-let listenerIfExistGame,previous_gameCode;
+let listenerIfExistGame, previous_gameCode;
 export default class ExistGame extends Component {
     constructor(props) {
         super(props);
         this.state = {
             gameCode: '',
             invalidGameCode: false,
-            participants: [],
             loadLocatePartic: null,
-            gameObj: {}
+            gameObj: {},
+            id_participants: [],
+            names_participants: []
         }
         window.history.pushState('existGame', '', 'existGame');
     }
@@ -25,8 +26,21 @@ export default class ExistGame extends Component {
     onClickExistGameCodeButton = () => {
         if (Object.keys(this.state.gameObj).length) {
             let gameObj = this.state.gameObj;
-            firebaseObj.updatingValueInDataBase(`Games/${this.state.gameCode}/Game_Participants`,
-                { [Variables.userId]: { Name: Variables.playerName, ProfilePic: Variables.profilePic, isConnected: true } });
+            if (this.state.all_participants.includes(Variables.userId))
+                firebaseObj.updatingValueInDataBase(
+                    `Games/${this.state.gameCode}/Game_Participants/${Variables.userId}`,
+                    { isConnected: true })
+
+            else
+                firebaseObj.updatingValueInDataBase(
+                    `Games/${this.state.gameCode}/Game_Participants`,
+                    {
+                        [Variables.userId]: {
+                            Name: Variables.playerName,
+                            ProfilePic: Variables.profilePic,
+                            isConnected: true
+                        }
+                    });
 
             Object.assign(Variables, {
                 gameCode: this.state.gameCode,
@@ -35,7 +49,7 @@ export default class ExistGame extends Component {
                 creationGameTime: gameObj.creationTime
             });
 
-            this.props.moveThroughPages("boa", gameObj,true);
+            this.props.moveThroughPages("boa", gameObj, true);
         }
         else
             this.setState({ invalidGameCode: true });
@@ -47,29 +61,41 @@ export default class ExistGame extends Component {
 
         if (input_gameCode.length <= 3) {
             this.setState({ gameCode: input_gameCode, invalidGameCode: false, participants: [], loadLocatePartic: null });
-            
-            if(input_gameCode.length <3 && previous_gameCode){
-                firebaseObj.removeListener(listenerIfExistGame,`Games/${previous_gameCode}`);
-                previous_gameCode=null;
+
+            if (input_gameCode.length < 3 && previous_gameCode) {
+                firebaseObj.removeListener(listenerIfExistGame, `Games/${previous_gameCode}`);
+                previous_gameCode = null;
             }
 
             if (input_gameCode.length === 3) {
                 this.setState({ loadLocatePartic: true });
-                listenerIfExistGame =firebaseObj.listenerOnFirebase(this.MonitorParticipants,`Games/${input_gameCode}`);
-                previous_gameCode=input_gameCode;
+                listenerIfExistGame = firebaseObj.listenerOnFirebase(this.MonitorParticipants, `Games/${input_gameCode}`);
+                previous_gameCode = input_gameCode;
             }
         }
     }
 
 
     MonitorParticipants = (gameObj) => {
-        let ArrParticipants = gameObj && gameObj.Game_Participants ?
+        let arr_participants = gameObj && gameObj.Game_Participants ?
             Object.entries(gameObj.Game_Participants).map(val => {
-                if (val[1].isConnected)
-                    return val[1].Name;
-            }) : []
-        ArrParticipants = ArrParticipants.filter(val => val !== undefined);
-        this.setState({ gameObj: gameObj ? gameObj : {}, participants: ArrParticipants, loadLocatePartic: false });
+                if (val[1].isConnected) {
+                    return val;
+                }
+            }) : [];
+
+        arr_participants = arr_participants.filter(val => val !== undefined);
+
+        let all_participants = gameObj && gameObj.Game_Participants ?
+            Object.keys(gameObj.Game_Participants) : [];
+        let id_participants = arr_participants.map(val => val[0]);
+        let names_participants = arr_participants.map(val => val[1].Name);
+
+        this.setState({
+            gameObj: gameObj ? gameObj : {}, loadLocatePartic: false,
+            id_participants: id_participants, names_participants: names_participants,
+            all_participants: all_participants
+        });
     }
 
 
@@ -78,45 +104,75 @@ export default class ExistGame extends Component {
             this.onClickExistGameCodeButton();
     }
 
-    
+
     render() {
         return (
-            <div onKeyPress={this.keypressed} id="existGame">
-                <div className="upperBar">
-                    <UserIcon name={Variables.playerName} src={Variables.profilePic} />
-                    <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
-                </div>
-                <h3> הכנס קוד משחק:</h3>
-                <input
-                    id="input"
-                    name='gameCode'
-                    type='text'
-                    placeholder="הכנס קוד משחק"
-                    value={this.state.gameCode}
-                    onChange={this.inputChange} />
-                <br />
+            <div id='exist-game' className='container-fluid' style={{ height: '100vh' }} onKeyPress={this.keypressed}>
 
-                {this.state.loadingParticipants ?
-                    <img src={LoadingImg} alt='loading' /> :
-                    <button
-                        onClick={this.onClickExistGameCodeButton}
-                        disabled={this.state.participants.length >= 4} >המשך</button>}
-                {this.state.loadLocatePartic ?
-                    <img src={LoadingImg} alt='loading' className="LoadingImg" /> :
-                    this.state.loadLocatePartic !== null &&
-                    <ParticipantsList participants={this.state.participants} />
-                }
+                <nav className="navbar bg-danger">
+                    <UserIcon name={Variables.playerName} src={Variables.profilePic} />
+                    <img id="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
+                </nav>
+
+                <div className='d-flex flex-column justify-content-center'>
+                    <h3 className='h1'> הכנס קוד משחק:</h3>
+                    <input
+                    className='d-block'
+                        id="input"
+                        name='gameCode'
+                        type='text'
+                        placeholder="הכנס קוד משחק"
+                        value={this.state.gameCode}
+                        onChange={this.inputChange} />
+
+
+                    {this.state.loadingParticipants ?
+                        <img src={LoadingImg} alt='loading' /> :
+
+                        <button
+                            className='btn btn-info'
+                            onClick={this.onClickExistGameCodeButton}
+                            disabled={!this.state.id_participants.length ||
+                                this.state.id_participants.length > 4 ||
+                                this.state.id_participants.includes(Variables.userId)} >המשך</button>
+                    }
+
+                    {this.state.loadLocatePartic ?
+                        <img src={LoadingImg} alt='loading' className="LoadingImg" /> :
+
+                        this.state.loadLocatePartic !== null &&
+                        <ParticipantsList
+                            id_participants={this.state.id_participants}
+                            names_participants={this.state.names_participants} />
+                    }
+
+                </div>
             </div>
         );
     }
 }
 
 
-const ParticipantsList = (props) => (
-    <p>
-        {props.participants.length >= 4 ? 'המשחק מכיל כבר כמות מקסימאלית של משתתפים' :
-            props.participants.length ?
-                GeneralFunctions.string_From_List(props.participants, '', ` ${props.participants.length === 1 ? `משתתף` : `משתתפים`} במשחק כרגע `) :
-                'המשחק אינו קיים. אנא נסה שנית'}
-    </p>
-);
+
+const ParticipantsList = (props) => {
+    let game_status = '';
+
+    if (props.id_participants.includes(Variables.userId)) {
+        game_status = 'הנך כבר משתתף במשחק זה'
+    }
+    else if (props.id_participants.length) {
+
+        if (props.id_participants.length > 4)
+            game_status = 'המשחק מכיל כבר כמות מקסימאלית של משתתפים';
+
+        else
+            game_status = GeneralFunctions.string_From_List(props.names_participants,
+                '', ` ${props.names_participants.length === 1 ? `משתתף` : `משתתפים`} במשחק כרגע `);
+    }
+    else
+        game_status = 'המשחק אינו קיים. אנא נסה שנית';
+
+    return (
+        <p>{game_status}</p>
+    );
+}

@@ -94,18 +94,6 @@ const ChartPage = (props) => (
     </div>
 );
 
-
-const Chart_terms = (props) => (
-    <div className='chart-terms' >
-        {props.chartInfo.map((val, i) => (
-            <div key={i} className='circleAndInfo-container'>
-                <div className='circle' style={{ backgroundColor: val.borderColor }}></div>
-                <label>{val.label}</label>
-            </div>)
-        )}
-    </div>
-);
-
 const displayLevels = ['קל', 'בינוני', 'קשה'];
 const DropDown_level = (props) => (
     <div id='drop_down_chart' className="d-flex ml-5 col-lg-4 col-md-10 justify-content-center mx-auto mt-md-3 m-lg-0">
