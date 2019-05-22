@@ -67,7 +67,7 @@ export default class GameType extends Component {
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
-                    <div id="container d-flex flex-column" style={{height:'100vh'}}>
+                    <div className="container-fluid d-flex flex-column" style={{height:'100vh'}}>
                         <TopBar signOut={this.signOut} />
                         <div className='container h-75 d-flex flex-column  justify-content-center '>
                             <h1 className='display-4' >בחר את סוג המשחק שלך</h1>
@@ -100,7 +100,7 @@ const TopBar = (props) => (
     <nav className='navbar bg-danger d-flex flex-row justify-content-between p-lg-2 p-md-3'>
         <UserIcon _direction='left' name={Variables.playerName} src={Variables.profilePic} />
         <div className='col-1'>
-            <img src={LogoutImg} onClick={props.signOut} alt="Logout" width='40' height='40' />
+            <img className='upper-bar-icon' src={LogoutImg} onClick={props.signOut} alt="Logout"/>
         </div>
     </nav>
 );

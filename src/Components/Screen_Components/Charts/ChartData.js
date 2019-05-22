@@ -69,7 +69,7 @@ class ChartData extends Component {
 
 const ChartPage = (props) => (
     <div id='chart-data' className='container-fluid' style={{ direction: 'rtl' }}>
-        <nav className='navbar px-0' style={{ backgroundColor: 'var(--dark_purple)' }}>
+        <nav className='navbar px-0 py-2' style={{ backgroundColor: 'var(--dark_purple)' }}>
             <div id='dropdown_and_buttons' className="container col-11 d-flex  m-lg-0" >
                 <div class="btn-group col-md-12 col-lg-5 justify-content-center" role="group" aria-label="Basic example" style={{ direction: 'ltr' }}>
                     <button class="btn btn-secondary text-body active" type="button" onClick={props.onClickChartType} name='numOfSets' id='numOfSets' href="#numOfSets" disabled={props.group_buttons.numOfSets} >מספר הסטים</button>
@@ -87,7 +87,7 @@ const ChartPage = (props) => (
                 <h1 className='h1 font-weight-light mt-md-3 m-lg-0 col-lg-12' >{chartTitles[props.chartType].title}</h1>
                 <p className='lead m-lg-0' >{chartTitles[props.chartType]._p}</p>
             </div>
-            <div id="lineChart" className='chart-div container col-lg-11 col-md-12' >
+            <div id="lineChart" className='container' >
                 <canvas id='_chart' />
             </div>
         </div>

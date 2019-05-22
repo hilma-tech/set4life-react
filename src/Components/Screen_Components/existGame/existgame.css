@@ -1,5 +1,32 @@
+#exist-game input{
+    width:50vw;
+    font-size: 6vw;
+}
 
-#arrow{
-    height: 5vh;
-    background-color: transparent;
+#search-game {
+    margin:20vh 0 0 0;
+}
+
+#search-game button{
+    font-size: 5.5vw;
+}
+
+@media (min-width: 992px) {
+    #search-game h3{
+        font-size: 7vw;
+    }
+
+    #search-game {
+        margin:7vh 0 0 0;
+    }
+
+    #exist-game input{
+        width:40vw;
+        font-size: 3.5vw;
+    }
+
+    #search-game button{
+        font-size: 2.8vw;
+    }
+    
 }

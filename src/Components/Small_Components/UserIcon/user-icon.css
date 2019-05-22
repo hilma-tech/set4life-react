@@ -15,17 +15,18 @@
 } */
 .user-icon.left{
     max-width:50vw;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
 }
 .user-icon.left img{
     width: 12vw;
     height: 12vw;
-    margin:auto 0;
 }
 
 .user-icon.left label{
     margin-right: 1vw;
     font-size: 2.2rem;
-    margin:auto 1vw;
 }
 
 .user-icon.bottom{
@@ -64,7 +65,6 @@
     .user-icon.left label{
         margin-right: 1vw;
         font-size: 1.4rem;
-        margin:auto 1vw 0;
     }
 
     #currentPlayer img{

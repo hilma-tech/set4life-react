@@ -15,6 +15,11 @@
   padding: 0;
 }
 
+.upper-bar-icon{
+    height: 10vh;
+    background-color: transparent;
+}
+
 input{
 direction: ltr;
 }
@@ -26,27 +31,6 @@ direction: ltr;
     direction: ltr;
 }
 
-
-
-/* .btn-primary,
-.btn-primary:hover,
-.btn-primary:focus{
-  color: rgb(8, 8, 8);
-  background-color: rgb(141, 135, 135);
-  border: .05rem solid #fff;
-} */
-
-/* .btn-lg{
-    padding: 0.2rem 0;
-    font-weight: 700;
-    margin: 2% 1%;
-    font-size:1.5rem; 
-    margin:0.5rem;
-    width:15vw;
-} */
-
-
-
   .upper-bar{
     width:100vw;
     background-color:#D1C1FC;
@@ -55,53 +39,8 @@ direction: ltr;
     padding-right: 2rem;
   }
 
-
-  /* @media only screen and (max-width: 1024px) and (min-width:425px) {
-    *{
-      font-size:14px;
-    }
-} */
-
-/* @media only screen and (max-width: 425px) {
-    *{
-        font-size:10px;
-      }
-} */
-
 .text-primary {
     color: rgb(91, 64, 167) !important;
-}
-
-/* .btn{
-    display:inline-block;
-    padding:0.3em 1.2em;
-    margin:0 0.3em 0.3em 0;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Roboto',sans-serif;
-    font-weight:400;
-    text-align:center;
-    transition: all 0.2s;
-    border-color: #707070;
-    }
-/*     
-    .btn:hover{
-        background-color:rgb(123, 77, 247);
-    } */
-
-    /* @media all and (max-width:30em){
-     .btn{
-        display:block;
-        margin:0.2em auto;
-        }
-    } */
-
-    /* #existGame >*{
-        margin:1vh;
-    } */
-
-button{
-  border: 1px solid #707070;
 }
 
 .upperBar{

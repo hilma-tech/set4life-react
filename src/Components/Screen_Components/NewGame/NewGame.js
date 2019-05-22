@@ -102,7 +102,7 @@ export default class NewGame extends Component {
             <div id="new-game" className='container-fluid' onKeyPress={this.keypressed}>
                 <nav className="navbar w-100 bg-danger p-lg-2 p-md-3">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
-                    <img className="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
+                    <img className="upper-bar-icon" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                 </nav> 
 
                 <div className='container h-75 my-md-auto col-lg-5 d-flex flex-column'>

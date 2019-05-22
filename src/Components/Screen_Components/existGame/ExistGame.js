@@ -100,24 +100,26 @@ export default class ExistGame extends Component {
 
 
     keypressed = (e) => {
-        if (e.key === "Enter")
-            this.onClickExistGameCodeButton();
+        if (!this.state.id_participants.length || this.state.id_participants.length > 4 || this.state.id_participants.includes(Variables.userId)) {
+            if (e.key === "Enter")
+                this.onClickExistGameCodeButton();
+        }
     }
 
 
     render() {
         return (
-            <div id='exist-game' className='container-fluid' style={{ height: '100vh' }} onKeyPress={this.keypressed}>
+            <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={this.keypressed}>
 
                 <nav className="navbar bg-danger">
-                    <UserIcon name={Variables.playerName} src={Variables.profilePic} />
-                    <img id="arrow" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
+                    <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
+                    <img className="upper-bar-icon" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                 </nav>
 
-                <div className='d-flex flex-column justify-content-center'>
-                    <h3 className='h1'> הכנס קוד משחק:</h3>
+                <div id='search-game' className='d-flex flex-column align-items-center'>
+                    <h3 className='display-4 mb-4'> הכנס קוד משחק:</h3>
                     <input
-                    className='d-block'
+                        className='d-block mb-4'
                         id="input"
                         name='gameCode'
                         type='text'
