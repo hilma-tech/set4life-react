@@ -22,6 +22,7 @@ export default class CurrentGame extends Component {
     }
 
     render() {
+        console.log('in curr game', this.props.CurrentGame)
         return (
             <div className="modal fade show"  aria-labelledby="exampleModalLabel"
             data-backdrop="static" role="dialog" style={{ display: 'block' }}>

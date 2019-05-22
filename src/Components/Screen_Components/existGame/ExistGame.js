@@ -109,7 +109,7 @@ export default class ExistGame extends Component {
 
     render() {
         return (
-            <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={this.keypressed}>
+            <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={(this.state.loadingParticipants) ? this.keypressed:()=>{}} >
 
                 <nav className="navbar bg-danger">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
@@ -149,26 +149,26 @@ export default class ExistGame extends Component {
                     }
 
                 </div>
-            </div>
-        );
-    }
-}
-
-
-
+            </ div>
+                );
+            }
+        }
+        
+        
+        
 const ParticipantsList = (props) => {
-    let game_status = '';
-
+                    let game_status = '';
+            
     if (props.id_participants.includes(Variables.userId)) {
-        game_status = 'הנך כבר משתתף במשחק זה'
-    }
-    else if (props.id_participants.length) {
+                    game_status = 'הנך כבר משתתף במשחק זה'
+                }
+                else if (props.id_participants.length) {
 
         if (props.id_participants.length > 4)
-            game_status = 'המשחק מכיל כבר כמות מקסימאלית של משתתפים';
-
-        else
-            game_status = GeneralFunctions.string_From_List(props.names_participants,
+                    game_status = 'המשחק מכיל כבר כמות מקסימאלית של משתתפים';
+        
+                else
+                    game_status = GeneralFunctions.string_From_List(props.names_participants,
                 '', ` ${props.names_participants.length === 1 ? `משתתף` : `משתתפים`} במשחק כרגע `);
     }
     else
@@ -176,5 +176,5 @@ const ParticipantsList = (props) => {
 
     return (
         <p>{game_status}</p>
-    );
+                );
 }
