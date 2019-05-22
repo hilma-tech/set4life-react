@@ -12,15 +12,18 @@ const fillingAxis = () => {
 }
 
 let x_y_axis = {
+
   avgTime_hitSet: {
     x_axis: {},
     y_Correct: {},
     y_Wrong: {}
   },
+
   avgTime_chooseSet: {
     x_axis: {},
     y_Correct: {}
   },
+  
   numOfSets: {
     x_axis: {},
     y_Correct: {},
@@ -29,28 +32,34 @@ let x_y_axis = {
   }
 }
 
+
 let chartTitles = {
+
   avgTime_hitSet: {
     title: 'זמן ממוצע עד הלחיצה על כפתור סט',
     _p: 'מציג את הזמן הממוצע עבור כל משחק, מהרגע שהוצגו קלפים חדשים על הלוח, עד הלחיצה על הכפתור "מצאתי סט"'
   },
+
   avgTime_chooseSet: {
     title: 'זמן ממוצע מהלחיצה על כפתור הסט עד בחירת סט נכון',
     _p: 'מציג את הזמן הממוצע מהרגע בו לוחצים על הכפתור "מצאתי סט", עד לבחירת סט כלשהו'
   },
+
   numOfSets: {
     title: 'מספר הסטים בכל משחק',
     _p: 'מציג את מספר הסטים שכל שחקן יצר בכל משחק לפי קטגוריות שונות'
   }
 }
 
+
 let chartsObj = {
+
   avgTime_hitSet: {
     Correct: {
       data: null,
       label: 'סטים נכונים',
       borderColor: "#8CC63F",
-      backgroundColor:"#8CC63F",
+      backgroundColor: "#8CC63F",
       fill: false,
       pointRadius: 5
     },
@@ -58,27 +67,29 @@ let chartsObj = {
       data: null,
       label: 'סטים לא נכונים',
       borderColor: "#FF1D00",
-      backgroundColor:"#FF1D00",
+      backgroundColor: "#FF1D00",
       fill: false,
       pointRadius: 5
     }
   },
+
   avgTime_chooseSet: {
     Correct: {
       label: 'סט נכון',
       data: null,
       borderColor: "#8CC63F",
-      backgroundColor:"#8CC63F",
+      backgroundColor: "#8CC63F",
       fill: false,
       pointRadius: 5
     }
   },
+
   numOfSets: {
     Correct: {
       data: null,
       label: "סטים נכונים",
       borderColor: "#8CC63F",
-      backgroundColor:"#8CC63F",
+      backgroundColor: "#8CC63F",
       fill: false,
       pointRadius: 5
     },
@@ -86,7 +97,7 @@ let chartsObj = {
       data: null,
       label: "סטים לא נכונים",
       borderColor: "#FF1D00",
-      backgroundColor:"#FF1D00",
+      backgroundColor: "#FF1D00",
       fill: false,
       pointRadius: 5
     },
@@ -94,7 +105,7 @@ let chartsObj = {
       data: null,
       label: "סטים מפוספסים",
       borderColor: "orange",
-      backgroundColor:"orange",
+      backgroundColor: "orange",
       fill: false,
       pointRadius: 5
     }

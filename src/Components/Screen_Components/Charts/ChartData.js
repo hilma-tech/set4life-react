@@ -72,9 +72,9 @@ const ChartPage = (props) => (
         <nav className='navbar px-0 py-2' style={{ backgroundColor: 'var(--dark_purple)' }}>
             <div id='dropdown_and_buttons' className="container col-11 d-flex  m-lg-0" >
                 <div class="btn-group col-md-12 col-lg-5 justify-content-center" role="group" aria-label="Basic example" style={{ direction: 'ltr' }}>
-                    <button class="btn btn-secondary text-body active" type="button" onClick={props.onClickChartType} name='numOfSets' id='numOfSets' href="#numOfSets" disabled={props.group_buttons.numOfSets} >מספר הסטים</button>
-                    <button class="btn btn-secondary text-body" type="button" onClick={props.onClickChartType} name='avgTime_hitSet' id='avgTime_hitSet' href="#avgTime_hitSet" disabled={props.group_buttons.avgTime_hitSet} >זמן ממוצע ללחיצה</button>
-                    <button class="btn btn-secondary text-body" type="button" onClick={props.onClickChartType} name='avgTime_chooseSet' id='avgTime_chooseSet' href="#avgTime_chooseSet" disabled={props.group_buttons.avgTime_chooseSet} >זמן ממוצע לבחירה</button>
+                    <button class="btn btn-secondary text-body" type="button" onClick={props.onClickChartType} name='numOfSets' id='numOfSets' disabled={props.group_buttons.numOfSets} >מספר הסטים</button>
+                    <button class="btn btn-secondary text-body" type="button" onClick={props.onClickChartType} name='avgTime_hitSet' id='avgTime_hitSet' disabled={props.group_buttons.avgTime_hitSet} >זמן ממוצע ללחיצה</button>
+                    <button class="btn btn-secondary text-body" type="button" onClick={props.onClickChartType} name='avgTime_chooseSet' id='avgTime_chooseSet' disabled={props.group_buttons.avgTime_chooseSet} >זמן ממוצע לבחירה</button>
                 </div>
                 <DropDown_level
                     onChange={props.onChange}
@@ -85,7 +85,7 @@ const ChartPage = (props) => (
         <div id='chart-container' className='col-md-11 mx-auto'>
             <div id='chart-info'>
                 <h1 className='h1 font-weight-light mt-md-3 m-lg-0 col-lg-12' >{chartTitles[props.chartType].title}</h1>
-                <p className='lead m-lg-0' >{chartTitles[props.chartType]._p}</p>
+                <p className='lead m-lg-0 m-0' >{chartTitles[props.chartType]._p}</p>
             </div>
             <div id="lineChart" className='container' >
                 <canvas id='_chart' />
