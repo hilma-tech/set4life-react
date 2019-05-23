@@ -1,142 +1,63 @@
-.top{
-    display: grid;
-    grid-template-rows: auto 0vh;
-    grid-template-columns: 17vw auto 17vw;
-}
 
-#login-page{
-    height: 100vh;
-}
-
-#cardsLeft{
+/* #cardsLeft{
     justify-self: end;
-}
+} */
 
-.top img{
+/* .top img{
     width: 17vw;
-} 
-
-#login-page h1, #login-page h1 span{
-    padding-bottom: 0;
-    align-self: end;
-    font-weight: 900;
-    font-size: 3.8rem;
-}
+}  */
 
 #login-page h1 span{
-    color: #4500FF;
+ font-size: 22vw;
 }
 
-#login-page .bottom{
-    margin-top: 6vh;
-    display: flex;
-    flex-direction: column;
-    /* align-items: center */
-}
-
-#login-page button{
-    background-color: #926AFF;
-    width: 11vw;
-    align-self: center;
-    border-radius: 10px;
-    font-size: 1.3rem;
-    font-weight: 800;
-    height: 8vh;
-    margin-top: 4vh;
+#login-page h1{
+margin-bottom: 8vw;
 }
 
 #login-page input{
-  border: 1px solid #707070;
-  background-color: #ffffff;
-  height: 7vh;
-  font-size: 1rem;
-  width: 18vw;
-  margin-right: 3vw;
-  margin-top: 3.6vh;
+    font-size: 6vw;
+    margin-bottom: 4vw;
+    width:75vw;
+}
+
+#login-page button{
+    font-size: 6vw;
+    font-weight: 600;
 }
 
 #login-page a{
-    color: #4500FF;
+    font-size: 6vw;
+    margin-top:7vw;
+    cursor: auto;
+    text-decoration: underline;
 }
 
-#login-page a, #login-page label{
-    font-weight: 800;
+@media (min-width: 992px) {
+    #login-page h1 span{
+        font-size: 10vw;
+       }
+       
+       #login-page h1{
+       margin-bottom: 1.5vw;
+       }
+       
+       #login-page input{
+           font-size: 2.6vw;
+           margin-bottom: 1.2vw;
+           width:37vw;
+       }
+       
+       #login-page button{
+           font-size: 2.3vw;
+           font-weight: 600;
+       }
+       
+       #login-page a{
+           font-size: 2vw;
+           margin-top:2.5vw;
+           cursor: auto;
+           text-decoration: underline;
+       } 
 }
 
-#login-page label{
-    font-size: 1.2rem;
-}
-
-.fildes{
-    height: 13vh;
-}
-
-.fildes label{
-    padding-top: 3vh;
-}
-
-#login-page .loading{
-    height: 8vh;
-    margin-top: 4vh;
-    align-self: center;
-}
-
-@media (max-width: 1118px) {
-    #login-page{
-        height: 100vh;
-    }
-    
-    .top{
-        grid-template-rows: auto;
-        grid-template-columns: auto;
-        grid-template-areas:
-        "cardsLeft . cardsRight"
-        "header header header"
-    }
-    #cardsLeft{
-        grid-area: cardsRight;
-    }
-
-    #cardsRight{
-        grid-area: cardsLeft;
-    }
-
-    #cardsRight, #cardsLeft{
-        width: 24vh;
-    }
-
-    .header{
-        grid-area: header;
-    }
-
-    #login-page h1, #login-page h1 span{
-        font-size: 5rem;
-    }
-
-    #login-page label{
-        font-size: 1.6rem;
-    }
-
-
-    #login-page input{
-        height: 6vh;
-        font-size: 1rem;
-        width: 41vw;
-        margin-right: 3vw;
-        margin-top: 3.5vh;
-    }
-
-    #login-page a{
-        position: absolute;
-        bottom: 7vh;
-        right: 40%;
-    }
-
-
-    #login-page button{
-        width: 23vw;
-        font-size: 1.8rem;
-        height: 8vh;
-        margin-top: 7vh;
-    }
-}

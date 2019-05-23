@@ -62,9 +62,7 @@ export default class Board extends Component {
         }
     }
 
-
     componentWillMount() {
-        firebaseObj.updatingGameIdInFB();
         firebaseObj.listenerOnFirebase(this.handleGameObjFromFirebase, `Games/${this.gameCode}`)
         firebaseObj.listenerOnFirebase(this.reciveCurrentUserIdFromFirebase, `Games/${this.gameCode}/currentPlayerID`);
 

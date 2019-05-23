@@ -39,7 +39,7 @@ export default class Registration extends Component {
 
     inputChange = (event) => {
         let personalInfo = this.state.personalInfo;
-        personalInfo[event.target.name] = event.target.value;
+        personalInfo[event.target.name] = event.target.value.trim();
         this.setState({ personalInfo: personalInfo, registStateInfo: '' })
     }
 
@@ -108,6 +108,7 @@ export default class Registration extends Component {
     }
 
     render() {
+        console.log('state reg',this.state.personalInfo)
         return (
             <div id='reg' className='page container-fluid d-flex flex-column' onKeyPress={this.keypressed}>
                 <nav className='navbar bg-danger w-100 sticky-top p-lg-0'>

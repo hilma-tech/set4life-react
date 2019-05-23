@@ -55,6 +55,7 @@ export default class NewGame extends Component {
             Game_Participants: { [Variables.userId]: { Name: Variables.playerName, ProfilePic: Variables.profilePic, isConnected: true } }
         };
         firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`, gameObj);
+        firebaseObj.updatingGameIdInFB();
         this.props.moveThroughPages("boa", gameObj);
     }
 

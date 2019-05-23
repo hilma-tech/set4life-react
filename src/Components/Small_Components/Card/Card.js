@@ -19,35 +19,35 @@ export default class Card extends Component {
     }
 
     settingClassNameCard = () => {
-        let classNameCard = '_card';
         switch (this.props.isSet) {
             case true:
-                classNameCard += ' greenCard';
-                break;
+                return 'greenCard';
             case false:
-                classNameCard += ' redCard';
-                break;
+                return 'redCard';
             case undefined:
-                classNameCard += ' greyCard';
-                break;
+                return 'greyCard';
         }
-        return classNameCard;
     }
 
     render() {
         let stageOfTheGame = this.props.stageOfTheGame;
-        let classNameCard = '_card';
+        let classNameCard ='';
 
-        (stageOfTheGame === 0 || stageOfTheGame === 3) && (classNameCard += ' not-active');
-        (stageOfTheGame === 1 || stageOfTheGame === 2) && (classNameCard += ' unselectedCard');
+        if(stageOfTheGame === 0)
+        classNameCard ='not-active ';
+        if(stageOfTheGame === 1 || stageOfTheGame === 2)
+        classNameCard = 'unselectedCard '
+        if(stageOfTheGame === 3)
+        classNameCard ='not-active another-player ';
 
         (this.props.isSelected) && (classNameCard += this.settingClassNameCard());
         
+        console.log(classNameCard)
         return (
             <div className="_card-div">
                 <img
                     onClick={this.props.stageOfTheGame === 1 ? this.clickOnCard : null}
-                    className={classNameCard}
+                    className={'_card '+classNameCard}
                     src={cardImages[`${this.props.cardCode}.png`]}
                     alt="card" />
 

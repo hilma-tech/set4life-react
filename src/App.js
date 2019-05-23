@@ -19,7 +19,6 @@ class App extends Component {
     super(props);
     this.state = {
       info: null,
-      existGame: false,
       pageSeen: "load"
       //load-load page
       //ent-EntrancePage
@@ -65,8 +64,8 @@ class App extends Component {
   }
 
 
-  moveThroughPages = (pageName, info = {}, existGame = false) => {
-    this.setState({ pageSeen: pageName, info: info, existGame: existGame });
+  moveThroughPages = (pageName, info = {}) => {
+    this.setState({ pageSeen: pageName, info: info});
   }
 
   render() {
@@ -79,8 +78,7 @@ class App extends Component {
         case "sel":
           return <SelectGameType moveThroughPages={this.moveThroughPages} />;
         case "boa":
-          return <Board existGame={this.state.existGame}
-            info={this.state.info} moveThroughPages={this.moveThroughPages} />;
+          return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
         default:
           return <ErrorMes />;
       }

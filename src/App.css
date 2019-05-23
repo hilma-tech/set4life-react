@@ -56,4 +56,18 @@ direction: ltr;
 
 
 
+.loading-sm{
+  height:10vw;
+  width:10vw;
+}
+
+@media (min-width: 992px) {
+  .loading-sm{
+    height:4vw;
+    width:4vw;
+  }
+}
+
+
+
 

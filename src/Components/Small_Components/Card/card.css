@@ -1,6 +1,11 @@
 .greyCard{
-    border: 2px solid #707070;
+    border: 2px solid #707070!important;
     transform: translateY(4px);
+    opacity:1!important;
+ }
+
+ .another-player{
+     opacity: 0.5;
  }
  
  .unselectedCard{
@@ -13,11 +18,14 @@
 }
   
  .greenCard{
-     border: solid 5px #8CC63F; 
+     border: solid 5px #8CC63F!important;
+     opacity:1!important;
+ 
  }
   
  .redCard{
-    border: solid 5px #FF1D00;
+    border: solid 5px #FF1D00!important;
+    opacity:1!important;
  }
  
  .not-active {

@@ -26,12 +26,13 @@ export default class ExistGame extends Component {
     onClickExistGameCodeButton = () => {
         if (Object.keys(this.state.gameObj).length) {
             let gameObj = this.state.gameObj;
+
             if (this.state.all_participants.includes(Variables.userId))
                 firebaseObj.updatingValueInDataBase(
                     `Games/${this.state.gameCode}/Game_Participants/${Variables.userId}`,
                     { isConnected: true })
 
-            else
+            else {
                 firebaseObj.updatingValueInDataBase(
                     `Games/${this.state.gameCode}/Game_Participants`,
                     {
@@ -41,6 +42,7 @@ export default class ExistGame extends Component {
                             isConnected: true
                         }
                     });
+            }
 
             Object.assign(Variables, {
                 gameCode: this.state.gameCode,
@@ -49,7 +51,10 @@ export default class ExistGame extends Component {
                 creationGameTime: gameObj.creationTime
             });
 
-            this.props.moveThroughPages("boa", gameObj, true);
+            if (!gameObj.Game_Participants[Variables.userId])
+                firebaseObj.updatingGameIdInFB();
+
+            this.props.moveThroughPages("boa", gameObj);
         }
         else
             this.setState({ invalidGameCode: true });

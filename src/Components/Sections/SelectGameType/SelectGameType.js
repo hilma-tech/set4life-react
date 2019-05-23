@@ -67,9 +67,9 @@ export default class GameType extends Component {
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
-                    <div className="container-fluid d-flex flex-column w-100" style={{height:'100vh'}}>
+                    <div className="container-fluid d-flex flex-column" style={{height:'100vh'}}>
                         <TopBar signOut={this.signOut} />
-                        <div className='container h-75 d-flex flex-column  justify-content-center '>
+                        <div className='container h-75 d-flex flex-column  justify-content-center'>
                             <h1 className='display-4' >בחר את סוג המשחק שלך</h1>
                             <div className='container w-75 mt-md-4'>
                                 <button className="btn btn-secondary btn-lg col-lg-5 m-2 mr-lg-4 mb-md-3" onClick={this.onClickGameTypeButton} name='existGame' ><img name='existGame' src={ExistGameImg} alt="existGame" className="buttonsIcons" /> משחק קיים</button>

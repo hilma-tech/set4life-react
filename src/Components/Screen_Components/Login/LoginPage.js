@@ -63,41 +63,41 @@ export default class LoginPage extends Component {
 
     render() {
         return (
-            <div id='login-page' onKeyPress={this.keypressed}>
-                <div className="top">
-                    <img src={cardsRight} alt="cards" id="cardsRight"/>
-                    <h1 className="header">Set<span>4</span>Life</h1>
-                    <img src={cardsLeft} alt="cards" id="cardsLeft"/>
-                </div>
-                <div className="bottom">
-                    <div>
-                        <label>אימייל</label>
+            <div id='login-page' className='container-fluid d-flex flex-column justify-content-center' onKeyPress={this.keypressed} style={{ height: '100vh' }}>
+                <div className='d-flex flex-column align-items-center'>
+
+                    <h1>
+                        <span className='display-4 text-success font-weight-bold' >Set</span>
+                        <span className='display-4 text-primary font-weight-bold'>4</span>
+                        <span className='display-4 text-danger font-weight-bold'>Life</span>
+                    </h1>
+
+                    <div className=''>
                         <input
+                            className='d-block'
                             name='loginEmail'
                             type='text'
                             placeholder="הכנס אימייל"
                             value={this.state.loginEmail}
-                            onChange={this.inputChange}>
-                        </input>
-                    </div>
-                    <div>
-                        <label>סיסמה</label>
+                            onChange={this.inputChange} />
+
                         <input
+                            className='d-block'
                             name='loginPsw'
                             type='password'
                             placeholder="הכנס סיסמא"
                             value={this.state.loginPsw}
-                            onChange={this.inputChange}>
-                        </input>
+                            onChange={this.inputChange} />
                     </div>
+
                     {this.state._loadingImg ?
-                        <img src={LoadingImg} alt='loading' className="loading"/> :
-                        <button onClick={this.clickLoginButtonEvent} >היכנס</button>
+                        <img className='loading-sm' src={LoadingImg} alt='loading' /> :
+                        <button className='btn btn-danger btn-lg' onClick={this.clickLoginButtonEvent} >היכנס</button>
                     }
-                    <div className="fildes">
-                        <label>{this.state.loginStateInfo}</label>
-                    </div>
-                    <a onClick={this.props.moveToRegistration}>עוד לא נרשמת?</a>
+
+                    <label>{this.state.loginStateInfo}</label>
+
+                    <a className='' href='#' onClick={this.props.moveToRegistration}>עוד לא נרשמת?</a>
                 </div>
             </div>
         );
