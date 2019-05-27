@@ -1,4 +1,21 @@
 .modal.show{
-    background: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.5);
+}
+
+#current-game .modal-body h1{
+    font-size: 10vw;
+    margin-top:0;
+}
+
+#current-game button{
+    font-size: 6.5vw;
+    font-weight: 600;
+}
+
+
+@media (min-width: 992px) {
+    #current-game .modal-body h1{
+        font-size: 6vw;
+    }
 }
 

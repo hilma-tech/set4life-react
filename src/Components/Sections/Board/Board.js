@@ -260,7 +260,7 @@ export default class Board extends Component {
                         </div>
 
                         {this.state.currentCards &&
-                            <button id='the-button' className='btn btn-info mt-md-1 mt-lg-2' onClick={this.clickButtonEvent} 
+                            <button id='the-button' className='btn btn-primary mt-md-1 mt-lg-2' onClick={this.clickButtonEvent} 
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :
@@ -279,7 +279,7 @@ export default class Board extends Component {
 }
 
 const UpperBar = (props) => (
-    <nav id='upper-bar' className='bg-danger navbar d-flex '>
+    <nav id='upper-bar' className='navbar d-flex '>
 
         <div id='participant-list' className='px-0'>
             {props.game_Participants.map(val =>

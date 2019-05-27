@@ -114,9 +114,9 @@ export default class ExistGame extends Component {
 
     render() {
         return (
-            <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={(this.state.loadingParticipants) ? this.keypressed:()=>{}} >
+            <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={(this.state.loadingParticipants) ? this.keypressed : () => { }} >
 
-                <nav className="navbar bg-danger">
+                <nav className="navbar">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
                     <img className="upper-bar-icon" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                 </nav>
@@ -124,7 +124,7 @@ export default class ExistGame extends Component {
                 <div id='search-game' className='d-flex flex-column align-items-center'>
                     <h3 className='display-4 mb-4'> הכנס קוד משחק:</h3>
                     <input
-                        className='d-block mb-4'
+                        className='d-block'
                         id="input"
                         name='gameCode'
                         type='text'
@@ -137,7 +137,7 @@ export default class ExistGame extends Component {
                         <img src={LoadingImg} alt='loading' /> :
 
                         <button
-                            className='btn btn-info'
+                            className='btn btn-primary'
                             onClick={this.onClickExistGameCodeButton}
                             disabled={!this.state.id_participants.length ||
                                 this.state.id_participants.length > 4 ||
@@ -145,7 +145,7 @@ export default class ExistGame extends Component {
                     }
 
                     {this.state.loadLocatePartic ?
-                        <img src={LoadingImg} alt='loading' className="LoadingImg" /> :
+                        <img className='loading-sm' src={LoadingImg} alt='loading' /> :
 
                         this.state.loadLocatePartic !== null &&
                         <ParticipantsList
@@ -155,31 +155,31 @@ export default class ExistGame extends Component {
 
                 </div>
             </ div>
-                );
-            }
-        }
-        
-        
-        
+        );
+    }
+}
+
+
+
 const ParticipantsList = (props) => {
-                    let game_status = '';
-            
+    let game_status = '';
+
     if (props.id_participants.includes(Variables.userId)) {
-                    game_status = 'הנך כבר משתתף במשחק זה'
-                }
-                else if (props.id_participants.length) {
+        game_status = 'הנך כבר משתתף במשחק זה'
+    }
+    else if (props.id_participants.length) {
 
         if (props.id_participants.length > 4)
-                    game_status = 'המשחק מכיל כבר כמות מקסימאלית של משתתפים';
-        
-                else
-                    game_status = GeneralFunctions.string_From_List(props.names_participants,
+            game_status = 'המשחק מכיל כבר כמות מקסימאלית של משתתפים';
+
+        else
+            game_status = GeneralFunctions.string_From_List(props.names_participants,
                 '', ` ${props.names_participants.length === 1 ? `משתתף` : `משתתפים`} במשחק כרגע `);
     }
     else
         game_status = 'המשחק אינו קיים. אנא נסה שנית';
 
     return (
-        <p>{game_status}</p>
-                );
+        <p id='participants-list'>{game_status}</p>
+    );
 }

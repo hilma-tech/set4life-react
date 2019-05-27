@@ -78,7 +78,7 @@ export default class GameType extends Component {
                             <div className='container w-75 mt-md-2 mt-lg-1'>
 
                                 <button
-                                    className="btn btn-secondary btn-lg col-lg-5 m-2 mr-lg-4 mb-md-3"
+                                    className="btn btn-primary btn-lg col-lg-5 mr-lg-4 mb-md-3"
                                     onClick={this.onClickGameTypeButton}
                                     name='existGame' >
                                     <img
@@ -89,7 +89,7 @@ export default class GameType extends Component {
                                     </button>
 
                                 <button
-                                    className="btn btn-secondary btn-lg col-lg-5 m-2 mb-md-3"
+                                    className="btn btn-primary btn-lg col-lg-5 mb-md-3"
                                     onClick={this.onClickGameTypeButton}
                                     name='newGame' >
                                     <img
@@ -100,7 +100,7 @@ export default class GameType extends Component {
                                     </button>
 
                                 <button
-                                    className="btn btn-secondary btn-lg col-lg-5  m-2 mb-md-3"
+                                    className="btn btn-primary btn-lg col-lg-5  mb-md-3"
                                     onClick={this.onClickGameTypeButton}
                                     name='charts'>
                                     <img
@@ -131,7 +131,7 @@ export default class GameType extends Component {
 
 
 const TopBar = (props) => (
-    <nav className='navbar bg-danger d-flex flex-row justify-content-between p-lg-2 p-md-3'>
+    <nav className='navbar d-flex flex-row justify-content-between p-lg-2 p-md-3'>
         <UserIcon _direction='left' name={Variables.playerName} src={Variables.profilePic} />
         <img className='upper-bar-icon' src={LogoutImg} onClick={props.signOut} alt="Logout" />
     </nav>

@@ -11,6 +11,12 @@
     font-size: 5.5vw;
 }
 
+#participants-list{
+    margin-top:7vw;
+    font-size:6vw;
+    max-width:83vw;
+}
+
 @media (min-width: 992px) {
     #search-game h3{
         font-size: 7vw;
@@ -26,7 +32,21 @@
     }
 
     #search-game button{
-        font-size: 2.8vw;
+        font-size: 2.5vw;
+        margin-top:1.5vw;
+        padding:0.2vw 1.5vw;
+        
+    }
+
+    #participants-list{
+        margin-top:2vw;
+        font-size:3vw;
+        max-width:80vw;
+    }
+
+    #search-game .loading-sm{
+        height:7vw;
+        width:7vw;
     }
     
 }

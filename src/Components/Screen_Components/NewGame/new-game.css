@@ -1,47 +1,68 @@
+
+#new-game label{
+    margin:0;
+}
+
 #new-game #checkbox-constParameters select{
-    font-size: 2rem;
+    font-size: 5vw;
+    width:25vw;
+    height:8vw;
 }
 
 #new-game #checkbox-constParameters select option{
-    font-size: 2rem;
+    font-size: 6vw;
 }
 
 #new-game #checkbox-constParameters input[type='checkbox']{
-    height:5vw;
-    width: 5vw;
+    height:8vw;
+    width: 8vw;
 }
 
 #new-game #checkbox-constParameters label,#timer-for-set{
-    font-size: 2.3rem;
+    font-size: 8vw;
 }
 
-@media (max-width: 992px){
-    #new-game{
-        width:100vw;
-        height: 100vh;
-    } 
+#checkbox-constParameters{
+    margin :1.7vh 0;
 }
 
+#new-game button{
+    font-size:6vw;
+    width:25vw;
+    margin-top:5vw;
+    align-self:center;
+}
+
+#new-game h1{
+    font-size:14vw;
+}
+
+#new-game div.container{
+    margin-top:10vh;
+    padding:0 5vw;
+    width:90vw;
+}
 
 @media (min-width: 992px) {
     #new-game button{
-        height: 10vh;
-        font-size: 1.27rem !important;
-        width:10vw;
+        height: 4vw;
+        font-size:2.3vw;
+        width:8vw;
         padding: 0;
     }
 
     #checkbox-constParameters{
         height: 10vh;
+        margin :0.3vh 0;
     }
 
     #new-game #checkbox-constParameters select{
-        font-size: 0.9rem;
-        height: 7vh;
-        width: 6vw;
+        font-size: 2vw;
+        height: 3vw;
+        width: 7.5vw;
     }
     #new-game #checkbox-constParameters select option{
-        font-size: 1rem;
+        font-size:2vw;
     }
     
     #new-game #checkbox-constParameters input[type='checkbox']{
@@ -51,12 +72,20 @@
     
     #new-game #checkbox-constParameters label,
     #timer-for-set{
-        font-size: 1.5rem;
+        font-size: 3vw;
     }
 
-    #header_new-game{
-        font-size: 3rem;
+    #new-game h1{
+        font-size:6vw;
     }
+
+    #new-game div.container{
+        margin-top:10vh;
+        padding:0;
+        width:35vw;
+        align-self:center;
+    }
+
  }
 
 

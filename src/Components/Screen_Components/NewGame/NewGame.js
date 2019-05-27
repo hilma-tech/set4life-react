@@ -100,17 +100,16 @@ export default class NewGame extends Component {
 
     render() {
         return (
-            <div id="new-game" className='container-fluid' onKeyPress={this.keypressed}>
-                <nav className="navbar w-100 bg-danger p-lg-2 p-md-3">
+            <div id="new-game" className='container-fluid d-flex flex-column' onKeyPress={this.keypressed} style={{height:'100vh'}}>
+                <nav className="navbar w-100 p-lg-2 p-md-3">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
                     <img className="upper-bar-icon" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                 </nav> 
 
-                <div className='container h-75 my-md-auto col-lg-5 d-flex flex-column'>
 
-                    <div className='container h-100 my-md-auto col-md-10 col-lg-12 m-lg-0 d-flex flex-column'>
-                        <h1 id='header_new-game' className='display-3 mb-md-3 mb-lg-1 text-right mr-2'>משחק חדש: </h1>
-                        <div className=" col-md-10 col-lg-12 ">
+                    <div className='container m-lg-0 d-flex flex-column'>
+                        <h1 className='mb-md-3 mb-lg-1 text-right mr-2'>משחק חדש </h1>
+                        <div className="mr-2">
                             <div className='col-lg-9 col-md-12 p-0'>
                                 {Object.keys(GameData.cardsParameters).map((par_name, i) => (
                                     <CheckboxConstParameter
@@ -133,22 +132,21 @@ export default class NewGame extends Component {
                                     onChange={this.settingTimeOut} />
 
                             </div>
-
-                            <button
-                                className='btn btn-secondary mt-md-4 mt-lg-2 rounded text-center'
+                        </div>
+                        
+                        <button
+                                className='btn btn-primary mt-md-4 mt-lg-2 rounded text-center'
                                 disabled={this.setDisableNewGameButton()}
                                 onClick={this.settingNewGame}>התחל</button>
-                        </div>
                     </div>
 
-                </div>
             </div>
         );
     }
 }
 
 const CheckboxConstParameter = (props) => (
-    <div id='checkbox-constParameters' key={props.i} className="container-fluid mb-md-2 mb-lg-0 d-flex align-items-center">
+    <div id='checkbox-constParameters' key={props.i} className="container-fluid d-flex align-items-center">
         <input
             type="checkbox"
             name={props.par_name}
@@ -168,7 +166,7 @@ const CheckboxConstParameter = (props) => (
 
 const SelectConstParameter = (props) => (
     <select
-        className='mr-auto ml-3 col-md-5 col-lg-4'
+        className='mr-auto ml-3'
         ref={el => dropdown_refs[props.categoryStr] = el}
         style={{ visibility: (!props.checkboxsInfo[props.categoryStr + 'Bool']) ? 'visible' : 'hidden' }}
         name={props.categoryStr}

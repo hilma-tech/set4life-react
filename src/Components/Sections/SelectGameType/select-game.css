@@ -11,12 +11,13 @@
   height: 9vw;
 }
 
-#sel button{
+#sel .btn-primary {
   font-size: 7.3vw;
   height: 15vw;
   text-align:right;
   padding-right:7.5vw;
   width:65vw;
+  margin:1.4vh 0;
 }
 
 #sel h1{
@@ -25,11 +26,15 @@
 }
 
 @media (min-width: 992px) {
-  #sel button{
+  #sel .btn-primary {
     font-size: 3.2vw;
     height: 7vw;
     text-align:center;
     padding-right:0vw;
+  }
+
+  #sel .btn-primary[name='existGame'] {
+    margin-left:2.7vw;
   }
 
   .buttonsIcons{
