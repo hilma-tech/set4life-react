@@ -8,6 +8,8 @@ import cardsRight from '../../../data/design/cardsRight.png';
 import cardsLeft from '../../../data/design/cardsLeft.png';
 import PhotoUploader from '../../../data/design/photo-uploader.png';
 import Variables from '../../../SetGame/Variables';
+import arrow from '../../../data/design/left-arrow.png';
+
 
 
 export default class Registration extends Component {
@@ -53,8 +55,8 @@ export default class Registration extends Component {
         if (!emptyFilesArr.length) {
             let _valid = this.registrationValidation()
             if (_valid.phoneNum && _valid.passwordAgain) {
-                Variables.playerName=this.state.fullName;
-                Variables.profilePic=this.state.profilePic ? this.state.profilePic : userIcon;
+                Variables.playerName = this.state.fullName;
+                Variables.profilePic = this.state.profilePic ? this.state.profilePic : userIcon;
                 firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
                     .then(fbUser => {
                         this.setState({ registStateInfo: 'נרשמת בהצלחה' });
@@ -108,11 +110,10 @@ export default class Registration extends Component {
     }
 
     render() {
-        console.log('state reg',this.state.personalInfo)
         return (
             <div id='reg' className='page container-fluid d-flex flex-column' onKeyPress={this.keypressed}>
-                <nav className='navbar bg-danger w-100 sticky-top p-lg-0'>
-                    <label className='mx-auto'>set4life</label>
+                <nav className='navbar w-100'>
+                    <img className="upper-bar-icon mr-auto ml-2" src={arrow} alt="back" onClick={()=>window.history.back()} name='sel' />
                 </nav>
 
                 <div className=''>
@@ -126,13 +127,13 @@ export default class Registration extends Component {
                             </label>
                             <p className='d-inline my-auto'>אנא לחץ על הסמל בשביל להעלות תמונת פרופיל. במידה ולא תעלה תמונה, תופיע תמונת ברירת מחדל.</p>
                         </div>
-                        <input className='col-md-9 d-md-block col-lg-3 d-lg-inline mx-lg-0 mb-lg-0' name='fullName' type='text' placeholder="שם מלא"
+                        <input className='col-md-9 d-md-block sm-in-lg-screen d-lg-inline' name='fullName' type='text' placeholder="שם מלא"
                             onChange={this.inputChange}></input>
 
-                        <input className='col-md-9 d-md-block col-lg-3 mr-lg-2 d-lg-inline mx-lg-0 mb-lg-0' name='phoneNum' type="text" placeholder="מספר טלפון"
+                        <input className='col-md-9 d-md-block sm-in-lg-screen d-lg-inline' name='phoneNum' type="text" placeholder="מספר טלפון"
                             onChange={this.inputChange} />
 
-                        <input className='col-md-9 col-lg-9 d-md-block lg-screen' name="email" type='text' placeholder='אימייל'
+                        <input className='col-md-9 d-md-block lg-screen' name="email" type='text' placeholder='אימייל'
                             onChange={this.inputChange}></input>
 
                         <input className='col-md-9 lg-screen d-block' name='password' type="password" placeholder='סיסמא'
@@ -142,10 +143,10 @@ export default class Registration extends Component {
                             onChange={this.inputChange} />
 
                     </div>
-                    <button className='btn btn-secondary btn-lg ' onClick={this.onClickRegisterButton}>הבא</button>
-                    {this.state.registStateInfo !== '' && 
-                    <label id='state-info' className='d-block text-danger mt-1 col-11 mx-auto'>{this.state.registStateInfo}</label>
-                    } 
+                    <button className='btn btn-primary btn-lg ' onClick={this.onClickRegisterButton}>הבא</button>
+                    {this.state.registStateInfo !== '' &&
+                        <label id='state-info' className='d-block text-danger mt-1 col-11 mx-auto'>{this.state.registStateInfo}</label>
+                    }
 
                 </div>
 

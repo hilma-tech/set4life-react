@@ -1,20 +1,53 @@
-
-#signout{
-  height: 9vh;
-  margin-left: 1.4vw;
-  float: left;
-  background-color: transparent;
-}
-
 .buttonsIcons{
-  height: 7vh;
+  height: 10vw;
   background-color: transparent;
 }
 
-.buttons{
-  border: 1px solid #707070;
-  border-radius: 10px;
-  font-weight: 800;
+.buttonsIcons.exist{
+  height: 13vw;
+}
+
+.buttonsIcons.new{
+  height: 9vw;
+}
+
+#sel button{
+  font-size: 7.3vw;
+  height: 15vw;
+  text-align:right;
+  padding-right:7.5vw;
+  width:65vw;
+}
+
+#sel h1{
+  margin-top:6vw;
+  font-size: 17vw;
+}
+
+@media (min-width: 992px) {
+  #sel button{
+    font-size: 3.2vw;
+    height: 7vw;
+    text-align:center;
+    padding-right:0vw;
+  }
+
+  .buttonsIcons{
+    height: 4vw;
+    background-color: transparent;
+  }
+
+  #sel h1{
+    font-size: 9.5vw;
+  }
+
+  .buttonsIcons.exist{
+    height: 5.5vw;
+  }
+  
+  .buttonsIcons.new{
+    height: 3.5vw;
+  }
 }
 
 

@@ -30,7 +30,8 @@ export default class GameType extends Component {
         }
         window.history.pushState('sel', '', 'gameType');
         window.addEventListener('popstate', (event) => {
-            console.log('inside popstate sel', event.state)
+            console.log(`%c pop sel- ${event.state}`, 'color: green;')
+
             switch (event.state) {
                 case "newGame": case "existGame":
                 case 'charts':
@@ -67,17 +68,50 @@ export default class GameType extends Component {
         switch (this.state.GameTypeOptions) {
             case 'sel':
                 return (
-                    <div className="container-fluid d-flex flex-column" style={{height:'100vh'}}>
+                    <div id='sel' className="container-fluid d-flex flex-column"
+                        style={{ height: '100vh', width: '100vw' }}>
+                       
                         <TopBar signOut={this.signOut} />
-                        <div className='container h-75 d-flex flex-column  justify-content-center'>
-                            <h1 className='display-4' >בחר את סוג המשחק שלך</h1>
-                            <div className='container w-75 mt-md-4'>
-                                <button className="btn btn-secondary btn-lg col-lg-5 m-2 mr-lg-4 mb-md-3" onClick={this.onClickGameTypeButton} name='existGame' ><img name='existGame' src={ExistGameImg} alt="existGame" className="buttonsIcons" /> משחק קיים</button>
-                                <button className="btn btn-secondary btn-lg col-lg-5 m-2 mb-md-3" onClick={this.onClickGameTypeButton} name='newGame' ><img name='newGame' src={NewGameImg} alt="new game" className="buttonsIcons" /> משחק חדש</button>
-                                <button className="btn btn-secondary btn-lg col-lg-5  m-2 mb-md-3" onClick={this.onClickGameTypeButton} name='charts'><img name='charts' src={chartsImg} alt="charts" className="buttonsIcons" /> גרפים </button>
+                        <div className='container-fluid h-75 d-flex flex-column  justify-content-center'>
+                            
+                            <h1 className='display-4' >בחר את סוג המשחק</h1>
+                            <div className='container w-75 mt-md-2 mt-lg-1'>
+
+                                <button
+                                    className="btn btn-secondary btn-lg col-lg-5 m-2 mr-lg-4 mb-md-3"
+                                    onClick={this.onClickGameTypeButton}
+                                    name='existGame' >
+                                    <img
+                                        name='existGame'
+                                        src={ExistGameImg}
+                                        alt="existGame"
+                                        className="buttonsIcons exist" /> משחק קיים
+                                    </button>
+
+                                <button
+                                    className="btn btn-secondary btn-lg col-lg-5 m-2 mb-md-3"
+                                    onClick={this.onClickGameTypeButton}
+                                    name='newGame' >
+                                    <img
+                                        name='newGame'
+                                        src={NewGameImg}
+                                        alt="new game"
+                                        className="buttonsIcons new" /> משחק חדש
+                                    </button>
+
+                                <button
+                                    className="btn btn-secondary btn-lg col-lg-5  m-2 mb-md-3"
+                                    onClick={this.onClickGameTypeButton}
+                                    name='charts'>
+                                    <img
+                                        name='charts'
+                                        src={chartsImg}
+                                        alt="charts"
+                                        className="buttonsIcons" />  גרפים
+                                    </button>
                             </div>
                         </div>
-                        {this.state.currentGame&&Object.keys(this.state.currentGame).length ?
+                        {this.state.currentGame && Object.keys(this.state.currentGame).length ?
                             <CurrentGame deleteCurrentGameInSel={this.deleteCurrentGameInSel} currentGame={this.state.currentGame} moveThroughPages={this.props.moveThroughPages} /> : ''}
                     </div>
                 );
@@ -99,8 +133,6 @@ export default class GameType extends Component {
 const TopBar = (props) => (
     <nav className='navbar bg-danger d-flex flex-row justify-content-between p-lg-2 p-md-3'>
         <UserIcon _direction='left' name={Variables.playerName} src={Variables.profilePic} />
-        <div className='col-1'>
-            <img className='upper-bar-icon' src={LogoutImg} onClick={props.signOut} alt="Logout"/>
-        </div>
+        <img className='upper-bar-icon' src={LogoutImg} onClick={props.signOut} alt="Logout" />
     </nav>
 );

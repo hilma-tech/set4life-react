@@ -4,8 +4,6 @@ import firebaseObj from '../../../firebase/firebaseObj';
 import GameData from '../../../data/GameData.json';
 import LoadingImg from '../../../data/design/loading-img.gif';
 import Generalfunctions from '../../../SetGame/GeneralFunctions';
-import cardsRight from '../../../data/design/cardsRight.png';
-import cardsLeft from '../../../data/design/cardsLeft.png';
 import './login.css'
 
 
@@ -17,7 +15,7 @@ export default class LoginPage extends Component {
                 loginEmail: '',
                 loginPsw: ''
             },
-            loginStateInfo: '',
+            loginStateInfo: ' ',
             _loadingImg: false
         };
         window.history.pushState('log', '', 'login');
@@ -67,12 +65,12 @@ export default class LoginPage extends Component {
                 <div className='d-flex flex-column align-items-center'>
 
                     <h1>
-                        <span className='display-4 text-success font-weight-bold' >Set</span>
-                        <span className='display-4 text-primary font-weight-bold'>4</span>
-                        <span className='display-4 text-danger font-weight-bold'>Life</span>
+                        <span className='display-4 font-weight-bold' >Set</span>
+                        <span className='display-4 font-weight-bold' style={{ color: 'var(--_1)' }}>4</span>
+                        <span className='display-4 font-weight-bold'>Life</span>
                     </h1>
 
-                    <div className=''>
+                    <div>
                         <input
                             className='d-block'
                             name='loginEmail'
@@ -92,12 +90,10 @@ export default class LoginPage extends Component {
 
                     {this.state._loadingImg ?
                         <img className='loading-sm' src={LoadingImg} alt='loading' /> :
-                        <button className='btn btn-danger btn-lg' onClick={this.clickLoginButtonEvent} >היכנס</button>
+                        <button className='btn btn-primary btn-lg' onClick={this.clickLoginButtonEvent} >היכנס</button>
                     }
-
-                    <label>{this.state.loginStateInfo}</label>
-
                     <a className='' href='#' onClick={this.props.moveToRegistration}>עוד לא נרשמת?</a>
+                    <label className='mt-2 text-danger'>{this.state.loginStateInfo}</label>
                 </div>
             </div>
         );

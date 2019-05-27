@@ -14,6 +14,7 @@ export default class Entrance extends Component{
             //'reg'-Registration
         }
         window.onpopstate=(event)=>{
+            console.log(`%c pop ent- ${event.state}, `,'color: red;')
             switch(event.state){
                 case "reg":
                 case "log":

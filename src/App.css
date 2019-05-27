@@ -16,8 +16,8 @@
 }
 
 .upper-bar-icon{
-    height: 10vh;
-    background-color: transparent;
+  height: 10vh;    
+  background-color: transparent;
 }
 
 input{
@@ -54,11 +54,20 @@ direction: ltr;
   border-bottom: 1px solid #707070;
 }
 
-
-
 .loading-sm{
   height:10vw;
   width:10vw;
+}
+
+nav{
+  background-color: var(--_3);
+}
+
+.btn.btn-primary,
+.btn-primary:hover,
+.btn-primary:active{
+  background-color: var(--_1)!important;
+  border-color:var(--_1)!important;
 }
 
 @media (min-width: 992px) {
@@ -66,6 +75,10 @@ direction: ltr;
     height:4vw;
     width:4vw;
   }
+  .upper-bar-icon{
+    height: 4.95vh;
+    background-color: transparent;
+}
 }
 
 

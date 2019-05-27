@@ -25,12 +25,7 @@ export default class Board extends Component {
         this.state = {
             currentCards: this.props.info.currentCards,
             selectedCards: [],
-            isSet: undefined,
-            usedCards: this.props.info.usedCards.slice(),
-            disableBeforeNext: false,
-            game_Participants: [],
-            currentPlayerName: '',
-            currentPlayerId: '',
+            isSet: undefined, 
             exitGame: false,
             endGame: false,
             stageOfTheGame: 0
@@ -44,7 +39,8 @@ export default class Board extends Component {
         }
         window.history.pushState('boa', '', 'board');
         window.onpopstate = (event) => {
-            console.log('popstate boa')
+            console.log(`%c pop boa- ${event.state}`,'color: pink;')
+            
             if (event.state !== 'boa') {
                 window.history.pushState('boa', '', 'board');
                 if (window.confirm("אתה בטוח שאתה רוצה לצאת?")) {
@@ -242,13 +238,13 @@ export default class Board extends Component {
     render() {
         if ((!this.state.exitGame) && this.state.currentCards.length) {
             return (
-                <div id="board" className='container-fluid'>
+                <div id="board" className='container-fluid d-flex flex-column'>
                     <UpperBar game_Participants={this.state.game_Participants}
                         gameCode={this.gameCode}
                         exitGame={this.exitGame}
                         currentPlayerId={this.state.currentPlayerId} />
 
-                    <div className='container'>
+                    <div className='container my-auto'>
                         <div id='cards' className='container'>
                             {this.state.currentCards.map((cardCode, i) =>
                                 <Card
@@ -264,7 +260,7 @@ export default class Board extends Component {
                         </div>
 
                         {this.state.currentCards &&
-                            <button id='the-button' className='btn btn-info mt-3' onClick={this.clickButtonEvent} id={this.state.stageOfTheGame === 0 ? "Not_fuond_set" : "main_button"}
+                            <button id='the-button' className='btn btn-info mt-md-1 mt-lg-2' onClick={this.clickButtonEvent} 
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :
@@ -283,18 +279,17 @@ export default class Board extends Component {
 }
 
 const UpperBar = (props) => (
-    <div className='bg-danger navbar'>
+    <nav id='upper-bar' className='bg-danger navbar d-flex '>
 
-        <div id='participant-list' className='px-0  rounded d-flex flex-wrap justify-content-center'>
+        <div id='participant-list' className='px-0'>
             {props.game_Participants.map(val =>
                 <UserIcon currentPlayer={props.currentPlayerId === val[0]} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
                     src={val[1].ProfilePic} _direction='bottom' />)}
         </div>
 
-        <label className='h4 col-5'>קוד המשחק {props.gameCode}</label>
-
-        <button className='btn btn-primary col-2' onClick={props.exitGame}>יציאה</button>
-    </div>
+        <label id='game-code' className='h4 col-lg-5 col-md-12'>קוד המשחק {props.gameCode}</label>
+        <button className='btn btn-primary' onClick={props.exitGame}>יציאה</button>
+    </nav>
 );
 
 

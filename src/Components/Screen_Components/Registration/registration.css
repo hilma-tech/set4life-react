@@ -5,6 +5,10 @@
     font-size: 1.5rem;
 }
 
+/* #reg nav{
+    padding:0;
+} */
+
 #reg div input[type='file']{
     display:none;
 }
@@ -47,6 +51,10 @@
     font-size: 1.2rem;
 }
 
+#reg .upper-bar-icon{
+    height: 5vh;
+}
+
 
 @media (min-width: 992px) {
     #reg #upload_profilePic_container{
@@ -54,7 +62,15 @@
     }
 
     #reg .lg-screen{
-        width:44.4vw;
+        width:43.5vw;
+    }
+
+    #reg .sm-in-lg-screen{
+        width:21vw;
+    }
+
+    #reg .sm-in-lg-screen[name='phoneNum']{
+        margin-right:1.5vw;
     }
 
     #upload_profilePic_container p{
@@ -84,5 +100,9 @@
 
     #reg #state-info{
         font-size:1rem;
+    }
+
+    #reg .upper-bar-icon{
+        height: 4.95vh;
     }
  }
