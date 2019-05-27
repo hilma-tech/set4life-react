@@ -75,17 +75,53 @@ const firebaseObj = {
         return await data;
     },
 
-    updatingGameIdInFB() {
-        Variables._date = GeneralFunctions.timeAndDate('date');
+
+    async updatingGameIdInFB(exist_gameCode = null) {
+        let _date = GeneralFunctions.timeAndDate('date');
         let level = Variables.constParameters ? (3 - Object.keys(Variables.constParameters).length) : 3;
 
-        firebaseObj._db.ref(`Players/${Variables.userId}/games/${Variables._date}`).once('value').then(snap => {
+        firebaseObj._db.ref(`Players/${Variables.userId}/games/${_date}`).once('value').then(snap => {
+            
             let leng = snap.val() ? Object.keys(snap.val()).length : 0;
-            Variables.day_numberedGame = setFunctions.add0beforGameCode(3, leng + 1);
-            firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${Variables._date}`,
-                { [setFunctions.add0beforGameCode(3, leng + 1)]: { startGameTime: Variables.creationGameTime, gameCode: Variables.gameCode, level: level } });
-            firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}`,
-                { currentGame: { gameCode: Variables.gameCode, index: { date: Variables._date, day_numberedGame: (setFunctions.add0beforGameCode(3, leng + 1)) } } });
+            let day_numberedGame = setFunctions.add0beforGameCode(3, leng + 1);
+
+            Object.assign(Variables, {
+                _date: _date,
+                day_numberedGame: day_numberedGame
+            })
+
+            firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${_date}`, {
+                [day_numberedGame]: {
+                    startGameTime: Variables.creationGameTime,
+                    gameCode: Variables.gameCode,
+                    level: level
+                }
+            });
+
+            firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}`, {
+                currentGame: {
+                    gameCode: Variables.gameCode,
+                    index: {
+                        date: _date,
+                        day_numberedGame: day_numberedGame
+                    }
+                }
+            });
+
+            if (exist_gameCode) {
+                firebaseObj.updatingValueInDataBase(
+                    `Games/${exist_gameCode}/Game_Participants`, {
+                        [Variables.userId]: {
+                            Name: Variables.playerName,
+                            ProfilePic: Variables.profilePic,
+                            isConnected: true,
+                            game_id: {
+                                _date: _date,
+                                day_numberedGame: day_numberedGame
+                            }
+                        }
+                    });
+            }
         });
     },
 

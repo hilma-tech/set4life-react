@@ -5,7 +5,7 @@ import SelectGameType from './Components/Sections/SelectGameType/SelectGameType.
 import Variables from './SetGame/Variables';
 import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
-import LoadingImg from './data/design/loading-img.gif';
+import LoadingPage from './Components/Screen_Components/LoadingPage/LoadingPage';
 import ErrorMes from './Components/Small_Components/ErrorMes';
 import NotChrome from './Components/Small_Components/NotChrome/notChrome';
 import SaveGame from './Components/Small_Components/SaveGame/SaveGame';
@@ -14,7 +14,7 @@ import ChartData from './Components/Screen_Components/Charts/ChartData';
 import UserIcon from './Components/Small_Components/UserIcon/UserIcon';
 import CurrentGame from './Components/Screen_Components/CurrentGame/CurrentGame';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -72,7 +72,7 @@ class App extends Component {
     if ((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) || (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)) {
       switch (this.state.pageSeen) {
         case "load":
-          return <div className='page'><img className="LoadingImg" src={LoadingImg} alt='loading' /></div>;
+          return <LoadingPage />;
         case 'ent':
           return <Entrance moveThroughPages={this.moveThroughPages} />;
         case "sel":
@@ -88,4 +88,3 @@ class App extends Component {
   }
 }
 
-export default App;

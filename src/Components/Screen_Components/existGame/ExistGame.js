@@ -27,23 +27,6 @@ export default class ExistGame extends Component {
         if (Object.keys(this.state.gameObj).length) {
             let gameObj = this.state.gameObj;
 
-            if (this.state.all_participants.includes(Variables.userId))
-                firebaseObj.updatingValueInDataBase(
-                    `Games/${this.state.gameCode}/Game_Participants/${Variables.userId}`,
-                    { isConnected: true })
-
-            else {
-                firebaseObj.updatingValueInDataBase(
-                    `Games/${this.state.gameCode}/Game_Participants`,
-                    {
-                        [Variables.userId]: {
-                            Name: Variables.playerName,
-                            ProfilePic: Variables.profilePic,
-                            isConnected: true
-                        }
-                    });
-            }
-
             Object.assign(Variables, {
                 gameCode: this.state.gameCode,
                 _timer: gameObj.timeOut_choosingCards,
@@ -51,14 +34,33 @@ export default class ExistGame extends Component {
                 creationGameTime: gameObj.creationTime
             });
 
-            if (!gameObj.Game_Participants[Variables.userId])
-                firebaseObj.updatingGameIdInFB();
+            if (gameObj.Game_Participants[Variables.userId]) {
+
+                firebaseObj.updatingValueInDataBase(
+                    `Games/${this.state.gameCode}/Game_Participants/${Variables.userId}`,
+                    { isConnected: true });
+
+                firebaseObj._db.ref(`Games/${this.state.gameCode}/Game_Participants/${Variables.userId}/game_id`).once('value').then(snap => {
+                    let game_id = snap.val();
+
+                    Object.assign(Variables, {
+                        _date: game_id._date,
+                        day_numberedGame: game_id.day_numberedGame
+                    });
+                });
+            }
+
+            else {
+                firebaseObj.updatingGameIdInFB(this.state.gameCode);
+            }
 
             this.props.moveThroughPages("boa", gameObj);
+
         }
         else
             this.setState({ invalidGameCode: true });
     }
+
 
 
     inputChange = (event) => {
@@ -90,23 +92,19 @@ export default class ExistGame extends Component {
             }) : [];
 
         arr_participants = arr_participants.filter(val => val !== undefined);
-
-        let all_participants = gameObj && gameObj.Game_Participants ?
-            Object.keys(gameObj.Game_Participants) : [];
         let id_participants = arr_participants.map(val => val[0]);
         let names_participants = arr_participants.map(val => val[1].Name);
 
         this.setState({
             gameObj: gameObj ? gameObj : {}, loadLocatePartic: false,
-            id_participants: id_participants, names_participants: names_participants,
-            all_participants: all_participants
+            id_participants: id_participants, names_participants: names_participants
         });
     }
 
 
     keypressed = (e) => {
         if (this.state.id_participants.length && this.state.id_participants.length < 4 && !this.state.id_participants.includes(Variables.userId)) {
-            if (e.key === "Enter"){
+            if (e.key === "Enter") {
                 this.onClickExistGameCodeButton();
             }
         }

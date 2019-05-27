@@ -1,0 +1,15 @@
+#loading-page {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#loading-page img{
+    height: 20vw;
+}
+
+@media (min-width: 992px) {
+    #loading-page img{
+        height: 10vw;
+    }
+}

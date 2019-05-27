@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ChartFunctions from './ChartFunctions';
-import LoadGif from '../../../data/design/loading-img.gif';
 import { fillingAxis, x_y_axis, chartsObj, chartTitles } from './X_Y_axis';
 import './chart-data.css'
 import LeftArrow from '../../../data/design/left-arrow.png';

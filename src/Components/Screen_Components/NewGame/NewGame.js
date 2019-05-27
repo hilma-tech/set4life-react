@@ -28,7 +28,7 @@ export default class NewGame extends Component {
         window.history.pushState('newGame', '', 'newGame');
     }
 
-    settingNewGame = async () => {
+     settingNewGame = async () => {
         let newGameCode;
         do {
             newGameCode = setFunctions.add0beforGameCode(3);
@@ -52,8 +52,19 @@ export default class NewGame extends Component {
             currentCards: newCurrentCards,
             usedCards: newCurrentCards,
             constParameters: Variables.constParameters,
-            Game_Participants: { [Variables.userId]: { Name: Variables.playerName, ProfilePic: Variables.profilePic, isConnected: true } }
+            Game_Participants: {
+                [Variables.userId]: {
+                    Name: Variables.playerName,
+                    ProfilePic: Variables.profilePic,
+                    isConnected: true,
+                    game_id: {
+                        _date: Variables._date,
+                        day_numberedGame: Variables.day_numberedGame
+                    }
+                }
+            }
         };
+
         firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`, gameObj);
         firebaseObj.updatingGameIdInFB();
         this.props.moveThroughPages("boa", gameObj);
@@ -100,45 +111,45 @@ export default class NewGame extends Component {
 
     render() {
         return (
-            <div id="new-game" className='container-fluid d-flex flex-column' onKeyPress={this.keypressed} style={{height:'100vh'}}>
+            <div id="new-game" className='container-fluid d-flex flex-column' onKeyPress={this.keypressed} style={{ height: '100vh' }}>
                 <nav className="navbar w-100 p-lg-2 p-md-3">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
                     <img className="upper-bar-icon" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
-                </nav> 
+                </nav>
 
 
-                    <div className='container m-lg-0 d-flex flex-column'>
-                        <h1 className='mb-md-3 mb-lg-1 text-right mr-2'>משחק חדש </h1>
-                        <div className="mr-2">
-                            <div className='col-lg-9 col-md-12 p-0'>
-                                {Object.keys(GameData.cardsParameters).map((par_name, i) => (
-                                    <CheckboxConstParameter
-                                        par_name={par_name}
-                                        checkboxsInfo={this.state.checkboxsInfo}
-                                        i={i}
-                                        key={i}
-                                        checkboxsChange={this.checkboxsChange}
-                                        settingConstParametersObj={this.settingConstParametersObj} />)
-                                )}
-                            </div>
-                            <div className='d-flex justify-content-start align-items-center'>
-                                <label id='timer-for-set' className='h4 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
-                                <input
-                                    style={{ fontSize: '0.9rem', height: '7vh' }}
-                                    className='col-2 p-0'
-                                    type="number"
-                                    min="2"
-                                    value={this.state._timer}
-                                    onChange={this.settingTimeOut} />
-
-                            </div>
+                <div className='container m-lg-0 d-flex flex-column'>
+                    <h1 className='mb-md-3 mb-lg-1 text-right mr-2'>משחק חדש </h1>
+                    <div className="mr-2">
+                        <div className='col-lg-9 col-md-12 p-0'>
+                            {Object.keys(GameData.cardsParameters).map((par_name, i) => (
+                                <CheckboxConstParameter
+                                    par_name={par_name}
+                                    checkboxsInfo={this.state.checkboxsInfo}
+                                    i={i}
+                                    key={i}
+                                    checkboxsChange={this.checkboxsChange}
+                                    settingConstParametersObj={this.settingConstParametersObj} />)
+                            )}
                         </div>
-                        
-                        <button
-                                className='btn btn-primary mt-md-4 mt-lg-2 rounded text-center'
-                                disabled={this.setDisableNewGameButton()}
-                                onClick={this.settingNewGame}>התחל</button>
+                        <div className='d-flex justify-content-start align-items-center'>
+                            <label id='timer-for-set' className='h4 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
+                            <input
+                                style={{ fontSize: '0.9rem', height: '7vh' }}
+                                className='col-2 p-0'
+                                type="number"
+                                min="2"
+                                value={this.state._timer}
+                                onChange={this.settingTimeOut} />
+
+                        </div>
                     </div>
+
+                    <button
+                        className='btn btn-primary mt-md-4 mt-lg-2 rounded text-center'
+                        disabled={this.setDisableNewGameButton()}
+                        onClick={this.settingNewGame}>התחל</button>
+                </div>
 
             </div>
         );

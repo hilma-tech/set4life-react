@@ -13,6 +13,7 @@ import chartsImg from '../../../data/design/line-chart.png'
 import LogoutImg from '../../../data/design/logout.png';
 import UserIcon from '../../Small_Components/UserIcon/UserIcon';
 import LoadingImg from '../../../data/design/loading-img.gif';
+import LoadingPage from '../../Screen_Components/LoadingPage/LoadingPage';
 
 
 export default class GameType extends Component {
@@ -120,7 +121,7 @@ export default class GameType extends Component {
             case 'newGame':
                 return <NewGame moveThroughPages={this.props.moveThroughPages} onClickGameTypeButton={this.onClickGameTypeButton} />;
             case 'load':
-                return <div><img src={LoadingImg} /></div>
+                return <LoadingPage/>
             case 'charts':
                 return <ChartData moveThroughPages={this.props.moveThroughPages} />
             default:
