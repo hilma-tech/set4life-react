@@ -42,7 +42,7 @@ export default class Card extends Component {
 
         (this.props.isSelected) && (classNameCard += this.settingClassNameCard());
         
-        console.log(classNameCard)
+        // console.log(classNameCard)
         return (
             <div className="_card-div">
                 <img

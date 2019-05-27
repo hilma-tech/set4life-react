@@ -105,16 +105,17 @@ export default class ExistGame extends Component {
 
 
     keypressed = (e) => {
-        if (!this.state.id_participants.length || this.state.id_participants.length > 4 || this.state.id_participants.includes(Variables.userId)) {
-            if (e.key === "Enter")
+        if (this.state.id_participants.length && this.state.id_participants.length < 4 && !this.state.id_participants.includes(Variables.userId)) {
+            if (e.key === "Enter"){
                 this.onClickExistGameCodeButton();
+            }
         }
     }
 
 
     render() {
         return (
-            <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={(this.state.loadingParticipants) ? this.keypressed : () => { }} >
+            <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={this.keypressed} >
 
                 <nav className="navbar">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
