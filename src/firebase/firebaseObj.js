@@ -76,12 +76,12 @@ const firebaseObj = {
     },
 
 
-    async updatingGameIdInFB(exist_gameCode = null) {
+    async updatingGameIdInFB(gameCode) {
         let _date = GeneralFunctions.timeAndDate('date');
         let level = Variables.constParameters ? (3 - Object.keys(Variables.constParameters).length) : 3;
 
         firebaseObj._db.ref(`Players/${Variables.userId}/games/${_date}`).once('value').then(snap => {
-            
+
             let leng = snap.val() ? Object.keys(snap.val()).length : 0;
             let day_numberedGame = setFunctions.add0beforGameCode(3, leng + 1);
 
@@ -108,20 +108,17 @@ const firebaseObj = {
                 }
             });
 
-            if (exist_gameCode) {
-                firebaseObj.updatingValueInDataBase(
-                    `Games/${exist_gameCode}/Game_Participants`, {
-                        [Variables.userId]: {
-                            Name: Variables.playerName,
-                            ProfilePic: Variables.profilePic,
-                            isConnected: true,
-                            game_id: {
-                                _date: _date,
-                                day_numberedGame: day_numberedGame
-                            }
-                        }
-                    });
-            }
+            firebaseObj.updatingValueInDataBase(`Games/${gameCode}/Game_Participants`, {
+                [Variables.userId]: {
+                    Name: Variables.playerName,
+                    ProfilePic: Variables.profilePic,
+                    isConnected: true,
+                    game_id: {
+                        _date: _date,
+                        day_numberedGame: day_numberedGame
+                    }
+                }
+            });
         });
     },
 

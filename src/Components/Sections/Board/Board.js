@@ -38,6 +38,7 @@ export default class Board extends Component {
             3-Another player is playing. lock state.
              */
         }
+
         window.history.pushState('boa', '', 'board');
         window.onpopstate = (event) => {
             console.log(`%c pop boa- ${event.state}`,'color: pink;')
@@ -261,7 +262,7 @@ export default class Board extends Component {
                         </div>
 
                         {this.state.currentCards &&
-                            <button id='the-button' className='btn btn-primary mt-md-1 mt-lg-2' onClick={this.clickButtonEvent} 
+                            <button id='the-button' className='btn btn-primary' onClick={this.clickButtonEvent} 
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :

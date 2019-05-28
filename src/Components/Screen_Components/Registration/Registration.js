@@ -54,36 +54,43 @@ export default class Registration extends Component {
 
         if (!emptyFilesArr.length) {
             let _valid = this.registrationValidation()
+
             if (_valid.phoneNum && _valid.passwordAgain) {
-                Variables.playerName = this.state.fullName;
-                Variables.profilePic = this.state.profilePic ? this.state.profilePic : userIcon;
                 firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
                     .then(fbUser => {
                         this.setState({ registStateInfo: 'נרשמת בהצלחה' });
+
+                        Object.assign(Variables, {
+                            playerName: this.state.personalInfo.fullName,
+                            profilePic: URL.createObjectURL(this.state.profilePic) ?
+                                URL.createObjectURL(this.state.profilePic) : userIcon
+                        })
+
                         let updating_PlayerInfo_fb = (userId, profilePic = null) => {
                             firebaseObj.settingValueInDataBase(`PlayersInfo/${userId}`,
                                 {
                                     Name: this.state.personalInfo.fullName,
                                     phoneNum: this.state.personalInfo.phoneNum,
-                                    ProfilePic: profilePic ? profilePic : userIcon
+                                    ProfilePic: this.state.profilePic ?
+                                        this.state.profilePic : userIcon
                                 });
                         }
+
                         if (this.state.profilePic) {
                             let task = firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).put(this.state.profilePic);
                             task.on('state_changed', () => { }, () => { },
                                 function finish() {
                                     firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).getDownloadURL().then(url => {
-                                        updating_PlayerInfo_fb(fbUser.user.uid, url)
+                                        updating_PlayerInfo_fb(fbUser.user.uid, url);
                                     });
                                 });
                         }
                         else updating_PlayerInfo_fb(fbUser.user.uid);
 
                     },
-                        error => {
+                        error =>
                             this.setState({ registStateInfo: GameData.errorRegistration[error.code] })
-                            console.log("error code", error.code)
-                        });
+                    );
             }
             else {
                 let arr = [];
@@ -113,10 +120,10 @@ export default class Registration extends Component {
         return (
             <div id='reg' className='page container-fluid d-flex flex-column' onKeyPress={this.keypressed}>
                 <nav className='navbar w-100'>
-                    <img className="upper-bar-icon mr-auto ml-2" src={arrow} alt="back" onClick={()=>window.history.back()} name='sel' />
+                    <img className="upper-bar-icon mr-auto ml-2" src={arrow} alt="back" onClick={() => window.history.back()} name='ent' />
                 </nav>
 
-                <div className=''>
+                <div >
                     <h1 className="display-2 my-0 py-lg-0">הרשמה</h1>
                     <div className="container mb-md-3 mb-lg-1">
                         <div id='upload_profilePic_container' className='d-flex col-md-9 mx-auto col-lg-8 p-0 lg-screen'>
@@ -145,7 +152,7 @@ export default class Registration extends Component {
                     </div>
                     <button className='btn btn-primary btn-lg ' onClick={this.onClickRegisterButton}>הבא</button>
                     {this.state.registStateInfo !== '' &&
-                        <label id='state-info' className='d-block text-danger mt-1 col-11 mx-auto'>{this.state.registStateInfo}</label>
+                        <label id='state-info' className='d-block text-danger col-11 mx-auto'>{this.state.registStateInfo}</label>
                     }
 
                 </div>

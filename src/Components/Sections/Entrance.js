@@ -13,6 +13,7 @@ export default class Entrance extends Component{
             //'log'-login
             //'reg'-Registration
         }
+        window.history.replaceState('ent','','Entrance');
         window.onpopstate=(event)=>{
             console.log(`%c pop ent- ${event.state}, `,'color: red;')
             switch(event.state){
@@ -25,17 +26,16 @@ export default class Entrance extends Component{
         }
     }
 
-    moveToRegistration=()=>{
-        this.setState({EntranceOption:'reg'})
+    moveBetweenEntOptions=(event)=>{
+        this.setState({EntranceOption:event.target.getAttribute('moveTo')});
     }
 
     render(){
         switch(this.state.EntranceOption){
             case 'log':
-                return <LoginPage moveToRegistration={this.moveToRegistration} 
-                            moveThroughPages={this.props.moveThroughPages}/>;
+                return <LoginPage moveBetweenEntOptions={this.moveBetweenEntOptions}/>;
             case 'reg':
-                return <Registration moveThroughPages={this.props.moveThroughPages}/>;
+                return <Registration/>;
             default:
                 return <ErrorMes/>; 
         }

@@ -28,7 +28,7 @@ export default class NewGame extends Component {
         window.history.pushState('newGame', '', 'newGame');
     }
 
-     settingNewGame = async () => {
+    settingNewGame = async () => {
         let newGameCode;
         do {
             newGameCode = setFunctions.add0beforGameCode(3);
@@ -65,8 +65,8 @@ export default class NewGame extends Component {
             }
         };
 
+        firebaseObj.updatingGameIdInFB(newGameCode);
         firebaseObj.settingValueInDataBase(`Games/${Variables.gameCode}`, gameObj);
-        firebaseObj.updatingGameIdInFB();
         this.props.moveThroughPages("boa", gameObj);
     }
 
@@ -81,10 +81,9 @@ export default class NewGame extends Component {
 
             checkboxsInfo[`${event.target.name}Bool`] = true;
         }
-        else {
-            if (setFunctions.checkOfValidChecks(checkboxsInfo) >= 3)
-                checkboxsInfo[`${event.target.name}Bool`] = false;
-        }
+        else if (setFunctions.checkOfValidChecks(checkboxsInfo) >= 3)
+            checkboxsInfo[`${event.target.name}Bool`] = false;
+
         this.setState({ checkboxsInfo: checkboxsInfo });
     }
 
@@ -96,7 +95,8 @@ export default class NewGame extends Component {
 
     setDisableNewGameButton = () => {
         return !(Object.keys(this.state.dropDownInfo).length +
-            setFunctions.checkOfValidChecks(this.state.checkboxsInfo) === 4) || parseInt(this.state._timer, 10) < 2 || this.state._timer === '';
+            setFunctions.checkOfValidChecks(this.state.checkboxsInfo) === 4) || 
+            parseInt(this.state._timer, 10) < 2 || this.state._timer === '';
     }
 
     settingTimeOut = (event) => {

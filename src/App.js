@@ -49,11 +49,20 @@ export default class App extends Component {
   handlePlayerAuthState = async (fbUser) => {
     if (fbUser) {
       console.log('fbUser', fbUser);
-      firebaseObj.readingDataOnFirebaseCB(info_obj => {
-        Object.assign(Variables,
-          {userId:fbUser.uid, profilePic: info_obj.ProfilePic,playerName: info_obj.Name });
+
+      if (Variables.profilePic === "default" || !Variables.playerName.length) {
+        firebaseObj.readingDataOnFirebaseCB(info_obj => {
+          Object.assign(Variables,
+            { userId: fbUser.uid, profilePic: info_obj.ProfilePic, playerName: info_obj.Name });
+          this.moveThroughPages("sel")
+        }, `PlayersInfo/${fbUser.uid}`);
+      }
+
+      else {
+        Variables.userId = fbUser.uid;
         this.moveThroughPages("sel")
-      }, `PlayersInfo/${fbUser.uid}`);
+      }
+
     }
     else {
       console.log("not logged in");
@@ -65,7 +74,7 @@ export default class App extends Component {
 
 
   moveThroughPages = (pageName, info = {}) => {
-    this.setState({ pageSeen: pageName, info: info});
+    this.setState({ pageSeen: pageName, info: info });
   }
 
   render() {
@@ -74,7 +83,7 @@ export default class App extends Component {
         case "load":
           return <LoadingPage />;
         case 'ent':
-          return <Entrance moveThroughPages={this.moveThroughPages} />;
+          return <Entrance />;
         case "sel":
           return <SelectGameType moveThroughPages={this.moveThroughPages} />;
         case "boa":

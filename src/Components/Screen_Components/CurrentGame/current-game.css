@@ -17,5 +17,9 @@
     #current-game .modal-body h1{
         font-size: 6vw;
     }
+
+    #current-game button{
+        font-size: 3.5vw;
+    }
 }
 

@@ -41,7 +41,6 @@ export default class LoginPage extends Component {
                     firebaseObj._db.ref(`PlayersInfo/${fbUser.user.uid}/Name`).once('value', snap => {
                         Object.assign(Variables,
                             { playerName: snap.val(), userId: fbUser.user.uid })
-                        this.props.moveThroughPages("sel")
                     });
                 }, error => {
                     this.setState({ loginStateInfo: GameData.errorLogin[error.code], _loadingImg: false })
@@ -92,7 +91,7 @@ export default class LoginPage extends Component {
                         <img className='loading-sm' src={LoadingImg} alt='loading' /> :
                         <button className='btn btn-primary btn-lg' onClick={this.clickLoginButtonEvent} >היכנס</button>
                     }
-                    <a className='' href='#' onClick={this.props.moveToRegistration}>עוד לא נרשמת?</a>
+                    <a className='' href='#' onClick={this.props.moveBetweenEntOptions}>עוד לא נרשמת?</a>
                     <label className='mt-2 text-danger'>{this.state.loginStateInfo}</label>
                 </div>
             </div>
