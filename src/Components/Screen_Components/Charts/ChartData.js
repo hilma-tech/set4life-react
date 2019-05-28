@@ -86,7 +86,7 @@ const ChartPage = (props) => (
         </nav>
         <div id='chart-container' className='col-md-11 mx-auto'>
             <div id='chart-info'>
-                <h1 className='h1 font-weight-light m-lg-0 col-lg-12' >{chartTitles[props.chartType].title}</h1>
+                <h1>{chartTitles[props.chartType].title}</h1>
                 <p className='lead m-lg-0 m-0' >{chartTitles[props.chartType]._p}</p>
             </div>
             <div id="lineChart" className='container' >
@@ -100,7 +100,7 @@ const displayLevels = ['קל', 'בינוני', 'קשה'];
 const DropDown_level = (props) => (
     <div id='drop_down_chart' className="d-flex ml-5 col-lg-4 col-md-10 justify-content-center mx-auto mt-md-3 m-lg-0">
         <label className="no-bg my-auto ml-1">רמת קושי:</label>
-        <select className="d-flex form-control " name={props.chartType} onChange={props.onChange} >
+        <select className="d-flex form-control" name={props.chartType} onChange={props.onChange} >
             {displayLevels.map((level, i) =>
                 <option key={i} num={i + 1} selected={i + 1 === 3}>{level}</option>)}
         </select>

@@ -4,7 +4,7 @@
 }
 
 #lineChart{
-  height: 68vh;
+  height: 60vh;
   width:90vw;
 }
 
@@ -41,7 +41,8 @@
 
 #chart-info h1{
   margin-top:2vh;
-  font-size: 8vw;
+  font-size: 6.7vw;
+  max-width:95vw;
 }
 
 #chart-info p{
@@ -91,7 +92,7 @@
   }
 
   #chart-info h1{
-    font-size:8.2vh;
+    font-size:8.3vh;
   }
 
   #chart-info p{
@@ -113,6 +114,11 @@
 
   #chart-data .form-control{
     height:3.6vw;
+  }
+
+  #lineChart{
+    height: 68vh;
+    width:94vw;
   }
   
 }

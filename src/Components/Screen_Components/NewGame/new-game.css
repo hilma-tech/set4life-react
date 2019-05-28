@@ -5,12 +5,16 @@
 
 #new-game #checkbox-constParameters select{
     font-size: 5vw;
+    text-align-last:center;
+    padding:0;
     width:25vw;
     height:8vw;
 }
 
-#new-game #checkbox-constParameters select option{
+#new-game #checkbox-constParameters select option.form-control{
     font-size: 6vw;
+    padding:0;
+    margin:0;
 }
 
 #new-game #checkbox-constParameters input[type='checkbox']{
@@ -27,10 +31,11 @@
 }
 
 #new-game button{
-    font-size:6vw;
-    width:25vw;
-    margin-top:5vw;
+    font-size:6.2vw;
+    width:23vw;
+    margin-top:3.5vw;
     align-self:center;
+    font-weight:600;
 }
 
 #new-game h1{
@@ -38,7 +43,7 @@
 }
 
 #new-game div.container{
-    margin-top:10vh;
+    margin-top:5vh;
     padding:0 5vw;
     width:90vw;
 }
@@ -83,6 +88,13 @@
         margin-top:10vh;
         padding:0;
         width:35vw;
+        align-self:center;
+    }
+
+    #new-game button{
+        font-size:2.5vw;
+        width:9vw;
+        margin-top:0.5vw;
         align-self:center;
     }
 

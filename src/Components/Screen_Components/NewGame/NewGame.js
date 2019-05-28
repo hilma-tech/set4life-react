@@ -146,7 +146,7 @@ export default class NewGame extends Component {
                     </div>
 
                     <button
-                        className='btn btn-primary mt-md-4 mt-lg-2 rounded text-center'
+                        className='btn btn-primary rounded text-center'
                         disabled={this.setDisableNewGameButton()}
                         onClick={this.settingNewGame}>התחל</button>
                 </div>
@@ -177,7 +177,8 @@ const CheckboxConstParameter = (props) => (
 
 const SelectConstParameter = (props) => (
     <select
-        className='mr-auto ml-3'
+        dir="rtl"
+        className='mr-auto ml-3 form-control'
         ref={el => dropdown_refs[props.categoryStr] = el}
         style={{ visibility: (!props.checkboxsInfo[props.categoryStr + 'Bool']) ? 'visible' : 'hidden' }}
         name={props.categoryStr}
