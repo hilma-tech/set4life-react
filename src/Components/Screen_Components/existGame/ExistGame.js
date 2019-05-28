@@ -115,7 +115,7 @@ export default class ExistGame extends Component {
         return (
             <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={this.keypressed} >
 
-                <nav className="navbar">
+                <nav className="navbar p-lg-2 p-md-3">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
                     <img className="upper-bar-icon" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                 </nav>

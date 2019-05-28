@@ -1,5 +1,5 @@
 
-#new-game label{
+#new-game label:not(.user-icon.left label){
     margin:0;
 }
 

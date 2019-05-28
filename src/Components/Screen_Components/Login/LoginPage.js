@@ -18,7 +18,7 @@ export default class LoginPage extends Component {
             loginStateInfo: ' ',
             _loadingImg: false
         };
-        window.history.pushState('log', '', 'login');
+        window.history.pushState('log', '', 'Login');
     }
 
     inputChange = (event) => {
@@ -91,7 +91,7 @@ export default class LoginPage extends Component {
                         <img className='loading-sm' src={LoadingImg} alt='loading' /> :
                         <button className='btn btn-primary btn-lg' onClick={this.clickLoginButtonEvent} >היכנס</button>
                     }
-                    <a className='' href='#' onClick={this.props.moveBetweenEntOptions}>עוד לא נרשמת?</a>
+                    <a onClick={this.props.moveBetweenEntOptions} moveTo='reg' >עוד לא נרשמת?</a>
                     <label className='mt-2 text-danger'>{this.state.loginStateInfo}</label>
                 </div>
             </div>

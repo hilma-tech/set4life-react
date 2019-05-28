@@ -26,7 +26,8 @@ export default class Registration extends Component {
             registStateInfo: '',
             profilePic: null
         }
-        window.history.pushState('reg', '', 'registration');
+        window.history.pushState('reg', '', 'Registration');
+        //console.log("window",window.history)
     }
 
 
@@ -120,7 +121,7 @@ export default class Registration extends Component {
         return (
             <div id='reg' className='page container-fluid d-flex flex-column' onKeyPress={this.keypressed}>
                 <nav className='navbar w-100'>
-                    <img className="upper-bar-icon mr-auto ml-2" src={arrow} alt="back" onClick={() => window.history.back()} name='ent' />
+                    <img className="upper-bar-icon mr-auto ml-2" src={arrow} alt="back" onClick={this.props.moveBetweenEntOptions} moveTo='log' />
                 </nav>
 
                 <div >
