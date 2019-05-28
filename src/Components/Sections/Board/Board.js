@@ -28,6 +28,7 @@ export default class Board extends Component {
             isSet: undefined, 
             exitGame: false,
             endGame: false,
+            game_Participants:[],
             stageOfTheGame: 0
             /*
             stageOfTheGame values:

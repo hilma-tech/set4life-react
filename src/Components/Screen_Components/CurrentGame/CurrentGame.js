@@ -18,13 +18,25 @@ export default class CurrentGame extends Component {
 
     deleteCurrentGame = () => {
         firebaseObj.removeDataFromDB(`Players/${Variables.userId}/currentGame`);
+        firebaseObj._db.ref(`Games/${this.props.currentGame.gameCode}/Game_Participants`).once('value',
+            snap => {
+                let game_Participants = snap.val();
+                let participants_length = Object.keys(game_Participants).length;
+                if (participants_length === 1)
+                    firebaseObj.removeDataFromDB(`Games/${this.props.currentGame.gameCode}`);
+                else
+                    firebaseObj.updatingValueInDataBase(
+                        `Games/${this.props.currentGame.gameCode}/Game_Participants/${Variables.userId}`,
+                        { isConnected: false });
+            });
         this.props.deleteCurrentGameInSel();
     }
 
     render() {
+        console.log('gameCode curr', this.props.currentGame.gameCode)
         return (
-            <div id='current-game' className="modal fade show"  aria-labelledby="exampleModalLabel"
-            data-backdrop="static" role="dialog" style={{ display: 'block' }}>
+            <div id='current-game' className="modal fade show" aria-labelledby="exampleModalLabel"
+                data-backdrop="static" role="dialog" style={{ display: 'block' }}>
                 <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-body">
