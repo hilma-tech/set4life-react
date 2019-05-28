@@ -59,7 +59,8 @@ class ChartData extends Component {
                 onChange={this.onChange_dropDown_level}
                 chartType={this.state.chartType}
                 onClickChartType={this.onClickChartType}
-                group_buttons={this.state.group_buttons} />
+                group_buttons={this.state.group_buttons}
+                onClickGameTypeButton={this.props.onClickGameTypeButton} />
         );
     }
 }
@@ -79,7 +80,9 @@ const ChartPage = (props) => (
                     onChange={props.onChange}
                     name={props.chartType} />
             </div>
-            <a className="col-1 p-0 mr-auto" onClick={() => window.history.back()}><img src={LeftArrow} /></a>
+            <a className="col-1 p-0 mr-auto" onClick={props.onClickGameTypeButton} name='sel' >
+                <img className='upper-bar-icon' src={LeftArrow} onClick={props.onClickGameTypeButton} name='sel' />
+            </a>
         </nav>
         <div id='chart-container' className='col-md-11 mx-auto'>
             <div id='chart-info'>

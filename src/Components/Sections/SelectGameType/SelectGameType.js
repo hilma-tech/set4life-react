@@ -47,6 +47,7 @@ export default class GameType extends Component {
     }
 
     onClickGameTypeButton = (event) => {
+        console.log('game types ',event.target)
         this.setState({ GameTypeOptions: event.target.getAttribute('name') });
     }
 
@@ -123,7 +124,7 @@ export default class GameType extends Component {
             case 'load':
                 return <LoadingPage/>
             case 'charts':
-                return <ChartData moveThroughPages={this.props.moveThroughPages} />
+                return <ChartData onClickGameTypeButton={this.onClickGameTypeButton} />
             default:
                 return <ErrorMes />;
         }
