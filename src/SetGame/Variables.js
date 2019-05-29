@@ -1,3 +1,5 @@
+import LodingImg from '../data/design/loading-img.gif';
+
 const Variables={
     constParameters: {},
     gameCode:'',
@@ -7,7 +9,9 @@ const Variables={
     creationGameTime:'',
     _date:'',
     day_numberedGame:0,
-    profilePic:"default"
+    profilePic:LodingImg
 }
+
+console.log('in var',Variables)
 
 export default Variables;

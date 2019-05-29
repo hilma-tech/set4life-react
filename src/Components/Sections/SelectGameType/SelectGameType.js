@@ -30,6 +30,9 @@ export default class GameType extends Component {
             //currentGame
         }
         window.history.pushState('sel', '', 'gameType');
+        window.onbeforeunload = () => {};
+        let last_screen='';
+
         window.addEventListener('popstate', (event) => {
             console.log(`%c pop sel- ${event.state}`, 'color: green;')
 
@@ -41,13 +44,15 @@ export default class GameType extends Component {
                         this.setState({ GameTypeOptions: event.state });
                     break;
                 default:
-                    window.history.pushState('sel', '', 'gameType');
+                    if(event.state!=='EndGame'||event.state!=='SaveGame')
+                        window.history.pushState('sel', '', 'gameType');
             }
+
+            last_screen=event.state;
         });
     }
 
     onClickGameTypeButton = (event) => {
-        console.log('game types ',event.target)
         this.setState({ GameTypeOptions: event.target.getAttribute('name') });
     }
 

@@ -27,7 +27,6 @@ export default class Registration extends Component {
             profilePic: null
         }
         window.history.pushState('reg', '', 'Registration');
-        //console.log("window",window.history)
     }
 
 
@@ -59,24 +58,19 @@ export default class Registration extends Component {
             if (_valid.phoneNum && _valid.passwordAgain) {
                 firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
                     .then(fbUser => {
+                        
                         this.setState({ registStateInfo: 'נרשמת בהצלחה' });
-
-                        Object.assign(Variables, {
-                            playerName: this.state.personalInfo.fullName,
-                            profilePic: URL.createObjectURL(this.state.profilePic) ?
-                                URL.createObjectURL(this.state.profilePic) : userIcon
-                        })
-
-                        let updating_PlayerInfo_fb = (userId, profilePic = null) => {
+                        
+                        let updating_PlayerInfo_fb = (userId, profilePic_downloadUrl = null) => {
                             firebaseObj.settingValueInDataBase(`PlayersInfo/${userId}`,
                                 {
                                     Name: this.state.personalInfo.fullName,
                                     phoneNum: this.state.personalInfo.phoneNum,
-                                    ProfilePic: this.state.profilePic ?
-                                        this.state.profilePic : userIcon
+                                    ProfilePic: profilePic_downloadUrl ?
+                                        profilePic_downloadUrl : userIcon
                                 });
                         }
-
+        
                         if (this.state.profilePic) {
                             let task = firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).put(this.state.profilePic);
                             task.on('state_changed', () => { }, () => { },
@@ -86,11 +80,11 @@ export default class Registration extends Component {
                                     });
                                 });
                         }
-                        else updating_PlayerInfo_fb(fbUser.user.uid);
-
-                    },
-                        error =>
-                            this.setState({ registStateInfo: GameData.errorRegistration[error.code] })
+                        else 
+                            updating_PlayerInfo_fb(fbUser.user.uid);
+                    })
+                    .catch(error =>
+                        this.setState({ registStateInfo: GameData.errorRegistration[error.code] })
                     );
             }
             else {
@@ -112,9 +106,10 @@ export default class Registration extends Component {
     }
 
     uploadProfilePic = (event) => {
-        if (event.target.files[0]) {
-            this.setState({ profilePic: event.target.files[0] })
-        }
+        let _img = event.target.files ? event.target.files[0] : null;
+
+        if (_img)
+            this.setState({ profilePic: _img });
     }
 
     render() {

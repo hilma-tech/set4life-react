@@ -46,6 +46,8 @@ export default class NewGame extends Component {
         let constParamLength = Object.keys(this.state.dropDownInfo).length;
         let newCurrentCards = setFunctions.createNewCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);
 
+        console.log('Variables',Variables)
+
         let gameObj = {
             timeOut_choosingCards: this.state._timer,
             creationTime: startGameTime,
@@ -110,6 +112,7 @@ export default class NewGame extends Component {
     }
 
     render() {
+        console.log('Variables new game',Variables)
         return (
             <div id="new-game" className='container-fluid d-flex flex-column' onKeyPress={this.keypressed} style={{ height: '100vh' }}>
                 <nav className="navbar w-100 p-lg-2 p-md-3">

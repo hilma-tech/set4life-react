@@ -1,16 +1,14 @@
 import React from 'react';
 import './user-icon.css';
 import ReactTooltip from 'react-tooltip';
-import UserIconImg from '../../../data/design/userIcon.png';
+import Variables from '../../../SetGame/Variables';
 
-// identify 2 players with the same default photo 
-// (props.src===UserIconImg?'defaultImg':'')
 
 let takesFirstWordInSentence = (sentence) => {
     return sentence.substring(0, sentence.indexOf(" ") !== -1 ? sentence.indexOf(" ") : sentence.length);
 }
 
-const UserIcon = (props) => (
+const UserIcon = (props) =>(
     <div id={props.currentPlayer ? 'currentPlayer' : ''} className={'user-icon ' + props._direction} >
         <img className='rounded' src={props.src} width="50" height="50" data-tip={props.name} />
         <label className='mb-0' >

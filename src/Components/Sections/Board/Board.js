@@ -25,10 +25,10 @@ export default class Board extends Component {
         this.state = {
             currentCards: this.props.info.currentCards,
             selectedCards: [],
-            isSet: undefined, 
+            isSet: undefined,
             exitGame: false,
             endGame: false,
-            game_Participants:[],
+            game_Participants: [],
             stageOfTheGame: 0
             /*
             stageOfTheGame values:
@@ -41,8 +41,8 @@ export default class Board extends Component {
 
         window.history.pushState('boa', '', 'board');
         window.onpopstate = (event) => {
-            console.log(`%c pop boa- ${event.state}`,'color: pink;')
-            
+            console.log(`%c pop boa- ${event.state}`, 'color: pink;')
+
             if (event.state !== 'boa') {
                 window.history.pushState('boa', '', 'board');
                 if (window.confirm("אתה בטוח שאתה רוצה לצאת?")) {
@@ -238,7 +238,7 @@ export default class Board extends Component {
 
 
     render() {
-        if ((!this.state.exitGame) && this.state.currentCards.length) {
+        if ((!this.state.exitGame) && this.state.currentCards && this.state.currentCards.length) {
             return (
                 <div id="board" className='container-fluid d-flex flex-column'>
                     <UpperBar game_Participants={this.state.game_Participants}
@@ -262,7 +262,7 @@ export default class Board extends Component {
                         </div>
 
                         {this.state.currentCards &&
-                            <button id='the-button' className='btn btn-primary' onClick={this.clickButtonEvent} 
+                            <button id='the-button' className='btn btn-primary' onClick={this.clickButtonEvent}
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :

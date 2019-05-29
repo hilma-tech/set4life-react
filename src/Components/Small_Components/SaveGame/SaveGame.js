@@ -12,6 +12,11 @@ export default class SaveGame extends Component {
         this.state = {
             choseOption: false
         }
+        window.history.pushState('SaveGame', '', 'SaveGame');
+        window.onpopstate = (event) => {
+            if(event.state==='EndGame')
+                window.history.back();
+        };
     }
 
     toggle = (event) => {

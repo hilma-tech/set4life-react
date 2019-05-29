@@ -50,17 +50,19 @@ export default class App extends Component {
     if (fbUser) {
       console.log('fbUser', fbUser);
 
-      if (Variables.profilePic === "default" || !Variables.playerName.length) {
-        firebaseObj.readingDataOnFirebaseCB(info_obj => {
-          Object.assign(Variables,
-            { userId: fbUser.uid, profilePic: info_obj.ProfilePic, playerName: info_obj.Name });
-          this.moveThroughPages("sel")
+      if (Variables.profilePic === "default" || (!Variables.playerName.length)) {
+        firebaseObj.listenerOnFirebase(info_obj => {
+          if (info_obj) {
+            Object.assign(Variables,
+              { userId: fbUser.uid, profilePic: info_obj.ProfilePic, playerName: info_obj.Name });
+            this.moveThroughPages("sel");
+          }
         }, `PlayersInfo/${fbUser.uid}`);
       }
 
       else {
         Variables.userId = fbUser.uid;
-        this.moveThroughPages("sel")
+        this.moveThroughPages("sel");
       }
 
     }

@@ -2,7 +2,6 @@
 *{
     padding:0;
     margin:0;
-    /* font-family:Verdana, Helvetica; */
     font-family:  -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     color:black;
     background-color:transparent;
@@ -69,6 +68,7 @@ nav{
   background-color: var(--_3)!important;
   border-color:var(--_3)!important;
   color:black;
+  font-weight:600;
 }
 
 @media (min-width: 992px) {

@@ -17,8 +17,11 @@ class EndGame extends Component {
             numWrongSet: 0,
             moveTo_SaveGame: false
         }
-        window.onbeforeunload = () => { };
-        window.onpopstate = () => { };
+        window.history.pushState('EndGame', '', 'EndGame');
+        window.onpopstate = (event) => {
+            window.history.pushState('EndGame', '', 'EndGame');
+            console.log('end state',event.state)
+        };
         firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
     }
     componentDidMount() {
@@ -53,8 +56,8 @@ class EndGame extends Component {
                             <img className="img-fluid" src={Party_Popper} />
                             <div>
                                 <ul className="list-group d-inline-block justify-content-end w-sm-75 w-md-50 list-group-flush">
-                                    <li className="list-group-item">מספר הסטים <span className='text-success'>הנכונים</span> שלך:  <span className='info-text'>{this.state.numCorrectSet}</span></li>
-                                    <li className="list-group-item">מספר הסטים <span className='text-danger'>הלא נכונים</span> שלך:  <span className='info-text'>{this.state.numWrongSet}</span></li>
+                                    <li className="list-group-item">מספר הסטים<span className='text-success'>הנכונים</span>שלך:  <span className='info-text'>{this.state.numCorrectSet}</span></li>
+                                    <li className="list-group-item">מספר הסטים<span className='text-danger'>הלא נכונים</span>שלך:  <span className='info-text'>{this.state.numWrongSet}</span></li>
                                     <li className="list-group-item">זמן ממוצע לבחירת סט:  <span className='info-text'>{this.state.avgTime} </span> שניות</li>
                                 </ul>
                             </div>
