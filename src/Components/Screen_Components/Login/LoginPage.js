@@ -71,7 +71,7 @@ export default class LoginPage extends Component {
 
                     <div>
                         <input
-                            className='d-block'
+                            className='d-block form-control'
                             name='loginEmail'
                             type='text'
                             placeholder="הכנס אימייל"
@@ -79,7 +79,7 @@ export default class LoginPage extends Component {
                             onChange={this.inputChange} />
 
                         <input
-                            className='d-block'
+                            className='d-block form-control'
                             name='loginPsw'
                             type='password'
                             placeholder="הכנס סיסמא"

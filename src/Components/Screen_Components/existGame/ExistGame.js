@@ -123,7 +123,7 @@ export default class ExistGame extends Component {
                 <div id='search-game' className='d-flex flex-column align-items-center'>
                     <h3 className='display-4 mb-4'> הכנס קוד משחק:</h3>
                     <input
-                        className='d-block'
+                        className='form-control d-block'
                         id="input"
                         name='gameCode'
                         type='text'

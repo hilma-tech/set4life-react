@@ -130,19 +130,19 @@ export default class Registration extends Component {
                             </label>
                             <p className='d-inline my-auto'>אנא לחץ על הסמל בשביל להעלות תמונת פרופיל. במידה ולא תעלה תמונה, תופיע תמונת ברירת מחדל.</p>
                         </div>
-                        <input className='col-md-9 d-md-block sm-in-lg-screen d-lg-inline' name='fullName' type='text' placeholder="שם מלא"
+                        <input className='form-control col-md-9 d-md-block sm-in-lg-screen d-lg-inline' name='fullName' type='text' placeholder="שם מלא"
                             onChange={this.inputChange}></input>
 
-                        <input className='col-md-9 d-md-block sm-in-lg-screen d-lg-inline' name='phoneNum' type="text" placeholder="מספר טלפון"
+                        <input className='form-control col-md-9 d-md-block sm-in-lg-screen d-lg-inline' name='phoneNum' type="text" placeholder="מספר טלפון"
                             onChange={this.inputChange} />
 
-                        <input className='col-md-9 d-md-block lg-screen' name="email" type='text' placeholder='אימייל'
+                        <input className='form-control col-md-9 d-md-block lg-screen' name="email" type='text' placeholder='אימייל'
                             onChange={this.inputChange}></input>
 
-                        <input className='col-md-9 lg-screen d-block' name='password' type="password" placeholder='סיסמא'
+                        <input className='form-control col-md-9 lg-screen d-block' name='password' type="password" placeholder='סיסמא'
                             onChange={this.inputChange} />
 
-                        <input className='col-md-9 lg-screen d-block mb-lg-0' name='passwordAgain' type="password" placeholder='אימות סיסמא'
+                        <input className='form-control col-md-9 lg-screen d-block mb-lg-0' name='passwordAgain' type="password" placeholder='אימות סיסמא'
                             onChange={this.inputChange} />
 
                     </div>
