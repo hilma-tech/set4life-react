@@ -15,7 +15,7 @@
   font-size: 7.3vw;
   height: 15vw;
   text-align:right;
-  padding-right:7.5vw;
+  padding:1vw 4vw;
   width:65vw;
   margin:1.4vh 0;
 }
@@ -30,7 +30,7 @@
     font-size: 3.2vw;
     height: 7vw;
     text-align:center;
-    padding-right:0vw;
+    width:50vw;
   }
 
   #sel .btn-primary[name='existGame'] {

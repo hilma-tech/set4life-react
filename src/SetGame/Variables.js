@@ -12,6 +12,4 @@ const Variables={
     profilePic:LodingImg
 }
 
-console.log('in var',Variables)
-
 export default Variables;

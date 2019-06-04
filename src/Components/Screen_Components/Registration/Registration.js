@@ -9,7 +9,7 @@ import cardsLeft from '../../../data/design/cardsLeft.png';
 import PhotoUploader from '../../../data/design/photo-uploader.png';
 import Variables from '../../../SetGame/Variables';
 import arrow from '../../../data/design/left-arrow.png';
-
+import LoadingImg from '../../../data/design/loading-img.gif';
 
 
 export default class Registration extends Component {
@@ -24,7 +24,8 @@ export default class Registration extends Component {
                 passwordAgain: ''
             },
             registStateInfo: '',
-            profilePic: null
+            profilePic: null,
+            loadingRegistration: false
         }
         window.history.pushState('reg', '', 'Registration');
     }
@@ -41,13 +42,20 @@ export default class Registration extends Component {
 
     inputChange = (event) => {
         let personalInfo = this.state.personalInfo;
-        personalInfo[event.target.name] = event.target.value.trim();
+        if (event.target.name === 'fullName') {
+            if (event.target.value.length < 18) 
+                personalInfo[event.target.name] =event.target.value;
+        }
+
+        else 
+            personalInfo[event.target.name] = event.target.value;
         this.setState({ personalInfo: personalInfo, registStateInfo: '' })
     }
 
     onClickRegisterButton = () => {
-        let emptyFilesArr = [];
+        this.setState({ loadingRegistration: true });
         let personalInfo = this.state.personalInfo;
+        let emptyFilesArr = [];
 
         Object.values(personalInfo).map((val, i) =>
             (!val) && emptyFilesArr.push(GameData.registration[i]));
@@ -58,19 +66,19 @@ export default class Registration extends Component {
             if (_valid.phoneNum && _valid.passwordAgain) {
                 firebaseObj._auth.createUserWithEmailAndPassword(personalInfo.email, personalInfo.password)
                     .then(fbUser => {
-                        
+
                         this.setState({ registStateInfo: 'נרשמת בהצלחה' });
-                        
+
                         let updating_PlayerInfo_fb = (userId, profilePic_downloadUrl = null) => {
                             firebaseObj.settingValueInDataBase(`PlayersInfo/${userId}`,
                                 {
-                                    Name: this.state.personalInfo.fullName,
-                                    phoneNum: this.state.personalInfo.phoneNum,
+                                    Name: this.state.personalInfo.fullName.trim(),
+                                    phoneNum: this.state.personalInfo.phoneNum.trim,
                                     ProfilePic: profilePic_downloadUrl ?
                                         profilePic_downloadUrl : userIcon
                                 });
                         }
-        
+
                         if (this.state.profilePic) {
                             let task = firebaseObj._storage.ref(`ProfilePics/${fbUser.user.uid}`).put(this.state.profilePic);
                             task.on('state_changed', () => { }, () => { },
@@ -80,11 +88,14 @@ export default class Registration extends Component {
                                     });
                                 });
                         }
-                        else 
+                        else
                             updating_PlayerInfo_fb(fbUser.user.uid);
                     })
                     .catch(error =>
-                        this.setState({ registStateInfo: GameData.errorRegistration[error.code] })
+                        this.setState({
+                            registStateInfo: GameData.errorRegistration[error.code],
+                            loadingRegistration: false
+                        })
                     );
             }
             else {
@@ -93,11 +104,17 @@ export default class Registration extends Component {
                     arr.push(GameData.errorRegistration.phoneNum);
                 if (!_valid.passwordAgain)
                     arr.push(GameData.errorRegistration.passwordAgain);
-                this.setState({ registStateInfo: GeneralFunctions.string_From_List(arr) });
+                this.setState({
+                    registStateInfo: GeneralFunctions.string_From_List(arr),
+                    loadingRegistration: false
+                });
             }
         }
         else
-            this.setState({ registStateInfo: GeneralFunctions.string_From_List(emptyFilesArr, 'שכחת למלא את השדות: ') });
+            this.setState({
+                registStateInfo: GeneralFunctions.string_From_List(emptyFilesArr, 'שכחת למלא את השדות: '),
+                loadingRegistration: false
+            });
     }
 
     keypressed = (e) => {
@@ -130,23 +147,50 @@ export default class Registration extends Component {
                             </label>
                             <p className='d-inline my-auto'>אנא לחץ על הסמל בשביל להעלות תמונת פרופיל. במידה ולא תעלה תמונה, תופיע תמונת ברירת מחדל.</p>
                         </div>
-                        <input className='form-control col-md-9 d-md-block sm-in-lg-screen d-lg-inline' name='fullName' type='text' placeholder="שם מלא"
+
+                        <input className='form-control col-md-9 d-md-block sm-in-lg-screen d-lg-inline'
+                            value={this.state.personalInfo.fullName}
+                            name='fullName'
+                            type='text'
+                            placeholder="שם מלא"
                             onChange={this.inputChange}></input>
 
-                        <input className='form-control col-md-9 d-md-block sm-in-lg-screen d-lg-inline' name='phoneNum' type="text" placeholder="מספר טלפון"
+                        <input className='form-control col-md-9 d-md-block sm-in-lg-screen d-lg-inline'
+                            value={this.state.personalInfo.phoneNum}
+                            name='phoneNum'
+                            type="text"
+                            placeholder="מספר טלפון"
                             onChange={this.inputChange} />
 
-                        <input className='form-control col-md-9 d-md-block lg-screen' name="email" type='text' placeholder='אימייל'
+                        <input className='form-control col-md-9 d-md-block lg-screen'
+                            value={this.state.personalInfo.email}
+                            name="email"
+                            type='text'
+                            placeholder='אימייל'
                             onChange={this.inputChange}></input>
 
-                        <input className='form-control col-md-9 lg-screen d-block' name='password' type="password" placeholder='סיסמא'
+                        <input
+                            className='form-control col-md-9 lg-screen d-block'
+                            value={this.state.personalInfo.password}
+                            name='password'
+                            type="password"
+                            placeholder='סיסמא'
                             onChange={this.inputChange} />
 
-                        <input className='form-control col-md-9 lg-screen d-block mb-lg-0' name='passwordAgain' type="password" placeholder='אימות סיסמא'
+                        <input
+                            className='form-control col-md-9 lg-screen d-block mb-lg-0'
+                            value={this.state.personalInfo.passwordAgain}
+                            name='passwordAgain'
+                            type="password"
+                            placeholder='אימות סיסמא'
                             onChange={this.inputChange} />
 
                     </div>
-                    <button className='btn btn-primary btn-lg ' onClick={this.onClickRegisterButton}>הבא</button>
+                    {this.state.loadingRegistration ?
+                        <img className='loading-sm' src={LoadingImg} alt='loading' /> :
+                        <button className='btn btn-primary btn-lg ' onClick={this.onClickRegisterButton}>הבא</button>
+                    }
+
                     {this.state.registStateInfo !== '' &&
                         <label id='state-info' className='d-block text-danger col-11 mx-auto'>{this.state.registStateInfo}</label>
                     }

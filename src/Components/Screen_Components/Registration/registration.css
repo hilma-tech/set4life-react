@@ -5,10 +5,6 @@
     font-size: 1.5rem;
 }
 
-/* #reg nav{
-    padding:0;
-} */
-
 #reg div input[type='file']{
     display:none;
 }
@@ -30,6 +26,7 @@
     display: inline-flex;
     justify-content:center ;
 }
+
 #upload_profilePic_container p{
     width: 35vh;
     font-size: 1rem;
@@ -88,8 +85,8 @@
     }
 
     #reg .display-2{
-        font-size: 3.5rem;
-        height:8vw;
+        font-size: 13vh;
+        height: 15vh;
     }
 
     #reg div input{
@@ -115,4 +112,15 @@
     #reg .upper-bar-icon{
         height: 4.95vh;
     }
+
+    #upload_profilePic_container label{
+        width: 12vw;
+        height: 10vw;
+    }
+
+    #upload_profilePic_container p{
+       font-size: 1.6vw
+    }
  }
+
+

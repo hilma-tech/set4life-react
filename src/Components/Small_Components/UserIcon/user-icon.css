@@ -1,7 +1,7 @@
 /* left user-icon */
 /*----------------------------------------- */
 .user-icon.left{
-    max-width:50vw;
+    max-width:80vw;
     display:flex;
     flex-direction: row;
     align-items: center;
@@ -12,7 +12,7 @@
 }
 
 .user-icon.left label{
-    margin-right: 1vw;
+    margin-right: 2vw;
     font-size: 2.2rem;
 }
 /*---------------------------------------- */
@@ -61,7 +61,7 @@
     /* left user-icon */
 /*----------------------------------------- */
     .user-icon.left{
-       max-width:20vw;
+       max-width:70vw;
     }
     .user-icon.left img{
         width: 6vw;

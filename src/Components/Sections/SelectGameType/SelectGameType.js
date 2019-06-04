@@ -82,7 +82,7 @@ export default class GameType extends Component {
                         <div className='container-fluid h-75 d-flex flex-column  justify-content-center'>
                             
                             <h1 className='display-4' >בחר את סוג המשחק</h1>
-                            <div className='container w-75 mt-md-2 mt-lg-1'>
+                            <div className='w-100 mt-md-2 mt-lg-1'>
 
                                 <button
                                     className="btn btn-primary btn-lg col-lg-5 mr-lg-4 mb-md-3"

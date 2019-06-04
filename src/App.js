@@ -48,8 +48,6 @@ export default class App extends Component {
 
   handlePlayerAuthState = async (fbUser) => {
     if (fbUser) {
-      console.log('fbUser', fbUser);
-
       if (Variables.profilePic === "default" || (!Variables.playerName.length)) {
         firebaseObj.listenerOnFirebase(info_obj => {
           if (info_obj) {
@@ -64,8 +62,8 @@ export default class App extends Component {
         Variables.userId = fbUser.uid;
         this.moveThroughPages("sel");
       }
-
     }
+
     else {
       console.log("not logged in");
       Object.assign(Variables,

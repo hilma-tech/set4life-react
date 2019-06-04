@@ -233,6 +233,13 @@ export default class Board extends Component {
                     });
             }
         }
+        else
+            firebaseObj.updatingValueInDataBase(`Games/${this.gameCode}`,
+                {
+                    selectedCards: [],
+                    currentPlayerID: ''
+                });
+
         this.setState({ exitGame: true })
     }
 
