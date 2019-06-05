@@ -7,7 +7,6 @@ import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingPage from './Components/Screen_Components/LoadingPage/LoadingPage';
 import ErrorMes from './Components/Small_Components/ErrorMes';
-import NotChrome from './Components/Small_Components/NotChrome/notChrome';
 import SaveGame from './Components/Small_Components/SaveGame/SaveGame';
 import EndGame from './Components/Screen_Components/EndGame/EndGame';
 import ChartData from './Components/Screen_Components/Charts/ChartData';
