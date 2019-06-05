@@ -138,9 +138,9 @@ export default class ExistGame extends Component {
                         <button
                             className='btn btn-primary'
                             onClick={this.onClickExistGameCodeButton}
-                            disabled={!this.state.id_participants.length ||
-                                this.state.id_participants.length > 4 ||
-                                this.state.id_participants.includes(Variables.userId)} >המשך</button>
+                            disabled={!(this.state.id_participants.length && 
+                                this.state.id_participants.length < 4 && 
+                                !this.state.id_participants.includes(Variables.userId))} >המשך</button>
                     }
 
                     {this.state.loadLocatePartic ?
@@ -159,7 +159,6 @@ export default class ExistGame extends Component {
 }
 
 
-
 const ParticipantsList = (props) => {
     let game_status = '';
 
@@ -168,7 +167,7 @@ const ParticipantsList = (props) => {
     }
     else if (props.id_participants.length) {
 
-        if (props.id_participants.length > 4)
+        if (props.id_participants.length >= 4)
             game_status = 'המשחק מכיל כבר כמות מקסימאלית של משתתפים';
 
         else
