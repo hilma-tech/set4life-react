@@ -78,22 +78,19 @@ export default class App extends Component {
   }
 
   render() {
-    if ((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) || (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1)) {
-      switch (this.state.pageSeen) {
-        case "load":
-          return <LoadingPage />;
-        case 'ent':
-          return <Entrance />;
-        case "sel":
-          return <SelectGameType moveThroughPages={this.moveThroughPages} />;
-        case "boa":
-          return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
-        default:
-          return <ErrorMes />;
-      }
+    switch (this.state.pageSeen) {
+      case "load":
+        return <LoadingPage />;
+      case 'ent':
+        return <Entrance />;
+      case "sel":
+        return <SelectGameType moveThroughPages={this.moveThroughPages} />;
+      case "boa":
+        return <Board info={this.state.info} moveThroughPages={this.moveThroughPages} />;
+      default:
+        return <ErrorMes />;
     }
 
-    else return <NotChrome />
   }
 }
 
