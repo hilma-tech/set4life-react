@@ -25,7 +25,7 @@
     "errorRegistration":{
         "auth/invalid-email":"כתובת האימייל שלך אינה חוקית",
         "auth/email-already-in-use":"האימייל כבר בשימוש",
-        "auth/weak-password":"הסיסמא שלך חלשה מידי",
+        "auth/weak-password":"הסיסמא שלך קצרה מידי",
         "phoneNum":"מספר הטלפון שהזנת אינו תקין",
         "passwordAgain":"הסיסמאות שהזנת אינם תואמות"
     },

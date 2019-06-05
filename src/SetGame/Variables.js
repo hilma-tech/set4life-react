@@ -4,12 +4,13 @@ const Variables={
     constParameters: {},
     gameCode:'',
     userId:'',
-    playerName:'',
+    playerName:"",
     _timer:15,
     creationGameTime:'',
     _date:'',
     day_numberedGame:0,
     profilePic:LodingImg
 }
+
 
 export default Variables;

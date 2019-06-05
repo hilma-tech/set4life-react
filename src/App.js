@@ -7,11 +7,7 @@ import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingPage from './Components/Screen_Components/LoadingPage/LoadingPage';
 import ErrorMes from './Components/Small_Components/ErrorMes';
-import SaveGame from './Components/Small_Components/SaveGame/SaveGame';
-import EndGame from './Components/Screen_Components/EndGame/EndGame';
-import ChartData from './Components/Screen_Components/Charts/ChartData';
-import UserIcon from './Components/Small_Components/UserIcon/UserIcon';
-import CurrentGame from './Components/Screen_Components/CurrentGame/CurrentGame';
+import LodingImg from './data/design/loading-img.gif';
 
 export default class App extends Component {
   constructor(props) {
@@ -29,6 +25,8 @@ export default class App extends Component {
     firebaseObj.createStorage();
     firebaseObj.authState(this.handlePlayerAuthState);
 
+    console.log('app Variables',Variables)
+
     window.onpopstate = (event) => {
       console.log('app popstate', event.state)
       switch (event.state) {
@@ -45,12 +43,10 @@ export default class App extends Component {
   }
 
 
-  handlePlayerAuthState = async (fbUser) => {
+  handlePlayerAuthState = (fbUser) => {
     if (fbUser) {
       console.log('fbUser',fbUser)
-      console.log('bool',Variables.profilePic === "default" ,!Variables.playerName.length)
-      if (Variables.profilePic === "default" || (!Variables.playerName.length)) {
-        console.log('inside')
+      if (Variables.profilePic === LodingImg|| (!Variables.playerName.length)) {
         firebaseObj.listenerOnFirebase(info_obj => {
           if (info_obj) {
             Object.assign(Variables,
@@ -70,14 +66,13 @@ export default class App extends Component {
     else {
       console.log("not logged in");
       Object.assign(Variables,
-        { userId: null, playerName: null, profilePic: "default" });
+        { userId: '', playerName: '', profilePic: LodingImg });
       this.moveThroughPages("ent");
     }
   }
 
 
   moveThroughPages = (pageName, info = {}) => {
-    console.log('move',pageName)
     this.setState({ pageSeen: pageName, info: info });
   }
 
@@ -94,7 +89,6 @@ export default class App extends Component {
       default:
         return <ErrorMes />;
     }
-
   }
 }
 

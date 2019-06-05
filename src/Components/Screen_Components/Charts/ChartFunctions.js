@@ -9,18 +9,17 @@ const ChartFunctions = {
   _load: true,
 
 
-  creatingChartInfo() {
+  creatingChartInfo(chart_canvas) {
     firebaseObj.readingDataOnFirebaseCB(playerObj => {
       this.createX_axis(playerObj.games);
       this.avgTime(playerObj);
       this.calculatesNumOfSets(playerObj);
-      this.createChart();
+      return this.createChart(chart_canvas);
     }, `Players/${Variables.userId}`)
   },
 
 
-  createChart() {
-    let ctx = document.getElementById(`_chart`).getContext('2d');
+  createChart(ctx) {
 
     let _chart = new Chart(ctx, {
       type: 'line',
@@ -50,7 +49,8 @@ const ChartFunctions = {
         }
       }
     });
-    this.chartRef = _chart
+    
+    this.chartRef = _chart;
   },
 
 

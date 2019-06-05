@@ -112,7 +112,6 @@ export default class NewGame extends Component {
     }
 
     render() {
-        console.log('Variables new game',Variables)
         return (
             <div id="new-game" className='container-fluid d-flex flex-column' onKeyPress={this.keypressed} style={{ height: '100vh' }}>
                 <nav className="navbar w-100 p-lg-2 p-md-3">

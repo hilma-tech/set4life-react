@@ -3,8 +3,9 @@ import ChartFunctions from './ChartFunctions';
 import { fillingAxis, x_y_axis, chartsObj, chartTitles } from './X_Y_axis';
 import './chart-data.css'
 import LeftArrow from '../../../data/design/left-arrow.png';
+import ErrorMes from '../../Small_Components/ErrorMes';
 
-
+let chart_canvas = null;
 
 class ChartData extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class ChartData extends Component {
     }
 
     componentDidMount() {
-        ChartFunctions.creatingChartInfo();
+        ChartFunctions.creatingChartInfo(chart_canvas);
     }
 
     onChange_dropDown_level = (event) => {
@@ -90,7 +91,7 @@ const ChartPage = (props) => (
                 <p className='lead m-lg-0 m-0' >{chartTitles[props.chartType]._p}</p>
             </div>
             <div id="lineChart" className='container' >
-                <canvas id='_chart' />
+                <canvas id='_chart' ref={el => chart_canvas = el} />
             </div>
         </div>
     </div>

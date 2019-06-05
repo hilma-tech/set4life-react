@@ -22,8 +22,8 @@
 
 #upload_profilePic_container label{
     border-style: dashed;
-    width:22vw;
-    height:22vw;
+    width:18vw;
+    height:18vw;
     display: inline-flex;
     justify-content:center ;
 }
@@ -59,7 +59,7 @@
 }
 
 #reg .display-2{
-    font-size:20vw;
+    font-size:18vw;
 }
 
     @media (min-width: 992px) {
