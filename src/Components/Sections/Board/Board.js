@@ -247,7 +247,7 @@ export default class Board extends Component {
     render() {
         if ((!this.state.exitGame) && this.state.currentCards && this.state.currentCards.length) {
             return (
-                <div id="board" className='container-fluid d-flex flex-column'>
+                <div id="board" className=' d-flex flex-column'>
                     <UpperBar game_Participants={this.state.game_Participants}
                         gameCode={this.gameCode}
                         exitGame={this.exitGame}
@@ -273,7 +273,7 @@ export default class Board extends Component {
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :
-                                        this.state.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
+                                        this.state.stageOfTheGame === 2 ? "בחר עוד סט!" : "שחקן אחר משחק"
                                 }
                             </button>}
 
@@ -296,7 +296,7 @@ const UpperBar = (props) => (
                     src={val[1].ProfilePic} _direction='bottom' />)}
         </div>
 
-        <label id='game-code' className='h4 col-lg-5 col-md-12'>קוד המשחק {props.gameCode}</label>
+        <label id='game-code' className='h4'>קוד המשחק {props.gameCode}</label>
         <button className='btn btn-primary' onClick={props.exitGame}>יציאה</button>
     </nav>
 );

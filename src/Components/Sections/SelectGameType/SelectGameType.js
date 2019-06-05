@@ -108,6 +108,7 @@ export default class GameType extends Component {
 
                                 <button
                                     className="btn btn-primary btn-lg col-lg-5  mb-md-3"
+                                    style={{backgroundColor:'#9fc8d0',borderColor:'#9fc8d0'}}
                                     onClick={this.onClickGameTypeButton}
                                     name='charts'>
                                     <img

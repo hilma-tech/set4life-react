@@ -1,8 +1,9 @@
 
 #reg div input{
-    margin:1.7vh auto;
+    margin:2vh auto;
     height: 6.5vh;
-    font-size: 1.5rem;
+    font-size: 4vw;
+    width:70vw;
 }
 
 #reg div input[type='file']{
@@ -10,8 +11,8 @@
 }
 
 #reg #profile-pic{
-    height: 15vh;
-    width: 15vh;
+    height: 15vw;
+    width: 15vw;
 }
 
 #reg #uploader-icon{
@@ -21,27 +22,29 @@
 
 #upload_profilePic_container label{
     border-style: dashed;
-    width:18vh;
-    height:18vh;
+    width:22vw;
+    height:22vw;
     display: inline-flex;
     justify-content:center ;
 }
 
 #upload_profilePic_container p{
-    width: 35vh;
-    font-size: 1rem;
+    width: 55vw;
+    font-size: 3.2vw;
     text-align: center;
 }
 
 #reg #upload_profilePic_container{
     margin-top: 1vh;
+    width:70vw;
+    margin:auto auto;
 }
 
 #reg .btn{
     width: 22vw;
     height: 7.5vh;
     padding: 0;
-    font-size: 2.2rem!important;
+    font-size: 2.2vw;
     font-weight:600;
 }
 
@@ -56,13 +59,65 @@
 }
 
 #reg .display-2{
-    height:17.5vw;
+    font-size:20vw;
 }
 
-@media (min-width: 992px) {
-    #reg #upload_profilePic_container{
-        margin: 0;
+    @media (min-width: 992px) {
+        #reg .display-2{
+            font-size: 15vw;
+        }
+
+        .sm-in-lg-screen{
+            display:block;
+        }
+    
+        #reg div input{
+            font-size: 5.5vw;
+            margin:3vh auto;
+            height: 10vw;
+        }
+    
+        #reg .btn{
+            height: 8vh;
+            width: 20vw;
+            font-size: 4vw;
+            padding:0;
+            margin-top: 2vh;
+        }
+    
+        #reg #state-info{
+            font-size:2vw;
+            margin:0.5vw 0 0 0;
+            max-width:80vw;
+        }
+    
+        #reg .upper-bar-icon{
+            height: 4.95vh;
+        }
+    
+        #reg #upload_profilePic_container{
+            width:70vw;
+        }
+    
+        #upload_profilePic_container label{
+            width: 15vw;
+            height: 15vw;
+        }
+    
+        #upload_profilePic_container p{
+            width: 80%;
+            text-align: right;
+            font-size: 3vw;
+        }
+    
+        #reg #profile-pic{
+            height: 12vw;
+            width: 12vw;
+        }
+
     }
+
+    @media (min-width: 1200px) {
 
     #reg .lg-screen{
         width:43.5vw;
@@ -71,34 +126,27 @@
     #reg .sm-in-lg-screen{
         width:21vw;
         margin:1.7vh 0 0 0;
+        display:inline;
     }
 
     #reg .sm-in-lg-screen[name='phoneNum']{
         margin-right:1.5vw;
     }
 
-    #upload_profilePic_container p{
-        width: 80vh;
-        font-size: 0.8rem;
-        text-align: right;
-
-    }
-
     #reg .display-2{
-        font-size: 13vh;
-        height: 15vh;
+        font-size: 7.5vw;
     }
 
     #reg div input{
-        font-size: 1rem;
-        margin:2vh auto;
-        height: 7vh;
+        font-size: 2vw;
+        margin:2.5vh auto;
+        height: 3.5vw;
     }
 
     #reg .btn{
         height: 8vh;
         width: 10vw;
-        font-size: 1.1rem!important;
+        font-size:2.5vw;
         padding:0;
         margin-top: 1vh;
     }
@@ -113,14 +161,27 @@
         height: 4.95vh;
     }
 
+
+    #reg #upload_profilePic_container{
+        width:43.3vw;
+    }
+
     #upload_profilePic_container label{
-        width: 12vw;
-        height: 10vw;
+        width: 8vw;
+        height: 8vw;
     }
 
     #upload_profilePic_container p{
-       font-size: 1.6vw
+        width: 80%;
+        text-align: right;
+        font-size: 1.6vw;
+    }
+
+    #reg #profile-pic{
+        height: 6vw;
+        width: 6vw;
     }
  }
+
 
 

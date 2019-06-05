@@ -35,6 +35,8 @@
  }
  
  ._card-div{
+    width: 21vmin;
+    height:21vmin;
      position: relative;
      margin:0 1vw;
  }
@@ -58,10 +60,8 @@
 }
 
 @media(min-width: 992px){
-    ._card-div{
-        width:10vw;
-        height:10vw;
-        margin:0 0.45vw;
-    }
+}
+
+@media(min-width: 1200px){
 }
  

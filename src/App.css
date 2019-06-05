@@ -63,13 +63,18 @@ nav{
 }
 
 .btn.btn-primary,
-.btn-primary:hover,
 .btn-primary:active{
-  background-color: var(--_3)!important;
-  border-color:var(--_3)!important;
+  background-color: var(--_3);
+  border-color:var(--_3);
   color:black;
   font-weight:600;
 }
+
+.btn-primary:hover{
+  background-color: #1b7988;
+  border-color:#1b7988;
+}
+
 
 @media (min-width: 992px) {
   .loading-sm{

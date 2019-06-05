@@ -47,13 +47,17 @@ export default class App extends Component {
 
   handlePlayerAuthState = async (fbUser) => {
     if (fbUser) {
+      console.log('fbUser',fbUser)
+      console.log('bool',Variables.profilePic === "default" ,!Variables.playerName.length)
       if (Variables.profilePic === "default" || (!Variables.playerName.length)) {
+        console.log('inside')
         firebaseObj.listenerOnFirebase(info_obj => {
           if (info_obj) {
             Object.assign(Variables,
               { userId: fbUser.uid, profilePic: info_obj.ProfilePic, playerName: info_obj.Name });
-            this.moveThroughPages("sel");
           }
+          this.moveThroughPages("sel");
+
         }, `PlayersInfo/${fbUser.uid}`);
       }
 
@@ -73,6 +77,7 @@ export default class App extends Component {
 
 
   moveThroughPages = (pageName, info = {}) => {
+    console.log('move',pageName)
     this.setState({ pageSeen: pageName, info: info });
   }
 

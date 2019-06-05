@@ -8,8 +8,9 @@ margin-bottom: 8vw;
 
 #login-page input{
     font-size: 6vw;
-    margin-bottom: 4vw;
+    margin-bottom: 3vh;
     width:75vw;
+    height:10vw;
 }
 
 #login-page button{
@@ -41,9 +42,10 @@ margin-bottom: 8vw;
        }
        
        #login-page input{
-           font-size: 2.6vw;
-           margin-bottom: 1.2vw;
-           width:37vw;
+           font-size:5vh;
+           margin-bottom: 3vh;
+           width:45vw;
+        height:5vw ;
        }
        
        #login-page button{

@@ -43,11 +43,14 @@ export default class Registration extends Component {
     inputChange = (event) => {
         let personalInfo = this.state.personalInfo;
         if (event.target.name === 'fullName') {
-            if (event.target.value.length < 18) 
-                personalInfo[event.target.name] =event.target.value;
+            if (event.target.value.length < 18)
+                personalInfo.fullName = event.target.value;
         }
-
-        else 
+        else if (event.target.name === 'phoneNum') {
+            if (event.target.value.match(/^\d+$/)||!event.target.value)
+                personalInfo.phoneNum = event.target.value;
+        }
+        else
             personalInfo[event.target.name] = event.target.value;
         this.setState({ personalInfo: personalInfo, registStateInfo: '' })
     }
@@ -73,7 +76,7 @@ export default class Registration extends Component {
                             firebaseObj.settingValueInDataBase(`PlayersInfo/${userId}`,
                                 {
                                     Name: this.state.personalInfo.fullName.trim(),
-                                    phoneNum: this.state.personalInfo.phoneNum.trim,
+                                    phoneNum: this.state.personalInfo.phoneNum.trim(),
                                     ProfilePic: profilePic_downloadUrl ?
                                         profilePic_downloadUrl : userIcon
                                 });
@@ -139,7 +142,7 @@ export default class Registration extends Component {
                 <div >
                     <h1 className="display-2 my-0 py-lg-0">הרשמה</h1>
                     <div className="container mb-md-3 mb-lg-1">
-                        <div id='upload_profilePic_container' className='d-flex col-md-9 mx-auto col-lg-8 p-0 lg-screen'>
+                        <div id='upload_profilePic_container' className='d-flex lg-screen'>
                             <label className="rounded text-right ml-2 my-auto">
                                 <input name='uplode_pic' type="file" placeholder='תמונת פרופיל'
                                     onChange={this.uploadProfilePic} />
@@ -148,21 +151,22 @@ export default class Registration extends Component {
                             <p className='d-inline my-auto'>אנא לחץ על הסמל בשביל להעלות תמונת פרופיל. במידה ולא תעלה תמונה, תופיע תמונת ברירת מחדל.</p>
                         </div>
 
-                        <input className='form-control col-md-9 d-md-block sm-in-lg-screen d-lg-inline'
+                        <input className='form-control sm-in-lg-screen'
                             value={this.state.personalInfo.fullName}
                             name='fullName'
                             type='text'
                             placeholder="שם מלא"
                             onChange={this.inputChange}></input>
 
-                        <input className='form-control col-md-9 d-md-block sm-in-lg-screen d-lg-inline'
+                        <input className='form-control sm-in-lg-screen'
                             value={this.state.personalInfo.phoneNum}
                             name='phoneNum'
                             type="text"
+                            pattern="[0-9]"
                             placeholder="מספר טלפון"
                             onChange={this.inputChange} />
 
-                        <input className='form-control col-md-9 d-md-block lg-screen'
+                        <input className='form-control d-md-block lg-screen'
                             value={this.state.personalInfo.email}
                             name="email"
                             type='text'
@@ -170,7 +174,7 @@ export default class Registration extends Component {
                             onChange={this.inputChange}></input>
 
                         <input
-                            className='form-control col-md-9 lg-screen d-block'
+                            className='form-control lg-screen d-block'
                             value={this.state.personalInfo.password}
                             name='password'
                             type="password"
@@ -178,7 +182,7 @@ export default class Registration extends Component {
                             onChange={this.inputChange} />
 
                         <input
-                            className='form-control col-md-9 lg-screen d-block mb-lg-0'
+                            className='form-control lg-screen d-block mb-lg-0'
                             value={this.state.personalInfo.passwordAgain}
                             name='passwordAgain'
                             type="password"
