@@ -3,7 +3,7 @@ import ChartFunctions from './ChartFunctions';
 import { fillingAxis, x_y_axis, chartsObj, chartTitles } from './X_Y_axis';
 import './chart-data.css'
 import LeftArrow from '../../../data/design/left-arrow.png';
-import ErrorMes from '../../Small_Components/ErrorMes';
+import ErrorMes from '../ErrorMes/ErrorMes';
 
 let chart_canvas = null;
 

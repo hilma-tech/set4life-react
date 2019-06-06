@@ -64,20 +64,23 @@ export default class ExistGame extends Component {
 
 
     inputChange = (event) => {
-        let input_gameCode = event.target.value;
 
-        if (input_gameCode.length <= 3) {
-            this.setState({ gameCode: input_gameCode, invalidGameCode: false, participants: [], loadLocatePartic: null });
+        if(event.target.value.match(/^\d+$/)||!event.target.value){
+            let input_gameCode = event.target.value;
 
-            if (input_gameCode.length < 3 && previous_gameCode) {
-                firebaseObj.removeListener(listenerIfExistGame, `Games/${previous_gameCode}`);
-                previous_gameCode = null;
-            }
-
-            if (input_gameCode.length === 3) {
-                this.setState({ loadLocatePartic: true });
-                listenerIfExistGame = firebaseObj.listenerOnFirebase(this.MonitorParticipants, `Games/${input_gameCode}`);
-                previous_gameCode = input_gameCode;
+            if (input_gameCode.length <= 3) {
+                this.setState({ gameCode: input_gameCode, invalidGameCode: false, participants: [], loadLocatePartic: null });
+    
+                if (input_gameCode.length < 3 && previous_gameCode) {
+                    firebaseObj.removeListener(listenerIfExistGame, `Games/${previous_gameCode}`);
+                    previous_gameCode = null;
+                }
+    
+                if (input_gameCode.length === 3) {
+                    this.setState({ loadLocatePartic: true });
+                    listenerIfExistGame = firebaseObj.listenerOnFirebase(this.MonitorParticipants, `Games/${input_gameCode}`);
+                    previous_gameCode = input_gameCode;
+                }
             }
         }
     }
@@ -113,15 +116,17 @@ export default class ExistGame extends Component {
 
     render() {
         return (
-            <div id='exist-game' className='container-fluid d-flex flex-column' style={{ height: '100vh' }} onKeyPress={this.keypressed} >
+            <div id='exist-game' className='container-fluid d-flex flex-column' 
+            style={{ height: '100vh' }} 
+            onKeyPress={this.keypressed} >
 
-                <nav className="navbar p-lg-2 p-md-3">
+                <nav className="navbar">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
                     <img className="upper-bar-icon" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                 </nav>
 
-                <div id='search-game' className='d-flex flex-column align-items-center'>
-                    <h3 className='display-4 mb-4'> הכנס קוד משחק:</h3>
+                <div id='search-game' className='container d-flex flex-column align-items-center'>
+                    <h3 className='display-4'> הכנס קוד משחק</h3>
                     <input
                         className='form-control d-block'
                         id="input"
@@ -161,6 +166,8 @@ export default class ExistGame extends Component {
 
 const ParticipantsList = (props) => {
     let game_status = '';
+    //red
+    let color='#dc3545';
 
     if (props.id_participants.includes(Variables.userId)) {
         game_status = 'הנך כבר משתתף במשחק זה'
@@ -170,14 +177,18 @@ const ParticipantsList = (props) => {
         if (props.id_participants.length >= 4)
             game_status = 'המשחק מכיל כבר כמות מקסימאלית של משתתפים';
 
-        else
+        else{
             game_status = GeneralFunctions.string_From_List(props.names_participants,
                 '', ` ${props.names_participants.length === 1 ? `משתתף` : `משתתפים`} במשחק כרגע `);
+            color='#28a745';
+        }
+            
     }
     else
         game_status = 'המשחק אינו קיים. אנא נסה שנית';
 
     return (
-        <p id='participants-list'>{game_status}</p>
+        <p id='participants-list'
+        style={{color:color}}>{game_status}</p>
     );
 }

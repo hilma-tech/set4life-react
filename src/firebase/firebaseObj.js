@@ -105,7 +105,7 @@ const firebaseObj = {
                     index: {
                         date: _date,
                         day_numberedGame: day_numberedGame
-                    }
+                    },
                 }
             });
 

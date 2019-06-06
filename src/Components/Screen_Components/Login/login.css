@@ -34,18 +34,54 @@ margin-bottom: 8vw;
 
 @media (min-width: 992px) {
     #login-page h1 span{
+        font-size: 20vw;
+       }
+       
+       #login-page h1{
+       margin-bottom: 1.5vh;
+       }
+       
+       #login-page input{
+           font-size:5vh;
+           margin-bottom: 3vh;
+           width:75vw;
+            height:10vw ;
+       }
+       
+       #login-page button{
+           font-size: 6vw;
+           font-weight: 600;
+           padding:1vw 3vw;
+       }
+ 
+       #login-page a{
+           font-size: 6vw;
+           margin-top:3vh;
+           cursor: auto;
+           text-decoration: underline;
+       }
+       
+       #login-page label{
+        font-size:7vw;
+        height: 3vw;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    #login-page h1 span{
         font-size: 10vw;
        }
        
        #login-page h1{
-       margin-bottom: 1.5vw;
+       margin-bottom: 1.5vh;
        }
        
        #login-page input{
            font-size:5vh;
            margin-bottom: 3vh;
            width:45vw;
-        height:5vw ;
+            height:5vw ;
        }
        
        #login-page button{
@@ -55,8 +91,8 @@ margin-bottom: 8vw;
        }
  
        #login-page a{
-           font-size: 2vw;
-           margin-top:1vw;
+           font-size: 3vw;
+           margin-top:2vh;
            cursor: auto;
            text-decoration: underline;
        }

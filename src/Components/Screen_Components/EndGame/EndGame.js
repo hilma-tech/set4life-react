@@ -24,7 +24,7 @@ class EndGame extends Component {
         };
         firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
     }
-    componentDidMount() {
+    componentWillMount() {
         firebaseObj.removeDataFromDB(`Players/${Variables.userId}/currentGame`);
         firebaseObj.readingDataOnFirebaseCB((playerObj) => {
             let correctSet = playerObj.CorrectSets ? playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`] : null;
@@ -48,7 +48,7 @@ class EndGame extends Component {
     render() {
         if (!this.state.moveTo_SaveGame) {
             return (
-                <div id="endGame" className="container">
+                <div id="endGame" className="container page d-flex align-items-center justify-content-center">
                     <div className=' d-flex align-items-center justify-content-center'>
                         <div className='d-flex flex-column'>
                             <h1 className='display-4 m-0' >כל הכבוד!</h1>

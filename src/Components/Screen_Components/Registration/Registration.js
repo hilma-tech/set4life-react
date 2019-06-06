@@ -4,8 +4,6 @@ import GameData from "../../../data/GameData.json";
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
 import './registration.css';
 import userIcon from '../../../data/design/userIcon.png';
-import cardsRight from '../../../data/design/cardsRight.png';
-import cardsLeft from '../../../data/design/cardsLeft.png';
 import PhotoUploader from '../../../data/design/photo-uploader.png';
 import Variables from '../../../SetGame/Variables';
 import arrow from '../../../data/design/left-arrow.png';
@@ -139,9 +137,9 @@ export default class Registration extends Component {
                     <img className="upper-bar-icon mr-auto ml-2" src={arrow} alt="back" onClick={this.props.moveBetweenEntOptions} moveTo='log' />
                 </nav>
 
-                <div >
+                <div className='my-auto' >
                     <h1 className="display-2 my-0 py-lg-0">הרשמה</h1>
-                    <div className="container mb-md-3 mb-lg-1">
+                    <div className="container w-75" style={{maxWidth:'80vw'}}>
                         <div id='upload_profilePic_container' className='d-flex lg-screen'>
                             <label className="rounded text-right ml-2 my-auto">
                                 <input name='uplode_pic' type="file" placeholder='תמונת פרופיל'
@@ -151,14 +149,14 @@ export default class Registration extends Component {
                             <p className='d-inline my-auto'>אנא לחץ על הסמל בשביל להעלות תמונת פרופיל. במידה ולא תעלה תמונה, תופיע תמונת ברירת מחדל.</p>
                         </div>
 
-                        <input className='form-control sm-in-lg-screen'
+                        <input className='form-control lg-screen '
                             value={this.state.personalInfo.fullName}
                             name='fullName'
                             type='text'
                             placeholder="שם מלא"
                             onChange={this.inputChange}></input>
 
-                        <input className='form-control sm-in-lg-screen'
+                        <input className='form-control lg-screen '
                             value={this.state.personalInfo.phoneNum}
                             name='phoneNum'
                             type="text"
@@ -174,7 +172,7 @@ export default class Registration extends Component {
                             onChange={this.inputChange}></input>
 
                         <input
-                            className='form-control lg-screen d-block'
+                            className='form-control sm-in-lg-screen'
                             value={this.state.personalInfo.password}
                             name='password'
                             type="password"
@@ -182,7 +180,7 @@ export default class Registration extends Component {
                             onChange={this.inputChange} />
 
                         <input
-                            className='form-control lg-screen d-block mb-lg-0'
+                            className='form-control sm-in-lg-screen'
                             value={this.state.personalInfo.passwordAgain}
                             name='passwordAgain'
                             type="password"

@@ -1,0 +1,32 @@
+#error-mes{
+ max-width:90vw;
+}
+
+#error-mes h1{
+    font-size:11vw;
+    margin:10vw 0;
+}
+
+
+@media (min-width: 992px) {
+    #error-mes img{
+        width:40vw;
+        height:40vw;
+    }
+    #error-mes h1{
+        font-size:10vw;
+        margin:8vw 0;
+    }
+}
+
+@media (min-width: 1200px) {
+    #error-mes img{
+        width:20vw;
+        height:20vw;
+    }
+
+    #error-mes h1{
+        font-size: 5vw;
+        margin:2vw 0;
+    }
+}

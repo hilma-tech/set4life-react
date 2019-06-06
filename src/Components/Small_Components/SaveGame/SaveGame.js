@@ -14,7 +14,7 @@ export default class SaveGame extends Component {
         }
         window.history.pushState('SaveGame', '', 'SaveGame');
         window.onpopstate = (event) => {
-            if(event.state==='EndGame')
+            if (event.state === 'EndGame')
                 window.history.back();
         };
     }
@@ -30,20 +30,16 @@ export default class SaveGame extends Component {
     }
 
     render() {
-        return <div style={{ height: '100vh' }} className='container' id='save-game' >
+        return <div id='save-game' style={{ height: '100vh' }} className='container' >
             <div className='h-100 d-flex align-items-center justify-content-center'>
-                <div className='h-lg-50 h-md-75 d-flex flex-column justify-content-around'>
+                <div className='d-flex flex-column justify-content-around'>
                     <div>
                         <h1 className='display-4'>האם אתה רוצה לשמור את המשחק?</h1>
                         <p className='lead' >במידה ותשמור את תוצאות המשחק, הם יופיעו בגרפים המסכמים את פעילותך באפליקציה.</p>
                     </div>
-                    <div className='d-flex flex-lg-row flex-md-column w-lg-100 w-md-75 justify-content-lg-around align-items-md-center my-md-4' >
-                        <div className='col-md-10 col-lg-6' >
-                            <button className='btn btn-success btn-lg btn-block text-body' onClick={this.toggle} name='yes'>כן</button>
-                        </div>
-                        <div className='col-md-10 col-lg-6 my-md-3'>
-                            <button className='btn btn-danger btn-lg btn-block text-body' onClick={this.toggle} name='no'>לא</button>
-                        </div>
+                    <div id='buttons-container' className='d-flex w-lg-100 w-md-75 align-items-center' >
+                        <button className='btn btn-success btn-block text-body' onClick={this.toggle} name='yes'>כן</button>
+                        <button className='btn btn-danger btn-block text-body' onClick={this.toggle} name='no'>לא</button>
                     </div>
                 </div>
             </div>

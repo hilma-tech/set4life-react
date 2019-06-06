@@ -6,8 +6,10 @@ import Variables from './SetGame/Variables';
 import Entrance from './Components/Sections/Entrance.js';
 import firebaseObj from './firebase/firebaseObj';
 import LoadingPage from './Components/Screen_Components/LoadingPage/LoadingPage';
-import ErrorMes from './Components/Small_Components/ErrorMes';
+import ErrorMes from './Components/Screen_Components/ErrorMes/ErrorMes';
 import LodingImg from './data/design/loading-img.gif';
+import SaveGame from './Components/Small_Components/SaveGame/SaveGame'
+import EndGame from './Components/Screen_Components/EndGame/EndGame';
 
 export default class App extends Component {
   constructor(props) {
@@ -33,11 +35,17 @@ export default class App extends Component {
         case 'reg': case 'log': case 'ent':
         case "avgTime": case "numOfSets": case "charts":
         case 'new': case 'exist':
+          case 'EndGame': case 'SaveGame':
           break;
         case 'sel':
           if (this.state.pageSeen != 'sel')
             this.setState({ pageSeen: 'sel' });
           break;
+          default:
+              this.setState({ pageSeen: null });
+              break;
+
+
       }
     }
   }

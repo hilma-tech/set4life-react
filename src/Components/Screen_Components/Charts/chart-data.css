@@ -6,6 +6,7 @@
 #lineChart{
   height: 60vh;
   width:90vw;
+  margin:0 auto;
 }
 
 #chart-container{
@@ -117,7 +118,7 @@
   }
 
   #lineChart{
-    height: 65vh;
+    height: 63vh;
     width:94vw;
   }
   

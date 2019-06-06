@@ -1,6 +1,4 @@
-#endGame{
-    margin-top: 4vh;
-}
+
 #endGame img{
     width:33vw;
     margin:1.5vh auto;
@@ -15,9 +13,13 @@
     font-size: 9vw;
 }
 
-#endGame ul li,
+#endGame ul li{
+    font-size: 4vw;
+}
+
 #endGame ul li span:not(.info-text){
     font-size: 4vw;
+    margin:0 1vw;
 }
 
 .info-text{
@@ -25,23 +27,20 @@
 }
 
 #endGame button{
-    width: 25vw;
-    height: 9vh;
     align-self: center;
     font-size:5vw;
-    padding: 0;
+    padding: 1.5vw 4vw;
     margin-top: 2vh;
 }
 
 
-@media (min-width: 992px) {
+ @media (min-width: 1200px) {
     #endGame{
         margin-top: 0vh;
     }
     #endGame img{
-        width:11vw;
+        width:9vw;
         margin:0 auto;
-        background-color: none;
     }
     
     #endGame .display-4{
@@ -55,15 +54,16 @@
     #endGame ul li,
     #endGame ul li span:not(.info-text){
         font-size: 1.4vw;
-        padding:1.4vh;
+    }
+
+    #endGame ul li{
+        padding:1vw;
     }
     
     #endGame button{
-        width: 7vw;
-        height: 9vh;
         align-self: center;
-        font-size:1.75vw;
-        padding: 0;
+        font-size:2vw;
+        padding: 0.5vw 2vw;
     }
     
     .info-text{

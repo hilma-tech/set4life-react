@@ -1,10 +1,16 @@
 #exist-game input{
     width:50vw;
     font-size: 6vw;
+    height: 12vw;
+}
+
+#exist-game h3{
+    font-size: 12vw;
+    margin-bottom:3vw;
 }
 
 #search-game {
-    margin:20vh 0 0 0;
+    margin:auto auto;
 }
 
 #search-game button{
@@ -18,36 +24,41 @@
     max-width:83vw;
 }
 
-@media (min-width: 992px) {
+#search-game img{
+    margin-top:10vw;
+}
+
+
+@media (min-width: 1200px) {
     #search-game h3{
         font-size: 7vw;
-    }
-
-    #search-game {
-        margin:7vh 0 0 0;
+        margin-bottom:1.5vw;
     }
 
     #exist-game input{
         width:40vw;
         font-size: 3.5vw;
+        height:6.5vw;
     }
 
     #search-game button{
         font-size: 2.5vw;
         margin-top:1.5vw;
-        padding:0.2vw 1.5vw;
-        
+        padding:0.2vw 1.5vw; 
     }
 
     #participants-list{
-        margin-top:2vw;
+        margin-top:1vw;
         font-size:3vw;
         max-width:80vw;
+        height:4vw;
+        width:80vw;
+        margin-bottom:0;
     }
 
     #search-game .loading-sm{
-        height:7vw;
-        width:7vw;
+        height:3vw;
+        width:3vw;
+        margin-top:2vw;
     }
-    
 }

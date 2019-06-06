@@ -5,7 +5,7 @@ import setFunctions from '../../../SetGame/setFunctions.js';
 import Variables from '../../../SetGame/Variables';
 import EndGame from '../../Screen_Components/EndGame/EndGame';
 import GeneralFunctions from '../../../SetGame/GeneralFunctions';
-import ErrorMes from '../../Small_Components/ErrorMes';
+import ErrorMes from '../../Screen_Components/ErrorMes/ErrorMes';
 import './board.css';
 import UserIcon from '../../Small_Components/UserIcon/UserIcon';
 import { ToastsContainer, ToastsStore } from 'react-toasts';

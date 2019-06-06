@@ -1,19 +1,55 @@
 #save-game button{
-    font-size: 2rem;
+    max-width:80vw;
+    font-size:6vw;
+    font-weight:600;
+    margin:1vh 0;
 }
 
 #save-game h1{
     font-size: 10.5vw;
-    margin-bottom: 3vh;
+    margin:3vh auto;
+    width:90vw;
+}
+
+#save-game p{
+    font-size: 4vw;
+}
+
+#save-game #buttons-container{
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
 }
 
 @media (min-width: 992px) {
     #save-game h1{
-        font-size: 7vw;
+        font-size: 10vw;
     }
 
     #save-game p{
-        font-size: 2.2vw;
+        font-size: 4vw;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    #save-game #buttons-container{
+        flex-direction: row;
+    }
+
+    #save-game h1{
+        font-size: 8vw;
+    }
+
+    #save-game p{
+        font-size: 2.5vw;
+    }
+
+    #save-game button{
+        max-width:37vw;
+        font-size:4vw;
+        margin:0 2vw;
+
     }
 }
 

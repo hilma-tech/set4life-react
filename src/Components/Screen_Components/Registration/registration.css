@@ -44,8 +44,7 @@
     width: 22vw;
     height: 7.5vh;
     padding: 0;
-    font-size: 2.2vw;
-    font-weight:600;
+    font-size: 6vw;
 }
 
 #reg #state-info{
@@ -72,17 +71,16 @@
         }
     
         #reg div input{
-            font-size: 5.5vw;
+            font-size: 5vw;
             margin:3vh auto;
-            height: 10vw;
+            height: 8vw;
         }
     
         #reg .btn{
             height: 8vh;
             width: 20vw;
-            font-size: 4vw;
+            font-size: 5vw;
             padding:0;
-            margin-top: 2vh;
         }
     
         #reg #state-info{
@@ -115,6 +113,11 @@
             width: 12vw;
         }
 
+        #reg #state-info{
+            font-size:4vw;
+            margin-top: 1.5vh;
+        }
+
     }
 
     @media (min-width: 1200px) {
@@ -125,16 +128,16 @@
 
     #reg .sm-in-lg-screen{
         width:21vw;
-        margin:1.7vh 0 0 0;
+        margin:0 0 1.7vh 0;
         display:inline;
     }
 
-    #reg .sm-in-lg-screen[name='phoneNum']{
+    #reg .sm-in-lg-screen[name='passwordAgain']{
         margin-right:1.5vw;
     }
 
     #reg .display-2{
-        font-size: 7.5vw;
+        font-size: 7vw;
     }
 
     #reg div input{

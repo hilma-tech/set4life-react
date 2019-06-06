@@ -4,7 +4,7 @@ import ExistGame from '../../Screen_Components/existGame/ExistGame';
 import CurrentGame from '../../Screen_Components/CurrentGame/CurrentGame';
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables';
-import ErrorMes from '../../Small_Components/ErrorMes';
+import ErrorMes from '../../Screen_Components/ErrorMes/ErrorMes';
 import ChartData from '../../Screen_Components/Charts/ChartData';
 import './select-game.css';
 import NewGameImg from '../../../data/design/add.png'
@@ -63,7 +63,16 @@ export default class GameType extends Component {
 
     checkCurrentGame = () => {
         firebaseObj.readingDataOnFirebaseCB(currentGame => {
-            this.setState({ currentGame: currentGame, GameTypeOptions: 'sel' });
+            if(currentGame){
+                firebaseObj.readingDataOnFirebaseCB(game_Participants=>{
+                    this.setState({ currentGame:game_Participants[Variables.userId],
+                         GameTypeOptions: 'sel' }); 
+
+                },`Games/${currentGame.gameCode}/Game_Participants`)
+            }
+            else
+                this.setState({ currentGame: null, GameTypeOptions: 'sel' });
+
         }, `Players/${Variables.userId}/currentGame`);
     }
 
@@ -137,10 +146,10 @@ export default class GameType extends Component {
     }
 }
 
-
 const TopBar = (props) => (
-    <nav className='navbar d-flex flex-row justify-content-between p-lg-2 p-md-3'>
+    <nav className='navbar d-flex flex-row justify-content-between '>
         <UserIcon _direction='left' name={Variables.playerName} src={Variables.profilePic} />
-        <img className='upper-bar-icon' src={LogoutImg} onClick={props.signOut} alt="Logout" />
+        <img className='upper-bar-icon' src={LogoutImg} onClick={props.signOut} alt="Logout"
+        style={{direction:'ltr'}} />
     </nav>
 );

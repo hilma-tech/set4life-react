@@ -46,8 +46,6 @@ export default class NewGame extends Component {
         let constParamLength = Object.keys(this.state.dropDownInfo).length;
         let newCurrentCards = setFunctions.createNewCards(constParamLength <= 2 && (constParamLength === 2 ? 9 : 12), [], []);
 
-        console.log('Variables',Variables)
-
         let gameObj = {
             timeOut_choosingCards: this.state._timer,
             creationTime: startGameTime,
@@ -114,13 +112,13 @@ export default class NewGame extends Component {
     render() {
         return (
             <div id="new-game" className='container-fluid d-flex flex-column' onKeyPress={this.keypressed} style={{ height: '100vh' }}>
-                <nav className="navbar w-100 p-lg-2 p-md-3">
+                <nav className="navbar">
                     <UserIcon name={Variables.playerName} src={Variables.profilePic} _direction='left' />
                     <img className="upper-bar-icon" src={arrow} alt="back" onClick={this.props.onClickGameTypeButton} name='sel' />
                 </nav>
 
 
-                <div className='container m-lg-0 d-flex flex-column'>
+                <div className='container d-flex flex-column'>
                     <h1 className='mb-md-3 mb-lg-1 text-right mr-2'>משחק חדש </h1>
                     <div className="mr-2">
                         <div className='col-lg-9 col-md-12 p-0'>

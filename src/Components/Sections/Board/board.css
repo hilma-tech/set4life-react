@@ -68,7 +68,7 @@
 }
 
 
-@media(min-width: 992px){
+@media(min-width: 1024px){
      #upper-bar{
         padding:2vw 2vw 1vw 2vw;
     }
@@ -77,33 +77,6 @@
         font-size:7vw;
         margin-top:1vh;
     } 
-
-    /*#upper-bar button{
-        margin-left:2vw;
-        font-size:2.5vw;
-        width:10vw;
-    }
-
-    #cards{
-        width:50vw;
-        height:67vh;
-        overflow: visible;
-    }
-
-    #participant-list{
-        display:flex;  
-        width:27vw;
-        height: 13.5vh;
-        align-items:center;
-        margin-right:1vw;
-    }
-
-    #the-button{
-        font-size:2.3vw;
-        margin-top:0.25vw;
-        padding:0.4vw 1.5vw;
-        font-weight:600;
-    } */
 }
 
 
@@ -120,7 +93,8 @@
 
     #game-code{
         position: absolute;
-        right: 29%;
+        right: 32.5%;
+        top:7%;
         font-size:4.8vw;
     } 
     #cards{
@@ -131,7 +105,7 @@
 
     #participant-list{
         display:flex;  
-        width:27vw;
+        max-width:30vw;
         height: 13.5vh;
         align-items:center;
         margin-right:1vw;
@@ -144,6 +118,9 @@
         font-weight:600;
     }
  }
+
+
+ 
 
 
 
