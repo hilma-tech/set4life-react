@@ -13,10 +13,9 @@
 
 #sel .btn-primary {
   font-size: 7.3vw;
-  height: 15vw;
+  max-width:75vw;
   text-align:right;
   padding:1vw 4vw;
-  width:65vw;
   margin:1.4vh 0;
 }
 
@@ -25,12 +24,71 @@
   font-size: 17vw;
 }
 
+#sel nav label:not(.user-icon.left label){
+  font-size:20vw;
+}
+
+
+
+#logout img{
+  height:9vw;
+  width:9vw;
+  cursor:pointer;
+
+}
+
+#logout label{
+  font-size:3vw;
+  cursor:pointer;
+}
+
 @media (min-width: 992px) {
   #sel .btn-primary {
-    font-size: 3.2vw;
-    height: 7vw;
+    font-size: 5vw;
+    padding: 2vw 4vw;
     text-align:center;
-    width:32vw;
+  }
+
+  #sel .btn-primary[name='existGame'] {
+    margin-left:4vw;
+  }
+
+  .buttonsIcons{
+    height: 6vw;
+    background-color: transparent;
+  }
+
+  #sel h1{
+    font-size: 14vw;
+  }
+
+  .buttonsIcons.exist{
+    height: 8vw;
+  }
+  
+  .buttonsIcons.new{
+    height: 5vw;
+  }
+
+  #logout img{
+    height:8vw;
+    width:8vw;
+  }
+  
+  #logout label{
+    font-size:3vw;
+  }
+  
+}
+
+
+
+@media (min-width: 1200px) {
+  #sel .btn-primary {
+    font-size: 3.2vw;
+    text-align:center;
+    padding:1vw 2vw;
+    max-width:41.666667%;
   }
 
   #sel .btn-primary[name='existGame'] {
@@ -47,14 +105,22 @@
   }
 
   .buttonsIcons.exist{
-    height: 5.5vw;
+    height: 4.3vw;
   }
   
   .buttonsIcons.new{
     height: 3.5vw;
   }
-}
 
+  #logout img{
+    height:4vw;
+    width:4vw;
+  }
+  
+  #logout label{
+    font-size:1.5vw;
+  }
+}
 
 
 

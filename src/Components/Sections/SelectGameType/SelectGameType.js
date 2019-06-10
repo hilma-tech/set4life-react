@@ -30,8 +30,8 @@ export default class GameType extends Component {
             //currentGame
         }
         window.history.pushState('sel', '', 'gameType');
-        window.onbeforeunload = () => {};
-        let last_screen='';
+        window.onbeforeunload = () => { };
+        let last_screen = '';
 
         window.addEventListener('popstate', (event) => {
             console.log(`%c pop sel- ${event.state}`, 'color: green;')
@@ -44,11 +44,11 @@ export default class GameType extends Component {
                         this.setState({ GameTypeOptions: event.state });
                     break;
                 default:
-                    if(event.state!=='EndGame'||event.state!=='SaveGame')
+                    if (event.state !== 'EndGame' || event.state !== 'SaveGame')
                         window.history.pushState('sel', '', 'gameType');
             }
 
-            last_screen=event.state;
+            last_screen = event.state;
         });
     }
 
@@ -63,12 +63,14 @@ export default class GameType extends Component {
 
     checkCurrentGame = () => {
         firebaseObj.readingDataOnFirebaseCB(currentGame => {
-            if(currentGame){
-                firebaseObj.readingDataOnFirebaseCB(game_Participants=>{
-                    this.setState({ currentGame:game_Participants[Variables.userId],
-                         GameTypeOptions: 'sel' }); 
+            if (currentGame) {
+                firebaseObj.readingDataOnFirebaseCB(game_Participants => {
+                    this.setState({
+                        currentGame: game_Participants[Variables.userId],
+                        GameTypeOptions: 'sel'
+                    });
 
-                },`Games/${currentGame.gameCode}/Game_Participants`)
+                }, `Games/${currentGame.gameCode}/Game_Participants`)
             }
             else
                 this.setState({ currentGame: null, GameTypeOptions: 'sel' });
@@ -86,10 +88,10 @@ export default class GameType extends Component {
                 return (
                     <div id='sel' className="container-fluid d-flex flex-column"
                         style={{ height: '100vh', width: '100vw' }}>
-                       
+
                         <TopBar signOut={this.signOut} />
                         <div className='container-fluid h-75 d-flex flex-column  justify-content-center'>
-                            
+
                             <h1 className='display-4' >בחר את סוג המשחק</h1>
                             <div className='w-100 mt-md-2 mt-lg-1'>
 
@@ -117,7 +119,7 @@ export default class GameType extends Component {
 
                                 <button
                                     className="btn btn-primary btn-lg col-lg-5  mb-md-3"
-                                    style={{backgroundColor:'#9fc8d0',borderColor:'#9fc8d0'}}
+                                    style={{ backgroundColor: '#9fc8d0', borderColor: '#9fc8d0' }}
                                     onClick={this.onClickGameTypeButton}
                                     name='charts'>
                                     <img
@@ -137,7 +139,7 @@ export default class GameType extends Component {
             case 'newGame':
                 return <NewGame moveThroughPages={this.props.moveThroughPages} onClickGameTypeButton={this.onClickGameTypeButton} />;
             case 'load':
-                return <LoadingPage/>
+                return <LoadingPage />
             case 'charts':
                 return <ChartData onClickGameTypeButton={this.onClickGameTypeButton} />
             default:
@@ -149,7 +151,12 @@ export default class GameType extends Component {
 const TopBar = (props) => (
     <nav className='navbar d-flex flex-row justify-content-between '>
         <UserIcon _direction='left' name={Variables.playerName} src={Variables.profilePic} />
-        <img className='upper-bar-icon' src={LogoutImg} onClick={props.signOut} alt="Logout"
-        style={{direction:'ltr'}} />
+        <div id='logout' className='d-flex flex-column upper-bar-icon 
+        justify-content-center align-items-center'
+            onClick={props.signOut}>
+            <img className='' src={LogoutImg} onClick={props.signOut} alt="Logout" />
+            <label className='mb-0'
+                onClick={props.signOut}>התנתק</label>
+        </div>
     </nav>
 );

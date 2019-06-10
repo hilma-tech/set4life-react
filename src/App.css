@@ -17,6 +17,7 @@
 .upper-bar-icon{
   height: 8.5vh;    
   background-color: transparent;
+  cursor:pointer;
 }
 
 input{
@@ -60,6 +61,10 @@ direction: ltr;
 
 nav{
   background-color: var(--_1);
+}
+
+body nav:not(#reg nav) {
+  height:50vh;
 }
 
 .btn.btn-primary,
