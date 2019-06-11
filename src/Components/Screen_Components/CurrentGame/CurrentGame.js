@@ -7,33 +7,32 @@ export default class CurrentGame extends Component {
     enterCurrentGame = () => {
         firebaseObj.readingDataOnFirebaseCB(gameObj => {
             Object.assign(Variables, {
-                gameCode: this.props.currentGame.gameCode,
+                gameCode: this.props.currentGame,
                 _timer: gameObj.timeOut_choosingCards,
                 constParameters: gameObj.constParameters ? gameObj.constParameters : {},
                 creationGameTime: gameObj.creationTime
             });
             this.props.moveThroughPages("boa", gameObj);
-        }, `Games/${this.props.currentGame.gameCode}`)
+        }, `Games/${this.props.currentGame}`)
     }
 
     deleteCurrentGame = () => {
         firebaseObj.removeDataFromDB(`Players/${Variables.userId}/currentGame`);
-        firebaseObj._db.ref(`Games/${this.props.currentGame.gameCode}/Game_Participants`).once('value',
+        firebaseObj._db.ref(`Games/${this.props.currentGame}/Game_Participants`).once('value',
             snap => {
                 let game_Participants = snap.val();
                 let participants_length = Object.keys(game_Participants).length;
                 if (participants_length === 1)
-                    firebaseObj.removeDataFromDB(`Games/${this.props.currentGame.gameCode}`);
+                    firebaseObj.removeDataFromDB(`Games/${this.props.currentGame}`);
                 else
                     firebaseObj.updatingValueInDataBase(
-                        `Games/${this.props.currentGame.gameCode}/Game_Participants/${Variables.userId}`,
+                        `Games/${this.props.currentGame}/Game_Participants/${Variables.userId}`,
                         { isConnected: false });
             });
         this.props.deleteCurrentGameInSel();
     }
 
     render() {
-        console.log('gameCode curr', this.props.currentGame.gameCode)
         return (
             <div id='current-game' className="modal fade show" aria-labelledby="exampleModalLabel"
                 data-backdrop="static" role="dialog" style={{ display: 'block' }}>

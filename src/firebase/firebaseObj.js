@@ -30,6 +30,7 @@ const firebaseObj = {
     },
 
     updatingValueInDataBase(path, value) {
+        console.log(path,'value',value)
         this._db.ref(path).update(value);
     },
 
@@ -77,7 +78,7 @@ const firebaseObj = {
     },
 
 
-    async updatingGameIdInFB(gameCode) {
+    async updatingGameIdInFB(gameCode,exist=null) {
         let _date = GeneralFunctions.timeAndDate('date');
         let level = Variables.constParameters ? (3 - Object.keys(Variables.constParameters).length) : 3;
 
@@ -91,14 +92,16 @@ const firebaseObj = {
                 day_numberedGame: day_numberedGame
             })
 
-            firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${_date}`, {
-                [day_numberedGame]: {
-                    startGameTime: Variables.creationGameTime,
-                    gameCode: Variables.gameCode,
-                    level: level
-                }
-            });
-
+            if(!exist){
+                firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}/games/${_date}`, {
+                    [day_numberedGame]: {
+                        startGameTime: Variables.creationGameTime,
+                        gameCode: Variables.gameCode,
+                        level: level
+                    }
+                });
+            }
+        
             firebaseObj.updatingValueInDataBase(`Players/${Variables.userId}`, {
                 currentGame: {
                     gameCode: Variables.gameCode,

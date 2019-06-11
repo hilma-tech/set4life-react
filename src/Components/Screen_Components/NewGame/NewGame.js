@@ -121,7 +121,7 @@ export default class NewGame extends Component {
                 <div className='container d-flex flex-column'>
                     <h1 className='mb-md-3 mb-lg-1 text-right mr-2'>משחק חדש </h1>
                     <div className="mr-2">
-                        <div className='col-lg-9 col-md-12 p-0'>
+                        <div className='col-lg-10 col-md-12 p-0'>
                             {Object.keys(GameData.cardsParameters).map((par_name, i) => (
                                 <CheckboxConstParameter
                                     par_name={par_name}
@@ -150,7 +150,6 @@ export default class NewGame extends Component {
                         disabled={this.setDisableNewGameButton()}
                         onClick={this.settingNewGame}>התחל</button>
                 </div>
-
             </div>
         );
     }
@@ -164,7 +163,7 @@ const CheckboxConstParameter = (props) => (
             checked={props.checkboxsInfo[props.par_name + 'Bool']}
             onChange={props.checkboxsChange} key={props.par_name} />
 
-        <label className='h4 mr-2 font-weight-light'> {GameData.cardsParameters[props.par_name].nameHe}</label>
+        <label className='h4 mr-2 font-weight-light'>  בחר <span>{GameData.cardsParameters[props.par_name].nameHe}</span> קבוע\ה</label>
 
         <SelectConstParameter
             checkboxsInfo={props.checkboxsInfo}

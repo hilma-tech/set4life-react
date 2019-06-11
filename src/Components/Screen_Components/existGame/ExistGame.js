@@ -48,6 +48,7 @@ export default class ExistGame extends Component {
                         day_numberedGame: game_id.day_numberedGame
                     });
                 });
+                firebaseObj.updatingGameIdInFB(this.state.gameCode,true);
             }
 
             else {

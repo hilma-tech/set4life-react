@@ -25,7 +25,6 @@ class EndGame extends Component {
         firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
     }
     componentWillMount() {
-        firebaseObj.removeDataFromDB(`Players/${Variables.userId}/currentGame`);
         firebaseObj.readingDataOnFirebaseCB((playerObj) => {
             let correctSet = playerObj.CorrectSets ? playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`] : null;
             let wrongSet = playerObj.WrongSets ? playerObj.WrongSets[`${Variables._date}:${Variables.day_numberedGame}`] : null;
@@ -43,6 +42,10 @@ class EndGame extends Component {
 
             this.setState({ numCorrectSet: numCorrectSets, numWrongSet: numWrongSets, avgTime: avgTime });
         }, `Players/${Variables.userId}`);
+    }
+
+    componentDidMount(){
+        firebaseObj.removeDataFromDB(`Players/${Variables.userId}/currentGame`);
     }
 
     render() {

@@ -72,10 +72,10 @@ const ChartPage = (props) => (
     <div id='chart-data' className='container-fluid' style={{ direction: 'rtl' }}>
         <nav className='navbar px-0 py-2'>
             <div id='dropdown_and_buttons' className="container col-11 d-flex  m-lg-0" >
-                <div class="btn-group col-md-12 col-lg-5 justify-content-center" role="group" aria-label="Basic example" style={{ direction: 'ltr' }}>
-                    <button class="btn btn-primary text-body" type="button" onClick={props.onClickChartType} name='numOfSets' id='numOfSets' disabled={props.group_buttons.numOfSets} >מספר הסטים</button>
-                    <button class="btn btn-primary text-body" type="button" onClick={props.onClickChartType} name='avgTime_hitSet' id='avgTime_hitSet' disabled={props.group_buttons.avgTime_hitSet} >זמן ממוצע ללחיצה</button>
-                    <button class="btn btn-primary text-body" type="button" onClick={props.onClickChartType} name='avgTime_chooseSet' id='avgTime_chooseSet' disabled={props.group_buttons.avgTime_chooseSet} >זמן ממוצע לבחירה</button>
+                <div className="btn-group col-md-12 col-lg-5 justify-content-center" role="group" aria-label="Basic example" style={{ direction: 'ltr' }}>
+                    <button className="btn btn-primary text-body" type="button" onClick={props.onClickChartType} name='numOfSets' id='numOfSets' disabled={props.group_buttons.numOfSets} >מספר הסטים</button>
+                    <button className="btn btn-primary text-body" type="button" onClick={props.onClickChartType} name='avgTime_hitSet' id='avgTime_hitSet' disabled={props.group_buttons.avgTime_hitSet} >זמן ממוצע ללחיצה</button>
+                    <button className="btn btn-primary text-body" type="button" onClick={props.onClickChartType} name='avgTime_chooseSet' id='avgTime_chooseSet' disabled={props.group_buttons.avgTime_chooseSet} >זמן ממוצע לבחירה</button>
                 </div>
                 <DropDown_level
                     onChange={props.onChange}

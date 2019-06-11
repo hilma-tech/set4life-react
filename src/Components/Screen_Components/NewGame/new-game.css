@@ -22,7 +22,9 @@
     width: 8vw;
 }
 
-#new-game #checkbox-constParameters label,#timer-for-set{
+#new-game #checkbox-constParameters label,
+#new-game #checkbox-constParameters span,
+#timer-for-set{
     font-size: 8vw;
 }
 
@@ -68,6 +70,7 @@
     }
     
     #new-game #checkbox-constParameters label,
+    #new-game #checkbox-constParameters span,
     #timer-for-set{
         font-size: 8.5vw;
     }
@@ -116,6 +119,7 @@
     }
     
     #new-game #checkbox-constParameters label,
+    #new-game #checkbox-constParameters span,
     #timer-for-set{
         font-size: 3vw;
     }

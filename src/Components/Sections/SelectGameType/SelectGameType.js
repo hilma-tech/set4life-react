@@ -54,6 +54,7 @@ export default class GameType extends Component {
 
     onClickGameTypeButton = (event) => {
         this.setState({ GameTypeOptions: event.target.getAttribute('name') });
+        window.history.pushState('sel', '', 'gameType');
     }
 
     signOut = () => {
@@ -62,19 +63,11 @@ export default class GameType extends Component {
     }
 
     checkCurrentGame = () => {
-        firebaseObj.readingDataOnFirebaseCB(currentGame => {
-            if (currentGame) {
-                firebaseObj.readingDataOnFirebaseCB(game_Participants => {
-                    this.setState({
-                        currentGame: game_Participants[Variables.userId],
-                        GameTypeOptions: 'sel'
-                    });
-
-                }, `Games/${currentGame.gameCode}/Game_Participants`)
-            }
-            else
-                this.setState({ currentGame: null, GameTypeOptions: 'sel' });
-
+        firebaseObj.listenerOnFirebase(currentGame => {
+            this.setState({
+                currentGame:currentGame? currentGame.gameCode:null,
+                GameTypeOptions: 'sel'
+            });
         }, `Players/${Variables.userId}/currentGame`);
     }
 
@@ -130,8 +123,11 @@ export default class GameType extends Component {
                                     </button>
                             </div>
                         </div>
-                        {this.state.currentGame && Object.keys(this.state.currentGame).length ?
-                            <CurrentGame deleteCurrentGameInSel={this.deleteCurrentGameInSel} currentGame={this.state.currentGame} moveThroughPages={this.props.moveThroughPages} /> : ''}
+                        {this.state.currentGame && 
+                            <CurrentGame 
+                            deleteCurrentGameInSel={this.deleteCurrentGameInSel} 
+                            currentGame={this.state.currentGame} 
+                            moveThroughPages={this.props.moveThroughPages} /> }
                     </div>
                 );
             case 'existGame':

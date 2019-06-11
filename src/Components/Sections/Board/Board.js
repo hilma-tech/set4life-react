@@ -168,7 +168,7 @@ export default class Board extends Component {
 
         if (selectedCards.length === 3) {
             timeChooseSet = performance.now();
-            // this.setState({disableBeforeNext:true})
+            this.setState({disableBeforeNext:true})
             clearTimeout(_timeOutChoosingSet);
             console.log('cleared timeout');
 
@@ -181,7 +181,7 @@ export default class Board extends Component {
                 }, 10000)
             });
             //timeout of the disable "next" btn
-            // setTimeout(()=>this.setState({disableBeforeNext:false}),5000)
+            setTimeout(()=>this.setState({disableBeforeNext:false}),5000)
         }
         this.setState({ selectedCards: selectedCards });
         firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/selectedCards`, selectedCards);
@@ -273,7 +273,7 @@ export default class Board extends Component {
                                 disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :
-                                        this.state.stageOfTheGame === 2 ? "בחר עוד סט!" : "שחקן אחר משחק"
+                                        this.state.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
                                 }
                             </button>}
 

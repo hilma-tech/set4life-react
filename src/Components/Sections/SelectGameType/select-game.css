@@ -87,8 +87,8 @@
   #sel .btn-primary {
     font-size: 3.2vw;
     text-align:center;
-    padding:1vw 2vw;
-    max-width:41.666667%;
+    padding:1vw 1vw;
+    max-width:40%;
   }
 
   #sel .btn-primary[name='existGame'] {
