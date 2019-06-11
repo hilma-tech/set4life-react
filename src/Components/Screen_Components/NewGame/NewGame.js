@@ -95,7 +95,7 @@ export default class NewGame extends Component {
 
     setDisableNewGameButton = () => {
         return !(Object.keys(this.state.dropDownInfo).length +
-            setFunctions.checkOfValidChecks(this.state.checkboxsInfo) === 4) || 
+            setFunctions.checkOfValidChecks(this.state.checkboxsInfo) === 4) ||
             parseInt(this.state._timer, 10) < 2 || this.state._timer === '';
     }
 
@@ -119,9 +119,9 @@ export default class NewGame extends Component {
 
 
                 <div className='container d-flex flex-column'>
-                    <h1 className='mb-md-3 mb-lg-1 text-right mr-2'>משחק חדש </h1>
+                    <h1 className='text-right mr-2'>משחק חדש </h1>
                     <div className="mr-2">
-                        <div className='col-lg-10 col-md-12 p-0'>
+                        <div className='col-lg-11 col-md-12 p-0'>
                             {Object.keys(GameData.cardsParameters).map((par_name, i) => (
                                 <CheckboxConstParameter
                                     par_name={par_name}
@@ -135,7 +135,6 @@ export default class NewGame extends Component {
                         <div className='d-flex justify-content-start align-items-center'>
                             <label id='timer-for-set' className='h4 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
                             <input
-                                style={{ fontSize: '0.9rem', height: '7vh' }}
                                 className='col-2 p-0'
                                 type="number"
                                 min="2"
@@ -163,7 +162,10 @@ const CheckboxConstParameter = (props) => (
             checked={props.checkboxsInfo[props.par_name + 'Bool']}
             onChange={props.checkboxsChange} key={props.par_name} />
 
-        <label className='h4 mr-2 font-weight-light'>  בחר <span>{GameData.cardsParameters[props.par_name].nameHe}</span> קבוע\ה</label>
+        <label className='h4 mr-2 font-weight-light'>
+            בחר <span className=''>{GameData.cardsParameters[props.par_name].nameHe}
+            </span> {GameData.cardsParameters[props.par_name].nameHe==='צורה'?'קבועה':'קבוע'}
+        </label>
 
         <SelectConstParameter
             checkboxsInfo={props.checkboxsInfo}
@@ -177,7 +179,7 @@ const CheckboxConstParameter = (props) => (
 const SelectConstParameter = (props) => (
     <select
         dir="rtl"
-        className='mr-auto ml-3 form-control'
+        className='mr-auto form-control'
         ref={el => dropdown_refs[props.categoryStr] = el}
         style={{ visibility: (!props.checkboxsInfo[props.categoryStr + 'Bool']) ? 'visible' : 'hidden' }}
         name={props.categoryStr}

@@ -4,11 +4,11 @@
 }
 
 #new-game #checkbox-constParameters select{
-    font-size: 5vw;
+    font-size: 4.8vw;
     text-align-last:center;
     padding:0;
-    width:25vw;
-    height:8vw;
+    width:18vw;
+    height:7vw;
 }
 
 #new-game #checkbox-constParameters select option.form-control{
@@ -18,18 +18,19 @@
 }
 
 #new-game #checkbox-constParameters input[type='checkbox']{
-    height:8vw;
-    width: 8vw;
+    height:5vw;
+    width: 5vw;
 }
 
 #new-game #checkbox-constParameters label,
 #new-game #checkbox-constParameters span,
 #timer-for-set{
-    font-size: 8vw;
+    font-size: 6.4vw;
+    margin-bottom: 0;
 }
 
 #checkbox-constParameters{
-    margin :1.7vh 0;
+    margin :4vh 0;
 }
 
 #new-game button{
@@ -40,16 +41,22 @@
 
 #new-game h1{
     font-size:14vw;
+    margin:0;
 }
 
 #new-game div.container{
     margin:auto auto;
-    padding:0 5vw;
     width:90vw;
+    padding:0;
     align-self:center;
 }
 
+#new-game input[type='number']{
+    font-size:5vw!important;
+}
+
 @media (min-width: 992px) {
+
     #checkbox-constParameters{
         height: 9vh;
         margin :0.3vh 0;
@@ -72,22 +79,21 @@
     #new-game #checkbox-constParameters label,
     #new-game #checkbox-constParameters span,
     #timer-for-set{
-        font-size: 8.5vw;
+        font-size: 6.5vw;
     }
 
     #new-game h1{
-        font-size:15vw;
+        font-size:16vw;
     }
 
     #new-game div.container{
         padding:0;
-        width:75vw;
     }
 
     #new-game button{
         font-size:6vw;
         padding:1.5vw 5vw;
-        margin-top:3vw;
+        margin-top:4vh;
     }
  }
 
@@ -108,6 +114,7 @@
         font-size: 2vw;
         height: 3vw;
         width: 7.5vw;
+        margin:auto auto;
     }
     #new-game #checkbox-constParameters select option{
         font-size:2vw;
@@ -121,7 +128,7 @@
     #new-game #checkbox-constParameters label,
     #new-game #checkbox-constParameters span,
     #timer-for-set{
-        font-size: 3vw;
+        font-size: 2.7vw;
     }
 
     #new-game h1{
@@ -129,15 +136,20 @@
     }
 
     #new-game div.container{
-        width:35vw;
+        width:42vw;
     }
 
     #new-game button{
         font-size:2.5vw;
         width:9vw;
-        margin-top:0.5vw;
+        margin-top:1.5vw;
         align-self:center;
     }
+
+    #new-game input[type='number']{
+        font-size:2.5vw!important;
+    }
+    
  }
 
 
