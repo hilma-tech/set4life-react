@@ -154,17 +154,26 @@ export default class NewGame extends Component {
     }
 }
 
-const CheckboxConstParameter = (props) => (
+const CheckboxConstParameter = (props) =>{ 
+    let cathegoryName_HE=GameData.cardsParameters[props.par_name].nameHe;
+    let checkbox_label='';
+
+    if(props.checkboxsInfo[props.par_name + 'Bool'])
+        checkbox_label=` כל ${cathegoryName_HE}`
+        // ${cathegoryName_HE==='צורה'?"רנדומלית":"רנדומלי"}`;
+    else
+        checkbox_label=`בחר ${cathegoryName_HE} ${cathegoryName_HE==='צורה'?"קבועה":"קבוע"}`;
+
+    return (
     <div id='checkbox-constParameters' key={props.i} className="container-fluid d-flex align-items-center">
         <input
             type="checkbox"
             name={props.par_name}
             checked={props.checkboxsInfo[props.par_name + 'Bool']}
-            onChange={props.checkboxsChange} key={props.par_name} />
+            onChange={props.checkboxsChange}
+            key={props.par_name} />
 
-        <label className='h4 mr-2 font-weight-light'>
-            בחר <span className=''>{GameData.cardsParameters[props.par_name].nameHe}
-            </span> {GameData.cardsParameters[props.par_name].nameHe==='צורה'?'קבועה':'קבוע'}
+        <label className='h4 mr-2 font-weight-light'>{checkbox_label}
         </label>
 
         <SelectConstParameter
@@ -172,7 +181,7 @@ const CheckboxConstParameter = (props) => (
             arrOptionsHe={GameData.cardsParameters[props.par_name][props.par_name + 'He']}
             categoryStr={props.par_name}
             settingConstParametersObj={props.settingConstParametersObj} />
-    </div>)
+    </div>);}
 
 
 
