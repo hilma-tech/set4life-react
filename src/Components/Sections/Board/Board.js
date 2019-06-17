@@ -39,7 +39,7 @@ export default class Board extends Component {
              */
         }
 
-        window.history.pushState('boa', '', 'board');
+        window.history.pushState('boa', '', 'Board');
         window.onpopstate = (event) => {
             console.log(`%c pop boa- ${event.state}`, 'color: pink;')
 

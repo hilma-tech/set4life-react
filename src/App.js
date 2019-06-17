@@ -8,8 +8,7 @@ import firebaseObj from './firebase/firebaseObj';
 import LoadingPage from './Components/Screen_Components/LoadingPage/LoadingPage';
 import ErrorMes from './Components/Screen_Components/ErrorMes/ErrorMes';
 import LodingImg from './data/design/loading-img.gif';
-import SaveGame from './Components/Small_Components/SaveGame/SaveGame'
-import EndGame from './Components/Screen_Components/EndGame/EndGame';
+
 
 export default class App extends Component {
   constructor(props) {
@@ -27,25 +26,29 @@ export default class App extends Component {
     firebaseObj.createStorage();
     firebaseObj.authState(this.handlePlayerAuthState);
 
-    console.log('app Variables',Variables)
+    window.onhashchange = () => {
+      let urlPaths = ['reg', 'log', 'ent', "avgTime", "numOfSets", "charts", 'newGame', 'existGame',
+        'EndGame', 'SaveGame', 'sel', 'boa'];
+
+      if (!urlPaths.includes(window.location.pathname.substring(1)))
+        this.setState({ pageSeen: null })
+    }
 
     window.onpopstate = (event) => {
       console.log('app popstate', event.state)
       switch (event.state) {
         case 'reg': case 'log': case 'ent':
         case "avgTime": case "numOfSets": case "charts":
-        case 'new': case 'exist':
-          case 'EndGame': case 'SaveGame':
+        case 'newGame': case 'existGame':
+        case 'EndGame': case 'SaveGame':
           break;
         case 'sel':
           if (this.state.pageSeen != 'sel')
             this.setState({ pageSeen: 'sel' });
           break;
-          default:
-              this.setState({ pageSeen: null });
-              break;
-
-
+        default:
+          this.setState({ pageSeen: null });
+          break;
       }
     }
   }
@@ -53,8 +56,8 @@ export default class App extends Component {
 
   handlePlayerAuthState = (fbUser) => {
     if (fbUser) {
-      console.log('fbUser',fbUser)
-      if (Variables.profilePic === LodingImg|| (!Variables.playerName.length)) {
+      console.log('fbUser', fbUser)
+      if (Variables.profilePic === LodingImg || (!Variables.playerName.length)) {
         firebaseObj.listenerOnFirebase(info_obj => {
           if (info_obj) {
             Object.assign(Variables,
@@ -85,6 +88,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('window.location.href', window.location.pathname)
     switch (this.state.pageSeen) {
       case "load":
         return <LoadingPage />;
