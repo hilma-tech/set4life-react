@@ -8,6 +8,11 @@ import firebaseObj from './firebase/firebaseObj';
 import LoadingPage from './Components/Screen_Components/LoadingPage/LoadingPage';
 import ErrorMes from './Components/Screen_Components/ErrorMes/ErrorMes';
 import LodingImg from './data/design/loading-img.gif';
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Link
+// } from 'react-router-dom'
 
 
 export default class App extends Component {
@@ -26,12 +31,26 @@ export default class App extends Component {
     firebaseObj.createStorage();
     firebaseObj.authState(this.handlePlayerAuthState);
 
-    window.onhashchange = () => {
-      let urlPaths = ['reg', 'log', 'ent', "avgTime", "numOfSets", "charts", 'newGame', 'existGame',
-        'EndGame', 'SaveGame', 'sel', 'boa'];
+    window.onload=()=>{
+      console.log('inside load')
+      this.setState({pageSeen:'sel'})
+      window.history.pushState('sel', '', 'gameType');
+    }
 
-      if (!urlPaths.includes(window.location.pathname.substring(1)))
-        this.setState({ pageSeen: null })
+    window.onunload=()=>{
+      console.log('inside load')
+      this.setState({pageSeen:'sel'})
+      window.history.pushState('sel', '', 'gameType');
+    }
+
+
+    window.onhashchange = () => {
+      console.log('hash')
+      // let urlPaths = ['reg', 'log', 'ent', "avgTime", "numOfSets", "charts", 'newGame', 'existGame',
+      //   'EndGame', 'SaveGame', 'sel', 'boa'];
+
+      // if (!urlPaths.includes(window.location.pathname.substring(1)))
+      //   this.setState({ pageSeen: null })
     }
 
     window.onpopstate = (event) => {
@@ -89,6 +108,7 @@ export default class App extends Component {
 
   render() {
     console.log('window.location.href', window.location.pathname)
+    console.log('xgdfhgggfggg lAFDFDFDF')
     switch (this.state.pageSeen) {
       case "load":
         return <LoadingPage />;
