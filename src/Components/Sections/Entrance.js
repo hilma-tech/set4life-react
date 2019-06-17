@@ -15,7 +15,7 @@ export default class Entrance extends Component {
         }
         window.history.replaceState('ent', '', 'Entrance');
         window.onpopstate = (event) => {
-            console.log(`%c pop ent- ${event.state}, `, 'color: red;')
+            // console.log(`%c pop ent- ${event.state}, `, 'color: red;')
             switch (event.state) {
                 case "reg":
                 case "log":

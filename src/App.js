@@ -31,30 +31,8 @@ export default class App extends Component {
     firebaseObj.createStorage();
     firebaseObj.authState(this.handlePlayerAuthState);
 
-    window.onload=()=>{
-      console.log('inside load')
-      this.setState({pageSeen:'sel'})
-      window.history.pushState('sel', '', 'gameType');
-    }
-
-    window.onunload=()=>{
-      console.log('inside load')
-      this.setState({pageSeen:'sel'})
-      window.history.pushState('sel', '', 'gameType');
-    }
-
-
-    window.onhashchange = () => {
-      console.log('hash')
-      // let urlPaths = ['reg', 'log', 'ent', "avgTime", "numOfSets", "charts", 'newGame', 'existGame',
-      //   'EndGame', 'SaveGame', 'sel', 'boa'];
-
-      // if (!urlPaths.includes(window.location.pathname.substring(1)))
-      //   this.setState({ pageSeen: null })
-    }
-
     window.onpopstate = (event) => {
-      console.log('app popstate', event.state)
+      // console.log('app popstate', event.state)
       switch (event.state) {
         case 'reg': case 'log': case 'ent':
         case "avgTime": case "numOfSets": case "charts":
@@ -75,7 +53,7 @@ export default class App extends Component {
 
   handlePlayerAuthState = (fbUser) => {
     if (fbUser) {
-      console.log('fbUser', fbUser)
+      // console.log('fbUser', fbUser)
       if (Variables.profilePic === LodingImg || (!Variables.playerName.length)) {
         firebaseObj.listenerOnFirebase(info_obj => {
           if (info_obj) {
@@ -94,7 +72,7 @@ export default class App extends Component {
     }
 
     else {
-      console.log("not logged in");
+      // console.log("not logged in");
       Object.assign(Variables,
         { userId: '', playerName: '', profilePic: LodingImg });
       this.moveThroughPages("ent");
@@ -107,8 +85,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log('window.location.href', window.location.pathname)
-    console.log('xgdfhgggfggg lAFDFDFDF')
     switch (this.state.pageSeen) {
       case "load":
         return <LoadingPage />;

@@ -42,10 +42,9 @@ export default class LoginPage extends Component {
                         Object.assign(Variables,
                             { playerName: snap.val(), userId: fbUser.user.uid })
                     });
-                }, error => {
+                }, error => 
                     this.setState({ loginStateInfo: GameData.errorLogin[error.code], _loadingImg: false })
-                    console.log("error login", error.code)
-                });
+                );
         else
             this.setState({
                 loginStateInfo: Generalfunctions.string_From_List(emptyFilesArr, 'שכחת למלא את השדות: '),

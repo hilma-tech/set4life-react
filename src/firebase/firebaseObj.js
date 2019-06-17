@@ -21,7 +21,6 @@ const firebaseObj = {
     },
 
     settingValueInDataBase(path, value) {
-        console.log('setting fb',path,value)
         this._db.ref(path).set(value)
     },
 
@@ -30,7 +29,6 @@ const firebaseObj = {
     },
 
     updatingValueInDataBase(path, value) {
-        console.log(path,'value',value)
         this._db.ref(path).update(value);
     },
 

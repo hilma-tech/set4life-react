@@ -20,7 +20,6 @@ class EndGame extends Component {
         window.history.pushState('EndGame', '', 'EndGame');
         window.onpopstate = (event) => {
             window.history.pushState('EndGame', '', 'EndGame');
-            console.log('end state',event.state)
         };
         firebaseObj.updatingValueInDataBase(`Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`, { isConnected: false });
     }

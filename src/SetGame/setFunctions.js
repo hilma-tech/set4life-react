@@ -67,7 +67,7 @@ const setFunctions = {
                 for (let c = b + 1; c < currCards.length; c++) {
                     if (this.isSetBoolFunction([currCards[a], currCards[b], currCards[c]]).bool) {
                         if(showSet)
-                            console.log('set at ', a, b, c)
+                            // console.log('set at ', a, b, c)
                         return true;
                     }
                 }

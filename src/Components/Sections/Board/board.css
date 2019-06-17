@@ -25,7 +25,6 @@
     font-weight: bold;
 }
 
-
 @media(max-width: 1200px){
     #upper-bar{
         flex-wrap: wrap;

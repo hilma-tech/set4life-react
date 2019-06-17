@@ -33,7 +33,7 @@ export default class GameType extends Component {
         window.onbeforeunload = () => { };
 
         window.addEventListener('popstate', (event) => {
-            console.log(`%c pop sel- ${event.state}`, 'color: green;')
+            // console.log(`%c pop sel- ${event.state}`, 'color: green;')
 
             switch (event.state) {
                 case "newGame": case "existGame":

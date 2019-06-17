@@ -63,7 +63,7 @@ const ChartFunctions = {
             x_axis_level.push(`${date}:${num}`);
         }
     })
-    console.log('finish x_axis')
+    // console.log('finish x_axis')
   },
 
 
@@ -94,7 +94,7 @@ const ChartFunctions = {
         }
       }
     });
-    console.log('finish y avgTime')
+    // console.log('finish y avgTime')
   },
 
 
@@ -113,7 +113,7 @@ const ChartFunctions = {
         chartsObj.numOfSets[y_axis.substring(2)].data = x_y_axis.numOfSets[y_axis].level_3
       }
     }
-    console.log('finish y numOfSets')
+    // console.log('finish y numOfSets')
   },
   ////////////////////////////////////////////////////////////////////////////////////////
 

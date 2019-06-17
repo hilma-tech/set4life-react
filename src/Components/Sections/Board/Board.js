@@ -41,7 +41,7 @@ export default class Board extends Component {
 
         window.history.pushState('boa', '', 'Board');
         window.onpopstate = (event) => {
-            console.log(`%c pop boa- ${event.state}`, 'color: pink;')
+            // console.log(`%c pop boa- ${event.state}`, 'color: pink;')
 
             if (event.state !== 'boa') {
                 window.history.pushState('boa', '', 'board');
@@ -71,7 +71,7 @@ export default class Board extends Component {
     componentDidMount() {
         window.onbeforeunload = (event) => {
             event.preventDefault();
-            console.log("leave??");
+            // console.log("leave??");
             return "leave??";
         };
 
@@ -170,7 +170,7 @@ export default class Board extends Component {
             timeChooseSet = performance.now();
             this.setState({disableBeforeNext:true})
             clearTimeout(_timeOutChoosingSet);
-            console.log('cleared timeout');
+            // console.log('cleared timeout');
 
             let isSet = setFunctions.isSetBoolFunction(this.state.selectedCards);
             firebaseObj.pushCorrectOrWrongSetToDB(isSet);
@@ -192,10 +192,10 @@ export default class Board extends Component {
         if (this.state.stageOfTheGame === 0) {
             timeClickOnChooseSet = performance.now();
             _timeOutChoosingSet = setTimeout(() => {
-                console.log("inside setTimeOut")
+                // console.log("inside setTimeOut")
                 if (this.state.selectedCards.length < 3 && this.state.stageOfTheGame === 1) {
                     this.setState({ stageOfTheGame: 0, selectedCards: [] });
-                    ToastsStore.success("נגמר הזמן!");
+                    ToastsStore.error("נגמר הזמן!");
                     ['selectedCards', 'currentPlayerID'].map(destination => {
                         firebaseObj.removeDataFromDB(`Games/${this.gameCode}/${destination}`);
                     })
@@ -277,7 +277,7 @@ export default class Board extends Component {
                                 }
                             </button>}
 
-                        <ToastsContainer store={ToastsStore} closeOnClick rtl="true" />
+                        <ToastsContainer store={ToastsStore} closeOnClick rtl="true"/>
 
                     </div>
                 </div>);
