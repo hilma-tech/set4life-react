@@ -1,7 +1,7 @@
 import firebaseObj from '../../../firebase/firebaseObj';
 import Variables from '../../../SetGame/Variables';
 import Chart from 'chart.js';
-import { x_y_axis, chartsObj } from './X_Y_axis';
+import { x_y_axis, chartsObj, chartTitles } from './X_Y_axis';
 
 const ChartFunctions = {
   chartType: null,
@@ -34,11 +34,18 @@ const ChartFunctions = {
           display: false
         },
         scales: {
-          yAxes: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: chartTitles[this.chartType].y_axis_label,
+              fontColor: '#229bad',
+              fontSize: 20,
+              padding:5
+            },
             ticks: {
               beginAtZero: true
             }
-          }
+          }]
         },
         legend: {
           labels: {
@@ -49,7 +56,7 @@ const ChartFunctions = {
         }
       }
     });
-    
+
     this.chartRef = _chart;
   },
 
@@ -124,6 +131,7 @@ const ChartFunctions = {
   updatingChartType(level) {
     this.chartRef.data.labels = x_y_axis[this.chartType].x_axis[`level_${level}`];
     this.chartRef.data.datasets = Object.values(chartsObj[this.chartType]);
+    this.chartRef.options.scales.yAxes[ 0 ].scaleLabel.labelString = chartTitles[this.chartType].y_axis_label;
     this.chartRef.update();
   },
 

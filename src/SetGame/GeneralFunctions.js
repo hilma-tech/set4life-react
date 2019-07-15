@@ -16,7 +16,7 @@ const GereralFunctions={
                 return `${hour<10?'0':''}${hour}:${min<10?'0':''}${min}`;
             }
             case 'date':
-                return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+                return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
         }
     }
 }
