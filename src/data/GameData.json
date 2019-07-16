@@ -8,7 +8,7 @@
         "shade":{
             "shadeHe" : ["ריק","מלא","פסים"],
             "shadeEn" : ["open","solid","striped"],
-            "nameHe":"מרקם"
+            "nameHe":"מילוי"
         },
         "color":{
             "colorHe" : ["כחול","ירוק","אדום"],

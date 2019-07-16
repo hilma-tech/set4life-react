@@ -168,7 +168,6 @@ export default class Board extends Component {
 
         if (selectedCards.length === 3) {
             timeChooseSet = performance.now();
-            this.setState({disableBeforeNext:true})
             clearTimeout(_timeOutChoosingSet);
             // console.log('cleared timeout');
 
@@ -176,12 +175,9 @@ export default class Board extends Component {
             firebaseObj.pushCorrectOrWrongSetToDB(isSet);
             //timeout of the "next" btn
             this.setState({ isSet: isSet.bool, stageOfTheGame: 2 }, () => {
-                _timeOutNextBtn = setTimeout(() => {
-                    this.outOfNextButton();
-                }, 10000)
-            });
-            //timeout of the disable "next" btn
-            setTimeout(()=>this.setState({disableBeforeNext:false}),5000)
+            _timeOutNextBtn = this.outOfNextButton;
+            }  );
+            
         }
         this.setState({ selectedCards: selectedCards });
         firebaseObj.settingValueInDataBase(`Games/${this.gameCode}/selectedCards`, selectedCards);
@@ -270,7 +266,7 @@ export default class Board extends Component {
 
                         {this.state.currentCards &&
                             <button id='the-button' className='btn btn-primary' onClick={this.clickButtonEvent}
-                                disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 || (this.state.stageOfTheGame === 2 && this.state.disableBeforeNext)}>
+                                disabled={this.state.stageOfTheGame === 1 || this.state.stageOfTheGame === 3 }>
                                 {this.state.stageOfTheGame === 0 ? "מצאתי סט!" :
                                     this.state.stageOfTheGame === 1 ? "סט בבחירה" :
                                         this.state.stageOfTheGame === 2 ? "הבא" : "שחקן אחר משחק"
