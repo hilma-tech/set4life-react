@@ -40,7 +40,7 @@ const ChartFunctions = {
               labelString: chartTitles[this.chartType].y_axis_label,
               fontColor: '#229bad',
               fontSize: 20,
-              padding:5
+              padding: 5
             },
             ticks: {
               beginAtZero: true
@@ -63,14 +63,50 @@ const ChartFunctions = {
 
   createX_axis(gamesObj) {
     ['numOfSets', 'avgTime_hitSet', 'avgTime_chooseSet'].map(_chartType => {
-      for (let date in gamesObj)
+      for (let date in gamesObj) {
         for (let num in gamesObj[date]) {
           let x_axis_level = x_y_axis[_chartType].x_axis[`level_${gamesObj[date][num].level}`];
           if (!x_axis_level.includes(`${date}:${num}`))
             x_axis_level.push(`${date}:${num}`);
         }
+      }
     })
+    this.sort_x_axis();
     // console.log('finish x_axis')
+  },
+
+
+  sort_x_axis() {
+    ['numOfSets', 'avgTime_hitSet', 'avgTime_chooseSet'].map(_chartType => {
+      for (let level in x_y_axis[_chartType].x_axis) {
+        let sorted_arr = []
+        x_y_axis[_chartType].x_axis[level].map((chart_game_code) => {
+          let instance = chart_game_code.replace(':', '-')
+          instance = instance.split('-');
+          sorted_arr.push(instance);
+        });
+
+        sorted_arr.sort((a, b) => {
+          let year = a[0] - b[0];
+          if (!year) {
+            let month = a[1] - b[1];
+            if (!month) {
+              let day = a[2] - b[2];
+              if (!day) {
+                let game_num = a[3] - b[3];
+                return game_num;
+              }
+              return day;
+            }
+            return month;
+          }
+          return year;
+        });
+        x_y_axis[_chartType].x_axis[level]=sorted_arr.map(instance=>`${instance[0]}-${instance[1]}-${instance[2]}:${instance[3]}`)
+      }
+    })
+
+    console.log('x_y_axis',x_y_axis)
   },
 
 
@@ -131,7 +167,7 @@ const ChartFunctions = {
   updatingChartType(level) {
     this.chartRef.data.labels = x_y_axis[this.chartType].x_axis[`level_${level}`];
     this.chartRef.data.datasets = Object.values(chartsObj[this.chartType]);
-    this.chartRef.options.scales.yAxes[ 0 ].scaleLabel.labelString = chartTitles[this.chartType].y_axis_label;
+    this.chartRef.options.scales.yAxes[0].scaleLabel.labelString = chartTitles[this.chartType].y_axis_label;
     this.chartRef.update();
   },
 

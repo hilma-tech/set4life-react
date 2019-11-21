@@ -8,4 +8,5 @@ var config = {
     storageBucket: "set4life-1e18e.appspot.com",
     messagingSenderId: "507778967665"
   };
+  
   export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app()[0];

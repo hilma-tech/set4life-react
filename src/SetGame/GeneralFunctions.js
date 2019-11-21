@@ -16,7 +16,10 @@ const GereralFunctions={
                 return `${hour<10?'0':''}${hour}:${min<10?'0':''}${min}`;
             }
             case 'date':
-                return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+                let day=`${d.getDate()}`.length===1?`0${d.getDate()}`:`${d.getDate()}`;
+                let month=`${d.getMonth()+1}`.length===1?`0${d.getMonth()+1}`:`${d.getMonth()+1}`;
+                let year=d.getFullYear()
+                return `${year}-${month}-${day}`;
         }
     }
 }
