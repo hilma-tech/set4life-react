@@ -109,7 +109,16 @@
         align-items:center;
         margin-right:1vw;
     }
-
+    .participant-list {
+        display: flex;
+        align-items: center;
+    }
+    .set-count {
+        color: darkgreen;
+        font-size: 1.5rem;
+        padding: 0 3px;
+        animation: enlarge 1s ease-in;
+    }
     #the-button{
         font-size:2.3vw;
         margin-top:0.25vw;

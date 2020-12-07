@@ -132,6 +132,7 @@ const firebaseObj = {
                 ClickSet_Till_ChooseSet: ((timeChooseSet - timeClickOnChooseSet) / 1000).toFixed(2),
                 StartGame_Till_ClickSet: ((timeClickOnChooseSet - timeStartGame) / 1000).toFixed(2)
             });
+            return isSet.bool;
     }
 }
 

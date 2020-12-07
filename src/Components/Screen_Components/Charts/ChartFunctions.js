@@ -126,11 +126,15 @@ const ChartFunctions = {
           for (let level in x_y_axis[_chartType][y_axis]) {
             x_y_axis[_chartType].x_axis[level].map(x => {
               let sum = 0;
+              let n = 0;
               if (setObj[setObjCategory] && setObj[setObjCategory].hasOwnProperty(x)) {
+                n = Object.keys(setObj[setObjCategory][x]).length;
                 for (let setId in setObj[setObjCategory][x])
-                  sum += parseFloat(setObj[setObjCategory][x][setId][action]);
+                  sum += parseFloat(setObj[setObjCategory][x][setId][action]).toFixed(2)
+
               }
-              x_y_axis[_chartType][y_axis][level].push(sum);
+            let avg = sum / (n > 0 ? n : 1)
+            x_y_axis[_chartType][y_axis][level].push(avg.toFixed(2));
             });
           }
           chartsObj[_chartType][y_axis.substring(2)].data = x_y_axis[_chartType][y_axis].level_3

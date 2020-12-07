@@ -63,7 +63,6 @@ export default class Board extends Component {
     componentWillMount() {
         firebaseObj.listenerOnFirebase(this.handleGameObjFromFirebase, `Games/${this.gameCode}`)
         firebaseObj.listenerOnFirebase(this.reciveCurrentUserIdFromFirebase, `Games/${this.gameCode}/currentPlayerID`);
-
         timeStartGame = timeNewCards = performance.now();
     }
 
@@ -172,7 +171,7 @@ export default class Board extends Component {
             // console.log('cleared timeout');
 
             let isSet = setFunctions.isSetBoolFunction(this.state.selectedCards);
-            firebaseObj.pushCorrectOrWrongSetToDB(isSet);
+            let isSetBool = firebaseObj.pushCorrectOrWrongSetToDB(isSet);
             //timeout of the "next" btn
             this.setState({ isSet: isSet.bool, stageOfTheGame: 2 }, () => {
             _timeOutNextBtn = this.outOfNextButton;
@@ -286,7 +285,7 @@ export default class Board extends Component {
 const UpperBar = (props) => (
     <nav id='upper-bar' className='navbar d-flex '>
 
-        <div id='participant-list' className='px-0'>
+        <div id='participant-list' className='px-0 participant-list'>
             {props.game_Participants.map(val =>
                 <UserIcon currentPlayer={props.currentPlayerId === val[0]} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
                     src={val[1].ProfilePic} _direction='bottom' />)}

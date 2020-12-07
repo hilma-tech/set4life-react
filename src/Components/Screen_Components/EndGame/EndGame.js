@@ -54,7 +54,7 @@ class EndGame extends Component {
                     <div className=' d-flex align-items-center justify-content-center'>
                         <div className='d-flex flex-column'>
                             <h1 className='display-4 m-0' >כל הכבוד!</h1>
-                            <h2 className="lead" >ניצחת</h2>
+                            <h2 className="lead" >המשחק הסתיים</h2>
                             <img className="img-fluid" src={Party_Popper} />
                             <div>
                                 <ul className="list-group d-inline-block justify-content-end w-sm-75 w-md-50 list-group-flush">

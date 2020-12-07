@@ -38,13 +38,13 @@ let chartTitles = {
   avgTime_hitSet: {
     title: 'זמן ממוצע עד הלחיצה על כפתור סט',
     _p: 'מציג את הזמן הממוצע עבור כל משחק, מהרגע שהוצגו קלפים חדשים על הלוח, עד הלחיצה על הכפתור "מצאתי סט"',
-    y_axis_label:'הזמן הממוצע'
+    y_axis_label:'הזמן הממוצע בשניות'
   },
 
   avgTime_chooseSet: {
     title: 'זמן ממוצע מהלחיצה על כפתור הסט עד בחירת סט נכון',
     _p: 'מציג את הזמן הממוצע מהרגע בו לוחצים על הכפתור "מצאתי סט", עד לבחירת סט כלשהו',
-    y_axis_label:'הזמן הממוצע'
+    y_axis_label:'הזמן הממוצע בשניות'
   },
 
   numOfSets: {
@@ -60,7 +60,7 @@ let chartsObj = {
   avgTime_hitSet: {
     Correct: {
       data: null,
-      label: 'סטים נכונים',
+      label: 'סטים נכונים - ממוצע שניות',
       borderColor: "#8CC63F",
       backgroundColor: "#8CC63F",
       fill: false,
@@ -68,7 +68,7 @@ let chartsObj = {
     },
     Wrong: {
       data: null,
-      label: 'סטים לא נכונים',
+      label: 'סטים לא נכונים - ממוצע שניות',
       borderColor: "#FF1D00",
       backgroundColor: "#FF1D00",
       fill: false,
