@@ -67,8 +67,81 @@ margin-bottom: 8vw;
     }
 }
 
+.resetPWPopup {
+    position: fixed;
+    background: rgb(233, 224, 224);
+    width: 90vw;
+    height: fit-content;
+    padding: 20px;
+    box-shadow: 2px 2px 7px #00000036;
+    border-radius: 5px;
+    z-index: 100;
+    top: 40vh;
+    left: 50vw;
+    transform: translate(-50%,-50%);
+}
+.email-for-new-pw-input {
+    background-color: white;
+    border: 1px solid rgb(218, 214, 214);
+    margin-bottom: 5px !important;
+    width: 100% !important;
+    font-size: 100% !important;
+    height: 7vh !important;
+    padding: 10px;
+}
+.incorrect-pw {
+    font-size: 85%;
+    /* margin-bottom: 5%; */
+    color: rgb(194, 0, 0);
+}
+.err-input {
+    border: 2px solid rgb(194, 0, 0);
+}
+.grayscale {
+    filter: grayscale(0.5);
+}
+.close-popup {
+    text-align: left;
+    margin-bottom: 10px;
+}
+.close-popup-img {
+    width: 35px;
+}
+.new-pw-go {
+    margin-top: 10vh;
+}
+.grey-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    opacity: 0.5;
+    background-color: black;
+}
+.link {
+cursor: pointer !important;
+}
 
-@media (min-width: 1200px) {
+    @media (min-width: 580px) {
+    .resetPWPopup {
+        width: 45vw;
+        font-size: 1.25rem;
+    }
+    .email-for-new-pw-input{
+        margin: auto;
+        margin-top: 5vh;
+        width: 60% !important;
+    }
+    @media (min-width: 480px) and (max-height: 450px) {
+        .email-for-new-pw-input{
+            height: 12vh !important;
+        width: 90% !important;
+        }
+    }
+}
+    @media (min-width: 1200px) {
     #login-page h1 span{
         font-size: 10vw;
        }

@@ -60,7 +60,7 @@ class EndGame extends Component {
                                 <ul className="list-group d-inline-block justify-content-end w-sm-75 w-md-50 list-group-flush">
                                     <li className="list-group-item">מספר הסטים<span className='text-success'>הנכונים</span>שלך:  <span className='info-text'>{this.state.numCorrectSet}</span></li>
                                     <li className="list-group-item">מספר הסטים<span className='text-danger'>הלא נכונים</span>שלך:  <span className='info-text'>{this.state.numWrongSet}</span></li>
-                                    <li className="list-group-item">זמן ממוצע לבחירת סט:  <span className='info-text'>{this.state.avgTime} </span> שניות</li>
+                                    <li className="list-group-item">זמן ממוצע למציאת סט:  <span className='info-text'>{this.state.avgTime} </span> שניות</li>
                                 </ul>
                             </div>
                             <button className='btn btn-primary' onClick={() => this.setState({ moveTo_SaveGame: true })} >המשך</button>

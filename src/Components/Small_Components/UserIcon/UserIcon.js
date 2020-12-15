@@ -15,6 +15,7 @@ const UserIcon = (props) =>(
             {props._direction === 'bottom' ? takesFirstWordInSentence(props.name) : props.name}</label>
         {props._direction === 'bottom' &&
             <ReactTooltip className='_tooltip' place="bottom" type="dark" effect="solid" />}
+            { props.numOfSets && props.numOfSets.length > 0 ?  <div style={{fontSize:"90%"}}>{`${props.numOfSets.length}`}</div>:null}
     </div>
 );
 

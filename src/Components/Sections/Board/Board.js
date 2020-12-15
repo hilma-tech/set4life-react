@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from '../../Small_Components/Card/Card';
+import firebase from './../../../firebase/Def';
 import firebaseObj from '../../../firebase/firebaseObj';
 import setFunctions from '../../../SetGame/setFunctions.js';
 import Variables from '../../../SetGame/Variables';
@@ -9,6 +10,8 @@ import ErrorMes from '../../Screen_Components/ErrorMes/ErrorMes';
 import './board.css';
 import UserIcon from '../../Small_Components/UserIcon/UserIcon';
 import { ToastsContainer, ToastsStore } from 'react-toasts';
+
+const to = (promise) => { return promise.then(data => { return [null, data]; }).catch(err => [err]); }
 
 //timeStartGame- the time when the game start
 //timeNewCards- the time when new cards are showen in the board (3 new cards after correct set or the new cards in the beginning of the game)
@@ -82,16 +85,42 @@ export default class Board extends Component {
         }
     }
 
+    //todo: move to FB file
+    getPlayerFromFB = async (id) => {
+        let ref = await firebase.database().ref(`Players/${id}`)
+        let [s_err, snap] = await to(ref.once('value'))
+        if (snap.val() !== null) {
+            return snap.val();
+        } else {
+            return null;
+        }
+    }
+
     //callback functions for listeners on firebase////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
-    handleGameObjFromFirebase = (gameObj) => {
+    handleGameObjFromFirebase = async (gameObj) => {
         let { Game_Participants,
             currentCards: newCurrentCards,
             selectedCards: newSelectedCards,
             usedCards } = gameObj ? gameObj : {};
 
         //Game_Participants
-        let ArrParticipants = Game_Participants ? Object.entries(Game_Participants).filter(val =>
+        let Participants_With_Score = []
+        let participantIdsArr;
+
+        //each player's number of sets found
+        if (Game_Participants) {
+            participantIdsArr = Object.getOwnPropertyNames(Game_Participants)
+            for (let i = 0; i < participantIdsArr.length; i++) {
+                let [err, playerObj] = await to(this.getPlayerFromFB(participantIdsArr[i]))
+                let numCorrectSets = (await playerObj.CorrectSets && playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`]) ?
+                    Object.keys(playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`]) : 0;
+                Game_Participants[participantIdsArr[i]].numCorrectSets = numCorrectSets
+                Participants_With_Score.push(Game_Participants[participantIdsArr[i]])
+            }
+        }
+
+        let ArrParticipants = Participants_With_Score ? Object.entries(Participants_With_Score).filter(val =>
             val[1].isConnected) : [];
         this.setState({ game_Participants: ArrParticipants });
         !ArrParticipants.length &&
@@ -287,7 +316,7 @@ const UpperBar = (props) => (
 
         <div id='participant-list' className='px-0 participant-list'>
             {props.game_Participants.map(val =>
-                <UserIcon currentPlayer={props.currentPlayerId === val[0]} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
+                <UserIcon numOfSets={val[1].numCorrectSets} currentPlayer={props.currentPlayerId === val[0]} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
                     src={val[1].ProfilePic} _direction='bottom' />)}
         </div>
 

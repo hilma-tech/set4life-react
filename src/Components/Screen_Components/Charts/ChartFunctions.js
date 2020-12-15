@@ -135,8 +135,6 @@ const ChartFunctions = {
               }
             sum = typeof sum == "number" ? sum : parseFloat(sum)
             let avg = sum / (n > 0 ? n : 1)
-            console.log('sum :', typeof sum);
-            console.log('avg :', avg);
             x_y_axis[_chartType][y_axis][level].push(avg.toFixed(2));
             });
           }
