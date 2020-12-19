@@ -105,23 +105,28 @@ export default class Board extends Component {
             usedCards } = gameObj ? gameObj : {};
 
         //Game_Participants
-        let Participants_With_Score = []
+        let Participants_With_Score = {}
         let participantIdsArr;
 
         //each player's number of sets found
         if (Game_Participants) {
             participantIdsArr = Object.getOwnPropertyNames(Game_Participants)
-            for (let i = 0; i < participantIdsArr.length; i++) {
-                let [err, playerObj] = await to(this.getPlayerFromFB(participantIdsArr[i]))
+            for (const id of participantIdsArr) {
+                let [err, playerObj] = await to(this.getPlayerFromFB(id))
                 let numCorrectSets = (await playerObj.CorrectSets && playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`]) ?
                     Object.keys(playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`]) : 0;
-                Game_Participants[participantIdsArr[i]].numCorrectSets = numCorrectSets
-                Participants_With_Score.push(Game_Participants[participantIdsArr[i]])
+                Game_Participants[id].numCorrectSets = numCorrectSets
+                Participants_With_Score[id] = Game_Participants[id]
             }
         }
 
-        let ArrParticipants = Participants_With_Score ? Object.entries(Participants_With_Score).filter(val =>
-            val[1].isConnected) : [];
+        let ArrParticipants = [];
+        if (Participants_With_Score) {
+            for (const participantId in Participants_With_Score) {
+                let participant = Participants_With_Score[participantId];
+                if(participant.isConnected) ArrParticipants.push([participantId, participant])
+            }
+        } 
         this.setState({ game_Participants: ArrParticipants });
         !ArrParticipants.length &&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
@@ -316,7 +321,7 @@ const UpperBar = (props) => (
 
         <div id='participant-list' className='px-0 participant-list'>
             {props.game_Participants.map(val =>
-                <UserIcon numOfSets={val[1].numCorrectSets} currentPlayer={props.currentPlayerId === val[0]} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
+                <UserIcon key={val[0]} numOfSets={val[1].numCorrectSets} currentPlayer={props.currentPlayerId === val[0]} name={(val[0] === Variables.userId) ? 'את/ה' : val[1].Name}
                     src={val[1].ProfilePic} _direction='bottom' />)}
         </div>
 
