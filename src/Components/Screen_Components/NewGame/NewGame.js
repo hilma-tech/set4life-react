@@ -23,7 +23,8 @@ export default class NewGame extends Component {
             checkboxsInfo: { colorBool: true, shapeBool: true, shadeBool: true, numberBool: true },
             dropDownInfo: {},
             messageErr: false,
-            _timer: 15
+            _timer: 15,
+            _scoreBoard: true
         }
         window.history.pushState('newGame', '', 'newGame');
     }
@@ -39,6 +40,7 @@ export default class NewGame extends Component {
         Object.assign(Variables, {
             gameCode: newGameCode,
             _timer: this.state._timer,
+            _scoreBoard: this.state._scoreBoard,
             constParameters: this.state.dropDownInfo,
             creationGameTime: startGameTime
         });
@@ -104,6 +106,10 @@ export default class NewGame extends Component {
             this.setState({ _timer: event.target.value })
     }
 
+    settingScoreBoard = (event) => {
+        this.setState({ _scoreBoard: !this.state._scoreBoard })
+    }
+
     keypressed = (e) => {
         if (e.key === "Enter")
             this.settingNewGame();
@@ -131,6 +137,13 @@ export default class NewGame extends Component {
                                     checkboxsChange={this.checkboxsChange}
                                     settingConstParametersObj={this.settingConstParametersObj} />)
                             )}
+                             <div id='checkbox-constParameters' className="container-fluid d-flex align-items-center">
+                            <input
+                                type="checkbox"
+                                checked={this.state._scoreBoard}
+                                onChange={this.settingScoreBoard}  />
+                            <label className='h4 mr-2 font-weight-light'>הצגת ניקוד</label>
+                            </div>
                         </div>
                         <div className='d-flex justify-content-start align-items-center'>
                             <label id='timer-for-set' className='h4 font-weight-light ml-1 text-right'>זמן לבחירת סט:</label>
@@ -140,6 +153,7 @@ export default class NewGame extends Component {
                                 min="2"
                                 value={this.state._timer}
                                 onChange={this.settingTimeOut} />
+                          
 
                         </div>
                     </div>

@@ -130,7 +130,7 @@ const ChartFunctions = {
               if (setObj[setObjCategory] && setObj[setObjCategory].hasOwnProperty(x)) {
                 n = Object.keys(setObj[setObjCategory][x]).length;
                 for (let setId in setObj[setObjCategory][x])
-                  sum += parseFloat(setObj[setObjCategory][x][setId][action]).toFixed(2)
+                  sum += parseFloat(setObj[setObjCategory][x][setId][action])
 
               }
             sum = typeof sum == "number" ? sum : parseFloat(sum)

@@ -78,6 +78,7 @@ export default class Board extends Component {
         };
 
         window.onunload = e => {
+            
             firebaseObj.updatingValueInDataBase(
                 `Games/${Variables.gameCode}/Game_Participants/${Variables.userId}`,
                 { isConnected: false });
@@ -111,23 +112,32 @@ export default class Board extends Component {
         //each player's number of sets found
         if (Game_Participants) {
             participantIdsArr = Object.getOwnPropertyNames(Game_Participants)
+            
+            
             for (const id of participantIdsArr) {
                 let [err, playerObj] = await to(this.getPlayerFromFB(id))
+                
+                
                 let numCorrectSets = (await playerObj.CorrectSets && playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`]) ?
                     Object.keys(playerObj.CorrectSets[`${Variables._date}:${Variables.day_numberedGame}`]) : 0;
                 Game_Participants[id].numCorrectSets = numCorrectSets
                 Participants_With_Score[id] = Game_Participants[id]
             }
-        }
+        } 
 
         let ArrParticipants = [];
         if (Participants_With_Score) {
+            
             for (const participantId in Participants_With_Score) {
                 let participant = Participants_With_Score[participantId];
+                
                 if(participant.isConnected) ArrParticipants.push([participantId, participant])
             }
         } 
-        this.setState({ game_Participants: ArrParticipants });
+        
+        this.setState({ game_Participants: ArrParticipants }
+            
+            );
         !ArrParticipants.length &&
             firebaseObj.removeDataFromDB(`Games/${this.gameCode}`);
 

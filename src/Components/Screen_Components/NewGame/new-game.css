@@ -25,7 +25,7 @@
 #new-game #checkbox-constParameters label,
 #new-game #checkbox-constParameters span,
 #timer-for-set{
-    font-size: 6.4vw;
+    font-size: 6vw;
     margin-bottom: 0;
 }
 
@@ -40,7 +40,7 @@
 }
 
 #new-game h1{
-    font-size:14vw;
+    font-size:12.5vw;
     margin:0;
 }
 

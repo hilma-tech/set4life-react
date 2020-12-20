@@ -6,6 +6,7 @@ const Variables={
     userId:'',
     playerName:"",
     _timer:15,
+    _scoreBoard: true,
     creationGameTime:'',
     _date:'',
     day_numberedGame:0,
