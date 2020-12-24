@@ -284,6 +284,9 @@ export default class Board extends Component {
 
 
     render() {
+        if (this.state.isSet && this.state.selectedCards.length === 3 && this.state.stageOfTheGame == 0) {
+            this.setState({ isSet: undefined, selectedCards: [], stageOfTheGame: 0 });
+        }
         if ((!this.state.exitGame) && this.state.currentCards && this.state.currentCards.length) {
             return (
                 <div id="board" className=' d-flex flex-column'>
